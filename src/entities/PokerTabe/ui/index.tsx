@@ -1,15 +1,16 @@
-import styles from './PokerTable.module.css';
-import { Card } from '../Card';
-import type { Card as CardType } from '../../shared/types/card';
 import React from 'react';
-import { useTable } from '../../Providers/table-context';
+
+import { useTable } from 'providers/table-context';
+import { Card } from 'entities/Card';
+import type { Card as CardType } from 'shared/types/card';
+import styles from './PokerTable.module.css';
 
 interface Props {
-    cards: CardType[];
+  cards: CardType[];
 }
 
 export const PokerTable = ({cards = []}: Props) => {
-    const {setTableElement} = useTable();
+  const {setTableElement} = useTable();
 
   return (
     <div className={styles.tableContainer}>

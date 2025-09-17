@@ -1,0 +1,13 @@
+.actionContainer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 1rem;
+  z-index: 1000;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end; /* правильное значение вместо "right" */
+  align-items: center;       /* выравнивание по вертикали внутри контейнера */
+  padding: 1rem;
+  height: auto;              /* не жёсткая высота; подгоняется под содержимое */
+}

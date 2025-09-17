@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
+
 import styles from './Card.module.css';
 
 const suitSymbol = (suit: string) => {
@@ -11,8 +12,14 @@ const suitSymbol = (suit: string) => {
   }
 };
 
-export const Card = ({ rank = 'A', suit = 'spades', hidden = false, index = 0 }) => {
-  const ref = useRef<HTMLDivElement | null>(null);
+export const Card = ({
+  rank = 'A',
+  suit = 'spades',
+  hidden = false,
+  index = 0,
+  size = 1 
+}) => {
+  const ref = React.useRef<HTMLDivElement | null>(null);
   const symbol = suitSymbol(suit);
 
   useEffect(() => {
@@ -41,6 +48,7 @@ export const Card = ({ rank = 'A', suit = 'spades', hidden = false, index = 0 })
   return (
     <div
       ref={ref}
+      style={{width: 64 * size, height: 92 * size}}
       className={`${styles.card} ${hidden ? styles.cardHidden : ''} ${styles['suit_' + suit] || ''}`}
       role="img"
       aria-label={hidden ? 'face down card' : `${rank} of ${suit}`}

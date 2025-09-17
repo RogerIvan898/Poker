@@ -6,20 +6,28 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    /* Bundler mode */
+    "baseUrl": ".",
+    "paths": {
+      "app/*": ["./src/app/*"],
+      "processes/*": ["./src/processes/*"],
+      "pages/*": ["./src/pages/*"],
+      "features/*": ["./src/features/*"],
+      "entities/*": ["./src/entities/*"],
+      "shared/*": ["./src/shared/*"],
+      "widgets/*": ["./src/widgets/*"],
+      "components/*": ["./src/components/*"],
+      "types/*": ["./src/types/*"],
+      "providers/*": ["./src/providers/*"],
+      "assets/*": ["./src/assets/*"]
+    },
+
+    "types": ["node"],
+
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
-    "noEmit": true,
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noEmit": true
   },
   "include": ["vite.config.ts"]
 }

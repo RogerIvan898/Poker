@@ -13,7 +13,7 @@ export const TableProvider = ({children}: React.PropsWithChildren) => {
     const value = React.useMemo(() => ({
         tableElement,
         setTableElement
-    }), [tableElement])
+    }), [tableElement]);
 
   return <TableContext.Provider value={value}>{children}</TableContext.Provider>;
 };

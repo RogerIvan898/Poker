@@ -1,0 +1,151 @@
+/* PokerStars-like button styles — paste into your CSS module */
+
+/* tokens */
+:root {
+  --ps-red: 214, 0, 24;        /* основной PokerStars red */
+  --ps-dark: 16, 18, 25;       /* тёмный фон/контуры */
+  --ps-gold: 255,199,44;       /* акцент (необязательно) */
+  --ps-radius: 10px;
+  --ps-padding-y: 10px;
+  --ps-padding-x: 18px;
+  --ps-gloss-a: 0.32;          /* интенсивность блика */
+  --ps-shadow: 0 14px 30px rgba(6,10,14,0.45);
+  --ps-inner-shadow: rgba(0,0,0,0.45);
+  --ps-transition: 180ms cubic-bezier(.2,.9,.3,1);
+}
+
+/* базовый класс (можно заменить вашу .button) */
+.ps-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: var(--ps-padding-y) var(--ps-padding-x);
+  min-width: 92px;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1;
+  border-radius: var(--ps-radius);
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  border: 1px solid rgba(var(--ps-dark),0.25);
+  transform: translateZ(0);
+  transition: transform var(--ps-transition), box-shadow var(--ps-transition), filter var(--ps-transition), opacity var(--ps-transition);
+  box-shadow: var(--ps-shadow);
+  will-change: transform, box-shadow;
+  background: linear-gradient(180deg, rgba(var(--ps-red),0.98) 0%, rgba(180,0,20,0.95) 45%, rgba(140,0,16,0.9) 100%);
+}
+
+/* глянцевый блик сверху (pseudo-element) */
+.ps-button::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 52%;
+  border-top-left-radius: var(--ps-radius);
+  border-top-right-radius: var(--ps-radius);
+  background: linear-gradient(180deg, rgba(255,255,255,var(--ps-gloss-a)) 0%, rgba(255,255,255,0.06) 30%, transparent 100%);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* тонкая светлая окантовка ближе к верху */
+.ps-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--ps-radius);
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,0.15);
+  pointer-events: none;
+}
+
+/* hover — лёгкий подъём и усиление свечения */
+.ps-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(6,10,14,0.55);
+  filter: saturate(1.06) brightness(1.02);
+}
+
+/* active — «вдавленный» эффект */
+.ps-button:active {
+  transform: translateY(0);
+  box-shadow: inset 0 6px 18px rgba(0,0,0,0.45);
+  filter: brightness(0.94);
+}
+
+/* focus-visible — кольцо для доступности */
+.ps-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 5px rgba(214,0,24,0.12), 0 16px 40px rgba(6,10,14,0.45);
+}
+
+/* disabled */
+.ps-button[disabled],
+.ps-button.isDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  filter: grayscale(0.2) brightness(0.9);
+}
+
+/* вариации (Call / Fold / Raise / All-in) */
+.ps-button--call { background: linear-gradient(180deg,#1f9d92,#178c81); }      /* зелёный-ish */
+.ps-button--check { background: linear-gradient(180deg,#3aa0ff,#238be6); }     /* синий */
+.ps-button--raise { background: linear-gradient(180deg,#ff8a00,#e66b00); }     /* оранжевый */
+.ps-button--fold { background: linear-gradient(180deg,#666,#444); color:#fff; }/* сдержанный тёмный */
+.ps-button--allin { background: linear-gradient(180deg,#c40000,#8b0000); }      /* алл-ин — насыщенно-красный */
+
+/* небольшие настройки для вариаций — повторяем глянец */
+.ps-button--call::before,
+.ps-button--check::before,
+.ps-button--raise::before,
+.ps-button--fold::before,
+.ps-button--allin::before {
+  mix-blend-mode: overlay;
+  opacity: 0.28;
+}
+
+/* иконка/минимальные размеры */
+.ps-button--icon {
+  padding: 10px;
+  min-width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* размеры */
+.ps-button--small { padding: 6px 10px; min-width: 68px; font-size: 13px; border-radius: 8px; }
+.ps-button--large { padding: 14px 22px; min-width: 120px; font-size: 15px; border-radius: 12px; }
+
+/* спиннер (loading) — скрывает текст, показывает кружок */
+.ps-button.isLoading { color: transparent; pointer-events: none; }
+.ps-button.isLoading::before { opacity: 1; }
+.ps-button.isLoading::after {
+  content: "";
+  position: absolute;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-top-color: rgba(255,255,255,0.95);
+  animation: ps-spin 900ms linear infinite;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+/* анимация */
+@keyframes ps-spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ps-button, .ps-button:hover, .ps-button:active { transition: none; transform: none; }
+  .ps-button.isLoading::after { animation: none; }
+}
