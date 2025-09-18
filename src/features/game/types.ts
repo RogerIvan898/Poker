@@ -49,6 +49,17 @@ export interface GameState {
   currentBet: number;
 }
 
+
+
+
+
+
+
+
+
+
+
+
 export type GameEvent =
   | { type: "SNAPSHOT"; state: GameState }
   | { type: "PLAYER_BET"; playerId: string; amount: number; serverSeq?: number }
@@ -58,3 +69,10 @@ export type GameEvent =
   | { type: "DEAL_COMMUNITY"; cards: Card[]; serverSeq?: number }
   | { type: "HAND_RESULT"; winners: string[]; serverSeq?: number }
   | { type: "ERROR"; payload: any };
+
+
+
+
+
+
+

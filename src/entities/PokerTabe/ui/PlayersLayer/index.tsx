@@ -8,9 +8,15 @@ interface Props {
   players: PlayerType[];
   padding?: number;
   currentPlayerId?: string | number;
+  seatMargins?: Record<number, number>;
 }
 
-export const PlayersLayer = ({ players = [], padding = -68, currentPlayerId }: Props) => {
+export const PlayersLayer = ({ 
+  players = [], 
+  padding = -68, 
+  currentPlayerId, 
+  seatMargins = {}
+}: Props) => {
   const [seatPositions, setSeatPositions] = React.useState<Array<{ left: number; top: number }>>([]);
   const { tableElement } = useTable();
   const playersLayerRef = React.useRef<HTMLDivElement>(null);
@@ -27,60 +33,57 @@ export const PlayersLayer = ({ players = [], padding = -68, currentPlayerId }: P
   }, [players, currentPlayerId]);
 
   const calculatePositions = React.useCallback(() => {
-  if (!tableElement || !playersLayerRef.current) return;
+    if (!tableElement || !playersLayerRef.current) return;
 
-  const tableRect = tableElement.getBoundingClientRect();
-  const layerRect = playersLayerRef.current.getBoundingClientRect();
+    const tableRect = tableElement.getBoundingClientRect();
+    const layerRect = playersLayerRef.current.getBoundingClientRect();
 
-  const offsetX = tableRect.left - layerRect.left;
-  const offsetY = tableRect.top - layerRect.top;
+    const offsetX = tableRect.left - layerRect.left;
+    const offsetY = tableRect.top - layerRect.top;
 
-  const width = tableRect.width;
-  const height = tableRect.height;
-  const centerX = width / 2;
-  const centerY = height / 2;
+    const width = tableRect.width;
+    const height = tableRect.height;
+    const centerX = width / 2;
+    const centerY = height / 2;
 
-  // Пытаемся измерить реальный размер аватара в DOM (если он уже есть)
-  let measuredSeatSize = 56; // fallback
-  try {
-    // styles.avatar — строка класса из CSS Modules
-    const avatarEl = playersLayerRef.current.querySelector(`.${(styles as any).avatar}`);
-    if (avatarEl instanceof HTMLElement) {
-      const r = avatarEl.getBoundingClientRect();
-      if (r.width > 0) measuredSeatSize = r.width;
-    }
-  } catch (e) {
-    // ignore
-  }
+    let measuredSeatSize = 72;
+    try {
+      const avatarEl = playersLayerRef.current.querySelector(`.${(styles as any).avatar}`);
+      if (avatarEl instanceof HTMLElement) {
+        const r = avatarEl.getBoundingClientRect();
+        if (r.width > 0) measuredSeatSize = r.width;
+      }
+    } catch (e) {}
 
-  // запас под border/shadow и небольшой внешний gap (подстроить при необходимости)
-  const extraGapOutside = 6; // если аватар всё ещё заезжает — увеличь (8..16)
-  const seatSize = measuredSeatSize;
-  const seatRadius = seatSize / 2 + extraGapOutside;
+    const extraGapOutside = 6;
+    const seatSize = measuredSeatSize;
+    const baseSeatRadius = seatSize / 2 + extraGapOutside;
 
-  // радиусы эллипса: центры аватаров расположены на (половина стола + радиус аватара)
-  const rx = width / 2 + seatRadius;
-  const ry = height / 2 + seatRadius;
+    const rx = width / 2;
+    const ry = height / 2;
 
-  const positions = orderedPlayers.map((_, index) => {
-    // ограничиваем количество позиций похожим на прежнее поведение
-    const angle = Math.PI * 1.5 + (index * (2 * Math.PI)) / Math.min(orderedPlayers.length, 9);
-    const dx = Math.cos(angle);
-    const dy = Math.sin(angle);
+    const positions = orderedPlayers.map((player, index) => {
+      const playerMargin = seatMargins[index] !== undefined 
+        ? seatMargins[index] * Math.min(width, height) / 100
+        : padding;
 
-    // координаты на эллипсе (впритык к краю стола с учётом реального радиуса аватара)
-    const x = centerX + rx * dx;
-    const y = centerY + ry * dy;
+      const playerRadius = baseSeatRadius + playerMargin;
 
-    return {
-      left: x + offsetX,
-      top: y + offsetY,
-    };
-  });
+      const angle = Math.PI * 1.5 + (index * (2 * Math.PI)) / Math.min(orderedPlayers.length, 9);
+      const dx = Math.cos(angle);
+      const dy = Math.sin(angle);
 
-  setSeatPositions(positions);
-}, [orderedPlayers, padding, tableElement]);
+      const x = centerX + (rx + playerRadius) * dx;
+      const y = centerY + (ry + playerRadius) * dy;
 
+      return {
+        left: x + offsetX,
+        top: y + offsetY,
+      };
+    });
+
+    setSeatPositions(positions);
+  }, [orderedPlayers, padding, tableElement, seatMargins]);
 
   React.useEffect(() => {
     if (!tableElement) return;

@@ -25,17 +25,6 @@ export const RoomPage = () => {
     $currentPlayerState
   ])
 
-  // Позиции игроков за столом (предположим, что у нас 6 позиций)
-  const positions = [
-    { id: 0, name: 'Bottom' },    // Текущий игрок (внизу)
-    { id: 1, name: 'Right' },     // Справа
-    { id: 2, name: 'Top-Right' }, // Сверху-справа
-    { id: 3, name: 'Top' },       // Сверху
-    { id: 4, name: 'Top-Left' },  // Сверху-слева
-    { id: 5, name: 'Left' }       // Слева
-  ];
-
-  // Общие карты (из стора или моковые данные)
   const community: Card[] = [
     { rank: 'A', suit: 'spades' },
     { rank: '10', suit: 'hearts' },
@@ -44,9 +33,7 @@ export const RoomPage = () => {
     { rank: '3', suit: 'clubs' },
   ];
 
-  // Формируем список игроков с позициями
   const playersWithPositions = gameState.players.map((player, index) => {
-    // Если это текущий игрок, ставим его на позицию 0 (внизу)
     if (currentPlayer && player.id === currentPlayer.id) {
       return {
         ...player,
@@ -54,8 +41,6 @@ export const RoomPage = () => {
       };
     }
     
-    // Остальных игроков распределяем по другим позициям
-    // Пропускаем позицию 0 (она для текущего игрока)
     const positionIndex = index >= 5 ? index % 5 + 1 : index + 1;
     return {
       ...player,
@@ -70,6 +55,17 @@ export const RoomPage = () => {
         <PlayersLayer 
           players={playersWithPositions} 
           currentPlayerId={currentPlayer?.id} 
+          seatMargins={{
+            0: 10,
+            1: 32,
+            2: 14,
+            3: 32,
+            4: 22,
+            5: 22,
+            6: 32,
+            7: 14,
+            8: 32
+          }}
         />
 
         {currentPlayer && (
