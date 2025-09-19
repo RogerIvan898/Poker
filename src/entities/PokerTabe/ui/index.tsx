@@ -19,7 +19,7 @@ export const PokerTable = ({cards = []}: Props) => {
         <div className={styles.tableSurface} ref={setTableElement}>
           <div className={styles.communityCards}>
             {cards.map((c, i) => (
-              <Card key={i} index={i} rank={c.rank} suit={c.suit} />
+              <Card key={i} index={i} card={c} />
             ))}
           </div>
         </div>

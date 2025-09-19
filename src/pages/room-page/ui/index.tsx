@@ -3,12 +3,13 @@ import { useUnit } from 'effector-react';
 
 import { TableProvider } from 'providers/table-context';
 import { useGameSocket, gameModel } from 'features/game';
+import { $currentPlayerId } from 'entities/Player/model/store';
 import { PokerTable } from 'entities/PokerTabe/ui'
 import { PlayersLayer } from 'entities/PokerTabe/ui/PlayersLayer';
 import { ActionViewer } from 'entities/PokerTabe/ui/ActionViewer';
 import type { Card } from 'shared/types/card';
+
 import styles from './room-page.module.css';
-import { $currentPlayerState } from 'entities/Player/model/store';
 
 export const RoomPage = () => {
   useGameSocket('1000');
@@ -21,8 +22,8 @@ export const RoomPage = () => {
     gameModel.$gameState
   ]);
 
-  const [currentPlayer] = useUnit([
-    $currentPlayerState
+  const [currentPlayerId] = useUnit([
+    $currentPlayerId
   ])
 
   const community: Card[] = [
@@ -34,7 +35,7 @@ export const RoomPage = () => {
   ];
 
   const playersWithPositions = gameState.players.map((player, index) => {
-    if (currentPlayer && player.id === currentPlayer.id) {
+    if (currentPlayerId === player.id) {
       return {
         ...player,
         seat: 0
@@ -42,6 +43,7 @@ export const RoomPage = () => {
     }
     
     const positionIndex = index >= 5 ? index % 5 + 1 : index + 1;
+
     return {
       ...player,
       seat: positionIndex
@@ -54,29 +56,55 @@ export const RoomPage = () => {
         <PokerTable cards={community} />
         <PlayersLayer 
           players={playersWithPositions} 
-          currentPlayerId={currentPlayer?.id} 
-          seatMargins={{
-            0: 10,
-            1: 32,
-            2: 14,
-            3: 32,
-            4: 22,
-            5: 22,
-            6: 32,
-            7: 14,
-            8: 32
+          seatConfigs={{
+            0: {
+              margin: 18,
+              cardPosition: 'left',
+            },
+            1: {
+              margin: 32,
+              cardPosition: 'right',
+            },
+            2: {
+              margin: 14,
+              cardPosition: 'right',
+            },
+            3: {
+              margin: 32,
+              cardPosition: 'right',
+            },
+            4: {
+              margin: 22,
+              cardPosition: 'right',
+            },
+            5: {
+              margin: 22,
+              cardPosition: 'left',
+            },
+            6: {
+              margin: 32,
+              cardPosition: 'left',
+            },
+            7: {
+              margin: 12,
+              cardPosition: 'left',
+            },
+            8: {
+              margin: 32,
+              cardPosition: 'left'
+            }
           }}
         />
 
-        {currentPlayer && (
+        {currentPlayerId && (
           <ActionViewer
             canFold={true}
             canCall={true}
             canRaise={true}
-            onCall={() => call({playerId: currentPlayer.id})}
-            onFold={() => fold({playerId: currentPlayer.id})}
-            onRaise={(amount: number) => raise({playerId: currentPlayer.id, amount})}
-            onCheck={() => check({playerId: currentPlayer.id})}
+            onCall={() => call({playerId: currentPlayerId})}
+            onFold={() => fold({playerId: currentPlayerId})}
+            onRaise={(amount: number) => raise({playerId: currentPlayerId, amount})}
+            onCheck={() => check({playerId: currentPlayerId})}
           />
         )}
       </div>

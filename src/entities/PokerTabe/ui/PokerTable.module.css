@@ -4,7 +4,6 @@ padding: 0;
 box-sizing: border-box;
 }
 
-
 .tableContainer {
 perspective: 1000px;
 position: relative;
@@ -17,8 +16,8 @@ font-family: 'Arial', sans-serif;
 
 .pokerTable {
   position: relative;
-  width: 700px;   /* было 800px */
-  height: 350px;  /* было 400px */
+  width: 700px;
+  height: 350px;
   transform-style: preserve-3d;
   transform: rotateX(7deg);
 }
@@ -49,7 +48,7 @@ url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100"
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) rotateX(0deg); /* у тебя стол наклонён через transform на .pokerTable, карты центрируем локально */
+  transform: translate(-50%, -50%) rotateX(0deg);
   display: flex;
   gap: 12px;
   align-items: center;

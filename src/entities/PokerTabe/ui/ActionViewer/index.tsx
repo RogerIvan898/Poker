@@ -11,6 +11,9 @@ interface Props {
   onFold: () => void;
   onCall: () => void;
   onRaise: (amount: number) => void;
+  minRaise?: number;
+  maxRaise?: number;
+  currentBet?: number;
 }
 
 export const ActionViewer = ({
@@ -20,18 +23,72 @@ export const ActionViewer = ({
   onFold,
   onCall,
   onRaise,
-  onCheck
+  onCheck,
+  minRaise = 0,
+  maxRaise = 1000,
+  currentBet = 0
 }: Props) => {
-  const [raiseAmount, setRiseAmount] = React.useState(0);
+  const [raiseAmount, setRaiseAmount] = React.useState(minRaise);
+  const [isRaising, setIsRaising] = React.useState(false);
+
+  const handleRaiseClick = () => {
+    if (isRaising) {
+      onRaise(raiseAmount);
+      setIsRaising(false);
+    } else {
+      setIsRaising(true);
+      setRaiseAmount(minRaise);
+    }
+  };
+
+  const handleRaiseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Math.min(maxRaise, Math.max(minRaise, Number(e.target.value)));
+    setRaiseAmount(value);
+  };
+
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRaiseAmount(Number(e.target.value));
+  };
+
+  const handleCancelRaise = () => {
+    setIsRaising(false);
+  };
 
   return (
-      <div className={styles.actionContainer}>
-        {canCall 
-          ? <ControlButton text='Call' variant='call' onClick={onCall}/> 
-          : <ControlButton text='Check' varian='check' onClick={onCheck}/>
-        }
-        {canRaise && <ControlButton text='Raise' variant='raise' onClick={() => onRaise(raiseAmount)}/>}
-        {canFold && <ControlButton text='Fold' variant='fold' onClick={onFold}/>}
+    <div className={styles.actionContainer}>
+      {isRaising ? (
+        <>
+          <div className={styles.raiseControls}>
+            <input
+              type="number"
+              value={raiseAmount}
+              onChange={handleRaiseChange}
+              min={minRaise}
+              max={maxRaise}
+              className={styles.raiseInput}
+            />
+            <input
+              type="range"
+              value={raiseAmount}
+              onChange={handleSliderChange}
+              min={minRaise}
+              max={maxRaise}
+              className={styles.raiseSlider}
+            />
+          </div>
+          <ControlButton text="Confirm Raise" variant="raise" onClick={handleRaiseClick} />
+          <ControlButton text="Cancel" variant="fold" onClick={handleCancelRaise} />
+        </>
+      ) : (
+        <>
+          {canCall 
+            ? <ControlButton text='Call' variant='call' onClick={onCall}/> 
+            : <ControlButton text='Check' variant='check' onClick={onCheck}/>
+          }
+          {canRaise && <ControlButton text='Raise' variant='raise' onClick={() => setIsRaising(true)}/>}
+          {canFold && <ControlButton text='Fold' variant='fold' onClick={onFold}/>}
+        </>
+      )}
     </div>
   );
 };

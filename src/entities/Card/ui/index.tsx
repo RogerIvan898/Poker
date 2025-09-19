@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import type { Card as CardType } from 'shared/types/card';
 import styles from './Card.module.css';
 
 const suitSymbol = (suit: string) => {
@@ -12,15 +12,18 @@ const suitSymbol = (suit: string) => {
   }
 };
 
+interface Props {
+  card: CardType | null,
+  hidden?: boolean; 
+  index?: number;
+}
+
 export const Card = ({
-  rank = 'A',
-  suit = 'spades',
+  card,
   hidden = false,
   index = 0,
-  size = 1 
-}) => {
+}: Props) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
-  const symbol = suitSymbol(suit);
 
   useEffect(() => {
     const el = ref.current;
@@ -45,22 +48,39 @@ export const Card = ({
     };
   }, [index]);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const symbol = suitSymbol(card?.suit ?? '');
+
+
   return (
     <div
       ref={ref}
-      style={{width: 64 * size, height: 92 * size}}
-      className={`${styles.card} ${hidden ? styles.cardHidden : ''} ${styles['suit_' + suit] || ''}`}
+      style={{width: 64, height: 92}}
+      className={`${styles.card} ${hidden ? styles.cardHidden : ''} ${styles['suit_' + card?.suit] || ''}`}
       role="img"
-      aria-label={hidden ? 'face down card' : `${rank} of ${suit}`}
     >
-      {!hidden ? (
+      {card ? (
         <>
           <div className={styles.cardCornerTop}>
-            {rank}<span className={styles.cardSuitSmall}>{symbol}</span>
+            {card.rank}<span className={styles.cardSuitSmall}>{symbol}</span>
           </div>
           <div className={styles.cardCenter}>{symbol}</div>
           <div className={styles.cardCornerBottom}>
-            {rank}<span className={styles.cardSuitSmall}>{symbol}</span>
+            {card.rank}<span className={styles.cardSuitSmall}>{symbol}</span>
           </div>
         </>
       ) : (

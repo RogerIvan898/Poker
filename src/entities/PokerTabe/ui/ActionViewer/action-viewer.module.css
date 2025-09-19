@@ -1,13 +1,68 @@
 .actionContainer {
   position: fixed;
-  left: 0;
   right: 0;
   bottom: 1rem;
   z-index: 1000;
   display: flex;
   gap: 1rem;
-  justify-content: flex-end; /* правильное значение вместо "right" */
-  align-items: center;       /* выравнивание по вертикали внутри контейнера */
   padding: 1rem;
-  height: auto;              /* не жёсткая высота; подгоняется под содержимое */
+  height: auto;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  width: fit-content;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.raiseControls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.raiseInput {
+  width: 80px;
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  text-align: center;
+}
+
+.raiseSlider {
+  width: 150px;
+  height: 5px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  -webkit-appearance: none;
+}
+
+.raiseSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%; 
+  background: #4caf50;
+  cursor: pointer;
+}
+
+.raiseSlider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #4caf50;
+  cursor: pointer;
+}
+
+.raiseValue {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
 }

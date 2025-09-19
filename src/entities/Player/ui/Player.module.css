@@ -1,25 +1,33 @@
-
-
-
-
 .player {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   gap: 6px;
   color: #fff;
   text-align: center;
   pointer-events: auto;
   user-select: none;
-}
-
-/* аватар */
-.avatarWrap {
   position: relative;
 }
+
+.mainContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 72px;
+  height: 72px;
+}
+
+.avatarWrap {
+  position: relative;
+  z-index: 1;
+}
+
 .avatar {
-  width: 56px;
-  height: 56px;
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   background: linear-gradient(180deg, #ffd966, #ffb200);
   color: #08131a;
@@ -29,9 +37,27 @@
   font-weight: 700;
   box-shadow: 0 6px 12px rgba(0,0,0,0.5);
   border: 3px solid rgba(0,0,0,0.25);
+  transition: all 0.3s ease;
 }
 
-/* dealer small badge */
+.avatar.currentPlayer {
+  border: 4px solid #00ffcc;
+  box-shadow: 0 0 15px rgba(0, 255, 204, 0.7), 0 6px 12px rgba(0,0,0,0.5);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.7), 0 6px 12px rgba(0,0,0,0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.9), 0 6px 12px rgba(0,0,0,0.5);
+  }
+  100% {
+    box-shadow: 0 0 15px rgba(0, 255, 204, 0.7), 0 6px 12px rgba(0,0,0,0.5);
+  }
+}
+
 .dealerBadge {
   position: absolute;
   right: -8px;
@@ -45,12 +71,133 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
 
-/* info */
-.info { display: flex; flex-direction: column; gap: 2px; align-items: center; }
-.name { font-size: 12px; font-weight: 600; color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.6); }
-.stack { font-size: 12px; color: #ffd; opacity: 0.9; font-weight: 700; }
+.info { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 2px; 
+  align-items: center; 
+  z-index: 1;
+}
+
+.name { 
+  font-size: 12px; 
+  font-weight: 600; 
+  color: #fff; 
+  text-shadow: 0 1px 0 rgba(0,0,0,0.6); 
+}
+
+.stack { 
+  font-size: 12px; 
+  color: #ffd; 
+  opacity: 0.9; 
+  font-weight: 700; 
+}
 
 .cards {
+  position: absolute;
   display: flex;
-  gap: 0.8rem;
+  gap: 0.6rem;
+  z-index: 0;
+}
+
+.cards-top {
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cards-bottom {
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cards-left {
+  right: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.cards-right {
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.sitOut {
+  opacity: 0.6;
+  filter: grayscale(0.7);
+}
+
+.player.sitOut .avatar {
+  background: linear-gradient(180deg, #888888, #667676);
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.player.sitOut .info .stack {
+  color: #ccc;
+  opacity: 0.7;
+}
+
+.player.folded .avatar {
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  
+}
+
+.player.folded .avatarWrap {
+  position: relative;
+}
+
+.player.folded .avatar::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 12px;
+  background: #ff4444;
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.player.folded .avatar::before {
+  content: 'FOLD';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.player.folded .avatar span {
+  filter: brightness(0.7);
+}
+
+.player.folded .info .name {
+  color: #999;
+  font-weight: 500;
+}
+
+.player.folded .info .stack{
+  color: #777;
+  opacity: 0.8;
+}
+
+.player.folded.isCurrentPlayer .cards {
+  display: flex;
+  opacity: 0.7;
+  filter: grayscale(0.7);
+}
+
+.player.folded:not(.isCurrentPlayer) .cards {
+  display: none;
 }

@@ -23,5 +23,5 @@ export interface Player {
   stack: number;
   seat: number;
   status: PlayerStatus;
-  hand?: [Card, Card]
+  hand?: [Card | null, Card | null]
 };

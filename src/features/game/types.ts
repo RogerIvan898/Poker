@@ -15,7 +15,7 @@ export interface Player {
   chips: number;
   seat: number;
   status: PlayerStatus;
-  hand?: [Card, Card]
+  hand?: [Card | null, Card | null]
 };
 
 export interface PlayerAction {
