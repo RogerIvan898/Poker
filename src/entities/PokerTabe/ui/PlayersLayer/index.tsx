@@ -19,24 +19,27 @@ export const PlayersLayer = ({
   playerTurnId = null,
 }: Props) => {
   const [seatPositions, setSeatPositions] = React.useState<Array<{ left: number; top: number }>>([]);
-  const { tableElement, dealerId } = useTable();
+  const { tableElement, dealerId, bigBlind } = useTable();
   const playersLayerRef = React.useRef<HTMLDivElement>(null);
 
-  const orderedPlayers = React.useMemo(() => {
-    if (!currentPlayerId) return players;
+  const sortedPlayers = React.useMemo(() => {
+    return [...players].sort((a, b) => a.seat - b.seat);
+  }, [players]);
 
-    const currentPlayerIndex = players.findIndex(p => p.id === currentPlayerId);
+  const orderedPlayers = React.useMemo(() => {
+    if (!currentPlayerId) return sortedPlayers;
+
+    const currentPlayerIndex = sortedPlayers.findIndex(p => p.id === currentPlayerId);
 
     if (currentPlayerIndex === -1) {
-      return players;
+      return sortedPlayers;
     }
 
     return [
-      players[currentPlayerIndex],
-      ...players.slice(currentPlayerIndex + 1),
-      ...players.slice(0, currentPlayerIndex)
+      ...sortedPlayers.slice(currentPlayerIndex),
+      ...sortedPlayers.slice(0, currentPlayerIndex)
     ];
-  }, [players, currentPlayerId]);
+  }, [sortedPlayers, currentPlayerId]);
 
   const calculatePositions = React.useCallback(() => {
     if (!tableElement || !playersLayerRef.current) return;
@@ -130,8 +133,6 @@ export const PlayersLayer = ({
         const isDealer = player.id === dealerId;
         const config = seatConfigs[index] || {};
         const cardPosition = config.cardPosition || 'top';
-
-        console.log(index, player.name);
 
         if (!position) {
           return null;

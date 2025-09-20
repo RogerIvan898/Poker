@@ -11,6 +11,7 @@ interface TableContextType extends Pick<GameState, 'dealerId'> {
   setTableElement: (element: HTMLElement | null) => void;
   currentPlayerId: Player['id'];
   playerTurnId: Player['id'] | null;
+  bigBlind: number;
 }
 
 const TableContext = React.createContext<TableContextType | null>(null);
@@ -26,7 +27,8 @@ export const TableProvider = ({children}: React.PropsWithChildren) => {
         currentPlayerId,
         dealerId: gameState.dealerId,
         playerTurnId: gameState.currentTurnId,
-    }), [tableElement, currentPlayerId, gameState.dealerId, gameState.currentTurnId]);
+        bigBlind: gameState.bigBlind,
+    }), [tableElement, currentPlayerId, gameState.dealerId, gameState.currentTurnId, gameState.bigBlind]);
 
   return <TableContext.Provider value={value}>{children}</TableContext.Provider>;
 };
