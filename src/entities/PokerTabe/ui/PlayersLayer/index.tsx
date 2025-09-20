@@ -136,15 +136,6 @@ export const PlayersLayer = ({
         const config = seatConfigs[index] || {};
         const cardPosition = config.cardPosition || 'top';
         const betPosition = config.betPosition;
-        
-        let blind = null;
-
-        if (bigBlindPlayer.id === player.id) {
-          blind = bigBlind;
-        } 
-        else if (smallBlindPlayer.id === player.id) {
-          blind = bigBlind / 2;
-        }
 
         if (!position) {
           return null;
