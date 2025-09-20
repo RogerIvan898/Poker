@@ -25,13 +25,42 @@ export const RoomPage = () => {
 
   const currentPlayerId = useUnit($currentPlayerId)
 
-  const community: Card[] = [
-    { rank: 'A', suit: 'spades' },
-    { rank: '10', suit: 'hearts' },
-    { rank: '7', suit: 'diamonds' },
-    { rank: 'K', suit: 'clubs' },
-    { rank: '3', suit: 'clubs' },
-  ];
+function generateRandomCards(players: any[], count: number = 5) {
+  const suits = ['hearts', 'diamonds', 'clubs', 'spades'];
+  const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+  
+  const fullDeck = [];
+  for (const suit of suits) {
+    for (const rank of ranks) {
+      fullDeck.push({ rank, suit });
+    }
+  }
+
+  const usedCards = new Set();
+  
+  players.forEach(player => {
+    player.hand.forEach(card => {
+      if (card) {
+        usedCards.add(`${card.rank}-${card.suit}`);
+      }
+    });
+  });
+  
+  const availableCards = fullDeck.filter(card => 
+    !usedCards.has(`${card.rank}-${card.suit}`)
+  );
+
+  const result = [];
+  for (let i = 0; i < count && availableCards.length > 0; i++) {
+    const randomIndex = Math.floor(Math.random() * availableCards.length);
+    result.push(availableCards[randomIndex]);
+    availableCards.splice(randomIndex, 1);
+  }
+
+  return result;
+}
+
+  const community: Card[] = generateRandomCards(gameState.players, 5);
 
   const playersWithPositions = gameState.players.map((player, index) => {
     if (currentPlayerId === player.id) {

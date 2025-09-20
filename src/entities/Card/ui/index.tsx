@@ -49,15 +49,15 @@ export const Card = ({
       className={cn(styles.card, hidden && styles.cardHidden, styles['suit_' + card?.suit])}
       role="img"
     >
-      {card ? (
+      {(card && !hidden) ? (
         <>
           <div className={styles.cardCornerTop}>
-            {card.rank}
+            {card?.rank ?? ''}
             <span className={styles.cardSuitSmall}>{symbol}</span>
           </div>
           <div className={styles.cardCenter}>{symbol}</div>
           <div className={styles.cardCornerBottom}>
-            {card.rank}
+            {card?.rank ?? ''}
             <span className={styles.cardSuitSmall}>{symbol}</span>
           </div>
         </>

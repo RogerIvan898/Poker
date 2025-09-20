@@ -124,6 +124,8 @@ export const PlayersLayer = ({
     };
   }, [calculatePositions, tableElement]);
 
+  if (!orderedPlayers.length) return null;
+
   return (
     <div ref={playersLayerRef} className={styles.playersLayer}>
       {orderedPlayers.map((player, index) => {
@@ -133,6 +135,16 @@ export const PlayersLayer = ({
         const isDealer = player.id === dealerId;
         const config = seatConfigs[index] || {};
         const cardPosition = config.cardPosition || 'top';
+        const betPosition = config.betPosition;
+        
+        let blind = null;
+
+        if (bigBlindPlayer.id === player.id) {
+          blind = bigBlind;
+        } 
+        else if (smallBlindPlayer.id === player.id) {
+          blind = bigBlind / 2;
+        }
 
         if (!position) {
           return null;
@@ -153,7 +165,8 @@ export const PlayersLayer = ({
               isCurrentPlayer={isCurrentPlayer}
               isTurn={isTurn}
               cardsPosition={cardPosition}
-              blind={100}
+              bet={isDealer ? 100 : null}
+              betPosition={betPosition}
             />
           </div>
         );

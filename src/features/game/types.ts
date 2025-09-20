@@ -13,6 +13,8 @@ export interface GameState {
   tableId: string | null;
   players: Player[];
   dealerId: string | null;
+  bigBlindId: string | null;
+  smallBlindId: string;
   currentTurnId: string | null;
   round: Round;
   community: Card[];

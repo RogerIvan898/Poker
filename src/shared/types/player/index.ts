@@ -29,4 +29,5 @@ export interface Player {
 export interface SeatConfig {
   margin?: number;
   cardPosition?: 'top' | 'bottom' | 'left' | 'right';
+  betPosition?: 'top' | 'bottom' | 'left' | 'right';
 }

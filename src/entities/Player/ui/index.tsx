@@ -15,8 +15,12 @@ interface PlayerProps {
   timeBankSec?: number;
   onTurnTimeout?: () => void;
   isTurn: boolean;
-  blind: number;
+  blind: number | null;
+  bet: number | null;
+  betPosition?: 'top' | 'bottom' | 'left' | 'right';
 }
+
+const debug = true;
 
 export const Player = ({
   player,
@@ -27,15 +31,17 @@ export const Player = ({
   onTurnTimeout,
   isDealer = false,
   isTurn = false,
-  blind
+  bet = 100,
+  betPosition = 'top',
 }: PlayerProps) => {
-  const {status, stack, hand, name} = player;
+  const {status, stack, hand, name, seat} = player;
 
   const isSitOut = status === 'SIT_OUT';
   const isFolded = status === 'FOLDED';
 
   const [remainingMs, setRemainingMs] = React.useState<number>(turnDurationSec * 1000);
   const [usingBank, setUsingBank] = React.useState<boolean>(false);
+  const [showBet, setShowBet] = React.useState<boolean>(true);
 
   const rafRef = React.useRef<number | null>(null);
   const endRef = React.useRef<number | null>(null);
@@ -131,6 +137,8 @@ export const Player = ({
         isSitOut && styles.sitOut
       )}
     >
+      <div className={styles.name}>{name}</div>
+
       <div className={styles.mainContainer}>
         <div className={styles.avatarWrap}>
           {showTimer && (
@@ -162,7 +170,7 @@ export const Player = ({
           <div
             className={cn(
               styles.avatar,
-              isFolded && styles.folded,
+              isFolded && styles.foldedAvatar,
               isTurn && styles.turn,
               isCurrentPlayer && styles.currentPlayer
             )}
@@ -173,6 +181,17 @@ export const Player = ({
           {isDealer && <div className={styles.dealerBadge}>D</div>}
         </div>
 
+        {bet !== null && showBet && (
+          <div className={cn(
+            styles.betContainer,
+            styles[`bet-${betPosition}`],
+            showBet && styles.betVisible
+          )}>
+            <div className={styles.betAmount}>{bet}</div>
+            <Logo />
+          </div>
+        )}
+
         {(hand?.length > 0 && (!isFolded || !isCurrentPlayer)) && (
           <div 
             className={cn(
@@ -180,18 +199,15 @@ export const Player = ({
               styles[`cards-${cardsPosition}`]
             )}
           >
-            <Card card={hand[0]} hidden={!isCurrentPlayer} />
-            <Card card={hand[1]} hidden={!isCurrentPlayer} />
+            <Card card={hand[0]} hidden={!isCurrentPlayer && !debug} />
+            <Card card={hand[1]} hidden={!isCurrentPlayer && !debug} />
           </div>
         )}
       </div>
 
-      <div className={styles.info}>
-        <div className={styles.name}>{name}</div>
-        <div className={styles.stack}>
-          <div className={styles.stackAmount}>{stack}</div>
-            <Logo />
-        </div>
+      <div className={styles.stackContainer}>
+        <div className={styles.stackAmount}>{stack}</div>
+        <Logo />
       </div>
     </div>
   );
