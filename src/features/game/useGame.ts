@@ -2,7 +2,7 @@ import React from "react";
 
 import { socket } from "shared/lib/socketClient";
 import type { GameEvent } from "./types";
-import { incomingEvent } from "./model";
+import { incomingEvent } from "./model/store";
 
 export function useGameSocket(
   tableId: string,

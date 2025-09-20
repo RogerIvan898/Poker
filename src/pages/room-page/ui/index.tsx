@@ -1,7 +1,7 @@
 import React from 'react'
 import { useUnit } from 'effector-react';
 
-import { TableProvider } from 'providers/table-context';
+import { TableProvider, useTable } from 'providers/table-context';
 import { useGameSocket, gameModel } from 'features/game';
 import { $currentPlayerId } from 'entities/Player/model/store';
 import { PokerTable } from 'entities/PokerTabe/ui'
@@ -10,21 +10,20 @@ import { ActionViewer } from 'entities/PokerTabe/ui/ActionViewer';
 import type { Card } from 'shared/types/card';
 
 import styles from './room-page.module.css';
+import { playerSeatsConfig } from '../constants';
 
 export const RoomPage = () => {
   useGameSocket('1000');
   
   const [call, check, fold, raise, gameState] = useUnit([
-    gameModel.callClicked,
-    gameModel.checkClicked,
-    gameModel.foldClicked,
-    gameModel.raiseClicked,
+    gameModel.call,
+    gameModel.check,
+    gameModel.fold,
+    gameModel.raise,
     gameModel.$gameState
   ]);
 
-  const [currentPlayerId] = useUnit([
-    $currentPlayerId
-  ])
+  const currentPlayerId = useUnit($currentPlayerId)
 
   const community: Card[] = [
     { rank: 'A', suit: 'spades' },
@@ -49,51 +48,15 @@ export const RoomPage = () => {
       seat: positionIndex
     };
   });
-
   return (
     <TableProvider>
       <div className={styles.container}>
         <PokerTable cards={community} />
         <PlayersLayer 
           players={playersWithPositions} 
-          seatConfigs={{
-            0: {
-              margin: 18,
-              cardPosition: 'left',
-            },
-            1: {
-              margin: 32,
-              cardPosition: 'right',
-            },
-            2: {
-              margin: 14,
-              cardPosition: 'right',
-            },
-            3: {
-              margin: 32,
-              cardPosition: 'right',
-            },
-            4: {
-              margin: 22,
-              cardPosition: 'right',
-            },
-            5: {
-              margin: 22,
-              cardPosition: 'left',
-            },
-            6: {
-              margin: 32,
-              cardPosition: 'left',
-            },
-            7: {
-              margin: 12,
-              cardPosition: 'left',
-            },
-            8: {
-              margin: 32,
-              cardPosition: 'left'
-            }
-          }}
+          seatConfigs={playerSeatsConfig}
+          currentPlayerId={currentPlayerId}
+          playerTurnId={gameState.currentTurnId}
         />
 
         {currentPlayerId && (

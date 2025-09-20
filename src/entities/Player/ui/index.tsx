@@ -1,31 +1,36 @@
 import React from 'react';
+
 import { Card } from 'entities/Card';
+import { cn, getInitialLetter } from 'shared/utils';
+import { Logo } from 'shared/ui/logo';
 import type { Player as PlayerType } from 'shared/types/player';
 import styles from './Player.module.css';
-import { Logo } from 'shared/ui/logo';
 
-const initialLetter = (name: string) => (name ? name.charAt(0).toUpperCase() : '?');
-
-interface PlayerProps extends PlayerType {
+interface PlayerProps {
+  player: PlayerType;
   cardsPosition?: 'top' | 'bottom' | 'left' | 'right';
   isCurrentPlayer?: boolean;
+  isDealer: boolean;
   turnDurationSec?: number;
   timeBankSec?: number;
   onTurnTimeout?: () => void;
+  isTurn: boolean;
+  blind: number;
 }
 
 export const Player = ({
-  name,
-  stack,
-  status,
-  hand,
+  player,
   cardsPosition = 'top',
   isCurrentPlayer = false,
   turnDurationSec = 15,
   timeBankSec = 10,
   onTurnTimeout,
+  isDealer = false,
+  isTurn = false,
+  blind
 }: PlayerProps) => {
-  const isDealer = false;
+  const {status, stack, hand, name} = player;
+
   const isSitOut = status === 'SIT_OUT';
   const isFolded = status === 'FOLDED';
 
@@ -48,7 +53,7 @@ export const Player = ({
     setUsingBank(false);
     setRemainingMs(turnDurationSec * 1000);
 
-    if (!isCurrentPlayer) return;
+    if (!isTurn) return;
 
     const now = performance.now();
     endRef.current = now + turnDurationSec * 1000;
@@ -105,10 +110,10 @@ export const Player = ({
         rafRef.current = null;
       }
     };
-  }, [isCurrentPlayer, turnDurationSec, timeBankSec, onTurnTimeout]);
+  }, [isTurn, turnDurationSec, timeBankSec, onTurnTimeout]);
 
   const remainingSeconds = Math.ceil(remainingMs / 1000);
-  const showTimer = isCurrentPlayer && usingBank;
+  const showTimer = isTurn && usingBank;
   const urgent = showTimer && remainingSeconds <= 3;
 
   const bankDuration = timeBankSec * 1000;
@@ -119,11 +124,23 @@ export const Player = ({
   const dashoffset = C * (1 - progress);
 
   return (
-    <div className={`${styles.player} ${isFolded ? styles.folded : ''} ${isSitOut ? styles.sitOut : ''}`}>
+    <div 
+      className={cn(
+        styles.player,
+        isFolded && styles.folded,
+        isSitOut && styles.sitOut
+      )}
+    >
       <div className={styles.mainContainer}>
         <div className={styles.avatarWrap}>
           {showTimer && (
-            <div className={`${styles.turnTimer} ${urgent ? styles.timerUrgent : ''}`} aria-hidden>
+            <div 
+              className={cn(
+                styles.turnTimer,
+                urgent && styles.timerUrgent
+              )}
+              aria-hidden
+            >
               <svg viewBox="0 0 100 100" className={styles.timerSvg}>
                 <circle cx="50" cy="50" r={R} stroke="var(--timer-bg, rgba(255,255,255,0.08))" strokeWidth="6" fill="none" />
                 <circle
@@ -143,16 +160,26 @@ export const Player = ({
           )}
 
           <div
-          className={`${styles.avatar} ${status === 'FOLDED' ? styles.folded : ''} ${isCurrentPlayer ? styles.currentPlayer : ''}`}
-          style={showTimer && {border: 'none'} || {}}
+            className={cn(
+              styles.avatar,
+              isFolded && styles.folded,
+              isTurn && styles.turn,
+              isCurrentPlayer && styles.currentPlayer
+            )}
+            style={showTimer && {border: 'none'} || {}}
           >
-            {initialLetter(name)}
+            {getInitialLetter(name)}
           </div>
           {isDealer && <div className={styles.dealerBadge}>D</div>}
         </div>
 
         {(hand?.length > 0 && (!isFolded || !isCurrentPlayer)) && (
-          <div className={`${styles.cards} ${styles[`cards-${cardsPosition}`]}`}>
+          <div 
+            className={cn(
+              styles.cards,
+              styles[`cards-${cardsPosition}`]
+            )}
+          >
             <Card card={hand[0]} hidden={!isCurrentPlayer} />
             <Card card={hand[1]} hidden={!isCurrentPlayer} />
           </div>
@@ -163,7 +190,7 @@ export const Player = ({
         <div className={styles.name}>{name}</div>
         <div className={styles.stack}>
           <div className={styles.stackAmount}>{stack}</div>
-          <Logo />
+            <Logo />
         </div>
       </div>
     </div>

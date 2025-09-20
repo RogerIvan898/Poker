@@ -1,8 +1,8 @@
 import React from 'react';
 
+import { Logo } from 'shared/ui/logo';
 import { ControlButton } from 'shared/ui/control-button';
 import styles from './action-viewer.module.css';
-import { Logo } from 'shared/ui/logo';
 
 interface Props {
   canFold: boolean;
@@ -83,17 +83,49 @@ export const ActionViewer = ({
               className={styles.raiseSlider}
             />
           </div>
-          <ControlButton text="Confirm Raise" variant="raise" onClick={handleRaiseClick} />
-          <ControlButton text="Cancel" variant="fold" onClick={handleCancelRaise} />
+          <ControlButton
+            text="Confirm Raise" 
+            variant="raise" 
+            onClick={handleRaiseClick} 
+          />
+          <ControlButton 
+            text="Cancel" 
+            variant="fold" 
+            onClick={handleCancelRaise} 
+          />
         </>
       ) : (
         <>
           {canCall 
-            ? <ControlButton text='Call' variant='call' onClick={onCall}/> 
-            : <ControlButton text='Check' variant='check' onClick={onCheck}/>
+            ? (
+                <ControlButton
+                  text='Call' 
+                  variant='call' 
+                  onClick={onCall}
+                /> 
+              )
+            : (
+                <ControlButton 
+                  text='Check' 
+                  variant='check' 
+                  onClick={onCheck}
+                />
+              )
           }
-          {canRaise && <ControlButton text='Raise' variant='raise' onClick={() => setIsRaising(true)}/>}
-          {canFold && <ControlButton text='Fold' variant='fold' onClick={onFold}/>}
+          {canRaise && (
+            <ControlButton
+              text='Raise' 
+              variant='raise' 
+              onClick={() => setIsRaising(true)}
+            />
+          )}
+          {canFold && (
+            <ControlButton 
+              text='Fold' 
+              variant='fold' 
+              onClick={onFold}
+            />
+          )}
         </>
       )}
     </div>

@@ -1,16 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+
+import { cn, getSymbol } from 'shared/utils';
 import type { Card as CardType } from 'shared/types/card';
 import styles from './Card.module.css';
-
-const suitSymbol = (suit: string) => {
-  switch (suit) {
-    case 'hearts': return '♥';
-    case 'diamonds': return '♦';
-    case 'clubs': return '♣';
-    case 'spades': return '♠';
-    default: return '';
-  }
-};
 
 interface Props {
   card: CardType | null,
@@ -25,7 +17,7 @@ export const Card = ({
 }: Props) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const el = ref.current;
 
     if (!el) return;
@@ -48,39 +40,25 @@ export const Card = ({
     };
   }, [index]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  const symbol = suitSymbol(card?.suit ?? '');
-
+  const symbol = getSymbol(card?.suit ?? '');
 
   return (
     <div
       ref={ref}
       style={{width: 64, height: 92}}
-      className={`${styles.card} ${hidden ? styles.cardHidden : ''} ${styles['suit_' + card?.suit] || ''}`}
+      className={cn(styles.card, hidden && styles.cardHidden, styles['suit_' + card?.suit])}
       role="img"
     >
       {card ? (
         <>
           <div className={styles.cardCornerTop}>
-            {card.rank}<span className={styles.cardSuitSmall}>{symbol}</span>
+            {card.rank}
+            <span className={styles.cardSuitSmall}>{symbol}</span>
           </div>
           <div className={styles.cardCenter}>{symbol}</div>
           <div className={styles.cardCornerBottom}>
-            {card.rank}<span className={styles.cardSuitSmall}>{symbol}</span>
+            {card.rank}
+            <span className={styles.cardSuitSmall}>{symbol}</span>
           </div>
         </>
       ) : (

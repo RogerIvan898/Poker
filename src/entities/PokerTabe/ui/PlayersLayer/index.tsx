@@ -1,27 +1,25 @@
 import React from 'react';
+
 import { useTable } from 'providers/table-context';
 import { Player } from 'entities/Player';
+import type { Player as PlayerType, SeatConfig } from 'shared/types/player';
 import styles from './PlayersLayer.module.css';
-import type { Player as PlayerType } from 'shared/types/player';
-
-interface SeatConfig {
-  margin?: number;
-  cardPosition?: 'top' | 'bottom' | 'left' | 'right';
-}
 
 interface Props {
   players: PlayerType[];
-  padding?: number;
+  currentPlayerId: PlayerType['id'];
   seatConfigs?: Record<number, SeatConfig>;
+  playerTurnId: PlayerType['id'] | null;
 }
 
 export const PlayersLayer = ({ 
   players = [], 
-  padding = -68, 
-  seatConfigs = {}
+  seatConfigs = {},
+  currentPlayerId,
+  playerTurnId = null,
 }: Props) => {
   const [seatPositions, setSeatPositions] = React.useState<Array<{ left: number; top: number }>>([]);
-  const { tableElement, currentPlayerId} = useTable();
+  const { tableElement, dealerId } = useTable();
   const playersLayerRef = React.useRef<HTMLDivElement>(null);
 
   const orderedPlayers = React.useMemo(() => {
@@ -72,14 +70,15 @@ export const PlayersLayer = ({
 
     const positions = orderedPlayers.map((_, index) => {
       const config = seatConfigs[index] || {};
+      
       const playerMargin = config.margin !== undefined 
         ? config.margin * Math.min(width, height) / 100
-        : padding;
+        : 0;
 
       const playerRadius = baseSeatRadius + playerMargin;
 
       const angle = - (
-        Math.PI * 1.5 + (index * (2 * Math.PI)) / Math.min(orderedPlayers.length, 9)
+        Math.PI * 1.5 - (index * (2 * Math.PI)) / Math.min(orderedPlayers.length, 9)
       );
       const dx = Math.cos(angle);
       const dy = Math.sin(angle);
@@ -94,10 +93,12 @@ export const PlayersLayer = ({
     });
 
     setSeatPositions(positions);
-  }, [orderedPlayers, padding, tableElement, seatConfigs]);
+  }, [orderedPlayers, tableElement, seatConfigs]);
 
   React.useEffect(() => {
-    if (!tableElement) return;
+    if (!tableElement) {
+      return;
+    }
 
     calculatePositions();
 
@@ -125,10 +126,16 @@ export const PlayersLayer = ({
       {orderedPlayers.map((player, index) => {
         const position = seatPositions[index];
         const isCurrentPlayer = player.id === currentPlayerId;
+        const isTurn = player.id === playerTurnId;
+        const isDealer = player.id === dealerId;
         const config = seatConfigs[index] || {};
         const cardPosition = config.cardPosition || 'top';
 
-        if (!position) return null;
+        console.log(index, player.name);
+
+        if (!position) {
+          return null;
+        }
 
         return (
           <div
@@ -140,14 +147,12 @@ export const PlayersLayer = ({
             }}
           >
             <Player
-              name={player.name}
-              stack={player.chips}
-              id={String(player.id)}
-              hand={player.hand}
-              status={player.status}
-              isDealer={player.isDealer}
+              player={player}
+              isDealer={isDealer}
               isCurrentPlayer={isCurrentPlayer}
+              isTurn={isTurn}
               cardsPosition={cardPosition}
+              blind={100}
             />
           </div>
         );

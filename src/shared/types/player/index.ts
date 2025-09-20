@@ -25,3 +25,8 @@ export interface Player {
   status: PlayerStatus;
   hand?: [Card | null, Card | null]
 };
+
+export interface SeatConfig {
+  margin?: number;
+  cardPosition?: 'top' | 'bottom' | 'left' | 'right';
+}

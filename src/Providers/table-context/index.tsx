@@ -1,24 +1,32 @@
 import { useUnit } from "effector-react";
-import { $currentPlayerId } from "entities/Player/model/store";
 import React from "react";
 
-interface TableContextType {
+import { gameModel } from "features/game";
+import { playerModel } from "entities/Player";
+import type { GameState } from "features/game/types";
+import type { Player } from "shared/types/player";
+
+interface TableContextType extends Pick<GameState, 'dealerId'> {
   tableElement: HTMLElement | null;
   setTableElement: (element: HTMLElement | null) => void;
-  currentPlayerId: string;
+  currentPlayerId: Player['id'];
+  playerTurnId: Player['id'] | null;
 }
 
 const TableContext = React.createContext<TableContextType | null>(null);
 
 export const TableProvider = ({children}: React.PropsWithChildren) => {
     const [tableElement, setTableElement] = React.useState<HTMLElement | null>(null);
-    const [currentPlayerId] = useUnit([$currentPlayerId]);
+    const [currentPlayerId] = useUnit(playerModel.$currentPlayerId);
+    const gameState = useUnit(gameModel.$gameState);
 
     const value = React.useMemo(() => ({
         tableElement,
         setTableElement,
-        currentPlayerId
-    }), [tableElement, currentPlayerId]);
+        currentPlayerId,
+        dealerId: gameState.dealerId,
+        playerTurnId: gameState.currentTurnId,
+    }), [tableElement, currentPlayerId, gameState.dealerId, gameState.currentTurnId]);
 
   return <TableContext.Provider value={value}>{children}</TableContext.Provider>;
 };
