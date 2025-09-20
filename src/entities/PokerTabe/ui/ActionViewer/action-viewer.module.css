@@ -27,11 +27,20 @@
 .raiseInput {
   width: 80px;
   padding: 0.5rem;
+  padding-right: 40px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   text-align: center;
+
+  -moz-appearance: textfield;
+}
+
+.raiseInput::-webkit-outer-spin-button,
+.raiseInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .raiseSlider {
@@ -65,4 +74,26 @@
   color: white;
   font-weight: bold;
   font-size: 14px;
+}
+
+.raiseInputContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.raiseLogo {
+  position: absolute;
+  right: 8px;    
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }

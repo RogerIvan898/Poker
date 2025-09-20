@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ControlButton } from 'shared/ui/control-button';
 import styles from './action-viewer.module.css';
+import { Logo } from 'shared/ui/logo';
 
 interface Props {
   canFold: boolean;
@@ -58,15 +59,21 @@ export const ActionViewer = ({
     <div className={styles.actionContainer}>
       {isRaising ? (
         <>
-          <div className={styles.raiseControls}>
-            <input
-              type="number"
-              value={raiseAmount}
-              onChange={handleRaiseChange}
-              min={minRaise}
-              max={maxRaise}
-              className={styles.raiseInput}
-            />
+          <div className={styles.raiseControls}> 
+            <div className={styles.raiseInputContainer}>
+              <input
+                type="number"
+                value={raiseAmount}
+                onChange={handleRaiseChange}
+                min={minRaise}
+                max={maxRaise}
+                className={styles.raiseInput}
+              />
+              <div className={styles.raiseLogo}>
+                <Logo size={19} />
+              </div>
+            </div>
+
             <input
               type="range"
               value={raiseAmount}
