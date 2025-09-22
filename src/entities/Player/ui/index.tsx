@@ -15,7 +15,6 @@ interface PlayerProps {
   timeBankSec?: number;
   onTurnTimeout?: () => void;
   isTurn: boolean;
-  blind: number | null;
   bet: number | null;
   betPosition?: 'top' | 'bottom' | 'left' | 'right';
 }
@@ -34,7 +33,7 @@ export const Player = ({
   bet = 100,
   betPosition = 'top',
 }: PlayerProps) => {
-  const {status, stack, hand, name, seat} = player;
+  const {status, stack, hand, name} = player;
 
   const isSitOut = status === 'SIT_OUT';
   const isFolded = status === 'FOLDED';

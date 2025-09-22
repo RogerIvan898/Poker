@@ -16,4 +16,9 @@ export default defineConfig({
       providers: resolve(__dirname, 'src/providers')
     },
   },
+  server: {
+    host: true,
+    strictPort: true,
+    port: 5000,
+  },
 })
