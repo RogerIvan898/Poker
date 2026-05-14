@@ -57,7 +57,7 @@
   appearance: none;
   width: 20px;
   height: 20px;
-  border-radius: 50%; 
+  border-radius: 50%;
   background: #4caf50;
   cursor: pointer;
 }
@@ -86,7 +86,7 @@
 
 .raiseLogo {
   position: absolute;
-  right: 8px;    
+  right: 8px;
   top: 50%;
   transform: translateY(-50%);
   border: none;

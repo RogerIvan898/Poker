@@ -1,0 +1,39 @@
+.betContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 6px 16px;
+  border-radius: 18px;
+  border: 2px solid #ffd700;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10;
+  animation: betAppear 0.5s ease forwards;
+}
+
+.bet-top {
+  bottom: calc(100% + 24px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+.bet-bottom {
+  top: calc(100% + 24px);
+  left: 50%;
+  transform: translateX(-50%) translateY(14px);
+}
+
+.bet-left {
+  right: calc(100% + 24px);
+  top: 50%;
+  transform: translateX(0) translateY(-50%);
+}
+
+.bet-right {
+  left: calc(100% + 24px);
+  top: 50%;
+  transform: translateX(0) translateY(-50%);
+}

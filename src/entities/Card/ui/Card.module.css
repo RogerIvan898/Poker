@@ -16,7 +16,8 @@
 }
 
 .play {
-  animation: cardDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) var(--delay, 0ms) forwards;
+  animation: cardDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) var(--delay, 0ms)
+    forwards;
 }
 
 .cardBack {
@@ -33,29 +34,54 @@
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.08);
 }
 
-.cardCornerTop { font-size: 12px; line-height: 1; }
-.cardCornerBottom { font-size: 12px; line-height: 1; transform: rotate(180deg); }
-.cardSuitSmall { display: inline-block; margin-left: 2px; font-size: 12px; }
-.cardCenter { font-size: 28px; text-align: center; line-height: 1; margin-top: 6px; }
+.cardCornerTop {
+  font-size: 12px;
+  line-height: 1;
+}
+.cardCornerBottom {
+  font-size: 12px;
+  line-height: 1;
+  transform: rotate(180deg);
+}
+.cardSuitSmall {
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 12px;
+}
+.cardCenter {
+  font-size: 28px;
+  text-align: center;
+  line-height: 1;
+  margin-top: 6px;
+}
 
 .suit_hearts .cardCenter,
 .suit_hearts .cardCornerTop,
-.suit_hearts .cardCornerBottom { color: #d32f2f; }
+.suit_hearts .cardCornerBottom {
+  color: #d32f2f;
+}
 
 .suit_diamonds .cardCenter,
 .suit_diamonds .cardCornerTop,
-.suit_diamonds .cardCornerBottom { color: #d32f2f; }
+.suit_diamonds .cardCornerBottom {
+  color: #d32f2f;
+}
 
 .suit_clubs .cardCenter,
 .suit_clubs .cardCornerTop,
-.suit_clubs .cardCornerBottom { color: #111; }
+.suit_clubs .cardCornerBottom {
+  color: #111;
+}
 
 .suit_spades .cardCenter,
 .suit_spades .cardCornerTop,
-.suit_spades .cardCornerBottom { color: #111; }
+.suit_spades .cardCornerBottom {
+  color: #111;
+}
 
-.cardHidden { background: transparent; }
-
+.cardHidden {
+  background: transparent;
+}
 
 @keyframes cardDrop {
   0% {

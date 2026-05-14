@@ -1,13 +1,13 @@
-import type { Card } from "../card";
+import type { Card } from '../card';
 
 type PlayerStatus =
-  | "SEATED" 
-  | "SIT_OUT" 
-  | "ACTIVE" 
-  | "FOLDED" 
-  | "ALL_IN" 
-  | "BUSTED" 
-  | "LEFT";
+  | 'SEATED'
+  | 'SIT_OUT'
+  | 'ACTIVE'
+  | 'FOLDED'
+  | 'ALL_IN'
+  | 'BUSTED'
+  | 'LEFT';
 
 export interface PlayerAction {
   type: 'BET' | 'FOLD' | 'CALL' | 'CHECK' | 'RAISE';
@@ -23,8 +23,8 @@ export interface Player {
   stack: number;
   seat: number;
   status: PlayerStatus;
-  hand?: [Card | null, Card | null]
-};
+  hand?: [Card | null, Card | null];
+}
 
 export interface SeatConfig {
   margin?: number;

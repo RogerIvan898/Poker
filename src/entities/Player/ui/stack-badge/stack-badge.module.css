@@ -1,0 +1,15 @@
+.stackContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  order: 3;
+}
+
+.stackAmount {
+  color: #ffd;
+  opacity: 0.9;
+  font-weight: 700;
+  font-size: 14px;
+}

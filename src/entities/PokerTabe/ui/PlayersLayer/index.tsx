@@ -12,14 +12,16 @@ interface Props {
   playerTurnId: PlayerType['id'] | null;
 }
 
-export const PlayersLayer = ({ 
-  players = [], 
+export const PlayersLayer = ({
+  players = [],
   seatConfigs = {},
   currentPlayerId,
   playerTurnId = null,
 }: Props) => {
-  const [seatPositions, setSeatPositions] = React.useState<Array<{ left: number; top: number }>>([]);
-  const { tableElement, dealerId, bigBlind } = useTable();
+  const [seatPositions, setSeatPositions] = React.useState<
+    Array<{ left: number; top: number }>
+  >([]);
+  const { tableElement, dealerId } = useTable();
   const playersLayerRef = React.useRef<HTMLDivElement>(null);
 
   const sortedPlayers = React.useMemo(() => {
@@ -29,7 +31,9 @@ export const PlayersLayer = ({
   const orderedPlayers = React.useMemo(() => {
     if (!currentPlayerId) return sortedPlayers;
 
-    const currentPlayerIndex = sortedPlayers.findIndex(p => p.id === currentPlayerId);
+    const currentPlayerIndex = sortedPlayers.findIndex(
+      p => p.id === currentPlayerId
+    );
 
     if (currentPlayerIndex === -1) {
       return sortedPlayers;
@@ -37,7 +41,7 @@ export const PlayersLayer = ({
 
     return [
       ...sortedPlayers.slice(currentPlayerIndex),
-      ...sortedPlayers.slice(0, currentPlayerIndex)
+      ...sortedPlayers.slice(0, currentPlayerIndex),
     ];
   }, [sortedPlayers, currentPlayerId]);
 
@@ -56,13 +60,12 @@ export const PlayersLayer = ({
     const centerY = height / 2;
 
     let measuredSeatSize = 72;
-    try {
-      const avatarEl = playersLayerRef.current.querySelector(`.${(styles as any).avatar}`);
-      if (avatarEl instanceof HTMLElement) {
-        const r = avatarEl.getBoundingClientRect();
-        if (r.width > 0) measuredSeatSize = r.width;
-      }
-    } catch (e) {}
+
+    const avatarEl = playersLayerRef.current.querySelector(styles.avatar);
+    if (avatarEl instanceof HTMLElement) {
+      const r = avatarEl.getBoundingClientRect();
+      if (r.width > 0) measuredSeatSize = r.width;
+    }
 
     const extraGapOutside = 6;
     const seatSize = measuredSeatSize;
@@ -73,15 +76,17 @@ export const PlayersLayer = ({
 
     const positions = orderedPlayers.map((_, index) => {
       const config = seatConfigs[index] || {};
-      
-      const playerMargin = config.margin !== undefined 
-        ? config.margin * Math.min(width, height) / 100
-        : 0;
+
+      const playerMargin =
+        config.margin !== undefined
+          ? (config.margin * Math.min(width, height)) / 100
+          : 0;
 
       const playerRadius = baseSeatRadius + playerMargin;
 
-      const angle = - (
-        Math.PI * 1.5 - (index * (2 * Math.PI)) / Math.min(orderedPlayers.length, 9)
+      const angle = -(
+        Math.PI * 1.5 -
+        (index * (2 * Math.PI)) / Math.min(orderedPlayers.length, 9)
       );
       const dx = Math.cos(angle);
       const dy = Math.sin(angle);
@@ -107,13 +112,13 @@ export const PlayersLayer = ({
 
     const resizeObserver = new ResizeObserver(calculatePositions);
     resizeObserver.observe(tableElement);
-    
+
     if (playersLayerRef.current) {
       resizeObserver.observe(playersLayerRef.current);
     }
 
     const handleResize = () => calculatePositions();
-    
+
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleResize);
 

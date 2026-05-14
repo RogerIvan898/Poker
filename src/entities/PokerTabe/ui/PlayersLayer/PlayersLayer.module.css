@@ -16,5 +16,7 @@
 
 /* адаптив */
 @media (max-width: 720px) {
-  .seat { width: 90px; }
+  .seat {
+    width: 90px;
+  }
 }

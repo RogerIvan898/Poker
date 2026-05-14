@@ -1,12 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 import { RoomPage } from 'pages/room-page';
-import './App.css'
+import './App.css';
 
 function App() {
-  return (
-    <RoomPage />
-  )
+  return <RoomPage />;
 }
 
-export default App
+export default App;

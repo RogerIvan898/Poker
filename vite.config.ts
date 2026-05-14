@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
@@ -13,7 +13,7 @@ export default defineConfig({
       entities: resolve(__dirname, 'src/entities'),
       shared: resolve(__dirname, 'src/shared'),
       widgets: resolve(__dirname, 'src/widgets'),
-      providers: resolve(__dirname, 'src/providers')
+      providers: resolve(__dirname, 'src/providers'),
     },
   },
   server: {
@@ -21,4 +21,4 @@ export default defineConfig({
     strictPort: true,
     port: 5000,
   },
-})
+});

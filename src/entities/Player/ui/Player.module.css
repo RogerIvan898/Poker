@@ -15,7 +15,7 @@
   font-size: 12px;
   font-weight: 600;
   color: #fff;
-  text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
   margin-bottom: 4px;
   order: 1; /* Помещаем имя первым (сверху) */
 }
@@ -30,62 +30,26 @@
   order: 2; /* Помещаем аватар вторым (посередине) */
 }
 
-.stackContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  margin-top: 4px;
-  order: 3; /* Помещаем стек третьим (снизу) */
-}
-
-.stackAmount {
-  color: #ffd;
-  opacity: 0.9;
-  font-weight: 700;
-  font-size: 14px;
-}
-
 .stackLogo {
   width: 16px;
   height: 16px;
 }
 
-.avatarWrap {
-  position: relative;
-  z-index: 1;
-}
-
-.avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: linear-gradient(180deg, #ffd966, #ffb200);
-  color: #08131a;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
-  border: 3px solid rgba(0,0,0,0.25);
-  transition: all 0.3s ease;
-}
-
-.avatar.turn {
-  border: 4px solid #00ffcc;
-  box-shadow: 0 0 15px rgba(0, 255, 204, 0.7), 0 6px 12px rgba(0,0,0,0.5);
-  animation: pulse 2s infinite;
-}
-
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 15px rgba(0, 255, 204, 0.7), 0 6px 12px rgba(0,0,0,0.5);
+    box-shadow:
+      0 0 15px rgba(0, 255, 204, 0.7),
+      0 6px 12px rgba(0, 0, 0, 0.5);
   }
   50% {
-    box-shadow: 0 0 20px rgba(0, 255, 204, 0.9), 0 6px 12px rgba(0,0,0,0.5);
+    box-shadow:
+      0 0 20px rgba(0, 255, 204, 0.9),
+      0 6px 12px rgba(0, 0, 0, 0.5);
   }
   100% {
-    box-shadow: 0 0 15px rgba(0, 255, 204, 0.7), 0 6px 12px rgba(0,0,0,0.5);
+    box-shadow:
+      0 0 15px rgba(0, 255, 204, 0.7),
+      0 6px 12px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -99,38 +63,7 @@
   padding: 4px 6px;
   border-radius: 12px;
   font-size: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-}
-
-.cards {
-  position: absolute;
-  display: flex;
-  gap: 0.6rem;
-  z-index: 0;
-}
-
-.cards-top {
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.cards-bottom {
-  top: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.cards-left {
-  right: calc(100% + 8px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.cards-right {
-  left: calc(100% + 8px);
-  top: 50%;
-  transform: translateY(-50%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .sitOut {
@@ -202,86 +135,6 @@
   display: none;
 }
 
-.turnTimer {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 84px;
-  height: 84px;
-  z-index: 0;
-  pointer-events: none;
-  transition: ease;
-}
-
-.timerSvg {
-  width: 100%;
-  height: 100%;
-  transform-origin: 50% 50%;
-  transform: rotate(-90deg);
-  display: block;
-}
-
-.timerLabel {
-  position: absolute;
-  right: -6px;
-  top: -6px;
-  transform: translate(0, 0);
-  min-width: 22px;
-  height: 22px;
-  padding: 0 6px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  font-weight: 700;
-  font-size: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.betContainer {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(0, 0, 0, 0.8);
-  padding: 6px 16px;
-  border-radius: 18px;
-  border: 2px solid #ffd700;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.bet-top {
-  bottom: calc(100% + 24px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-10px);
-}
-
-.bet-bottom {
-  top: calc(100% + 24px);
-  left: 50%;
-  transform: translateX(-50%) translateY(14px);
-}
-
-.bet-left {
-  right: calc(100% + 24px);
-  top: 50%;
-  transform: translateX(0) translateY(-50%);
-}
-
-.bet-right {
-  left: calc(100% + 24px);
-  top: 50%;
-  transform: translateX(0) translateY(-50%);
-}
-
 @keyframes betAppear {
   0% {
     opacity: 0;
@@ -289,10 +142,6 @@
   100% {
     opacity: 1;
   }
-}
-
-.betVisible {
-  animation: betAppear 0.5s ease forwards;
 }
 
 .betAmount {

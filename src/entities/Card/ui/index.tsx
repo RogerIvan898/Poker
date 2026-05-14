@@ -5,51 +5,50 @@ import type { Card as CardType } from 'shared/types/card';
 import styles from './Card.module.css';
 
 interface Props {
-  card: CardType | null,
-  hidden?: boolean; 
-  index?: number;
+  card: CardType | null;
+  hidden?: boolean;
 }
 
-export const Card = ({
-  card,
-  hidden = false,
-  index = 0,
-}: Props) => {
+export const Card = ({ card, hidden = false }: Props) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    const el = ref.current;
+    const element = ref.current;
 
-    if (!el) return;
+    if (!element) {
+      return;
+    }
 
-    const delay = index * 150;
-    el.style.setProperty('--delay', `${delay}ms`);
-    el.classList.add(styles.play);
+    element.classList.add(styles.play);
 
     const rot = (Math.random() * 10 - 5).toFixed(2);
-    
+
     const onEnd = () => {
-      el.style.transform = `rotate(${rot}deg)`;
-      el.removeEventListener('animationend', onEnd);
+      element.style.transform = `rotate(${rot}deg)`;
+      element.removeEventListener('animationend', onEnd);
     };
 
-    el.addEventListener('animationend', onEnd);
+    element.addEventListener('animationend', onEnd);
 
     return () => {
-      el.removeEventListener('animationend', onEnd);
+      element.removeEventListener('animationend', onEnd);
     };
-  }, [index]);
+  }, []);
 
   const symbol = getSymbol(card?.suit ?? '');
 
   return (
     <div
       ref={ref}
-      style={{width: 64, height: 92}}
-      className={cn(styles.card, hidden && styles.cardHidden, styles['suit_' + card?.suit])}
+      style={{ width: 64, height: 92 }}
+      className={cn(
+        styles.card,
+        hidden && styles.cardHidden,
+        styles['suit_' + card?.suit]
+      )}
       role="img"
     >
-      {(card && !hidden) ? (
+      {card && !hidden ? (
         <>
           <div className={styles.cardCornerTop}>
             {card?.rank ?? ''}

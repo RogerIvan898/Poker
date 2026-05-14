@@ -27,7 +27,6 @@ export const ActionViewer = ({
   onCheck,
   minRaise = 0,
   maxRaise = 1000,
-  currentBet = 0
 }: Props) => {
   const [raiseAmount, setRaiseAmount] = React.useState(minRaise);
   const [isRaising, setIsRaising] = React.useState(false);
@@ -43,7 +42,10 @@ export const ActionViewer = ({
   };
 
   const handleRaiseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.min(maxRaise, Math.max(minRaise, Number(e.target.value)));
+    const value = Math.min(
+      maxRaise,
+      Math.max(minRaise, Number(e.target.value))
+    );
     setRaiseAmount(value);
   };
 
@@ -59,7 +61,7 @@ export const ActionViewer = ({
     <div className={styles.actionContainer}>
       {isRaising ? (
         <>
-          <div className={styles.raiseControls}> 
+          <div className={styles.raiseControls}>
             <div className={styles.raiseInputContainer}>
               <input
                 type="number"
@@ -84,47 +86,32 @@ export const ActionViewer = ({
             />
           </div>
           <ControlButton
-            text="Confirm Raise" 
-            variant="raise" 
-            onClick={handleRaiseClick} 
+            text="Confirm Raise"
+            variant="raise"
+            onClick={handleRaiseClick}
           />
-          <ControlButton 
-            text="Cancel" 
-            variant="fold" 
-            onClick={handleCancelRaise} 
+          <ControlButton
+            text="Cancel"
+            variant="fold"
+            onClick={handleCancelRaise}
           />
         </>
       ) : (
         <>
-          {canCall 
-            ? (
-                <ControlButton
-                  text='Call' 
-                  variant='call' 
-                  onClick={onCall}
-                /> 
-              )
-            : (
-                <ControlButton 
-                  text='Check' 
-                  variant='check' 
-                  onClick={onCheck}
-                />
-              )
-          }
+          {canCall ? (
+            <ControlButton text="Call" variant="call" onClick={onCall} />
+          ) : (
+            <ControlButton text="Check" variant="check" onClick={onCheck} />
+          )}
           {canRaise && (
             <ControlButton
-              text='Raise' 
-              variant='raise' 
+              text="Raise"
+              variant="raise"
               onClick={() => setIsRaising(true)}
             />
           )}
           {canFold && (
-            <ControlButton 
-              text='Fold' 
-              variant='fold' 
-              onClick={onFold}
-            />
+            <ControlButton text="Fold" variant="fold" onClick={onFold} />
           )}
         </>
       )}

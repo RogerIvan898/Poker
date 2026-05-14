@@ -1,15 +1,12 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   color?: string;
   size?: number | string;
 }
 
-export const Logo: React.FC<Props> = ({
-  size = 18,
-  color = "white",
-}) => {
-  const normalizedSize = typeof size === "number" ? `${size}px` : size;
+export const Logo: React.FC<Props> = ({ size = 18, color = 'white' }) => {
+  const normalizedSize = typeof size === 'number' ? `${size}px` : size;
 
   const viewMinX = 12.6944;
   const viewMinY = 15.6277;

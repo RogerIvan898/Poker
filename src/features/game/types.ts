@@ -1,5 +1,5 @@
-import type { Card } from "shared/types/card";
-import type { Player, PlayerAction } from "shared/types/player";
+import type { Card } from 'shared/types/card';
+import type { Player, PlayerAction } from 'shared/types/player';
 
 export type Round =
   | 'PRE_FLOP'
@@ -27,11 +27,11 @@ export interface GameState {
 }
 
 export type GameEvent =
-  | { type: "SNAPSHOT"; state: GameState }
-  | { type: "PLAYER_BET"; playerId: string; amount: number; serverSeq?: number }
-  | { type: "PLAYER_CHECK"; playerId: string; serverSeq: number }
-  | { type: "PLAYER_FOLD"; playerId: string; serverSeq?: number }
-  | { type: "DEAL_PRIVATE"; playerId: string; cards: [Card, Card] }
-  | { type: "DEAL_COMMUNITY"; cards: Card[]; serverSeq?: number }
-  | { type: "HAND_RESULT"; winners: string[]; serverSeq?: number }
-  | { type: "ERROR"; payload: any };
+  | { type: 'SNAPSHOT'; state: GameState }
+  | { type: 'PLAYER_BET'; playerId: string; amount: number; serverSeq?: number }
+  | { type: 'PLAYER_CHECK'; playerId: string; serverSeq: number }
+  | { type: 'PLAYER_FOLD'; playerId: string; serverSeq?: number }
+  | { type: 'DEAL_PRIVATE'; playerId: string; cards: [Card, Card] }
+  | { type: 'DEAL_COMMUNITY'; cards: Card[]; serverSeq?: number }
+  | { type: 'HAND_RESULT'; winners: string[]; serverSeq?: number }
+  | { type: 'ERROR'; payload: unknown };

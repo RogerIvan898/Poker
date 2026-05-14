@@ -1,10 +1,10 @@
-import { useUnit } from "effector-react";
-import React from "react";
+import { useUnit } from 'effector-react';
+import React from 'react';
 
-import { gameModel } from "features/game";
-import { playerModel } from "entities/Player";
-import type { GameState } from "features/game/types";
-import type { Player } from "shared/types/player";
+import { gameModel } from 'features/game';
+import { playerModel } from 'entities/Player';
+import type { GameState } from 'features/game/types';
+import type { Player } from 'shared/types/player';
 
 interface TableContextType extends Pick<GameState, 'dealerId'> {
   tableElement: HTMLElement | null;
@@ -16,21 +16,36 @@ interface TableContextType extends Pick<GameState, 'dealerId'> {
 
 const TableContext = React.createContext<TableContextType | null>(null);
 
-export const TableProvider = ({children}: React.PropsWithChildren) => {
-    const [tableElement, setTableElement] = React.useState<HTMLElement | null>(null);
-    const [currentPlayerId] = useUnit(playerModel.$currentPlayerId);
-    const gameState = useUnit(gameModel.$gameState);
+export const TableProvider = ({ children }: React.PropsWithChildren) => {
+  const [tableElement, setTableElement] = React.useState<HTMLElement | null>(
+    null
+  );
 
-    const value = React.useMemo(() => ({
-        tableElement,
-        setTableElement,
-        currentPlayerId,
-        dealerId: gameState.dealerId,
-        playerTurnId: gameState.currentTurnId,
-        bigBlind: gameState.bigBlind,
-    }), [tableElement, currentPlayerId, gameState.dealerId, gameState.currentTurnId, gameState.bigBlind]);
+  const [currentPlayerId] = useUnit(playerModel.$currentPlayerId);
 
-  return <TableContext.Provider value={value}>{children}</TableContext.Provider>;
+  const gameState = useUnit(gameModel.$gameState);
+
+  const value = React.useMemo(
+    () => ({
+      tableElement,
+      setTableElement,
+      currentPlayerId,
+      dealerId: gameState.dealerId,
+      playerTurnId: gameState.currentTurnId,
+      bigBlind: gameState.bigBlind,
+    }),
+    [
+      tableElement,
+      currentPlayerId,
+      gameState.dealerId,
+      gameState.currentTurnId,
+      gameState.bigBlind,
+    ]
+  );
+
+  return (
+    <TableContext.Provider value={value}>{children}</TableContext.Provider>
+  );
 };
 
 export const useTable = () => {

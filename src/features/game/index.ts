@@ -1,2 +1,2 @@
-export {useGameSocket} from './useGame';
+export { useGameSocket } from './useGame';
 export * as gameModel from './model';
