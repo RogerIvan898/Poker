@@ -1,30 +1,36 @@
 .cards {
   position: absolute;
   display: flex;
-  gap: 0.6rem;
+  gap: clamp(3px, 1vw, 0.6rem);
   z-index: 0;
 }
 
 .cards-top {
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
 }
 
 .cards-bottom {
-  top: calc(100% + 8px);
+  top: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
 }
 
 .cards-left {
-  right: calc(100% + 8px);
+  right: calc(100% + 6px);
   top: 50%;
   transform: translateY(-50%);
 }
 
 .cards-right {
-  left: calc(100% + 8px);
+  left: calc(100% + 6px);
   top: 50%;
   transform: translateY(-50%);
+}
+
+@media (max-width: 768px) {
+  .cards {
+    gap: 4px;
+  }
 }

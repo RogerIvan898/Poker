@@ -1,20 +1,20 @@
-import { useTable } from 'providers/table-context';
-import { Card } from 'entities/Card';
+import React from 'react';
+
+import { Card } from 'entities/card';
 import type { Card as CardType } from 'shared/types/card';
-import styles from './PokerTable.module.css';
+
+import styles from './poker-table.module.css';
 
 interface Props {
   cards: CardType[];
 }
 
-export const PokerTable = ({ cards = [] }: Props) => {
-  const { setTableElement } = useTable();
-
-  return (
-    <div className={styles.tableContainer}>
+export const PokerTable = React.forwardRef<HTMLDivElement, Props>(
+  ({ cards = [] }, ref) => (
+    <div className={styles.tableContainer} ref={ref}>
       <div className={styles.pokerTable}>
         <div className={styles.tableRail} />
-        <div className={styles.tableSurface} ref={setTableElement}>
+        <div className={styles.tableSurface}>
           <div className={styles.communityCards}>
             {cards.map(c => (
               <Card key={`${c.rank}-${c.suit}`} card={c} />
@@ -23,5 +23,5 @@ export const PokerTable = ({ cards = [] }: Props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+);

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { cn, getSymbol } from 'shared/utils';
 import type { Card as CardType } from 'shared/types/card';
-import styles from './Card.module.css';
+import styles from './сard.module.css';
 
 interface Props {
   card: CardType | null;
@@ -40,7 +40,6 @@ export const Card = ({ card, hidden = false }: Props) => {
   return (
     <div
       ref={ref}
-      style={{ width: 64, height: 92 }}
       className={cn(
         styles.card,
         hidden && styles.cardHidden,

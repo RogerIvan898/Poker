@@ -1,12 +1,15 @@
 import React from 'react';
 
 import { socket } from 'shared/lib/socketClient';
-import type { GameEvent } from './types';
-import { incomingEvent } from './model/store';
+
+import type { GameEvent } from '../types';
+import { incomingEvent } from '../model/store';
 
 export function useGameSocket(tableId: string) {
   React.useEffect(() => {
-    if (!tableId) return;
+    if (!tableId) {
+      return;
+    }
 
     if (!socket.connected) socket.connect();
 

@@ -5,13 +5,22 @@ interface Props {
   size?: number | string;
 }
 
-export const Logo: React.FC<Props> = ({ size = 18, color = 'white' }) => {
+export const Logo = ({ size = 18, color = 'white' }: Props) => {
   const normalizedSize = typeof size === 'number' ? `${size}px` : size;
 
-  const viewMinX = 12.6944;
-  const viewMinY = 15.6277;
-  const viewWidth = 41.5381 - 12.6944;
-  const viewHeight = 44.2765 - 15.6277;
+  // Точные границы оригинального пути TON
+  const minX = 12.6944;
+  const minY = 15.6277;
+  const maxX = 41.5381;
+  const maxY = 44.2765;
+
+  // Безопасный буфер в 1 единицу, чтобы сглаживание пикселей не резало края
+  const padding = 1;
+
+  const viewMinX = minX - padding;
+  const viewMinY = minY - padding;
+  const viewWidth = maxX - minX + padding * 2;
+  const viewHeight = maxY - minY + padding * 2;
 
   return (
     <svg

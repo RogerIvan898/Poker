@@ -2,7 +2,10 @@ import { createEffect, createEvent, createStore, sample } from 'effector';
 
 import { socket } from 'shared/lib/socketClient';
 import type { PlayerAction } from 'shared/types/player';
+
 import type { GameEvent, GameState } from '../types';
+
+import { INITIAL_GAME_STATE } from './constants';
 import type { PlayerInitActionPayload } from './types';
 
 export const incomingEvent = createEvent<GameEvent>();
@@ -28,122 +31,7 @@ export const sendActionFx = createEffect(
   }
 );
 
-const initialState: GameState = {
-  tableId: null,
-  players: [
-    {
-      id: '787',
-      name: 'You',
-      stack: 12.5,
-      status: 'ACTIVE',
-      hand: [
-        { rank: 'A', suit: 'hearts' },
-        { rank: 'K', suit: 'hearts' },
-      ],
-      seat: 6,
-    },
-    {
-      id: '2',
-      name: 'Anna',
-      stack: 2.4,
-      status: 'SEATED',
-      hand: [
-        { rank: '10', suit: 'hearts' },
-        { rank: '6', suit: 'clubs' },
-      ],
-      seat: 7,
-    },
-    {
-      id: '3',
-      name: 'Mark',
-      stack: 32,
-      status: 'SEATED',
-      hand: [
-        { rank: 'J', suit: 'clubs' },
-        { rank: 'A', suit: 'diamonds' },
-      ],
-      seat: 8,
-    },
-    {
-      id: '4',
-      name: 'Luca',
-      stack: 98,
-      status: 'SIT_OUT',
-      hand: [
-        { rank: 'A', suit: 'spades' },
-        { rank: 'A', suit: 'clubs' },
-      ],
-      seat: 5,
-    },
-    {
-      id: '100',
-      name: 'Serg',
-      stack: 4.1,
-      status: 'SEATED',
-      hand: [
-        { rank: '7', suit: 'clubs' },
-        { rank: '10', suit: 'diamonds' },
-      ],
-      seat: 4,
-    },
-    {
-      id: '6',
-      name: 'Priya',
-      stack: 17,
-      status: 'SEATED',
-      hand: [
-        { rank: '9', suit: 'hearts' },
-        { rank: '5', suit: 'clubs' },
-      ],
-      seat: 3,
-    },
-    {
-      id: '90',
-      name: 'Lucaй',
-      stack: 6.8,
-      status: 'SEATED',
-      hand: [
-        { rank: 'J', suit: 'hearts' },
-        { rank: 'K', suit: 'diamonds' },
-      ],
-      seat: 2,
-    },
-    {
-      id: '89',
-      name: 'Sergй',
-      stack: 41,
-      status: 'SEATED',
-      hand: [
-        { rank: '10', suit: 'clubs' },
-        { rank: '10', suit: 'diamonds' },
-      ],
-      seat: 1,
-    },
-    {
-      id: '09',
-      name: 'Priyaq',
-      stack: 17,
-      status: 'FOLDED',
-      hand: [
-        { rank: '7', suit: 'spades' },
-        { rank: '7', suit: 'diamonds' },
-      ],
-      seat: 0,
-    },
-  ],
-  dealerId: '100',
-  currentTurnId: '787',
-  round: 'IDLE',
-  community: [],
-  pot: 0,
-  serverSeq: 0,
-  actionHistory: [],
-  bigBlind: 0,
-  minimumRaise: 0,
-  currentBet: 0,
-};
-
-export const $gameState = createStore<GameState>(initialState)
+export const $gameState = createStore<GameState>(INITIAL_GAME_STATE)
   .on(incomingEvent, (state, evt) => {
     if (evt.type === 'SNAPSHOT') {
       return evt.state;
@@ -237,6 +125,8 @@ export const $gameState = createStore<GameState>(initialState)
         return state;
     }
   });
+
+export const $dealerId = $gameState.map(state => state.dealerId);
 
 sample({
   clock: fold,

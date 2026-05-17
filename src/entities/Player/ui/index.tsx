@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { cn } from 'shared/utils';
 import type { Player as PlayerType } from 'shared/types/player';
 
@@ -37,11 +35,9 @@ export const Player = ({
   onTurnTimeout,
   isDealer,
   isTurn,
-  bet,
-  betPosition = 'top',
   debug = true,
 }: Props) => {
-  const { status, stack, hand = [], name } = player;
+  const { status, stack, hand, name } = player;
 
   const isSitOut = status === 'SIT_OUT';
   const isFolded = status === 'FOLDED';
@@ -53,8 +49,8 @@ export const Player = ({
     onTurnTimeout,
   });
 
-  const canShowCards = hand.length >= 2 && (!isFolded || !isCurrentPlayer);
-  const showBet = bet !== null;
+  const canShowCards =
+    hand && hand.length >= 2 && (!isFolded || !isCurrentPlayer);
 
   return (
     <section
@@ -87,7 +83,7 @@ export const Player = ({
           {isDealer && <div className={styles.dealerBadge}>D</div>}
         </div>
 
-        {showBet && bet && <BetBadge bet={bet} position={betPosition} />}
+        <BetBadge bet={100} position={'top'} />
 
         {canShowCards && (
           <PlayerCards

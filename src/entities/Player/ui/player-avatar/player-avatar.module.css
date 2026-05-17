@@ -1,12 +1,11 @@
-
 .avatarWrap {
   position: relative;
   z-index: 1;
 }
 
 .avatar {
-  width: 72px;
-  height: 72px;
+  width: clamp(44px, 10vw, 72px);
+  height: clamp(44px, 10vw, 72px);
   border-radius: 50%;
   background: linear-gradient(180deg, #ffd966, #ffb200);
   color: #08131a;
@@ -17,6 +16,7 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
   border: 3px solid rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease;
+  font-size: clamp(14px, 3.2vw, 18px);
 }
 
 .avatar.turn {
@@ -31,4 +31,21 @@
   background: linear-gradient(180deg, #888888, #667676);
   border: 3px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .cards {
+    gap: 4px;
+  }
+
+  .avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 12px;
+    border-width: 2px;
+  }
+
+  .avatar.turn {
+    border-width: 3px;
+  }
 }

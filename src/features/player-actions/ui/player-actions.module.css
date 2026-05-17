@@ -1,0 +1,31 @@
+.actionContainer {
+  position: fixed;
+  right: 0;
+  bottom: 1rem;
+  z-index: 1000;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  height: auto;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  width: fit-content;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .actionContainer {
+    left: 50%;
+    right: auto;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    transform: translateX(-50%);
+    width: calc(100vw - 16px);
+    max-width: 420px;
+    padding: 10px;
+    gap: 8px;
+    border-radius: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
