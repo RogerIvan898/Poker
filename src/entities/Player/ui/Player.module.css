@@ -17,7 +17,7 @@
   color: #fff;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
   margin-bottom: 4px;
-  order: 1; /* Помещаем имя первым (сверху) */
+  order: 1;
 }
 
 .mainContainer {
@@ -25,9 +25,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 72px;
-  height: 72px;
-  order: 2; /* Помещаем аватар вторым (посередине) */
+  width: clamp(38px, 8vw, 72px);
+  height: clamp(38px, 8vw, 72px);
+  order: 2;
 }
 
 .stackLogo {

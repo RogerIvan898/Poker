@@ -6,7 +6,7 @@ export const sessionStarted = createEvent<{ id: string }>();
 export const handDealt = createEvent<[Card, Card]>();
 export const handFolded = createEvent();
 
-export const $viewerId = createStore<string | null>(null).on(
+export const $viewerId = createStore<string | null>('100').on(
   sessionStarted,
   (_, { id }) => id
 );

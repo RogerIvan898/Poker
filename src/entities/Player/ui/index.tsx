@@ -17,7 +17,7 @@ type CardPosition = 'top' | 'bottom' | 'left' | 'right';
 interface Props {
   player: PlayerType;
   cardsPosition?: CardPosition;
-  isCurrentPlayer?: boolean;
+  currentPlayer?: boolean;
   dealer: boolean;
   turnDurationSec?: number;
   timeBankSec?: number;
@@ -31,7 +31,7 @@ interface Props {
 export const Player = ({
   player,
   cardsPosition = 'top',
-  isCurrentPlayer = false,
+  currentPlayer = false,
   turnDurationSec = 15,
   timeBankSec = 10,
   onTurnTimeout,
@@ -52,7 +52,7 @@ export const Player = ({
   });
 
   const canShowCards =
-    hand && hand.length >= 2 && (!isFolded || !isCurrentPlayer);
+    hand && hand.length >= 2 && (!isFolded || !currentPlayer);
 
   return (
     <section
@@ -76,9 +76,9 @@ export const Player = ({
 
           <PlayerAvatar
             name={name}
-            isFolded={isFolded}
-            isTurn={turn}
-            isCurrentPlayer={isCurrentPlayer}
+            folded={isFolded}
+            turn={turn}
+            currentPlayer={currentPlayer}
             hideBorder={showTimer}
           />
 
@@ -91,7 +91,7 @@ export const Player = ({
           <PlayerCards
             cards={hand}
             position={cardsPosition}
-            reveal={isCurrentPlayer || debug}
+            reveal={currentPlayer || debug}
           />
         )}
       </div>

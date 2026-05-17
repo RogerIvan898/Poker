@@ -81,7 +81,7 @@ export const PlayersLayer = ({ tableElement }: Props) => {
           <Player
             player={player}
             dealer={player.seat === dealerSeatIndex}
-            isCurrentPlayer={player.id === viewerId}
+            currentPlayer={player.id === viewerId}
             turn={player.seat === activeSeatIndex}
             cardsPosition={config.cardPosition}
             bet={player.committed}
