@@ -12,10 +12,10 @@ export type Round =
 export interface GameState {
   tableId: string | null;
   players: Player[];
-  dealerId: string | null;
-  bigBlindId: string | null;
-  smallBlindId: string;
-  currentTurnId: string | null;
+  dealerSeatIndex: number | null;
+  bigBlindSeatIndex: number | null;
+  smallBlindSeatIndex: number | null;
+  activeSeatIndex: number | null;
   round: Round;
   community: Card[];
   pot: number;

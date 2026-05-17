@@ -4,62 +4,37 @@ import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
 import { Player } from 'entities/player';
-import type { Player as PlayerType } from 'shared/types/player';
+import { sessionModel } from 'entities/session';
+import { useElementRect } from 'shared/hooks/useElementRect';
 
 import { VISUAL_SEATS_CONFIG } from './constants';
 import styles from './players-layer.module.css';
 
 interface Props {
-  players: PlayerType[];
-  currentPlayerId: string | null;
-  playerTurnId: string | null;
   tableElement: HTMLDivElement | null;
 }
 
-export const PlayersLayer = ({
-  players = [],
-  currentPlayerId,
-  playerTurnId,
-  tableElement,
-}: Props) => {
-  const dealerId = useUnit(gameModel.$dealerId);
+export const PlayersLayer = ({ tableElement }: Props) => {
+  const [players, dealerSeatIndex, activeSeatIndex, viewerId] = useUnit([
+    gameModel.$players,
+    gameModel.$dealerSeatIndex,
+    gameModel.$activeSeatIndex,
+    sessionModel.$viewerId,
+  ]);
 
-  const [rect, setRect] = React.useState<DOMRect | null>(null);
-
-  React.useLayoutEffect(() => {
-    if (!tableElement) {
-      return;
-    }
-
-    const update = () => {
-      setRect(tableElement.getBoundingClientRect());
-    };
-
-    update();
-
-    const observer = new ResizeObserver(update);
-
-    observer.observe(tableElement);
-
-    window.addEventListener('resize', update);
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', update);
-    };
-  }, [tableElement]);
+  const rect = useElementRect(tableElement);
 
   const maxSeats = Object.keys(VISUAL_SEATS_CONFIG).length;
 
   const seatOffset = React.useMemo(() => {
-    const currentPlayer = players.find(player => player.id === currentPlayerId);
+    const currentPlayer = players.find(player => player.id === viewerId);
 
     if (!currentPlayer) {
       return 0;
     }
 
     return (maxSeats - currentPlayer.seat) % maxSeats;
-  }, [players, currentPlayerId, maxSeats]);
+  }, [players, viewerId, maxSeats]);
 
   const playersWithStyles = React.useMemo(() => {
     if (!rect) {
@@ -105,9 +80,9 @@ export const PlayersLayer = ({
         <div key={player.id} className={styles.seatWrapper} style={style}>
           <Player
             player={player}
-            isDealer={player.id === dealerId}
-            isCurrentPlayer={player.id === currentPlayerId}
-            isTurn={player.id === playerTurnId}
+            dealer={player.seat === dealerSeatIndex}
+            isCurrentPlayer={player.id === viewerId}
+            turn={player.seat === activeSeatIndex}
             cardsPosition={config.cardPosition}
             bet={player.committed}
             betPosition={config.betPosition}

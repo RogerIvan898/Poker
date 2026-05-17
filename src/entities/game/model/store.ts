@@ -126,7 +126,9 @@ export const $gameState = createStore<GameState>(INITIAL_GAME_STATE)
     }
   });
 
-export const $dealerId = $gameState.map(state => state.dealerId);
+export const $dealerSeatIndex = $gameState.map(state => state.dealerSeatIndex);
+export const $players = $gameState.map(state => state.players);
+export const $activeSeatIndex = $gameState.map(state => state.activeSeatIndex);
 
 sample({
   clock: fold,

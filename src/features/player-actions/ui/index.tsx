@@ -1,7 +1,7 @@
 import React from 'react';
 import { useUnit } from 'effector-react';
 
-import { playerModel } from 'entities/player';
+import { sessionModel } from 'entities/session';
 
 import { BaseActions } from './base-actions';
 import { RaiseManager } from './raise-manager';
@@ -22,10 +22,10 @@ export const PlayerActions = ({
   minRaise = 0,
   maxRaise = 1000,
 }: Props) => {
-  const [playerId] = useUnit([playerModel.$currentPlayerId]);
+  const [viewerId] = useUnit([sessionModel.$viewerId]);
   const [isRaising, setIsRaising] = React.useState(false);
 
-  if (!playerId) {
+  if (!viewerId) {
     return null;
   }
 
@@ -33,14 +33,14 @@ export const PlayerActions = ({
     <div className={styles.actionContainer}>
       {isRaising ? (
         <RaiseManager
-          playerId={playerId}
+          playerId={viewerId}
           minRaise={minRaise}
           maxRaise={maxRaise}
           onCancel={() => setIsRaising(false)}
         />
       ) : (
         <BaseActions
-          playerId={playerId}
+          playerId={viewerId}
           canFold={canFold}
           canCall={canCall}
           canRaise={canRaise}

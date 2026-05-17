@@ -1,16 +1,14 @@
+import type { PLAYER_ACTIONS, PLAYER_STATUSES } from 'shared/constants/player';
+
 import type { Card } from '../card';
 
-type PlayerStatus =
-  | 'SEATED'
-  | 'SIT_OUT'
-  | 'ACTIVE'
-  | 'FOLDED'
-  | 'ALL_IN'
-  | 'BUSTED'
-  | 'LEFT';
+export type PlayerActionType =
+  (typeof PLAYER_ACTIONS)[keyof typeof PLAYER_ACTIONS];
+
+type PlayerStatusType = (typeof PLAYER_STATUSES)[keyof typeof PLAYER_STATUSES];
 
 export interface PlayerAction {
-  type: 'BET' | 'FOLD' | 'CALL' | 'CHECK' | 'RAISE';
+  type: PlayerActionType;
   playerId: string;
   amount?: number;
   serverSeq: number;
@@ -22,7 +20,7 @@ export interface Player {
   name: string;
   stack: number;
   seat: number;
-  status: PlayerStatus;
+  status: PlayerStatusType;
   hand?: [Card | null, Card | null];
 }
 

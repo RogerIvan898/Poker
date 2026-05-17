@@ -1,7 +1,9 @@
 import { cn } from 'shared/utils';
 import type { Player as PlayerType } from 'shared/types/player';
 
-import { useTurnTimer } from '../hooks';
+import { PLAYER_STATUSES } from 'shared/constants/player';
+
+import { useTurnTimer } from '../hooks/useTurnTimer';
 
 import styles from './Player.module.css';
 import { BetBadge } from './bet-badge';
@@ -16,11 +18,11 @@ interface Props {
   player: PlayerType;
   cardsPosition?: CardPosition;
   isCurrentPlayer?: boolean;
-  isDealer: boolean;
+  dealer: boolean;
   turnDurationSec?: number;
   timeBankSec?: number;
   onTurnTimeout?: () => void;
-  isTurn: boolean;
+  turn: boolean;
   bet: number | null;
   betPosition?: CardPosition;
   debug?: boolean;
@@ -33,17 +35,17 @@ export const Player = ({
   turnDurationSec = 15,
   timeBankSec = 10,
   onTurnTimeout,
-  isDealer,
-  isTurn,
+  dealer = false,
+  turn = false,
   debug = true,
 }: Props) => {
   const { status, stack, hand, name } = player;
 
-  const isSitOut = status === 'SIT_OUT';
-  const isFolded = status === 'FOLDED';
+  const isSitOut = status === PLAYER_STATUSES.SITTING_OUT;
+  const isFolded = status === PLAYER_STATUSES.FOLDED;
 
   const { remainingSeconds, showTimer, urgent, progress } = useTurnTimer({
-    isTurn,
+    isTurn: turn,
     turnDurationSec,
     timeBankSec,
     onTurnTimeout,
@@ -75,12 +77,12 @@ export const Player = ({
           <PlayerAvatar
             name={name}
             isFolded={isFolded}
-            isTurn={isTurn}
+            isTurn={turn}
             isCurrentPlayer={isCurrentPlayer}
             hideBorder={showTimer}
           />
 
-          {isDealer && <div className={styles.dealerBadge}>D</div>}
+          {dealer && <div className={styles.dealerBadge}>D</div>}
         </div>
 
         <BetBadge bet={100} position={'top'} />
