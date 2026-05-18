@@ -84,10 +84,6 @@
   color: #111;
 }
 
-.cardHidden {
-  background: transparent;
-}
-
 @keyframes cardDrop {
   0% {
     transform: translateY(-80px) scale(0.9) rotate(-6deg);

@@ -2,14 +2,14 @@ import React from 'react';
 
 import { cn, getSymbol } from 'shared/utils';
 import type { Card as CardType } from 'shared/types/card';
-import styles from './сard.module.css';
+
+import styles from './card.module.css';
 
 interface Props {
   card: CardType | null;
-  hidden?: boolean;
 }
 
-export const Card = ({ card, hidden = false }: Props) => {
+export const Card = ({ card }: Props) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
@@ -40,22 +40,18 @@ export const Card = ({ card, hidden = false }: Props) => {
   return (
     <div
       ref={ref}
-      className={cn(
-        styles.card,
-        hidden && styles.cardHidden,
-        styles['suit_' + card?.suit]
-      )}
+      className={cn(styles.card, styles['suit_' + card?.suit])}
       role="img"
     >
-      {card && !hidden ? (
+      {card ? (
         <>
           <div className={styles.cardCornerTop}>
-            {card?.rank ?? ''}
+            {card.rank ?? ''}
             <span className={styles.cardSuitSmall}>{symbol}</span>
           </div>
           <div className={styles.cardCenter}>{symbol}</div>
           <div className={styles.cardCornerBottom}>
-            {card?.rank ?? ''}
+            {card.rank ?? ''}
             <span className={styles.cardSuitSmall}>{symbol}</span>
           </div>
         </>

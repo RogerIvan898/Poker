@@ -6,7 +6,7 @@ export const INITIAL_GAME_STATE: GameState = {
   tableId: null,
   players: [
     {
-      id: '787',
+      id: '100',
       name: 'You',
       stack: 12.5,
       status: PLAYER_STATUSES.IN_GAME,
@@ -15,6 +15,7 @@ export const INITIAL_GAME_STATE: GameState = {
         { rank: 'K', suit: 'hearts' },
       ],
       seat: 6,
+      committed: 0,
     },
     {
       id: '2',
@@ -26,28 +27,31 @@ export const INITIAL_GAME_STATE: GameState = {
         { rank: '6', suit: 'clubs' },
       ],
       seat: 7,
+      committed: 0,
     },
     {
       id: '3',
       name: 'Mark',
       stack: 32,
-      status: PLAYER_STATUSES.IN_GAME,
+      status: PLAYER_STATUSES.SITTING_OUT,
       hand: [
         { rank: 'J', suit: 'clubs' },
         { rank: 'A', suit: 'diamonds' },
       ],
       seat: 8,
+      committed: 0,
     },
     {
       id: '4',
       name: 'Luca',
       stack: 98,
-      status: PLAYER_STATUSES.SITTING_OUT,
+      status: PLAYER_STATUSES.IN_GAME,
       hand: [
         { rank: 'A', suit: 'spades' },
         { rank: 'A', suit: 'clubs' },
       ],
       seat: 5,
+      committed: 30,
     },
     {
       id: '100',
@@ -59,17 +63,19 @@ export const INITIAL_GAME_STATE: GameState = {
         { rank: '10', suit: 'diamonds' },
       ],
       seat: 4,
+      committed: 15,
     },
     {
       id: '6',
       name: 'Priya',
       stack: 17,
-      status: PLAYER_STATUSES.FOLDED,
+      status: PLAYER_STATUSES.IN_GAME,
       hand: [
         { rank: '9', suit: 'hearts' },
         { rank: '5', suit: 'clubs' },
       ],
       seat: 3,
+      committed: 0,
     },
   ],
   dealerSeatIndex: 3,

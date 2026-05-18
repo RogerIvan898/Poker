@@ -108,3 +108,14 @@
     transform: translate(-50%, -50%) scale(0.8); 
   }
 }
+
+.mainPotArea {
+  position: absolute;
+  left: 50%;
+  top: 50%; /* Тоже строго по центру */
+  /* Смещаем вверх над картами (на 95px). 
+     Так банк всегда будет на одном расстоянии от карт при любом ресайзе! */
+  transform: translate(-50%, -95px);
+  z-index: 5;
+}
+

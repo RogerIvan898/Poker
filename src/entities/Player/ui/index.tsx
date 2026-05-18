@@ -2,6 +2,7 @@ import { cn } from 'shared/utils';
 import type { Player as PlayerType } from 'shared/types/player';
 
 import { PLAYER_STATUSES } from 'shared/constants/player';
+import type { DirectionType } from 'shared/types/primitives';
 
 import { useTurnTimer } from '../hooks/useTurnTimer';
 
@@ -12,11 +13,9 @@ import { TurnTimer } from './turn-timer';
 import { PlayerCards } from './player-cards';
 import { StackBadge } from './stack-badge';
 
-type CardPosition = 'top' | 'bottom' | 'left' | 'right';
-
 interface Props {
   player: PlayerType;
-  cardsPosition?: CardPosition;
+  cardsPosition?: DirectionType;
   currentPlayer?: boolean;
   dealer: boolean;
   turnDurationSec?: number;
@@ -24,8 +23,7 @@ interface Props {
   onTurnTimeout?: () => void;
   turn: boolean;
   bet: number | null;
-  betPosition?: CardPosition;
-  debug?: boolean;
+  betPosition?: DirectionType;
 }
 
 export const Player = ({
@@ -37,7 +35,6 @@ export const Player = ({
   onTurnTimeout,
   dealer = false,
   turn = false,
-  debug = true,
 }: Props) => {
   const { status, stack, hand, name } = player;
 
@@ -85,15 +82,11 @@ export const Player = ({
           {dealer && <div className={styles.dealerBadge}>D</div>}
         </div>
 
-        <BetBadge bet={100} position={'top'} />
-
-        {canShowCards && (
-          <PlayerCards
-            cards={hand}
-            position={cardsPosition}
-            reveal={currentPlayer || debug}
-          />
+        {player.committed > 0 && (
+          <BetBadge bet={player.committed} position={'top'} />
         )}
+
+        {canShowCards && <PlayerCards cards={hand} position={cardsPosition} />}
       </div>
 
       <StackBadge amount={stack} />

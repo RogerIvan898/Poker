@@ -23,6 +23,7 @@ export const PlayerActions = ({
   maxRaise = 1000,
 }: Props) => {
   const [viewerId] = useUnit([sessionModel.$viewerId]);
+
   const [isRaising, setIsRaising] = React.useState(false);
 
   if (!viewerId) {

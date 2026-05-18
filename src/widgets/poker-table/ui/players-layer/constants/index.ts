@@ -1,7 +1,9 @@
-export interface SeatConfig {
+import type { DirectionType } from 'shared/types/primitives';
+
+interface SeatConfig {
   angle: number;
-  cardPosition: 'top' | 'bottom' | 'left' | 'right';
-  betPosition: 'top' | 'bottom' | 'left' | 'right';
+  cardPosition: DirectionType;
+  betPosition: DirectionType;
 }
 
 export const VISUAL_SEATS_CONFIG: Record<number, SeatConfig> = {

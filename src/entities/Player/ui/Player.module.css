@@ -55,15 +55,38 @@
 
 .dealerBadge {
   position: absolute;
-  right: -8px;
-  bottom: -8px;
-  background: #111;
-  color: #ffd966;
-  font-weight: 700;
-  padding: 4px 6px;
-  border-radius: 12px;
-  font-size: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  right: -6px;
+  bottom: -6px;
+  z-index: 15;
+  
+  width: clamp(22px, 5vw, 28px);
+  height: clamp(22px, 5vw, 28px);
+  border-radius: 50%;
+  
+  /* Идеально сглаженный фон без торчащих пикселей */
+  background: 
+    radial-gradient(circle, #0d1322 0%, #111827 46%, rgba(17, 24, 39, 0) 56%),
+    linear-gradient(135deg, #ffe082 0%, #ffb300 50%, #b38600 100%);
+  
+  color: #ffd966; 
+  border: 2px solid #ffb300;
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: clamp(9px, 1.8vw, 12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 
+    0 5px 12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
+    
+  text-shadow: 0 0 3px rgba(255, 217, 102, 0.5);
+  
+  user-select: none;
+  pointer-events: none;
 }
 
 .sitOut {
@@ -148,4 +171,16 @@
   color: #ffd700;
   font-weight: 700;
   font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .dealerBadge {
+    /* На мобилке аватарки уменьшаются, слегка прижимаем фишку ближе к центру */
+    right: -4px;
+    bottom: -4px;
+    /* Уменьшаем тень, чтобы она не грязнудила на маленьком экране */
+    box-shadow: 
+      0 2px 6px rgba(0, 0, 0, 0.4),
+      inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  }
 }
