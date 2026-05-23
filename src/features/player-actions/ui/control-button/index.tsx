@@ -9,10 +9,11 @@ const DEFAULT_LABELS = {
   check: 'Check',
   fold: 'Fold',
   raise: 'Raise',
+  bet: 'Bet',
 } as const;
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: 'call' | 'check' | 'fold' | 'raise';
+  variant: 'call' | 'check' | 'fold' | 'raise' | 'bet';
   text?: string;
 }
 

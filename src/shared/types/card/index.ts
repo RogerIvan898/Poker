@@ -1,17 +1,9 @@
+import type { CARD_RANK, CARD_SUIT } from 'shared/constants/cards';
+
+export type CardRank = (typeof CARD_RANK)[keyof typeof CARD_RANK];
+export type CardSuit = (typeof CARD_SUIT)[keyof typeof CARD_SUIT];
+
 export interface Card {
-  rank:
-    | '2'
-    | '3'
-    | '4'
-    | '5'
-    | '6'
-    | '7'
-    | '8'
-    | '9'
-    | '10'
-    | 'J'
-    | 'Q'
-    | 'K'
-    | 'A';
-  suit: 'hearts' | 'diamonds' | 'clubs' | 'spades';
+  rank: CardRank;
+  suit: CardSuit;
 }

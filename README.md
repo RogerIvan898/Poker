@@ -97,7 +97,7 @@ export interface GameState {
   tableId: string | null; // Id игрового стола
   players: Player[]; // Массив игроков за столом
   dealerSeatIndex: string | null; // Id дилера (игрок, который ходит последним, каждую раздачу меняетя)
-  activeSeatIndex: string | null; // Id игрока, чей сейчас ход
+  activeSeat: string | null; // Id игрока, чей сейчас ход
   round: Round; // Текущий этам игры
   community: Card[]; // Общие карты на столе
   pot: number; // Текущий размер банка (все ставки)

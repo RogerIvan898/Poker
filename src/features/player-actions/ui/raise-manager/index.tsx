@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-import { gameModel } from 'entities/game';
 import { Logo } from 'shared/ui/logo';
 
 import { ControlButton } from '../control-button';
+import { raise } from '../../model';
 
 import styles from './raise-manager.module.css';
 
-interface RaiseManagerProps {
+interface Props {
   playerId: string;
   minRaise: number;
   maxRaise: number;
@@ -19,11 +19,11 @@ export const RaiseManager = ({
   minRaise,
   maxRaise,
   onCancel,
-}: RaiseManagerProps) => {
+}: Props) => {
   const [raiseAmount, setRaiseAmount] = useState(minRaise);
 
   const handleConfirm = () => {
-    gameModel.raise({ playerId, amount: raiseAmount });
+    raise({ playerId, amount: raiseAmount });
     onCancel();
   };
 

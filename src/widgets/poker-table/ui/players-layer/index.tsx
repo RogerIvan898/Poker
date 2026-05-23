@@ -15,10 +15,10 @@ interface Props {
 }
 
 export const PlayersLayer = ({ tableElement }: Props) => {
-  const [players, dealerSeatIndex, activeSeatIndex, viewerId] = useUnit([
+  const [players, dealerSeat, activeSeat, viewerId] = useUnit([
     gameModel.$players,
-    gameModel.$dealerSeatIndex,
-    gameModel.$activeSeatIndex,
+    gameModel.$dealerSeat,
+    gameModel.$activeSeat,
     sessionModel.$viewerId,
   ]);
 
@@ -80,9 +80,9 @@ export const PlayersLayer = ({ tableElement }: Props) => {
         <div key={player.id} className={styles.seatWrapper} style={style}>
           <Player
             player={player}
-            dealer={player.seat === dealerSeatIndex}
+            dealer={player.seat === dealerSeat}
             currentPlayer={player.id === viewerId}
-            turn={player.seat === activeSeatIndex}
+            turn={player.seat === activeSeat}
             cardsPosition={config.cardPosition}
             bet={player.committed}
             betPosition={config.betPosition}

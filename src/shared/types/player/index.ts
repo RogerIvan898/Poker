@@ -5,7 +5,8 @@ import type { Card } from '../card';
 export type PlayerActionType =
   (typeof PLAYER_ACTIONS)[keyof typeof PLAYER_ACTIONS];
 
-type PlayerStatusType = (typeof PLAYER_STATUSES)[keyof typeof PLAYER_STATUSES];
+export type PlayerStatusType =
+  (typeof PLAYER_STATUSES)[keyof typeof PLAYER_STATUSES];
 
 export interface PlayerAction {
   type: PlayerActionType;
@@ -21,6 +22,6 @@ export interface Player {
   stack: number;
   seat: number;
   status: PlayerStatusType;
-  hand?: [Card | null, Card | null];
+  hand: [Card | null, Card | null] | null;
   committed: number;
 }

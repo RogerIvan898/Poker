@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { socket } from 'shared/lib/socketClient';
+import { socket } from 'shared/api/socket';
 
-import type { GameEvent } from '../types';
-import { incomingEvent } from '../model/store';
+import type { GameEvent } from '../model/types';
+import { incomingEvent } from '../model';
 
 export function useGameSocket(tableId: string) {
   React.useEffect(() => {

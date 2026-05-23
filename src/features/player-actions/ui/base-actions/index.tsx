@@ -1,6 +1,5 @@
-import { gameModel } from 'entities/game';
-
 import { ControlButton } from '../control-button';
+import { call, check, fold } from '../../model';
 
 import styles from './base-actions.module.css';
 
@@ -18,28 +17,18 @@ export const BaseActions = ({
   canCall,
   canRaise,
   onRaiseClick,
-}: Props) => {
-  return (
-    <div className={styles.buttonRow}>
-      {canCall ? (
-        <ControlButton
-          variant="call"
-          onClick={() => gameModel.call({ playerId })}
-        />
-      ) : (
-        <ControlButton
-          variant="check"
-          onClick={() => gameModel.check({ playerId })}
-        />
-      )}
+}: Props) => (
+  <div className={styles.buttonRow}>
+    {canCall ? (
+      <ControlButton variant="call" onClick={() => call({ playerId })} />
+    ) : (
+      <ControlButton variant="check" onClick={() => check({ playerId })} />
+    )}
 
-      {canRaise && <ControlButton variant="raise" onClick={onRaiseClick} />}
-      {canFold && (
-        <ControlButton
-          variant="fold"
-          onClick={() => gameModel.fold({ playerId })}
-        />
-      )}
-    </div>
-  );
-};
+    {canRaise && <ControlButton variant="raise" onClick={onRaiseClick} />}
+
+    {canFold && (
+      <ControlButton variant="fold" onClick={() => fold({ playerId })} />
+    )}
+  </div>
+);
