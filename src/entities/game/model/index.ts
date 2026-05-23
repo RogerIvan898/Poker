@@ -9,9 +9,9 @@ import { parseCard } from './utils';
 import type {
   AllowedPlayerActionsEvent,
   GameState,
-  PlayerInfo,
   ServerGameEvent,
 } from './types';
+import * as reducers from './reducers';
 
 export const subscribeToGameSocketFx = createEffect(() =>
   socket.on('message', (payload: ServerGameEvent) => {
@@ -33,149 +33,33 @@ export const incomingEvent = createEvent<ServerGameEvent>();
 //   socket.disconnect();
 // });
 
-const buildPlayer = (playerInfo: PlayerInfo, seat: number): Player => ({
-  id: playerInfo.id,
-  name: playerInfo.name,
-  stack: playerInfo.stack,
-  seat,
-  status: playerInfo.status,
-  committed: 0,
-  hand: null,
-});
-
 export const $gameState = createStore<GameState>(INITIAL_GAME_STATE).on(
   incomingEvent,
   (state, { type, payload }) => {
     switch (type) {
       case SERVER_EVENTS.PLAYER_SEATED:
-        return {
-          ...state,
-          players: {
-            ...state.players,
-            [payload.seatIndex]: buildPlayer(payload.player, payload.seatIndex),
-          },
-        };
+        return reducers.reducePlayerSeated(state, payload);
 
-      case SERVER_EVENTS.HAND_STARTED: {
-        const { smallBlindSeat, bigBlindSeat, initialBets } = payload;
-
-        const resetPlayers = Object.keys(state.players).reduce(
-          (acc, key) => {
-            acc[key] = {
-              ...state.players[key],
-              committed: initialBets[Number(key)] || 0,
-              hand: null,
-            };
-            return acc;
-          },
-          {} as Record<string, Player>
-        );
-
-        return {
-          ...state,
-          community: payload.community.map(card => parseCard(card)),
-          dealerSeat: payload.dealerSeat,
-          bigBlindSeat: bigBlindSeat,
-          smallBlindSeat: smallBlindSeat,
-          smallBlind: initialBets[smallBlindSeat] || 0,
-          bigBlind: initialBets[bigBlindSeat] || 0,
-          players: resetPlayers,
-          pot: 0,
-          currentBet: initialBets[bigBlindSeat] || 0,
-          actionHistory: [],
-        };
-      }
+      case SERVER_EVENTS.HAND_STARTED:
+        return reducers.reduceHandStarted(state, payload);
 
       case SERVER_EVENTS.PLAYER_ACTED:
-        return {
-          ...state,
-          players: {
-            ...state.players,
-            [payload.seat]: {
-              ...state.players[payload.seat],
-              stack: payload.stack,
-              status: payload.status,
-              committed:
-                state.players[payload.seat].committed + (payload.amount ?? 0),
-            },
-          },
-        };
+        return reducers.reducePlayerActed(state, payload);
 
       case SERVER_EVENTS.TURN_CHANGED:
-        return {
-          ...state,
-          activeSeat: payload.activeSeat,
-        };
+        return reducers.reduceTurnChanged(state, payload);
 
-      case SERVER_EVENTS.STREET_CONCLUDED: {
-        const clearedPlayers = Object.keys(state.players).reduce(
-          (acc, key) => {
-            acc[key] = { ...state.players[key], committed: 0 };
-
-            return acc;
-          },
-          {} as Record<string, Player>
-        );
-
-        const totalSidePots = payload.sidePots.reduce(
-          (sum, sp) => sum + sp.amount,
-          0
-        );
-
-        return {
-          ...state,
-          players: clearedPlayers,
-          pot: payload.main + totalSidePots,
-          currentBet: 0,
-        };
-      }
+      case SERVER_EVENTS.STREET_CONCLUDED:
+        return reducers.reduceStreetConcluded(state, payload);
 
       case SERVER_EVENTS.BOARD_DEALT:
-        return {
-          ...state,
-          round: payload.street,
-          community: [
-            ...state.community,
-            ...payload.cards.map(card => parseCard(card)),
-          ],
-        };
+        return reducers.reduceBoardDealt(state, payload);
 
-      case SERVER_EVENTS.SHOWDOWN: {
-        const revealedPlayers = { ...state.players };
+      case SERVER_EVENTS.SHOWDOWN:
+        return reducers.reduceShowdown(state, payload);
 
-        Object.entries(payload.revealedHands).forEach(([seat, cards]) => {
-          if (revealedPlayers[seat]) {
-            revealedPlayers[seat] = {
-              ...revealedPlayers[seat],
-              hand: cards.map(card => parseCard(card)) as [Card, Card],
-            };
-          }
-        });
-
-        return {
-          ...state,
-          players: revealedPlayers,
-        };
-      }
-
-      case SERVER_EVENTS.HAND_COMPLETED: {
-        const updatedPlayers = { ...state.players };
-
-        payload.winners.forEach(winner => {
-          if (updatedPlayers[winner.seatIndex]) {
-            updatedPlayers[winner.seatIndex] = {
-              ...updatedPlayers[winner.seatIndex],
-              stack: updatedPlayers[winner.seatIndex].stack + winner.amountWon,
-            };
-          }
-        });
-
-        return {
-          ...state,
-          players: updatedPlayers,
-          activeSeat: null,
-        };
-      }
+      case SERVER_EVENTS.HAND_COMPLETED:
+        return reducers.reduceHandCompleted(state, payload);
     }
 
     return state;

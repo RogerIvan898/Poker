@@ -12,26 +12,38 @@ const DEFAULT_LABELS = {
   bet: 'Bet',
 } as const;
 
+type ActionType = keyof typeof DEFAULT_LABELS;
+type ColorIntent = 'primary' | 'secondary' | 'danger' | 'neutral';
+
+const ACTION_COLORS: Record<ActionType, ColorIntent> = {
+  call: 'secondary',
+  check: 'neutral',
+  fold: 'danger',
+  raise: 'primary',
+  bet: 'primary',
+};
+
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: 'call' | 'check' | 'fold' | 'raise' | 'bet';
+  action?: ActionType;
+  color?: ColorIntent;
   text?: string;
 }
 
 export const ControlButton = ({
-  variant,
+  action,
+  color,
   text,
   className,
   disabled,
   ...props
 }: Props) => {
-  const buttonText = text ?? DEFAULT_LABELS[variant];
-
-  const variantClass = styles[`ps-button--${variant}`];
+  const buttonText = text ?? (action ? DEFAULT_LABELS[action] : '');
+  const buttonColor = color ?? (action ? ACTION_COLORS[action] : 'neutral');
 
   return (
     <button
       type="button"
-      className={cn(styles['ps-button'], variantClass, className)}
+      className={cn(styles.button, styles[`color-${buttonColor}`], className)}
       disabled={disabled}
       {...props}
     >

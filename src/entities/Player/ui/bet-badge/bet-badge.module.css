@@ -1,20 +1,15 @@
-/* bet-badge.module.css */
-
 .betContainer {
   position: absolute;
   display: flex;
   align-items: center;
   gap: 6px;
   
-  /* Х СТОП БЕЛЫЙ ФОН: Делаем космическое неоновое стекло */
   background: linear-gradient(135deg, rgba(0, 152, 234, 0.15) 0%, rgba(4, 8, 18, 0.75) 100%);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   
-  /* Заставляем рамку гореть неоново-голубым (Официальный TON-акцент) */
   border: 1.5px solid #00b2ff;
   
-  /* Эффект неонового свечения (Glow) вокруг бэджа */
   box-shadow: 
     0 0 15px rgba(0, 178, 255, 0.35),
     inset 0 1px 2px rgba(255, 255, 255, 0.2);
@@ -23,21 +18,17 @@
   border-radius: 999px;
   z-index: 10;
   
-  /* Плавное упругое появление */
   opacity: 0;
   animation: betAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-/* Белоснежный четкий текст с легким неоновым отсветом */
 .betAmount {
   color: #ffffff;
   font-size: 13px;
-  font-weight: 800; /* Сделали шрифт жирнее, чтобы цифры звенели */
+  font-weight: 800;
   font-family: system-ui, -apple-system, sans-serif;
   letter-spacing: 0.5px;
 }
-
-/* --- ПОЗИЦИОНИРОВАНИЕ (ТВОИ КООРДИНАТЫ) --- */
 
 .bet-top {
   bottom: calc(100% + 24px);

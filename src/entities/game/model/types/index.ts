@@ -34,7 +34,7 @@ export interface GameState {
   currentBet: number;
 }
 
-interface HandStartedEvent {
+export interface HandStartedEvent {
   type: typeof SERVER_EVENTS.HAND_STARTED;
   payload: {
     community: string[];
@@ -58,7 +58,7 @@ export interface SidePot {
   eligibleSeatIndexes: number[];
 }
 
-interface StreetConcludedEvent {
+export interface StreetConcludedEvent {
   type: typeof SERVER_EVENTS.STREET_CONCLUDED;
   payload: {
     main: number;
@@ -71,13 +71,14 @@ export interface AllowedPlayerActionsEvent {
   payload: {
     canCheck: boolean;
     canCall: boolean;
+    canFold: boolean;
     callAmount: number;
     minRaise: number;
     maxRaise: number;
   };
 }
 
-interface PlayerActedEvent {
+export interface PlayerActedEvent {
   type: typeof SERVER_EVENTS.PLAYER_ACTED;
   payload: {
     seat: number;
@@ -96,7 +97,7 @@ export interface PlayerInfo {
   status: PlayerStatusType;
 }
 
-interface PlayerSeatedEvent {
+export interface PlayerSeatedEvent {
   type: typeof SERVER_EVENTS.PLAYER_SEATED;
   payload: {
     seatIndex: number;
@@ -111,7 +112,7 @@ interface YourCardsEvent {
   };
 }
 
-interface BoardDealtEvent {
+export interface BoardDealtEvent {
   type: typeof SERVER_EVENTS.BOARD_DEALT;
   payload: {
     street: GameStreet;
@@ -119,14 +120,14 @@ interface BoardDealtEvent {
   };
 }
 
-interface ShowdownEvent {
+export interface ShowdownEvent {
   type: typeof SERVER_EVENTS.SHOWDOWN;
   payload: {
     revealedHands: Record<number, string[]>;
   };
 }
 
-interface HandCompleteEvent {
+export interface HandCompleteEvent {
   type: typeof SERVER_EVENTS.HAND_COMPLETED;
   payload: {
     winners: {

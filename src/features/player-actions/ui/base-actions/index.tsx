@@ -8,6 +8,7 @@ interface Props {
   canFold: boolean;
   canCall: boolean;
   canRaise: boolean;
+  isBet: boolean;
   onRaiseClick: () => void;
 }
 
@@ -16,19 +17,22 @@ export const BaseActions = ({
   canFold,
   canCall,
   canRaise,
+  isBet,
   onRaiseClick,
 }: Props) => (
   <div className={styles.buttonRow}>
     {canCall ? (
-      <ControlButton variant="call" onClick={() => call({ playerId })} />
+      <ControlButton action="call" onClick={() => call({ playerId })} />
     ) : (
-      <ControlButton variant="check" onClick={() => check({ playerId })} />
+      <ControlButton action="check" onClick={() => check({ playerId })} />
     )}
 
-    {canRaise && <ControlButton variant="raise" onClick={onRaiseClick} />}
+    {canRaise && (
+      <ControlButton action={isBet ? 'bet' : 'raise'} onClick={onRaiseClick} />
+    )}
 
     {canFold && (
-      <ControlButton variant="fold" onClick={() => fold({ playerId })} />
+      <ControlButton action="fold" onClick={() => fold({ playerId })} />
     )}
   </div>
 );

@@ -42,10 +42,7 @@
 .tableSurface::before {
   content: '';
   position: absolute;
-  /* ИЗМЕНЕНИЕ 2: Вместо inset: 0 делаем небольшой заступ внутрь (-1px), 
-     чтобы градиент гарантированно перекрывал стыки под рамкой */
   inset: -1px;
-  /* ИЗМЕНЕНИЕ 3: Наследуем скругление родителя, чтобы оно было идентичным */
   border-radius: inherit; 
   background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 45%);
   pointer-events: none;
@@ -55,12 +52,9 @@
 .tableSurface::after {
   content: '';
   position: absolute;
-  /* Вместо inset 12px используем проценты, чтобы на мобилках линия не съезжала */
   inset: 4%; 
-  /* Чтобы скругление внутренней линии было математически идеальным, 
-     оно должно быть чуть меньше родительского. 850px — магия для этой пропорции */
   border-radius: 850px; 
-  border: 1px dashed rgba(255, 255, 255, 0.15); /* Пунктир смотрится дороже */
+  border: 1px dashed rgba(255, 255, 255, 0.15);
   pointer-events: none;
   z-index: 1;
 }
@@ -79,12 +73,12 @@
 
 @media (max-width: 768px) {
 .tableContainer {
-    padding: 16px; /* Чуть увеличили отступ, чтобы аватаркам было просторнее */
+    padding: 16px;
   }
 
   .pokerTable {
     width: min(72vw, 320px);
-    aspect-ratio: 1 / 1.6; /* Сделали чуть вытянутее под современные экраны */
+    aspect-ratio: 1 / 1.6;
   }
 
   .tableRail {
@@ -93,18 +87,16 @@
 
   .tableSurface {
     border-width: 6px;
-    /* Переворачиваем градиент для вертикального стола, чтобы свет шел сверху */
     background: radial-gradient(circle at 50% 20%, #3b82f6 0%, #1d4ed8 40%, #1e3a8a 75%, #0f172a 100%);
   }
   
 .tableSurface::after {
     border-radius: inherit;
-    inset: 6%; /* Сделали отступ линии чуть глубже для вертикального стола */
+    inset: 6%;
   }
 
   .communityCards {
     gap: 4px;
-    /* Разворачиваем карты на мобилке в 2 ряда или уменьшаем, если не влезают */
     transform: translate(-50%, -50%) scale(0.8); 
   }
 }
@@ -112,9 +104,7 @@
 .mainPotArea {
   position: absolute;
   left: 50%;
-  top: 50%; /* Тоже строго по центру */
-  /* Смещаем вверх над картами (на 95px). 
-     Так банк всегда будет на одном расстоянии от карт при любом ресайзе! */
+  top: 50%;
   transform: translate(-50%, -95px);
   z-index: 5;
 }

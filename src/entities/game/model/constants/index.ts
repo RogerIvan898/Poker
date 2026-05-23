@@ -20,7 +20,7 @@ export const INITIAL_GAME_STATE: GameState = {
     },
 
     4: {
-      id: '100',
+      id: '100 100',
       name: 'Serg',
       stack: 4.1,
       status: PLAYER_STATUSES.IN_GAME,

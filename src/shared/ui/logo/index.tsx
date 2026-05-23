@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface Props {
   color?: string;
   size?: number | string;
@@ -8,13 +6,11 @@ interface Props {
 export const Logo = ({ size = 18, color = 'white' }: Props) => {
   const normalizedSize = typeof size === 'number' ? `${size}px` : size;
 
-  // Точные границы оригинального пути TON
   const minX = 12.6944;
   const minY = 15.6277;
   const maxX = 41.5381;
   const maxY = 44.2765;
 
-  // Безопасный буфер в 1 единицу, чтобы сглаживание пикселей не резало края
   const padding = 1;
 
   const viewMinX = minX - padding;

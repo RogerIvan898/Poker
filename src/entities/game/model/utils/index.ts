@@ -1,5 +1,8 @@
 import { CARD_SUIT } from 'shared/constants/cards';
 import type { Card, CardRank } from 'shared/types/card';
+import type { Player } from 'shared/types/player';
+
+import type { PlayerInfo } from '../types';
 
 const SUIT_MAP = {
   h: CARD_SUIT.HEARTS,
@@ -19,3 +22,13 @@ export const parseCard = (cardString: string): Card => {
     suit,
   };
 };
+
+export const buildPlayer = (playerInfo: PlayerInfo, seat: number): Player => ({
+  id: playerInfo.id,
+  name: playerInfo.name,
+  stack: playerInfo.stack,
+  seat,
+  status: playerInfo.status,
+  committed: 0,
+  hand: null,
+});

@@ -27,7 +27,9 @@ export const PlayersLayer = ({ tableElement }: Props) => {
   const maxSeats = Object.keys(VISUAL_SEATS_CONFIG).length;
 
   const seatOffset = React.useMemo(() => {
-    const currentPlayer = players.find(player => player.id === viewerId);
+    const currentPlayer = Object.values(players).find(
+      player => player.id === viewerId
+    );
 
     if (!currentPlayer) {
       return 0;
@@ -47,7 +49,7 @@ export const PlayersLayer = ({ tableElement }: Props) => {
     const radiusX = rect.width * 0.7;
     const radiusY = rect.height * 0.3;
 
-    return players.map(player => {
+    return Object.values(players).map(player => {
       const visualSeatIndex = (player.seat + seatOffset) % maxSeats;
 
       const config =
@@ -70,7 +72,7 @@ export const PlayersLayer = ({ tableElement }: Props) => {
     });
   }, [players, seatOffset, maxSeats, rect]);
 
-  if (!tableElement || !rect || !players.length) {
+  if (!tableElement || !rect || !playersWithStyles.length) {
     return null;
   }
 
