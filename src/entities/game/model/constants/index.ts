@@ -98,7 +98,8 @@ export const INITIAL_GAME_STATE: GameState = {
 
   actionHistory: [],
 
-  bigBlind: 0,
+  bigBlind: 30,
+  smallBlind: 15,
 
   smallBlindSeat: 4,
   bigBlindSeat: 5,

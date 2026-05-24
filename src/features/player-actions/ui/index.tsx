@@ -17,9 +17,6 @@ export const PlayerActions = () => {
   const [isChangingAmount, setIsChangingAmount] = React.useState(false);
 
   // if (!viewerId || !allowedActions) {
-  //     return null;
-  //   }
-
   if (!viewerId) {
     return null;
   }

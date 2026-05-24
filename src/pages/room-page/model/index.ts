@@ -1,5 +1,6 @@
 import { sample } from 'effector';
 import { createGate } from 'effector-react';
+
 import {
   subscribeToGameSocketFx,
   unsubscribeFromGameSocketFx,
