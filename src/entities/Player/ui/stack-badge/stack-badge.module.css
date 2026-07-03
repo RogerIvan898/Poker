@@ -1,26 +1,93 @@
-.stackContainer {
+.frame {
+  position: relative;
+  z-index: 12;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  gap: 3px;
+  width: 100%;
+  min-width: clamp(76px, 16vw, 108px);
+  max-width: clamp(96px, 20vw, 124px);
+  margin-top: -14px;
+  padding: 6px 10px 7px;
+  border-radius: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 16, 28, 0.96) 0%,
+    rgba(4, 8, 18, 0.98) 100%
+  );
+  border: 1.5px solid rgba(0, 152, 234, 0.4);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+}
+
+.name {
+  width: 100%;
+  font-size: clamp(11px, 2.2vw, 13px);
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.stackRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 4px;
-  margin-top: 4px;
-  order: 3;
 }
 
 .stackAmount {
-  color: #ffd;
-  opacity: 0.9;
-  font-weight: 700;
-  font-size: 14px;
+  color: #30b6ff;
+  font-weight: 800;
+  font-size: clamp(13px, 2.6vw, 16px);
+  line-height: 1;
+  letter-spacing: 0.2px;
+}
+
+.stackLogo {
+  color: #0098ea;
+  flex-shrink: 0;
+}
+
+.frameFolded {
+  opacity: 0.75;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.frameFolded .name {
+  color: #999;
+}
+
+.frameFolded .stackAmount {
+  color: #777;
+}
+
+.frameSitOut {
+  opacity: 0.7;
+  filter: grayscale(0.5);
 }
 
 @media (max-width: 768px) {
-  .stackContainer {
-    gap: 2px;
-    margin-top: 2px;
+  .frame {
+    min-width: 76px;
+    max-width: 96px;
+    margin-top: -12px;
+    padding: 5px 8px 6px;
+  }
+
+  .name {
+    font-size: 11px;
   }
 
   .stackAmount {
-    font-size: 11px;
+    font-size: 13px;
   }
 }

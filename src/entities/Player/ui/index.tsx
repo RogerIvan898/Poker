@@ -15,7 +15,6 @@ import { StackBadge } from './stack-badge';
 
 interface Props {
   player: PlayerType;
-  cardsPosition?: DirectionType;
   currentPlayer?: boolean;
   dealer: boolean;
   turnDurationSec?: number;
@@ -28,13 +27,13 @@ interface Props {
 
 export const Player = ({
   player,
-  cardsPosition = 'top',
   currentPlayer = false,
   turnDurationSec = 15,
   timeBankSec = 10,
   onTurnTimeout,
   dealer = false,
   turn = false,
+  betPosition = 'top',
 }: Props) => {
   const { status, stack, hand, name } = player;
 
@@ -56,11 +55,10 @@ export const Player = ({
       className={cn(
         styles.player,
         isFolded && styles.folded,
-        isSitOut && styles.sitOut
+        isSitOut && styles.sitOut,
+        currentPlayer && styles.isCurrentPlayer
       )}
     >
-      <div className={styles.name}>{name}</div>
-
       <div className={styles.mainContainer}>
         <div className={styles.avatarWrap}>
           {showTimer && (
@@ -70,6 +68,8 @@ export const Player = ({
               progress={progress}
             />
           )}
+
+          {canShowCards && <PlayerCards cards={hand} />}
 
           <PlayerAvatar
             name={name}
@@ -82,14 +82,17 @@ export const Player = ({
           {dealer && <div className={styles.dealerBadge}>D</div>}
         </div>
 
+        <StackBadge
+          amount={stack}
+          name={name}
+          folded={isFolded}
+          sitOut={isSitOut}
+        />
+
         {player.committed > 0 && (
-          <BetBadge bet={player.committed} position={'top'} />
+          <BetBadge amount={player.committed} position={betPosition} />
         )}
-
-        {canShowCards && <PlayerCards cards={hand} position={cardsPosition} />}
       </div>
-
-      <StackBadge amount={stack} />
     </section>
   );
 };

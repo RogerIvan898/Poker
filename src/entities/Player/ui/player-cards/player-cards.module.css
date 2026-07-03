@@ -1,36 +1,33 @@
 .cards {
   position: absolute;
+  left: 50%;
+  top: 50%;
+  /* Смещаем вверх — карты в верхней половине аватара */
+  transform: translate(-50%, -68%);
   display: flex;
-  gap: clamp(3px, 1vw, 0.6rem);
-  z-index: 0;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1px;
+  z-index: 8;
+  pointer-events: none;
 }
 
-.cards-top {
-  bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
+.cardSlot {
+  flex-shrink: 0;
+  transform: scale(0.55);
+  transform-origin: bottom center;
 }
 
-.cards-bottom {
-  top: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.cards-left {
-  right: calc(100% + 6px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.cards-right {
-  left: calc(100% + 6px);
-  top: 50%;
-  transform: translateY(-50%);
+.cardSlot:last-child {
+  margin-left: -8px;
 }
 
 @media (max-width: 768px) {
-  .cards {
-    gap: 4px;
+  .cardSlot {
+    transform: scale(0.52);
+  }
+
+  .cardSlot:last-child {
+    margin-left: -7px;
   }
 }

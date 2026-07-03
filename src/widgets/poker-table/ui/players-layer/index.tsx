@@ -7,7 +7,7 @@ import { Player } from 'entities/player';
 import { sessionModel } from 'entities/session';
 import { useElementRect } from 'shared/hooks/useElementRect';
 
-import { VISUAL_SEATS_CONFIG } from './constants';
+import { computeSeats } from './seating';
 import styles from './players-layer.module.css';
 
 interface Props {
@@ -24,70 +24,30 @@ export const PlayersLayer = ({ tableElement }: Props) => {
 
   const rect = useElementRect(tableElement);
 
-  const maxSeats = Object.keys(VISUAL_SEATS_CONFIG).length;
+  const seats = React.useMemo(() => {
+    if (!rect) return [];
 
-  const seatOffset = React.useMemo(() => {
-    const currentPlayer = Object.values(players).find(
-      player => player.id === viewerId
-    );
+    const playerList = Object.values(players);
+    const viewerSeat = playerList.find(p => p.id === viewerId)?.seat ?? null;
 
-    if (!currentPlayer) {
-      return 0;
-    }
+    return computeSeats(playerList, viewerSeat, rect);
+  }, [players, viewerId, rect]);
 
-    return (maxSeats - currentPlayer.seat) % maxSeats;
-  }, [players, viewerId, maxSeats]);
-
-  const playersWithStyles = React.useMemo(() => {
-    if (!rect) {
-      return [];
-    }
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const radiusX = rect.width * 0.7;
-    const radiusY = rect.height * 0.3;
-
-    return Object.values(players).map(player => {
-      const visualSeatIndex = (player.seat + seatOffset) % maxSeats;
-
-      const config =
-        VISUAL_SEATS_CONFIG[visualSeatIndex] ?? VISUAL_SEATS_CONFIG[0];
-
-      const angle = ((config.angle - 90) * Math.PI) / 180;
-
-      const x = centerX + Math.cos(angle) * radiusX;
-
-      const y = centerY + Math.sin(angle) * radiusY;
-
-      return {
-        player,
-        config,
-        style: {
-          left: `${x}px`,
-          top: `${y}px`,
-        },
-      };
-    });
-  }, [players, seatOffset, maxSeats, rect]);
-
-  if (!tableElement || !rect || !playersWithStyles.length) {
+  if (!tableElement || !rect || !seats.length) {
     return null;
   }
 
   return createPortal(
     <div className={styles.playersLayer}>
-      {playersWithStyles.map(({ player, config, style }) => (
+      {seats.map(({ player, betPosition, style }) => (
         <div key={player.id} className={styles.seatWrapper} style={style}>
           <Player
             player={player}
             dealer={player.seat === dealerSeat}
             currentPlayer={player.id === viewerId}
             turn={player.seat === activeSeat}
-            cardsPosition={config.cardPosition}
             bet={player.committed}
-            betPosition={config.betPosition}
+            betPosition={betPosition}
           />
         </div>
       ))}

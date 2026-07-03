@@ -5,6 +5,7 @@ import { gameModel } from 'entities/game';
 
 import { PokerTable } from './poker-table';
 import { PlayersLayer } from './players-layer';
+import styles from './poker-board.module.css';
 
 export const PokerBoard = () => {
   const [gameState] = useUnit([gameModel.$gameState]);
@@ -14,10 +15,10 @@ export const PokerBoard = () => {
   );
 
   return (
-    <>
+    <div className={styles.board}>
       <PokerTable cards={gameState.community} ref={setTableElement} />
 
       {tableElement && <PlayersLayer tableElement={tableElement} />}
-    </>
+    </div>
   );
 };

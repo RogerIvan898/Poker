@@ -45,9 +45,9 @@
 
 @media (max-width: 768px) {
   .container {
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 32px;
+    justify-content: stretch;
+    padding-top: 48px;
+    padding-bottom: 8px;
 
     background-image:
       radial-gradient(circle at 100% -5%, var(--color-accent-glow-strong) 0%, transparent 40%),

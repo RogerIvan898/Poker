@@ -33,7 +33,7 @@
   background: rgba(0, 0, 0, 0.85);
   color: #fff;
   font-weight: 700;
-  font-size: clamp(10px, 1.5vw, 14px); 
+  font-size: clamp(11px, 2vw, 15px); 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   pointer-events: none;
 }

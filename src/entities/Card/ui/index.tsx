@@ -7,9 +7,10 @@ import styles from './card.module.css';
 
 interface Props {
   card: CardType | null;
+  flat?: boolean;
 }
 
-export const Card = ({ card }: Props) => {
+export const Card = ({ card, flat = false }: Props) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
@@ -19,12 +20,12 @@ export const Card = ({ card }: Props) => {
       return;
     }
 
-    element.classList.add(styles.play);
-
-    const rot = (Math.random() * 10 - 5).toFixed(2);
+    element.classList.add(flat ? styles.playFlat : styles.play);
 
     const onEnd = () => {
-      element.style.transform = `rotate(${rot}deg)`;
+      element.style.transform = flat
+        ? 'none'
+        : `rotate(${(Math.random() * 10 - 5).toFixed(2)}deg)`;
       element.removeEventListener('animationend', onEnd);
     };
 
@@ -33,7 +34,7 @@ export const Card = ({ card }: Props) => {
     return () => {
       element.removeEventListener('animationend', onEnd);
     };
-  }, []);
+  }, [flat]);
 
   const symbol = getSymbol(card?.suit ?? '');
 
