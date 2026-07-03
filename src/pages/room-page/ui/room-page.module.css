@@ -6,17 +6,41 @@
   width: 100dvw;
   height: 100dvh;
   overflow: hidden;
-  
-  background-color: #040812;
-  background-image: 
-    radial-gradient(circle at 85% 0%, rgba(0, 152, 234, 0.18) 0%, transparent 45%),
-    radial-gradient(circle at 10% 100%, rgba(0, 152, 234, 0.12) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(0, 152, 234, 0.05) 0%, transparent 65%),
-    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  
+
+  background-color: var(--color-bg-room);
+  background-image:
+    radial-gradient(circle at 85% 0%, var(--color-accent-glow) 0%, transparent 45%),
+    radial-gradient(circle at 10% 100%, var(--color-accent-glow-soft) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, var(--color-accent-glow-faint) 0%, transparent 65%),
+    linear-gradient(var(--color-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+
   background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
   background-position: center center;
+}
+
+.backBtn {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-header);
+  backdrop-filter: blur(10px);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.backBtn:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-hover);
 }
 
 @media (max-width: 768px) {
@@ -24,13 +48,13 @@
     justify-content: flex-start;
     align-items: center;
     padding-top: 32px;
-    
-    background-image: 
-      radial-gradient(circle at 100% -5%, rgba(0, 152, 234, 0.22) 0%, transparent 40%),
-      radial-gradient(circle at 0% 105%, rgba(0, 152, 234, 0.15) 0%, transparent 45%),
-      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-    
+
+    background-image:
+      radial-gradient(circle at 100% -5%, var(--color-accent-glow-strong) 0%, transparent 40%),
+      radial-gradient(circle at 0% 105%, var(--color-accent-glow) 0%, transparent 45%),
+      linear-gradient(var(--color-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-grid-line) 1px, transparent 1px);
+
     background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
   }
 }

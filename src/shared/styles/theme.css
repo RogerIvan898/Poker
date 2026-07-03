@@ -1,0 +1,41 @@
+:root {
+  --color-bg: #0a0e17;
+  --color-bg-elevated: #121825;
+  --color-bg-sidebar: #0d121c;
+  --color-bg-tabs: #0e1420;
+  --color-bg-header: rgba(10, 14, 23, 0.85);
+  --color-bg-room: #040812;
+  --color-bg-muted: #1c263b;
+  --color-bg-disabled: #1c2536;
+
+  --color-accent: #0098ea;
+  --color-accent-hover: #0082c8;
+  --color-accent-light: #30b6ff;
+  --color-accent-muted: rgba(0, 152, 234, 0.12);
+  --color-accent-subtle: rgba(0, 152, 234, 0.03);
+  --color-accent-active: rgba(0, 152, 234, 0.1);
+  --color-accent-glow-strong: rgba(0, 152, 234, 0.22);
+  --color-accent-glow: rgba(0, 152, 234, 0.18);
+  --color-accent-glow-soft: rgba(0, 152, 234, 0.12);
+  --color-accent-glow-faint: rgba(0, 152, 234, 0.05);
+
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-hover: rgba(255, 255, 255, 0.15);
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  --color-grid-line: rgba(255, 255, 255, 0.015);
+
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #748398;
+
+  --color-danger: #ff4a4a;
+  --color-success: #00e676;
+  --color-error: #ff5252;
+
+  --color-overlay: rgba(0, 0, 0, 0.8);
+  --color-hover: rgba(255, 255, 255, 0.03);
+
+  --radius-lg: 12px;
+  --radius-md: 8px;
+
+  --font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
