@@ -7,16 +7,9 @@ interface Props {
   folded: boolean;
   turn: boolean;
   currentPlayer: boolean;
-  hideBorder: boolean;
 }
 
-export const PlayerAvatar = ({
-  name,
-  folded,
-  turn,
-  currentPlayer,
-  hideBorder,
-}: Props) => (
+export const PlayerAvatar = ({ name, folded, turn, currentPlayer }: Props) => (
   <div
     className={cn(
       styles.avatar,
@@ -24,7 +17,6 @@ export const PlayerAvatar = ({
       turn && styles.turn,
       currentPlayer && styles.currentPlayer
     )}
-    style={hideBorder ? { border: 'none' } : undefined}
   >
     {getInitialLetter(name)}
   </div>

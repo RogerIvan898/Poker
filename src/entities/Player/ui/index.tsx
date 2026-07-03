@@ -6,10 +6,11 @@ import type { DirectionType } from 'shared/types/primitives';
 
 import { useTurnTimer } from '../hooks/useTurnTimer';
 
+import { DealerButton } from 'shared/ui/dealer-button';
+
 import styles from './Player.module.css';
 import { BetBadge } from './bet-badge';
 import { PlayerAvatar } from './player-avatar';
-import { TurnTimer } from './turn-timer';
 import { PlayerCards } from './player-cards';
 import { StackBadge } from './stack-badge';
 
@@ -40,7 +41,7 @@ export const Player = ({
   const isSitOut = status === PLAYER_STATUSES.SITTING_OUT;
   const isFolded = status === PLAYER_STATUSES.FOLDED;
 
-  const { remainingSeconds, showTimer, urgent, progress } = useTurnTimer({
+  const { showTimer, urgent, progress } = useTurnTimer({
     isTurn: turn,
     turnDurationSec,
     timeBankSec,
@@ -61,14 +62,6 @@ export const Player = ({
     >
       <div className={styles.mainContainer}>
         <div className={styles.avatarWrap}>
-          {showTimer && (
-            <TurnTimer
-              urgent={urgent}
-              remainingSeconds={remainingSeconds}
-              progress={progress}
-            />
-          )}
-
           {canShowCards && <PlayerCards cards={hand} />}
 
           <PlayerAvatar
@@ -76,10 +69,15 @@ export const Player = ({
             folded={isFolded}
             turn={turn}
             currentPlayer={currentPlayer}
-            hideBorder={showTimer}
           />
 
-          {dealer && <div className={styles.dealerBadge}>D</div>}
+          {dealer && (
+            <div
+              className={cn(styles.dealerWrap, styles[`dealer_${betPosition}`])}
+            >
+              <DealerButton compact />
+            </div>
+          )}
         </div>
 
         <StackBadge
@@ -87,6 +85,9 @@ export const Player = ({
           name={name}
           folded={isFolded}
           sitOut={isSitOut}
+          turnActive={showTimer}
+          turnProgress={progress}
+          urgent={urgent}
         />
 
         {player.committed > 0 && (

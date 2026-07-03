@@ -70,17 +70,16 @@ export const useTurnTimer = ({
   }, [isTurn, turnDurationSec, timeBankSec, onTurnTimeout]);
 
   const remainingSeconds = Math.ceil(remainingMs / 1000);
-  const showTimer = isTurn && usingBank;
-  const urgent = showTimer && remainingSeconds <= 3;
-  const progress = showTimer
-    ? Math.max(0, Math.min(1, remainingMs / (timeBankSec * 1000)))
-    : 0;
+  const totalMs = (usingBank ? timeBankSec : turnDurationSec) * 1000;
+  const progress = isTurn ? Math.max(0, Math.min(1, remainingMs / totalMs)) : 0;
+  const urgent =
+    isTurn && (usingBank ? remainingSeconds <= 3 : remainingSeconds <= 5);
 
   return {
     remainingMs,
     remainingSeconds,
     usingBank,
-    showTimer,
+    showTimer: isTurn,
     urgent,
     progress,
   };

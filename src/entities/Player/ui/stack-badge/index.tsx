@@ -8,6 +8,9 @@ interface Props {
   name: string;
   folded?: boolean;
   sitOut?: boolean;
+  turnActive?: boolean;
+  turnProgress?: number;
+  urgent?: boolean;
 }
 
 export const StackBadge = ({
@@ -15,18 +18,33 @@ export const StackBadge = ({
   name,
   folded = false,
   sitOut = false,
+  turnActive = false,
+  turnProgress = 0,
+  urgent = false,
 }: Props) => (
   <div
     className={cn(
       styles.frame,
       folded && styles.frameFolded,
-      sitOut && styles.frameSitOut
+      sitOut && styles.frameSitOut,
+      turnActive && styles.frameTurn,
+      urgent && styles.frameUrgent
     )}
   >
-    <span className={styles.name}>{name}</span>
-    <div className={styles.stackRow}>
-      <span className={styles.stackAmount}>{amount}</span>
-      <Logo size={14} className={styles.stackLogo} />
+    {turnActive && (
+      <div
+        className={cn(styles.timerFill, urgent && styles.timerFillUrgent)}
+        style={{ transform: `scaleX(${turnProgress})` }}
+        aria-hidden
+      />
+    )}
+
+    <div className={styles.content}>
+      <span className={styles.name}>{name}</span>
+      <div className={styles.stackRow}>
+        <span className={styles.stackAmount}>{amount}</span>
+        <Logo size={14} className={styles.stackLogo} />
+      </div>
     </div>
   </div>
 );
