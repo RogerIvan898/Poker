@@ -1,50 +1,109 @@
 import React from 'react';
 
+type PlayOptions = {
+  onStart?: () => void;
+};
+
+type UseSoundResult = {
+  play: (options?: PlayOptions) => void;
+  ready: boolean;
+};
+
 let audioContext: AudioContext | null = null;
 
-export const useSound = (url: string) => {
-  const bufferRef = React.useRef<AudioBuffer | null>(null);
+const bufferCache = new Map<string, AudioBuffer>();
+const loadPromises = new Map<string, Promise<AudioBuffer>>();
 
-  const play = React.useCallback(() => {
-    if (!audioContext || !bufferRef.current) {
-      return;
-    }
+const getAudioContext = () => {
+  if (!audioContext) {
+    audioContext = new AudioContext();
+  }
 
-    if (audioContext.state === 'suspended') {
-      audioContext.resume();
-    }
+  return audioContext;
+};
 
-    const source = audioContext.createBufferSource();
-    source.buffer = bufferRef.current;
-    source.connect(audioContext.destination);
+const loadBuffer = (url: string): Promise<AudioBuffer> => {
+  const cached = bufferCache.get(url);
 
-    source.start(0);
-  }, []);
+  if (cached) {
+    return Promise.resolve(cached);
+  }
+
+  const pending = loadPromises.get(url);
+
+  if (pending) {
+    return pending;
+  }
+
+  const promise = (async () => {
+    const context = getAudioContext();
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    const decoded = await context.decodeAudioData(arrayBuffer);
+
+    bufferCache.set(url, decoded);
+
+    return decoded;
+  })();
+
+  loadPromises.set(url, promise);
+
+  return promise;
+};
+
+export const useSound = (url: string): UseSoundResult => {
+  const [ready, setReady] = React.useState(() => bufferCache.has(url));
+  const pendingPlaysRef = React.useRef<PlayOptions[]>([]);
+
+  const play = React.useCallback(
+    (options?: PlayOptions) => {
+      const runPlay = (buffer: AudioBuffer, onStart?: () => void) => {
+        const context = getAudioContext();
+
+        if (context.state === 'suspended') {
+          void context.resume();
+        }
+
+        const source = context.createBufferSource();
+        source.buffer = buffer;
+        source.connect(context.destination);
+        source.start(0);
+        onStart?.();
+      };
+
+      const cached = bufferCache.get(url);
+
+      if (cached) {
+        runPlay(cached, options?.onStart);
+
+        return;
+      }
+
+      pendingPlaysRef.current.push(options ?? {});
+
+      void loadBuffer(url).then(buffer => {
+        const queued = pendingPlaysRef.current.splice(0);
+
+        queued.forEach(({ onStart }) => runPlay(buffer, onStart));
+      });
+    },
+    [url]
+  );
 
   React.useEffect(() => {
-    if (!audioContext) {
-      audioContext = new AudioContext();
-    }
-
     let isMounted = true;
 
-    const preloadSound = async () => {
-      const response = await fetch(url);
-      const arrayBuffer = await response.arrayBuffer();
-      const decodedData =
-        (await audioContext?.decodeAudioData(arrayBuffer)) ?? null;
-
+    void loadBuffer(url).then(() => {
       if (isMounted) {
-        bufferRef.current = decodedData;
+        setReady(true);
       }
-    };
-
-    preloadSound();
+    });
 
     return () => {
       isMounted = false;
+      pendingPlaysRef.current = [];
     };
   }, [url]);
 
-  return play;
+  return { play, ready };
 };

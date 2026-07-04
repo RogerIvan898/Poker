@@ -39,7 +39,7 @@ export const ControlButton = ({
   disabled,
   ...props
 }: Props) => {
-  const playCheckSound = useSound(checkSoundUrl);
+  const { play: playCheckSound } = useSound(checkSoundUrl);
   const buttonText = text ?? (action ? DEFAULT_LABELS[action] : '');
   const buttonColor = color ?? (action ? ACTION_COLORS[action] : 'neutral');
 
@@ -49,7 +49,7 @@ export const ControlButton = ({
       className={cn(styles.button, styles[`color-${buttonColor}`], className)}
       disabled={disabled}
       {...props}
-      onClick={playCheckSound}
+      onClick={() => playCheckSound()}
     >
       {buttonText}
     </button>

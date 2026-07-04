@@ -2,7 +2,6 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  /* Масштаб всей пары карт поверх аватара */
   transform: translate(-50%, -62%) scale(0.80);
   transform-origin: bottom center;
   display: flex;
@@ -13,13 +12,26 @@
   pointer-events: none;
 }
 
+/* Исходное (невидимое) состояние карты: она смещена вниз и уменьшена */
 .cardSlot {
   flex-shrink: 0;
+  opacity: 0;
+  transform: translateY(25px) scale(0.6);
+  /* Плавный переход для прозрачности и трансформации с эффектом упругости */
+  transition: 
+    opacity 0.2s ease-out, 
+    transform 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 /* Нахлёст карт в «руке» */
 .cardSlot + .cardSlot {
   margin-left: -36px;
+}
+
+/* Активное состояние: карта прилетает на свое законное место */
+.cardSlot.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 @media (max-width: 768px) {

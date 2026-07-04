@@ -15,11 +15,12 @@ interface Props {
 }
 
 export const PlayersLayer = ({ tableElement }: Props) => {
-  const [players, dealerSeat, activeSeat, viewerId] = useUnit([
+  const [players, dealerSeat, activeSeat, viewerId, myCards] = useUnit([
     gameModel.$players,
     gameModel.$dealerSeat,
     gameModel.$activeSeat,
     sessionModel.$viewerId,
+    gameModel.$myCards,
   ]);
 
   const rect = useElementRect(tableElement);
@@ -39,18 +40,23 @@ export const PlayersLayer = ({ tableElement }: Props) => {
 
   return createPortal(
     <div className={styles.playersLayer}>
-      {seats.map(({ player, betPosition, style }) => (
-        <div key={player.id} className={styles.seatWrapper} style={style}>
-          <Player
-            player={player}
-            dealer={player.seat === dealerSeat}
-            currentPlayer={player.id === viewerId}
-            turn={player.seat === activeSeat}
-            bet={player.committed}
-            betPosition={betPosition}
-          />
-        </div>
-      ))}
+      {seats.map(({ player, betPosition, style }) => {
+        const isViewer = player.id === viewerId;
+        const hand = isViewer && myCards ? myCards : player.hand;
+
+        return (
+          <div key={player.id} className={styles.seatWrapper} style={style}>
+            <Player
+              player={{ ...player, hand }}
+              dealer={player.seat === dealerSeat}
+              currentPlayer={isViewer}
+              turn={player.seat === activeSeat}
+              bet={player.committed}
+              betPosition={betPosition}
+            />
+          </div>
+        );
+      })}
     </div>,
     tableElement
   );

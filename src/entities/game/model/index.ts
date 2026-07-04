@@ -73,6 +73,13 @@ export const $myCards = createStore<Player['hand']>(null).on(
       return payload.cards.map(card => parseCard(card)) as [Card, Card];
     }
 
+    if (
+      type === SERVER_EVENTS.HAND_STARTED ||
+      type === SERVER_EVENTS.HAND_COMPLETED
+    ) {
+      return null;
+    }
+
     return state;
   }
 );

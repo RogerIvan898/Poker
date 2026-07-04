@@ -51,6 +51,11 @@ export const Player = ({
   const canShowCards =
     hand && hand.length >= 2 && (!isFolded || !currentPlayer);
 
+  const cardsKey =
+    hand && hand.length >= 2
+      ? `${hand[0].rank}-${hand[0].suit}|${hand[1].rank}-${hand[1].suit}`
+      : 'hidden';
+
   return (
     <section
       className={cn(
@@ -62,7 +67,13 @@ export const Player = ({
     >
       <div className={styles.mainContainer}>
         <div className={styles.avatarWrap}>
-          {canShowCards && <PlayerCards cards={hand} />}
+          {canShowCards && (
+            <PlayerCards
+              key={cardsKey}
+              cards={hand}
+              needSound={currentPlayer}
+            />
+          )}
 
           <PlayerAvatar
             name={name}
