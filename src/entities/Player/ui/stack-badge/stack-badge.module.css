@@ -2,10 +2,10 @@
   position: relative;
   z-index: 12;
   width: 100%;
-  min-width: clamp(76px, 16vw, 108px);
-  max-width: clamp(96px, 20vw, 124px);
-  margin-top: -14px;
-  padding: 6px 10px 7px;
+  min-width: clamp(88px, 18vw, 124px);
+  max-width: clamp(108px, 22vw, 140px);
+  margin-top: -18px;
+  padding: 7px 12px 8px;
   border-radius: 10px;
   background: linear-gradient(
     180deg,
@@ -53,25 +53,9 @@
   );
 }
 
-.frameTurn {
-  border-color: rgba(0, 255, 204, 0.55);
-  box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.55),
-    0 0 12px rgba(0, 255, 204, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.frameUrgent {
-  border-color: rgba(255, 77, 79, 0.65);
-  box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.55),
-    0 0 14px rgba(255, 77, 79, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
 .name {
   width: 100%;
-  font-size: clamp(11px, 2.2vw, 13px);
+  font-size: clamp(12px, 2.4vw, 15px);
   font-weight: 600;
   color: #fff;
   text-align: center;
@@ -92,7 +76,7 @@
 .stackAmount {
   color: #30b6ff;
   font-weight: 800;
-  font-size: clamp(13px, 2.6vw, 16px);
+  font-size: clamp(14px, 2.8vw, 18px);
   line-height: 1;
   letter-spacing: 0.2px;
 }
@@ -122,17 +106,17 @@
 
 @media (max-width: 768px) {
   .frame {
-    min-width: 76px;
-    max-width: 96px;
-    margin-top: -12px;
-    padding: 5px 8px 6px;
+    min-width: 88px;
+    max-width: 108px;
+    margin-top: -14px;
+    padding: 6px 10px 7px;
   }
 
   .name {
-    font-size: 11px;
+    font-size: 12px;
   }
 
   .stackAmount {
-    font-size: 13px;
+    font-size: 14px;
   }
 }

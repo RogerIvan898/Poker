@@ -5,16 +5,14 @@ import styles from './player-avatar.module.css';
 interface Props {
   name: string;
   folded: boolean;
-  turn: boolean;
   currentPlayer: boolean;
 }
 
-export const PlayerAvatar = ({ name, folded, turn, currentPlayer }: Props) => (
+export const PlayerAvatar = ({ name, folded, currentPlayer }: Props) => (
   <div
     className={cn(
       styles.avatar,
       folded && styles.foldedAvatar,
-      turn && styles.turn,
       currentPlayer && styles.currentPlayer
     )}
   >

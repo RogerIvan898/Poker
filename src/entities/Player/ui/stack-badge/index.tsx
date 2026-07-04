@@ -26,9 +26,7 @@ export const StackBadge = ({
     className={cn(
       styles.frame,
       folded && styles.frameFolded,
-      sitOut && styles.frameSitOut,
-      turnActive && styles.frameTurn,
-      urgent && styles.frameUrgent
+      sitOut && styles.frameSitOut
     )}
   >
     {turnActive && (
@@ -43,7 +41,7 @@ export const StackBadge = ({
       <span className={styles.name}>{name}</span>
       <div className={styles.stackRow}>
         <span className={styles.stackAmount}>{amount}</span>
-        <Logo size={14} className={styles.stackLogo} />
+        <Logo size={16} className={styles.stackLogo} />
       </div>
     </div>
   </div>

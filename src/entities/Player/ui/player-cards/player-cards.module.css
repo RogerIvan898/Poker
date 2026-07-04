@@ -2,7 +2,8 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -68%) scale(0.52);
+  /* Масштаб всей пары карт поверх аватара */
+  transform: translate(-50%, -62%) scale(0.80);
   transform-origin: bottom center;
   display: flex;
   align-items: flex-end;
@@ -16,16 +17,17 @@
   flex-shrink: 0;
 }
 
+/* Нахлёст карт в «руке» */
 .cardSlot + .cardSlot {
-  margin-left: -30px;
+  margin-left: -36px;
 }
 
 @media (max-width: 768px) {
   .cards {
-    transform: translate(-50%, -68%) scale(0.48);
+    transform: translate(-50%, -62%) scale(0.62);
   }
 
   .cardSlot + .cardSlot {
-    margin-left: -26px;
+    margin-left: -32px;
   }
 }

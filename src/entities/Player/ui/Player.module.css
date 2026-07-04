@@ -22,14 +22,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: clamp(56px, 12vw, 100px);
+  width: clamp(72px, 15vw, 118px);
 }
 
 /* Квадратная зона аватара, карт и кнопки дилера */
 .avatarWrap {
   position: relative;
-  width: clamp(52px, 11vw, 92px);
-  height: clamp(52px, 11vw, 92px);
+  width: clamp(68px, 14vw, 108px);
+  height: clamp(68px, 14vw, 108px);
   flex-shrink: 0;
   z-index: 8;
 }
@@ -37,25 +37,6 @@
 .stackLogo {
   width: 16px;
   height: 16px;
-}
-
-/* Пульсация рамки аватара на ходу */
-@keyframes pulse {
-  0% {
-    box-shadow:
-      0 0 15px rgba(0, 255, 204, 0.7),
-      0 6px 12px rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    box-shadow:
-      0 0 20px rgba(0, 255, 204, 0.9),
-      0 6px 12px rgba(0, 0, 0, 0.5);
-  }
-  100% {
-    box-shadow:
-      0 0 15px rgba(0, 255, 204, 0.7),
-      0 6px 12px rgba(0, 0, 0, 0.5);
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -151,7 +132,7 @@
   }
 
   .avatarWrap {
-    width: 52px;
-    height: 52px;
+    width: 68px;
+    height: 68px;
   }
 }

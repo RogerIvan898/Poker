@@ -67,7 +67,6 @@ export const Player = ({
           <PlayerAvatar
             name={name}
             folded={isFolded}
-            turn={turn}
             currentPlayer={currentPlayer}
           />
 

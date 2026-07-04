@@ -12,6 +12,7 @@ export default defineConfig({
       entities: resolve(__dirname, 'src/entities'),
       shared: resolve(__dirname, 'src/shared'),
       widgets: resolve(__dirname, 'src/widgets'),
+      assets: resolve(__dirname, 'src/assets'),
     },
   },
   server: {

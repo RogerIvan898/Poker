@@ -3,6 +3,8 @@ import React from 'react';
 import { cn } from 'shared/utils';
 
 import styles from './control-button.module.css';
+import { useSound } from 'shared/hooks/useSound';
+import checkSoundUrl from 'assets/sounds/check.mp3';
 
 const DEFAULT_LABELS = {
   call: 'Call',
@@ -37,6 +39,7 @@ export const ControlButton = ({
   disabled,
   ...props
 }: Props) => {
+  const playCheckSound = useSound(checkSoundUrl);
   const buttonText = text ?? (action ? DEFAULT_LABELS[action] : '');
   const buttonColor = color ?? (action ? ACTION_COLORS[action] : 'neutral');
 
@@ -46,6 +49,7 @@ export const ControlButton = ({
       className={cn(styles.button, styles[`color-${buttonColor}`], className)}
       disabled={disabled}
       {...props}
+      onClick={playCheckSound}
     >
       {buttonText}
     </button>
