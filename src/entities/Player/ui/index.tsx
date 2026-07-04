@@ -41,11 +41,12 @@ export const Player = ({
   const isSitOut = status === PLAYER_STATUSES.SITTING_OUT;
   const isFolded = status === PLAYER_STATUSES.FOLDED;
 
-  const { showTimer, urgent, progress } = useTurnTimer({
+  const { showTimer, usingBank, progress } = useTurnTimer({
     isTurn: turn,
     turnDurationSec,
     timeBankSec,
     onTurnTimeout,
+    playSound: currentPlayer,
   });
 
   const canShowCards =
@@ -97,7 +98,7 @@ export const Player = ({
           sitOut={isSitOut}
           turnActive={showTimer}
           turnProgress={progress}
-          urgent={urgent}
+          usingBank={usingBank}
         />
 
         {player.committed > 0 && (

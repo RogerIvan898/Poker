@@ -10,7 +10,7 @@ interface Props {
   sitOut?: boolean;
   turnActive?: boolean;
   turnProgress?: number;
-  urgent?: boolean;
+  usingBank?: boolean;
 }
 
 export const StackBadge = ({
@@ -20,7 +20,7 @@ export const StackBadge = ({
   sitOut = false,
   turnActive = false,
   turnProgress = 0,
-  urgent = false,
+  usingBank = false,
 }: Props) => (
   <div
     className={cn(
@@ -31,7 +31,7 @@ export const StackBadge = ({
   >
     {turnActive && (
       <div
-        className={cn(styles.timerFill, urgent && styles.timerFillUrgent)}
+        className={cn(styles.timerFill, usingBank && styles.timerFillBank)}
         style={{ transform: `scaleX(${turnProgress})` }}
         aria-hidden
       />

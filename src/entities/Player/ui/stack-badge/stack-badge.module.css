@@ -45,11 +45,11 @@
   will-change: transform;
 }
 
-.timerFillUrgent {
+.timerFillBank {
   background: linear-gradient(
     90deg,
     rgba(255, 77, 79, 0.5) 0%,
-    rgba(255, 77, 79, 0.25) 100%
+    rgba(220, 50, 55, 0.28) 100%
   );
 }
 
