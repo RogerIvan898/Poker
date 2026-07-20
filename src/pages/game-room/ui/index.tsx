@@ -7,6 +7,7 @@ import { TablePageGate } from '../model';
 
 import styles from './room-page.module.css';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from 'shared/constants/routes';
 
 export const GameRoomPage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export const GameRoomPage = () => {
     <div className={styles.container}>
       <button
         className={styles.backBtn}
-        onClick={() => navigate('/')}
+        onClick={() => navigate(ROUTES.MENU)}
         type="button"
       >
         ← Столы

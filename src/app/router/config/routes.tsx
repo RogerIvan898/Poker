@@ -1,23 +1,23 @@
 import { GameRoomPage } from 'pages/game-room';
 import { MenuPage } from 'pages/main-menu';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { ROUTES } from 'shared/constants/routes';
 
 export const router = createBrowserRouter([
   {
-    path: '/',
-    // element: <div />,
+    path: ROUTES.MENU,
     children: [
       {
         index: true,
         element: <MenuPage />,
       },
       {
-        path: 'game/:roomId',
+        path: ROUTES.GAME_ROOM_PATTENR,
         element: <GameRoomPage />,
       },
       {
         path: '*',
-        element: <Navigate to={'/'} replace />,
+        element: <Navigate to={ROUTES.MENU} replace />,
       },
     ],
   },

@@ -4,6 +4,7 @@ import { cn } from 'shared/utils';
 import { Logo } from 'shared/ui/logo';
 import styles from './main-menu.module.css';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from 'shared/constants/routes';
 
 const ROOMS = [
   {
@@ -152,7 +153,7 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
       <button
         className={styles.playBtn}
         disabled={isFull}
-        onClick={() => navigate(`game/${room.id}`)}
+        onClick={() => navigate(ROUTES.GAME_ROOM(String(room.id)))}
       >
         {isFull ? 'ПОЛН' : 'ИГРАТЬ'}
       </button>
