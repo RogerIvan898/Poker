@@ -9,9 +9,3 @@
   transform: translate(-50%, -50%);
   pointer-events: auto;
 }
-
-@media (max-width: 720px) {
-  .seat {
-    width: 90px;
-  }
-}

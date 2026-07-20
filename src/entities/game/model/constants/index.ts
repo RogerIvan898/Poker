@@ -123,5 +123,4 @@ export const SERVER_EVENTS = {
 
 export const CLIENT_COMMANDS = {
   PLAYER_ACTION: 'CMD_PLAYER_ACTION',
-  LEAVE_TABLE: 'CMD_LEAVE_TABLE',
 } as const;

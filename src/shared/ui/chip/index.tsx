@@ -5,7 +5,7 @@ import { cn } from 'shared/utils';
 import styles from './chip-stack.module.css';
 import chipStyles from './chip.module.css';
 import type { ChipColor } from './utils';
-import { breakdownBet, CHIP_LAYER_STEP } from './utils';
+import { breakdownBet } from './utils';
 
 interface ChipProps {
   label: string;
@@ -60,7 +60,7 @@ export const ChipStack = ({ amount, className }: StackProps) => {
           grounded={index === 0}
           className={styles.layer}
           style={{
-            bottom: index * CHIP_LAYER_STEP,
+            bottom: `calc(${index} * var(--step))`,
             zIndex: index + 1,
           }}
         />

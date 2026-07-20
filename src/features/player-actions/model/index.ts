@@ -20,7 +20,6 @@ export const fold = createEvent<PlayerActionPayloadBase>();
 export const call = createEvent<PlayerActionPayloadBase>();
 export const check = createEvent<PlayerActionPayloadBase>();
 export const raise = createEvent<PlayerActionPayloadAmount>();
-export const bet = createEvent<PlayerActionPayloadAmount>();
 
 sample({
   clock: fold,
@@ -49,18 +48,6 @@ sample({
   fn: ({ playerId, amount }) => ({
     payload: {
       action: PLAYER_ACTIONS.RAISE,
-      amount,
-    },
-    playerId,
-  }),
-  target: sendActionFx,
-});
-
-sample({
-  clock: bet,
-  fn: ({ playerId, amount }) => ({
-    payload: {
-      action: PLAYER_ACTIONS.BET,
       amount,
     },
     playerId,

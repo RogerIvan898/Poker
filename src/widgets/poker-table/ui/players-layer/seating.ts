@@ -1,3 +1,4 @@
+import type { Player } from 'shared/types/player';
 import type { DirectionType } from 'shared/types/primitives';
 
 /**
@@ -18,7 +19,7 @@ export function betPositionFromAngle(angleDeg: number): DirectionType {
  * Текущий игрок (viewerSeat) всегда оказывается снизу (angle 180°).
  */
 export function computeSeats(
-  players: { seat: number; id: string }[],
+  players: Player[],
   viewerSeat: number | null,
   rect: { width: number; height: number }
 ) {

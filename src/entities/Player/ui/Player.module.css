@@ -72,21 +72,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes betAppear {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.betAmount {
-  color: #ffd700;
-  font-weight: 700;
-  font-size: 16px;
-}
-
 @media (max-width: 768px) {
   .mainContainer {
     width: 72px;

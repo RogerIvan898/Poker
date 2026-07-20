@@ -6,7 +6,7 @@ import { cn } from 'shared/utils';
 
 import { useTurnTimer } from '../hooks/useTurnTimer';
 
-import { BetBadge } from './bet-badge';
+import { BetBadge, type BetBadgeVariant } from './bet-badge';
 import { PlayerAvatar } from './player-avatar';
 import { PlayerCards } from './player-cards';
 import styles from './Player.module.css';
@@ -20,8 +20,8 @@ interface Props {
   timeBankSec?: number;
   onTurnTimeout?: () => void;
   turn: boolean;
-  bet: number | null;
   betPosition?: DirectionType;
+  betBadgeVariant?: BetBadgeVariant;
 }
 
 export const Player = ({
@@ -33,6 +33,7 @@ export const Player = ({
   dealer = false,
   turn = false,
   betPosition = 'top',
+  betBadgeVariant = 'chips',
 }: Props) => {
   const { status, stack, hand, name } = player;
 
@@ -56,14 +57,7 @@ export const Player = ({
       : 'hidden';
 
   return (
-    <section
-      className={cn(
-        styles.player,
-        isFolded && styles.folded,
-        isSitOut && styles.sitOut,
-        currentPlayer && styles.isCurrentPlayer
-      )}
-    >
+    <section className={cn(styles.player, isSitOut && styles.sitOut)}>
       <div className={styles.mainContainer}>
         <div className={styles.avatarWrap}>
           {canShowCards && (
@@ -100,7 +94,11 @@ export const Player = ({
         />
 
         {player.committed > 0 && (
-          <BetBadge amount={player.committed} position={betPosition} />
+          <BetBadge
+            amount={player.committed}
+            position={betPosition}
+            variant={betBadgeVariant}
+          />
         )}
       </div>
     </section>

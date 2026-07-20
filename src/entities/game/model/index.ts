@@ -25,14 +25,6 @@ export const unsubscribeFromGameSocketFx = createEffect(() =>
 
 export const incomingEvent = createEvent<ServerGameEvent>();
 
-// const connectToTableFx = createEffect(gameApi.connectToTable);
-
-// const disconnectFromTableFx = createEffect((tableId: string) => {
-//   socket.emit(CLIENT_COMMANDS.LEAVE_TABLE, { tableId });
-
-//   socket.disconnect();
-// });
-
 export const $gameState = createStore<GameState>(INITIAL_GAME_STATE).on(
   incomingEvent,
   (state, { type, payload }) => {

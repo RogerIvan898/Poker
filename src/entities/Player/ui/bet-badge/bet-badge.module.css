@@ -5,6 +5,44 @@
   pointer-events: none;
 }
 
+.betAreaAmount {
+  perspective: none;
+}
+
+.amountBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 52px;
+  padding: 5px 10px 6px;
+  border-radius: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 24, 38, 0.96) 0%,
+    rgba(8, 12, 22, 0.98) 100%
+  );
+  border: 1.5px solid rgba(255, 193, 7, 0.35);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.amountValue {
+  color: #ffd966;
+  font-weight: 800;
+  font-size: clamp(12px, 2.4vw, 15px);
+  line-height: 1;
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.amountLogo {
+  color: #ffc107;
+  flex-shrink: 0;
+}
+
 .bet_top {
   bottom: calc(100% + 22px);
   left: 50%;
@@ -106,5 +144,15 @@
   .bet_right {
     left: calc(100% + 16px);
     --slide-x: -30px;
+  }
+
+  .amountBadge {
+    min-width: 48px;
+    padding: 4px 8px 5px;
+    gap: 3px;
+  }
+
+  .amountValue {
+    font-size: 12px;
   }
 }

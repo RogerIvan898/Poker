@@ -53,7 +53,6 @@ export const PlayersLayer = ({ tableElement }: Props) => {
               dealer={player.seat === dealerSeat}
               currentPlayer={isViewer}
               turn={player.seat === activeSeat}
-              bet={player.committed}
               betPosition={betPosition}
             />
           </div>
