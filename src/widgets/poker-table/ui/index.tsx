@@ -1,11 +1,12 @@
 import React from 'react';
+
 import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
 
-import { PokerTable } from './poker-table';
 import { PlayersLayer } from './players-layer';
 import styles from './poker-board.module.css';
+import { PokerTable } from './poker-table';
 
 export const PokerBoard = () => {
   const [gameState] = useUnit([gameModel.$gameState]);

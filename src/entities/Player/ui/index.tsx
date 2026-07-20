@@ -1,17 +1,15 @@
-import { cn } from 'shared/utils';
-import type { Player as PlayerType } from 'shared/types/player';
-
 import { PLAYER_STATUSES } from 'shared/constants/player';
+import type { Player as PlayerType } from 'shared/types/player';
 import type { DirectionType } from 'shared/types/primitives';
+import { DealerButton } from 'shared/ui/dealer-button';
+import { cn } from 'shared/utils';
 
 import { useTurnTimer } from '../hooks/useTurnTimer';
 
-import { DealerButton } from 'shared/ui/dealer-button';
-
-import styles from './Player.module.css';
 import { BetBadge } from './bet-badge';
 import { PlayerAvatar } from './player-avatar';
 import { PlayerCards } from './player-cards';
+import styles from './Player.module.css';
 import { StackBadge } from './stack-badge';
 
 interface Props {

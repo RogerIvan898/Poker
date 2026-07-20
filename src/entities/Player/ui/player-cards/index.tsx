@@ -1,11 +1,14 @@
 import React from 'react';
 
-import { Card } from 'entities/card';
-import type { Player } from 'shared/types/player';
-import styles from './player-cards.module.css';
-import { useSound } from 'shared/hooks/useSound';
 import cardDealSound from 'assets/sounds/card-deal.mp3';
+
+import { Card } from 'entities/card';
+
+import { useSound } from 'shared/hooks/useSound';
+import type { Player } from 'shared/types/player';
 import { cn } from 'shared/utils';
+
+import styles from './player-cards.module.css';
 
 interface Props {
   cards: Player['hand'];

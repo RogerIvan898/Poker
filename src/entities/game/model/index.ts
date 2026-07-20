@@ -4,14 +4,14 @@ import { socket } from 'shared/api/socket';
 import type { Card } from 'shared/types/card';
 import type { Player } from 'shared/types/player';
 
-import * as reducers from './reducers';
 import { INITIAL_GAME_STATE, SERVER_EVENTS } from './constants';
-import { parseCard } from './utils';
+import * as reducers from './reducers';
 import type {
   AllowedPlayerActionsEvent,
   GameState,
   ServerGameEvent,
 } from './types';
+import { parseCard } from './utils';
 
 export const subscribeToGameSocketFx = createEffect(() =>
   socket.on('message', (payload: ServerGameEvent) => {

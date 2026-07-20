@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { cn } from 'shared/utils';
-import type { DirectionType } from 'shared/types/primitives';
-import { useSound } from 'shared/hooks/useSound';
 import chipsSound from 'assets/sounds/chips.mp3';
 
+import { useSound } from 'shared/hooks/useSound';
+import type { DirectionType } from 'shared/types/primitives';
 import { ChipStack } from 'shared/ui/chip';
+import { cn } from 'shared/utils';
 
 import styles from './bet-badge.module.css';
 

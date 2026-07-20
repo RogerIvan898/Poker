@@ -1,8 +1,9 @@
 import { createEffect, createEvent, sample } from 'effector';
 
 import { CLIENT_COMMANDS } from 'entities/game/model/constants';
-import { PLAYER_ACTIONS } from 'shared/constants/player';
+
 import { socket } from 'shared/api/socket';
+import { PLAYER_ACTIONS } from 'shared/constants/player';
 
 import type {
   ClientPlayerEvent,

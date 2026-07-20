@@ -1,13 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+
 import { useGate } from 'effector-react';
 
 import { PokerBoard } from 'widgets/poker-table';
+
 import { PlayerActions } from 'features/player-actions';
+
+import { ROUTES } from 'shared/constants/routes';
 
 import { TablePageGate } from '../model';
 
 import styles from './game-room.module.css';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from 'shared/constants/routes';
 
 export const GameRoomPage = () => {
   const navigate = useNavigate();

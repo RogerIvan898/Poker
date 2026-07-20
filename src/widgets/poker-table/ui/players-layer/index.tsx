@@ -1,14 +1,16 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+
 import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
 import { Player } from 'entities/player';
 import { sessionModel } from 'entities/session';
+
 import { useElementRect } from 'shared/hooks/useElementRect';
 
-import { computeSeats } from './seating';
 import styles from './players-layer.module.css';
+import { computeSeats } from './seating';
 
 interface Props {
   tableElement: HTMLDivElement | null;

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
@@ -16,7 +17,6 @@ export const PlayerActions = () => {
 
   const [isChangingAmount, setIsChangingAmount] = React.useState(false);
 
-  // if (!viewerId || !allowedActions) {
   if (!viewerId) {
     return null;
   }

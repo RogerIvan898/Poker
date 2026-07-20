@@ -1,8 +1,8 @@
+import type { Card } from 'shared/types/card';
 import type { Player } from 'shared/types/player';
 
 import type * as T from '../types';
 import { buildPlayer, parseCard } from '../utils';
-import type { Card } from 'shared/types/card';
 
 export const reducePlayerSeated = (
   state: T.GameState,

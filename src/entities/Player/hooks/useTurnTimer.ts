@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { useSound } from 'shared/hooks/useSound';
-import turnSound from 'assets/sounds/turn.mp3';
 import timeBankSound from 'assets/sounds/time-bank.mp3';
+import turnSound from 'assets/sounds/turn.mp3';
+
+import { useSound } from 'shared/hooks/useSound';
 
 export const useTurnTimer = ({
   isTurn,

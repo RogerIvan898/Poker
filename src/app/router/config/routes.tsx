@@ -1,6 +1,8 @@
+import { createBrowserRouter, Navigate } from 'react-router-dom';
+
 import { GameRoomPage } from 'pages/game-room';
 import { MenuPage } from 'pages/main-menu';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+
 import { ROUTES } from 'shared/constants/routes';
 
 export const router = createBrowserRouter([

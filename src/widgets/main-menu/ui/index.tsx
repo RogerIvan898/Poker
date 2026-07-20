@@ -1,10 +1,11 @@
 import { useState } from 'react';
-
-import { cn } from 'shared/utils';
-import { Logo } from 'shared/ui/logo';
-import styles from './main-menu.module.css';
 import { useNavigate } from 'react-router-dom';
+
 import { ROUTES } from 'shared/constants/routes';
+import { Logo } from 'shared/ui/logo';
+import { cn } from 'shared/utils';
+
+import styles from './main-menu.module.css';
 
 const ROOMS = [
   {

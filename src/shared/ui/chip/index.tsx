@@ -2,11 +2,10 @@ import type { CSSProperties } from 'react';
 
 import { cn } from 'shared/utils';
 
+import styles from './chip-stack.module.css';
+import chipStyles from './chip.module.css';
 import type { ChipColor } from './utils';
 import { breakdownBet, CHIP_LAYER_STEP } from './utils';
-
-import chipStyles from './chip.module.css';
-import styles from './chip-stack.module.css';
 
 interface ChipProps {
   label: string;

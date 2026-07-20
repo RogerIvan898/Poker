@@ -1,4 +1,5 @@
-import { ControlButton } from '../control-button';
+import { ActionButton } from 'shared/ui/action-button';
+
 import { call, check, fold } from '../../model';
 
 import styles from './base-actions.module.css';
@@ -21,18 +22,26 @@ export const BaseActions = ({
   onRaiseClick,
 }: Props) => (
   <div className={styles.buttonRow}>
-    {canCall ? (
-      <ControlButton action="call" onClick={() => call({ playerId })} />
-    ) : (
-      <ControlButton action="check" onClick={() => check({ playerId })} />
-    )}
+    <ActionButton
+      color="danger"
+      text={canCall ? 'Call' : 'Check'}
+      onClick={canCall ? () => call({ playerId }) : () => check({ playerId })}
+    />
 
     {canRaise && (
-      <ControlButton action={isBet ? 'bet' : 'raise'} onClick={onRaiseClick} />
+      <ActionButton
+        color="primary"
+        text={isBet ? 'Bet' : 'Raise'}
+        onClick={onRaiseClick}
+      />
     )}
 
     {canFold && (
-      <ControlButton action="fold" onClick={() => fold({ playerId })} />
+      <ActionButton
+        color="secondary"
+        text="Fold"
+        onClick={() => fold({ playerId })}
+      />
     )}
   </div>
 );

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+
+import { ActionButton } from 'shared/ui/action-button';
 import { Logo } from 'shared/ui/logo';
-import { ControlButton } from '../control-button';
+
 import { raise } from '../../model';
 
 import styles from './bet-manager.module.css';
@@ -63,12 +65,12 @@ export const BetManager = ({
       />
 
       <div className={styles.buttonRow}>
-        <ControlButton
+        <ActionButton
           color="primary"
           text={`Confirm ${variant}`}
           onClick={handleConfirm}
         />
-        <ControlButton color="danger" text="Cancel" onClick={onCancel} />
+        <ActionButton color="danger" text="Cancel" onClick={onCancel} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -62%) scale(0.80);
+  transform: translate(-50%, -62%) scale(0.8);
   transform-origin: bottom center;
   display: flex;
   align-items: flex-end;
@@ -16,8 +16,8 @@
   flex-shrink: 0;
   opacity: 0;
   transform: translateY(25px) scale(0.6);
-  transition: 
-    opacity 0.2s ease-out, 
+  transition:
+    opacity 0.2s ease-out,
     transform 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
@@ -34,7 +34,7 @@
 
 @media (max-width: 768px) {
   .cards {
-    transform: translate(-50%, -62%) scale(0.60);
+    transform: translate(-50%, -62%) scale(0.6);
   }
 
   .cardSlot + .cardSlot {

@@ -77,8 +77,14 @@
   font-size: 14px;
 }
 
-.userInfo { display: flex; flex-direction: column; }
-.userName { font-size: 13px; font-weight: 600; }
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+.userName {
+  font-size: 13px;
+  font-weight: 600;
+}
 
 .balanceRow {
   display: flex;
@@ -97,10 +103,20 @@
   border: 1px solid var(--color-border);
 }
 
-.tonIcon { width: 12px; height: 12px; }
-.balanceValue { font-size: 12px; font-weight: 700; color: var(--color-accent-light); }
+.tonIcon {
+  width: 12px;
+  height: 12px;
+}
+.balanceValue {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-accent-light);
+}
 
-.walletActions { display: flex; gap: 4px; }
+.walletActions {
+  display: flex;
+  gap: 4px;
+}
 
 .actionBtn {
   width: 20px;
@@ -116,8 +132,12 @@
   justify-content: center;
 }
 
-.depositBtn { color: var(--color-success); }
-.withdrawBtn { color: var(--color-error); }
+.depositBtn {
+  color: var(--color-success);
+}
+.withdrawBtn {
+  color: var(--color-error);
+}
 
 .settingsBtn {
   background: none;
@@ -178,14 +198,18 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  transition: transform 0.15s ease, border-color 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .roomCard:hover {
   border-color: var(--color-border-hover);
 }
 
-.roomFull { opacity: 0.5; }
+.roomFull {
+  opacity: 0.5;
+}
 
 .roomContent {
   display: flex;
@@ -195,7 +219,11 @@
   min-width: 0;
 }
 
-.roomHeader { display: flex; align-items: center; gap: 8px; }
+.roomHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
 .roomName {
   margin: 0;
@@ -217,11 +245,27 @@
   text-transform: uppercase;
 }
 
-.roomDetails { display: flex; gap: 20px; }
-.stat { display: flex; flex-direction: column; }
-.statLabel { font-size: 10px; color: var(--color-text-secondary); margin-bottom: 2px; }
-.statValue { font-size: 13px; font-weight: 600; color: #fff; }
-.textAlert { color: var(--color-danger); }
+.roomDetails {
+  display: flex;
+  gap: 20px;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+.statLabel {
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  margin-bottom: 2px;
+}
+.statValue {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+.textAlert {
+  color: var(--color-danger);
+}
 
 .playBtn {
   min-width: 80px;
@@ -237,8 +281,14 @@
   flex-shrink: 0;
 }
 
-.playBtn:hover:not(:disabled) { background: var(--color-accent-hover); }
-.playBtn:disabled { background: var(--color-bg-disabled); color: var(--color-text-secondary); cursor: not-allowed; }
+.playBtn:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+}
+.playBtn:disabled {
+  background: var(--color-bg-disabled);
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+}
 
 .navItem {
   background: none;
@@ -263,19 +313,26 @@
   gap: 4px;
 }
 
-.bottomNav .activeNav { color: var(--color-accent); }
-.bottomNav .navIcon { font-size: 20px; }
-.bottomNav .navText { font-size: 10px; font-weight: 600; }
+.bottomNav .activeNav {
+  color: var(--color-accent);
+}
+.bottomNav .navIcon {
+  font-size: 20px;
+}
+.bottomNav .navText {
+  font-size: 10px;
+  font-weight: 600;
+}
 
 @media (min-width: 768px) {
   .bottomNav {
     display: none;
   }
-  
+
   .sideNav {
     display: flex;
   }
-  
+
   .sideNav .navItem {
     display: flex;
     align-items: center;
@@ -285,23 +342,28 @@
     width: 100%;
     text-align: left;
   }
-  
+
   .sideNav .navItem:hover {
     background: var(--color-hover);
   }
-  
+
   .sideNav .activeNav {
     background: var(--color-accent-active);
     color: var(--color-accent);
   }
-  
-  .sideNav .navIcon { font-size: 18px; }
-  .sideNav .navText { font-size: 14px; font-weight: 600; }
-  
+
+  .sideNav .navIcon {
+    font-size: 18px;
+  }
+  .sideNav .navText {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
   .contentArea {
     padding: 24px 32px;
   }
-  
+
   .roomGrid {
     gap: 16px;
   }
