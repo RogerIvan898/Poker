@@ -5,7 +5,7 @@ import { PlayerActions } from 'features/player-actions';
 
 import { TablePageGate } from '../model';
 
-import styles from './room-page.module.css';
+import styles from './game-room.module.css';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'shared/constants/routes';
 
@@ -16,11 +16,7 @@ export const GameRoomPage = () => {
 
   return (
     <div className={styles.container}>
-      <button
-        className={styles.backBtn}
-        onClick={() => navigate(ROUTES.MENU)}
-        type="button"
-      >
+      <button className={styles.backBtn} onClick={() => navigate(ROUTES.MENU)}>
         ← Столы
       </button>
       <PokerBoard />
