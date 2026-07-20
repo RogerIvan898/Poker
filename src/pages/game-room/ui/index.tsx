@@ -1,21 +1,25 @@
-import { useGate, useUnit } from 'effector-react';
+import { useGate } from 'effector-react';
 
-import { navigateToMenu } from 'app/model';
 import { PokerBoard } from 'widgets/poker-table';
 import { PlayerActions } from 'features/player-actions';
 
 import { TablePageGate } from '../model';
 
 import styles from './room-page.module.css';
+import { useNavigate } from 'react-router-dom';
 
-export const RoomPage = () => {
-  const leave = useUnit(navigateToMenu);
+export const GameRoomPage = () => {
+  const navigate = useNavigate();
 
   useGate(TablePageGate);
 
   return (
     <div className={styles.container}>
-      <button className={styles.backBtn} onClick={() => leave()} type="button">
+      <button
+        className={styles.backBtn}
+        onClick={() => navigate('/')}
+        type="button"
+      >
         ← Столы
       </button>
       <PokerBoard />

@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { useUnit } from 'effector-react';
 
-import { playRoomClicked } from 'app/model';
 import { cn } from 'shared/utils';
 import { Logo } from 'shared/ui/logo';
 import styles from './main-menu.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const ROOMS = [
   {
@@ -120,7 +119,8 @@ const Filters = () => {
 };
 
 const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
-  const play = useUnit(playRoomClicked);
+  const navigate = useNavigate();
+
   const isFull = room.players === room.max;
 
   return (
@@ -152,7 +152,7 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
       <button
         className={styles.playBtn}
         disabled={isFull}
-        onClick={() => play(room.id)}
+        onClick={() => navigate(`game/${room.id}`)}
       >
         {isFull ? 'ПОЛН' : 'ИГРАТЬ'}
       </button>
