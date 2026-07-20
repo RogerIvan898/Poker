@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100dvw;
+  width: 100%;
   height: 100dvh;
   overflow: hidden;
 
@@ -45,9 +45,10 @@
 
 @media (max-width: 768px) {
   .container {
-    justify-content: stretch;
+    justify-content: center;
+    align-items: center;
     padding-top: 48px;
-    padding-bottom: 8px;
+    padding-bottom: 88px;
 
     background-image:
       radial-gradient(circle at 100% -5%, var(--color-accent-glow-strong) 0%, transparent 40%),

@@ -16,12 +16,13 @@
 
 @media (max-width: 768px) {
   .actionContainer {
-    left: 50%;
-    right: auto;
+    left: 8px;
+    right: 8px;
     bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
-    transform: translateX(-50%);
-    width: calc(100vw - 16px);
+    transform: none;
+    width: auto;
     max-width: 420px;
+    margin: 0 auto;
     padding: 10px;
     gap: 8px;
     border-radius: 16px;

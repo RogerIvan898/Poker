@@ -5,7 +5,6 @@
   pointer-events: none;
 }
 
-/* Позиции — стопка дальше от игрока, ближе к центру стола */
 .bet_top {
   bottom: calc(100% + 22px);
   left: 50%;

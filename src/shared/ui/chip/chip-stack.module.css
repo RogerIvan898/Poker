@@ -1,6 +1,6 @@
 .stack {
-  --size: clamp(24px, 5vw, 32px);
-  --step: 4.5px; /* Немного уменьшили шаг, чтобы стопка сидела плотнее друг к другу — это дает ощущение монолитности */
+  --size: clamp(20px, 5vw, 32px);
+  --step: 4.5px;
   position: relative;
   width: var(--size);
   height: calc(var(--size) + (var(--layers, 1) - 1) * var(--step));
@@ -14,8 +14,13 @@
   bottom: 0;
 }
 
-/* Тень подрезки (Ambient Occlusion) между слоями фишек */
 .layer:not(:first-child) {
-  /* Сдвиг тени вниз по оси Y (0 2px), так как фишка сверху перекрывает нижнюю в изометрии */
   filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.75));
+}
+
+@media (max-width: 768px) {
+  .stack {
+    --size: 16px;
+    --step: 3px;
+  }
 }

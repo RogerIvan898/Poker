@@ -85,14 +85,18 @@
 
 @media (max-width: 768px) {
   .tableContainer {
-    padding: 4px 8px;
+    justify-content: center;
     align-items: center;
+    padding: 0;
+    overflow: visible;
   }
 
   .pokerTable {
-    width: min(94vw, 440px);
-    max-height: min(calc(100dvh - 200px), 520px);
-    aspect-ratio: 1 / 1.32;
+    height: min(calc(100dvh - 152px), 58dvh);
+    width: auto;
+    max-width: 86vw;
+    max-height: none;
+    aspect-ratio: 5 / 7;
   }
 
   .tableRail {

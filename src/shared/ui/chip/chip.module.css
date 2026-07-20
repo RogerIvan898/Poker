@@ -1,5 +1,5 @@
 .chip {
-  --size: clamp(24px, 5vw, 32px);
+  --size: clamp(20px, 5vw, 32px);
   --stripe: #ffffff;
   --main: #d32f2f;
   --edge: #941717;
@@ -24,7 +24,6 @@
   justify-content: center;
 }
 
-/* Ребро фишки в стопке — чёткие слои без размытия */
 .stacked {
   box-shadow:
     0 1px 0 var(--edge),
@@ -34,7 +33,6 @@
     0 5px 0 var(--edge);
 }
 
-/* Нижняя фишка — ребро + тень на стол */
 .grounded {
   box-shadow:
     0 1px 0 var(--edge),
@@ -67,7 +65,6 @@
   line-height: 1;
 }
 
-/* 1K — чёрная с золотыми полосками */
 .color_black {
   --main: #212121;
   --edge: #0a0a0a;
@@ -75,32 +72,33 @@
   --text: #e6c138;
 }
 
-/* 100 — зелёная */
 .color_green {
   --main: #2e7d32;
   --edge: #1b4b1e;
 }
 
-/* 50 — синяя */
 .color_blue {
   --main: #1976d2;
   --edge: #0e4c8a;
 }
 
-/* 10 — красная */
 .color_red {
   --main: #d32f2f;
   --edge: #8a1919;
 }
 
-/* 1 — оранжевая */
 .color_orange {
   --main: #ef6c00;
   --edge: #bf360c;
 }
 
-/* запасной номинал — фиолетовая */
 .color_purple {
   --main: #7b1fa2;
   --edge: #4a148c;
+}
+
+@media (max-width: 768px) {
+  .chip {
+    --size: 16px;
+  }
 }

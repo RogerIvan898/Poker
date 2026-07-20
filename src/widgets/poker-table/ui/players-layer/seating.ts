@@ -27,8 +27,8 @@ export function computeSeats(
 
   const cx = rect.width / 2;
   const cy = rect.height / 2;
-  const rx = rect.width * 0.54;
-  const ry = rect.height * 0.48;
+  const rx = rect.width * (rect.width < 380 ? 0.5 : 0.54);
+  const ry = rect.height * (rect.width < 380 ? 0.46 : 0.48);
 
   // Находим минимальный seat, чтобы нумерация шла по порядку
   const refSeat = viewerSeat ?? players[0].seat;
