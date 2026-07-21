@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { DepositModal } from 'features/deposit/ui';
 
 import { ROUTES } from 'shared/constants/routes';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils';
 
+import { Header } from './header';
 import styles from './main-menu.module.css';
 
 const ROOMS = [
@@ -56,51 +59,6 @@ const ROOMS = [
 ];
 
 const FILTERS = ['Все', 'Кэш', 'Турниры', 'Sit & Go'];
-
-const Header = ({ user }: { user: { firstName: string; balance: string } }) => (
-  <header className={styles.header}>
-    <div className={styles.headerLeft}>
-      <div className={styles.avatarPlaceholder}>{user.firstName.charAt(0)}</div>
-      <div className={styles.userInfo}>
-        <span className={styles.userName}>{user.firstName}</span>
-        <div className={styles.balanceRow}>
-          <div className={styles.balanceBadge}>
-            <Logo className={styles.tonIcon} />
-            <span className={styles.balanceValue}>{user.balance}</span>
-          </div>
-          <div className={styles.walletActions}>
-            <button
-              className={cn(styles.actionBtn, styles.depositBtn)}
-              aria-label="Пополнить"
-            >
-              +
-            </button>
-            <button
-              className={cn(styles.actionBtn, styles.withdrawBtn)}
-              aria-label="Вывести"
-            >
-              -
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <button className={styles.settingsBtn} aria-label="Настройки">
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <circle cx="12" cy="12" r="3"></circle>
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-      </svg>
-    </button>
-  </header>
-);
 
 const Filters = () => {
   const [active, setActive] = useState('Все');
@@ -180,7 +138,9 @@ const NavLinks = () => (
 );
 
 export const MainMenu = () => {
-  const mockUser = { firstName: 'Алексей', balance: '124.50' };
+  const [isDepositOpen, setIsDepositOpen] = React.useState(false);
+
+  const mockUser = { firstName: 'Алексей', balance: 124.5 };
 
   return (
     <div className={styles.appLayout}>
@@ -195,7 +155,12 @@ export const MainMenu = () => {
       </aside>
 
       <div className={styles.mainContainer}>
-        <Header user={mockUser} />
+        <Header
+          userName={mockUser.firstName}
+          balance={mockUser.balance}
+          onDepositClick={() => setIsDepositOpen(true)}
+        />
+
         <Filters />
 
         <main className={styles.contentArea}>
@@ -211,6 +176,11 @@ export const MainMenu = () => {
           <NavLinks />
         </nav>
       </div>
+
+      <DepositModal
+        open={isDepositOpen}
+        onClose={() => setIsDepositOpen(false)}
+      />
     </div>
   );
 };

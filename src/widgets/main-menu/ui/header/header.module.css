@@ -1,0 +1,99 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--color-bg-header);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatarPlaceholder {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #0098ea 0%, #00c6ff 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.balanceRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.balanceBadge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-border-subtle);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+}
+
+.tonIcon {
+  width: 12px;
+  height: 12px;
+}
+.balanceValue {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-accent-light);
+}
+
+.walletActions {
+  display: flex;
+  gap: 4px;
+}
+
+.actionBtn {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  font-size: 12px;
+  cursor: pointer;
+  background: var(--color-bg-muted);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.depositBtn {
+  color: var(--color-success);
+}
+.withdrawBtn {
+  color: var(--color-error);
+}
+
+.settingsBtn {
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 4px;
+}

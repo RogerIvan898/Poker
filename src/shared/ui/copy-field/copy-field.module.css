@@ -1,0 +1,64 @@
+.fieldGroup {
+    margin-bottom: 16px;
+}
+
+.fieldHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.fieldHeader span {
+    color: #999;
+    font-size: 13px;
+}
+
+.fieldHeader b {
+    color: #ffc107;
+    font-size: 12px;
+}
+
+.fieldBox {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    background: #080808;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.text {
+    flex: 1;
+    min-width: 0;
+    padding-left: 14px;
+    font-family: monospace;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #ddd;
+}
+
+.copyBtn {
+    width: 48px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: #202020;
+    color: white;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.copyBtn:hover {
+    background: #2b2b2b;
+}
+
+@media (max-width: 600px) {
+    .fieldBox {
+        height: 56px;
+    }
+}
