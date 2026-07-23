@@ -1,4 +1,9 @@
+import React from 'react';
+
+import { useTonWallet } from '@tonconnect/ui-react';
 import { Settings, Plus, Minus } from 'lucide-react';
+
+import { SettingsDialog } from 'widgets/settings/ui';
 
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils';
@@ -20,9 +25,14 @@ export const Header = ({
   avatarUrl,
   onDepositClick,
   onWithdrawClick,
-  onSettingsClick,
 }: Props) => {
-  const initial = userName?.trim()?.charAt(0)?.toUpperCase() || '?';
+  const [isSettingsOpened, setIsSettingsOpened] = React.useState(false);
+
+  const wallet = useTonWallet();
+
+  const walletAddress = wallet?.account.address;
+
+  const avatarLetter = userName?.trim()?.charAt(0)?.toUpperCase() || '?';
 
   const formattedBalance = new Intl.NumberFormat('ru-RU', {
     maximumFractionDigits: 2,
@@ -31,18 +41,23 @@ export const Header = ({
   return (
     <header className={styles.header}>
       <div className={styles.headerLeft}>
-        <div className={styles.avatarPlaceholder}>
+        <button
+          type="button"
+          className={styles.avatarPlaceholder}
+          disabled={Boolean(wallet)}
+          aria-label={wallet ? 'Кошелёк подключён' : 'Подключить кошелёк'}
+          title={walletAddress ?? 'Подключить кошелёк'}
+        >
           {avatarUrl ? (
             <img src={avatarUrl} alt={userName} className={styles.avatarImg} />
           ) : (
-            initial
+            avatarLetter
           )}
-        </div>
+        </button>
 
         <div className={styles.userInfo}>
-          <span className={styles.userName} title={userName}>
-            {userName}
-          </span>
+          <span className={styles.userName}>{userName}</span>
+
           <div className={styles.balanceRow}>
             <div className={styles.balanceBadge}>
               <Logo className={styles.tonIcon} />
@@ -76,12 +91,17 @@ export const Header = ({
       <button
         type="button"
         className={styles.settingsBtn}
-        onClick={onSettingsClick}
+        onClick={() => setIsSettingsOpened(true)}
         aria-label="Настройки"
         title="Настройки"
       >
         <Settings size={22} />
       </button>
+
+      <SettingsDialog
+        open={isSettingsOpened}
+        onClose={() => setIsSettingsOpened(false)}
+      />
     </header>
   );
 };

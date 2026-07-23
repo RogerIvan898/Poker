@@ -27,12 +27,7 @@ export const PayViaWalletButton = ({
 
   const handleClick = async () => {
     if (!wallet) {
-      try {
-        await tonConnectUI.openSingleWalletModal('tonkeeper');
-      } catch (error) {
-        console.error('Failed to open Tonkeeper modal:', error);
-        await tonConnectUI.openModal();
-      }
+      await tonConnectUI.openModal();
       return;
     }
 

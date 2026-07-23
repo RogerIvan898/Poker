@@ -1,0 +1,46 @@
+.walletAddress {
+    color: var(--color-info);
+    max-width: none;
+}
+
+.walletRow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.switchWalletBtn:hover {
+    background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+    color: var(--color-primary-light);
+}
+
+.switchWalletBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: auto;
+    height: 28px;
+    padding: 0 10px;
+    margin-left: auto;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    color: var(--color-primary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.switchWalletBtn p {
+    padding-bottom: 2px;
+}
+
+.switchWalletBtn:hover {
+    background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+    color: var(--color-primary-light);
+}
