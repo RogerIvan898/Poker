@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Alert } from 'shared/ui/alert';
+import { NumberField } from 'shared/ui/NumberField';
 
 import styles from '../deposit.module.css';
 
@@ -21,11 +22,10 @@ export const AmountStep = ({ amount, onChangeAmount, onNext }: Props) => {
 
       <label className={styles.label}>Amount</label>
       <div className={styles.amountBox}>
-        <input
+        <NumberField
           value={amount}
-          onChange={e => onChangeAmount(e.target.value)}
+          onChange={onChangeAmount}
           placeholder="0.00"
-          inputMode="decimal"
         />
         <span>TON</span>
       </div>
