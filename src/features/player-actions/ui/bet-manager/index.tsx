@@ -51,7 +51,7 @@ export const BetManager = ({
           className={styles.input}
         />
         <div className={styles.logo}>
-          <Logo size={14} color="#0098ea" />
+          <Logo size={14} className={styles.logoIcon} />
         </div>
       </div>
 

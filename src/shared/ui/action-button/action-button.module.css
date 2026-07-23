@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   padding: 14px 24px 18px 24px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 16px;
   font-weight: 800;
   border: none !important;
@@ -13,13 +13,10 @@
     transform 0.1s ease,
     box-shadow 0.1s ease,
     filter 0.2s ease;
-  color: #ffffff;
+  color: var(--color-text-on-primary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-family:
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-family: var(--font-family);
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
@@ -43,97 +40,91 @@
 }
 
 .color-primary {
-  background: linear-gradient(180deg, #00b2ff 0%, #0066cc 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-primary-light) 0%,
+    var(--color-primary) 100%
+  );
   box-shadow:
-    0 4px 0 #004488,
-    0 8px 16px rgba(0, 102, 204, 0.4),
-    inset 0 1px 0px rgba(255, 255, 255, 0.4);
-  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.5);
+    0 4px 0 color-mix(in srgb, var(--color-primary) 55%, black),
+    0 8px 16px color-mix(in srgb, var(--color-primary) 40%, transparent);
 }
 
 .color-primary:hover:not(:disabled) {
   box-shadow:
-    0 5px 0 #004488,
-    0 10px 20px rgba(0, 178, 255, 0.5),
-    inset 0 1px 0px rgba(255, 255, 255, 0.5);
+    0 5px 0 color-mix(in srgb, var(--color-primary) 55%, black),
+    0 10px 20px color-mix(in srgb, var(--color-primary) 50%, transparent);
 }
 
 .color-primary:active:not(:disabled) {
   transform: translateY(4px);
   box-shadow:
-    0 0px 0 #004488,
-    0 2px 4px rgba(0, 102, 204, 0.3),
-    inset 0 1px 2px rgba(0, 0, 0, 0.4);
+    0 0 0 color-mix(in srgb, var(--color-primary) 55%, black),
+    0 2px 4px color-mix(in srgb, var(--color-primary) 40%, transparent);
 }
 
 .color-secondary {
-  background: linear-gradient(180deg, #4c5a6b 0%, #1e252e 100%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-secondary) 80%, white) 0%,
+    var(--color-secondary) 100%
+  );
   box-shadow:
-    0 4px 0 #11151a,
-    0 8px 12px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0px rgba(255, 255, 255, 0.15);
-  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.6);
+    0 4px 0 color-mix(in srgb, var(--color-secondary) 50%, black),
+    0 8px 12px var(--color-shadow);
 }
 
 .color-secondary:hover:not(:disabled) {
   box-shadow:
-    0 5px 0 #11151a,
-    0 10px 16px rgba(0, 0, 0, 0.6),
-    inset 0 1px 0px rgba(255, 255, 255, 0.2);
+    0 5px 0 color-mix(in srgb, var(--color-secondary) 50%, black),
+    0 10px 16px var(--color-shadow);
 }
 
 .color-secondary:active:not(:disabled) {
   transform: translateY(4px);
   box-shadow:
-    0 0px 0 #11151a,
-    0 2px 4px rgba(0, 0, 0, 0.4),
-    inset 0 1px 2px rgba(0, 0, 0, 0.5);
+    0 0 0 color-mix(in srgb, var(--color-secondary) 50%, black),
+    0 2px 4px var(--color-shadow);
 }
 
 .color-danger {
-  background: linear-gradient(180deg, #ff4b4b 0%, #b30000 100%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--color-danger) 85%, white) 0%,
+    var(--color-danger) 100%
+  );
   box-shadow:
-    0 4px 0 #800000,
-    0 8px 14px rgba(179, 0, 0, 0.4),
-    inset 0 1px 0px rgba(255, 255, 255, 0.4);
-  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.5);
+    0 4px 0 color-mix(in srgb, var(--color-danger) 55%, black),
+    0 8px 14px color-mix(in srgb, var(--color-danger) 40%, transparent);
 }
 
 .color-danger:hover:not(:disabled) {
   box-shadow:
-    0 5px 0 #800000,
-    0 10px 20px rgba(255, 75, 75, 0.5),
-    inset 0 1px 0px rgba(255, 255, 255, 0.5);
+    0 5px 0 color-mix(in srgb, var(--color-danger) 55%, black),
+    0 10px 20px color-mix(in srgb, var(--color-danger) 50%, transparent);
 }
 
 .color-danger:active:not(:disabled) {
   transform: translateY(4px);
   box-shadow:
-    0 0px 0 #800000,
-    0 2px 4px rgba(179, 0, 0, 0.3),
-    inset 0 1px 2px rgba(0, 0, 0, 0.4);
+    0 0 0 color-mix(in srgb, var(--color-danger) 55%, black),
+    0 2px 4px color-mix(in srgb, var(--color-danger) 40%, transparent);
 }
 
 .color-neutral {
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--color-text) 6%, transparent);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  box-shadow:
-    0 3px 0 rgba(0, 0, 0, 0.2),
-    inset 0 1px 0px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 3px 0 color-mix(in srgb, var(--color-shadow) 40%, transparent);
 }
 
 .color-neutral:hover:not(:disabled) {
   box-shadow:
-    0 4px 0 rgba(0, 0, 0, 0.2),
-    0 6px 12px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0px rgba(255, 255, 255, 0.12);
+    0 4px 0 color-mix(in srgb, var(--color-shadow) 40%, transparent),
+    0 6px 12px var(--color-shadow);
 }
 
 .color-neutral:active:not(:disabled) {
   transform: translateY(3px);
-  box-shadow:
-    0 0px 0 rgba(0, 0, 0, 0.2),
-    0 2px 4px rgba(0, 0, 0, 0.15),
-    inset 0 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 color-mix(in srgb, var(--color-shadow) 40%, transparent);
 }

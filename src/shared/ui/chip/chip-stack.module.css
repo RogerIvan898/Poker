@@ -16,7 +16,7 @@
 }
 
 .layer:not(:first-child) {
-  filter: drop-shadow(0 2px 1.5px rgba(0, 0, 0, 0.75));
+  filter: drop-shadow(0 2px 1.5px var(--color-shadow));
 }
 
 @media (max-width: 768px) {

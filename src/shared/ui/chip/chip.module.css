@@ -2,7 +2,7 @@
   --size: clamp(20px, 5vw, 32px);
   --stripe: #ffffff;
   --main: #d32f2f;
-  --edge: #941717;
+  --edge: #8a1919;
 
   width: var(--size);
   height: var(--size);
@@ -40,7 +40,7 @@
     0 3px 0 var(--edge),
     0 4px 0 var(--edge),
     0 5px 0 var(--edge),
-    0 10px 14px rgba(0, 0, 0, 0.45);
+    0 10px 14px var(--color-shadow);
 }
 
 .inner {

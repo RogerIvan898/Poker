@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { DepositModal } from 'features/deposit/ui';
 
 import { ROUTES } from 'shared/constants/routes';
-import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils';
 
 import { Header } from './header';
@@ -65,22 +64,23 @@ const Filters = () => {
 
   return (
     <div className={styles.tabsContainer}>
-      {FILTERS.map(f => (
-        <button
-          key={f}
-          onClick={() => setActive(f)}
-          className={cn(styles.tabItem, active === f && styles.activeTab)}
-        >
-          {f}
-        </button>
-      ))}
+      <div className={styles.tabsScroll}>
+        {FILTERS.map(f => (
+          <button
+            key={f}
+            onClick={() => setActive(f)}
+            className={cn(styles.tabItem, active === f && styles.activeTab)}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
 
 const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
   const navigate = useNavigate();
-
   const isFull = room.players === room.max;
 
   return (
@@ -88,7 +88,14 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
       <div className={styles.roomContent}>
         <div className={styles.roomHeader}>
           <h3 className={styles.roomName}>{room.name}</h3>
-          <span className={styles.roomType}>{room.type}</span>
+          <span
+            className={cn(
+              styles.roomType,
+              room.type === 'Турбо' && styles.typeTurbo
+            )}
+          >
+            {room.type}
+          </span>
         </div>
 
         <div className={styles.roomDetails}>
@@ -96,12 +103,14 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
             <span className={styles.statLabel}>Блайнды</span>
             <span className={styles.statValue}>{room.blinds}</span>
           </div>
+          <div className={styles.statDivider} />
           <div className={styles.stat}>
             <span className={styles.statLabel}>Игроки</span>
             <span className={cn(styles.statValue, isFull && styles.textAlert)}>
               {room.players}/{room.max}
             </span>
           </div>
+          <div className={styles.statDivider} />
           <div className={styles.stat}>
             <span className={styles.statLabel}>Вход</span>
             <span className={styles.statValue}>{room.minBuy}</span>
@@ -110,50 +119,22 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
       </div>
 
       <button
-        className={styles.playBtn}
+        className={cn(styles.playBtn, isFull && styles.playBtnDisabled)}
         disabled={isFull}
         onClick={() => navigate(ROUTES.GAME_ROOM(String(room.id)))}
       >
-        {isFull ? 'ПОЛН' : 'ИГРАТЬ'}
+        {isFull ? 'МЕСТ НЕТ' : 'ИГРАТЬ'}
       </button>
     </div>
   );
 };
 
-const NavLinks = () => (
-  <>
-    <button className={cn(styles.navItem, styles.activeNav)}>
-      <span className={styles.navIcon}>🃏</span>
-      <span className={styles.navText}>Столы</span>
-    </button>
-    <button className={styles.navItem}>
-      <span className={styles.navIcon}>🎁</span>
-      <span className={styles.navText}>Задания</span>
-    </button>
-    <button className={styles.navItem}>
-      <span className={styles.navIcon}>📊</span>
-      <span className={styles.navText}>Лидеры</span>
-    </button>
-  </>
-);
-
 export const MainMenu = () => {
-  const [isDepositOpen, setIsDepositOpen] = React.useState(false);
-
+  const [isDepositOpen, setIsDepositOpen] = useState(false);
   const mockUser = { firstName: 'Алексей', balance: 124.5 };
 
   return (
     <div className={styles.appLayout}>
-      <aside className={styles.sideNav}>
-        <div className={styles.brandLogo}>
-          <Logo className={styles.tonIconLg} />
-          <span>Poker</span>
-        </div>
-        <nav className={styles.sideNavLinks}>
-          <NavLinks />
-        </nav>
-      </aside>
-
       <div className={styles.mainContainer}>
         <Header
           userName={mockUser.firstName}
@@ -161,9 +142,16 @@ export const MainMenu = () => {
           onDepositClick={() => setIsDepositOpen(true)}
         />
 
-        <Filters />
-
         <main className={styles.contentArea}>
+          {/* Фильтры и заголовок прилипают к верху при скролле */}
+          <div className={styles.stickyHeader}>
+            <Filters />
+            <div className={styles.sectionHeader}>
+              <h2 className={styles.sectionTitle}>Доступные столы</h2>
+              <span className={styles.onlineCount}>1,243 онлайн</span>
+            </div>
+          </div>
+
           <div className={styles.roomGrid}>
             {ROOMS.map(room => (
               <RoomCard key={room.id} room={room} />
@@ -171,10 +159,6 @@ export const MainMenu = () => {
           </div>
           <div className={styles.bottomSpacer} />
         </main>
-
-        <nav className={styles.bottomNav}>
-          <NavLinks />
-        </nav>
       </div>
 
       <DepositModal

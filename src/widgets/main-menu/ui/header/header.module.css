@@ -1,11 +1,16 @@
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
+  padding: 12px 16px;
   background: var(--color-bg-header);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border);
+  user-select: none;
 }
 
 .headerLeft {
@@ -15,85 +20,142 @@
 }
 
 .avatarPlaceholder {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, #0098ea 0%, #00c6ff 100%);
-  color: #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-info) 100%
+  );
+  color: var(--color-text-on-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px var(--color-primary-muted);
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .userInfo {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 
 .userName {
   font-size: 13px;
   font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
 }
 
 .balanceRow {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 2px;
+  gap: 8px;
 }
 
 .balanceBadge {
   display: flex;
   align-items: center;
-  gap: 4px;
-  background: var(--color-border-subtle);
-  padding: 2px 6px;
-  border-radius: 4px;
+  gap: 6px;
+  background: var(--color-border);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
 }
 
 .tonIcon {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
+
 .balanceValue {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
-  color: var(--color-accent-light);
+  color: var(--color-info);
+  letter-spacing: -0.2px;
 }
 
 .walletActions {
   display: flex;
-  gap: 4px;
+  gap: 6px;
 }
 
 .actionBtn {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-  border: 1px solid var(--color-border);
-  font-size: 12px;
-  cursor: pointer;
-  background: var(--color-bg-muted);
-  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.actionBtn:hover {
+  transform: translateY(-1px);
+}
+
+.actionBtn:active {
+  transform: scale(0.92);
 }
 
 .depositBtn {
   color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 15%, transparent);
 }
+
+.depositBtn:hover {
+  background: color-mix(in srgb, var(--color-success) 28%, transparent);
+}
+
 .withdrawBtn {
-  color: var(--color-error);
+  color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 15%, transparent);
+}
+
+.withdrawBtn:hover {
+  background: color-mix(in srgb, var(--color-danger) 28%, transparent);
 }
 
 .settingsBtn {
-  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
   border: none;
   color: var(--color-text-secondary);
   cursor: pointer;
-  padding: 4px;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.settingsBtn:hover {
+  color: var(--color-text);
+  background: color-mix(in srgb, var(--color-text) 8%, transparent);
+  transform: rotate(30deg);
+}
+
+.settingsBtn:active {
+  transform: scale(0.9) rotate(30deg);
 }

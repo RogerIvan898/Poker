@@ -1,6 +1,5 @@
 .dealerButton {
   --size: clamp(44px, 8vw, 56px);
-
   --base-light: #ffffff;
   --base-shadow: #e2e8f0;
   --edge-light: #cbd5e1;
@@ -60,10 +59,7 @@
 
 .letter {
   color: var(--engraving-color);
-  font-family:
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-family: var(--font-family);
   font-weight: 900;
   font-size: clamp(16px, 3.2vw, 22px);
   line-height: 1;

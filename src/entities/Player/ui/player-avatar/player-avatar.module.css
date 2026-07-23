@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 8px var(--color-shadow);
   border: 3px solid rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease;
   font-size: clamp(18px, 3.2vw, 26px);

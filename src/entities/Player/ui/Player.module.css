@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: var(--color-text);
   text-align: center;
   pointer-events: auto;
   user-select: none;

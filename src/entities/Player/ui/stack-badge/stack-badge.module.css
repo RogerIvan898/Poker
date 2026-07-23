@@ -7,15 +7,9 @@
   margin-top: -18px;
   padding: 7px 12px 8px;
   border-radius: 10px;
-  background: linear-gradient(
-    180deg,
-    rgba(10, 16, 28, 0.96) 0%,
-    rgba(4, 8, 18, 0.98) 100%
-  );
-  border: 1.5px solid rgba(0, 152, 234, 0.4);
-  box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  background: var(--color-bg-elevated);
+  border: 1.5px solid color-mix(in srgb, var(--color-primary) 40%, transparent);
+  box-shadow: 0 4px 14px var(--color-shadow);
   backdrop-filter: blur(10px);
   pointer-events: none;
   overflow: hidden;
@@ -36,8 +30,8 @@
   transform-origin: left center;
   background: linear-gradient(
     90deg,
-    rgba(0, 255, 204, 0.4) 0%,
-    rgba(0, 152, 234, 0.25) 100%
+    color-mix(in srgb, var(--color-info) 40%, transparent) 0%,
+    color-mix(in srgb, var(--color-primary) 25%, transparent) 100%
   );
   border-radius: inherit;
   z-index: 0;
@@ -48,8 +42,8 @@
 .timerFillBank {
   background: linear-gradient(
     90deg,
-    rgba(255, 77, 79, 0.5) 0%,
-    rgba(220, 50, 55, 0.28) 100%
+    color-mix(in srgb, var(--color-danger) 50%, transparent) 0%,
+    color-mix(in srgb, var(--color-danger) 28%, transparent) 100%
   );
 }
 
@@ -57,13 +51,13 @@
   width: 100%;
   font-size: clamp(12px, 2.4vw, 15px);
   font-weight: 600;
-  color: #fff;
+  color: var(--color-text);
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.2;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 2px var(--color-shadow);
 }
 
 .stackRow {
@@ -74,7 +68,7 @@
 }
 
 .stackAmount {
-  color: #30b6ff;
+  color: var(--color-primary-light);
   font-weight: 800;
   font-size: clamp(14px, 2.8vw, 18px);
   line-height: 1;
@@ -82,21 +76,21 @@
 }
 
 .stackLogo {
-  color: #0098ea;
+  color: var(--color-primary);
   flex-shrink: 0;
 }
 
 .frameFolded {
   opacity: 0.75;
-  border-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--color-border-hover);
 }
 
 .frameFolded .name {
-  color: #999;
+  color: var(--color-text-muted);
 }
 
 .frameFolded .stackAmount {
-  color: #777;
+  color: var(--color-text-secondary);
 }
 
 .frameSitOut {
