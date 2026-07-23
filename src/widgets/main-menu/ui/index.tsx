@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { DepositModal } from 'features/deposit/ui';
+import { DepositModal } from 'widgets/deposit/ui';
 
 import { ROUTES } from 'shared/constants/routes';
 import { cn } from 'shared/utils';
@@ -131,7 +131,7 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
 
 export const MainMenu = () => {
   const [isDepositOpen, setIsDepositOpen] = useState(false);
-  const mockUser = { firstName: 'Алексей', balance: 124.5 };
+  const mockUser = { firstName: 'User', balance: 0 };
 
   return (
     <div className={styles.appLayout}>
@@ -164,6 +164,7 @@ export const MainMenu = () => {
       <DepositModal
         open={isDepositOpen}
         onClose={() => setIsDepositOpen(false)}
+        depositAddress="UQAakyZLxnYkr2DhDNKG_6qp4LcLvpCo4CArwG3fKkBYTKZC"
       />
     </div>
   );

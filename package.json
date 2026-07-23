@@ -15,6 +15,9 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@ton/core": "^0.63.1",
+    "@tonconnect/ui-react": "^3.0.0",
+    "buffer": "^6.0.3",
     "effector": "^23.4.4",
     "effector-react": "^23.3.0",
     "lucide-react": "^1.25.0",
@@ -39,7 +42,8 @@
     "prettier": "3.8.3",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
-    "vite": "^7.1.2"
+    "vite": "^7.1.2",
+    "vite-plugin-node-polyfills": "^0.28.0"
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
