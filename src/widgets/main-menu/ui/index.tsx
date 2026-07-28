@@ -154,7 +154,7 @@ export const MainMenu = () => {
             <Filters />
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Доступные столы</h2>
-              <span className={styles.onlineCount}>1,243 онлайн</span>
+              {/* <span className={styles.onlineCount}>0</span> */}
             </div>
           </div>
 
