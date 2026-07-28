@@ -1,19 +1,20 @@
 import { sample } from 'effector';
 import { createGate } from 'effector-react';
 
-import {
-  subscribeToGameSocketFx,
-  unsubscribeFromGameSocketFx,
-} from 'entities/game/model';
+import { gameModel } from 'entities/game';
+import type { ServerGameEvent } from 'entities/game/model/types';
+
+import { wsDisconnect, wsMessageReceived } from 'shared/api/socket';
 
 export const TablePageGate = createGate();
 
 sample({
-  clock: TablePageGate.open,
-  target: subscribeToGameSocketFx,
+  clock: wsMessageReceived,
+  fn: message => message as ServerGameEvent,
+  target: gameModel.incomingEvent,
 });
 
 sample({
   clock: TablePageGate.close,
-  target: unsubscribeFromGameSocketFx,
+  target: wsDisconnect,
 });

@@ -1,8 +1,8 @@
-import { createEffect, createEvent, sample } from 'effector';
+import { createEvent, sample } from 'effector';
 
 import { CLIENT_COMMANDS } from 'entities/game/model/constants';
 
-import { socket } from 'shared/api/socket';
+import { wsSendMessage } from 'shared/api/socket';
 import { PLAYER_ACTIONS } from 'shared/constants/player';
 
 import type {
@@ -11,57 +11,52 @@ import type {
   PlayerActionPayloadBase,
 } from './types';
 
-export const sendActionFx = createEffect(
-  ({ playerId, payload }: ClientPlayerEvent) =>
-    socket.emit(CLIENT_COMMANDS.PLAYER_ACTION, { playerId, payload })
-);
-
 export const fold = createEvent<PlayerActionPayloadBase>();
 export const call = createEvent<PlayerActionPayloadBase>();
 export const check = createEvent<PlayerActionPayloadBase>();
 export const raise = createEvent<PlayerActionPayloadAmount>();
 
+const toPlayerActionMessage = ({ playerId, payload }: ClientPlayerEvent) => ({
+  type: CLIENT_COMMANDS.PLAYER_ACTION,
+  payload: { playerId, payload },
+});
+
 sample({
   clock: fold,
-  fn: ({ playerId }) => ({
-    playerId,
-    payload: {
-      action: PLAYER_ACTIONS.FOLD,
-    },
-  }),
-  target: sendActionFx,
+  fn: ({ playerId }) =>
+    toPlayerActionMessage({
+      playerId,
+      payload: { action: PLAYER_ACTIONS.FOLD },
+    }),
+  target: wsSendMessage,
 });
 
 sample({
   clock: call,
-  fn: ({ playerId }) => ({
-    payload: {
-      action: PLAYER_ACTIONS.CALL,
-    },
-    playerId,
-  }),
-  target: sendActionFx,
+  fn: ({ playerId }) =>
+    toPlayerActionMessage({
+      playerId,
+      payload: { action: PLAYER_ACTIONS.CALL },
+    }),
+  target: wsSendMessage,
 });
 
 sample({
   clock: raise,
-  fn: ({ playerId, amount }) => ({
-    payload: {
-      action: PLAYER_ACTIONS.RAISE,
-      amount,
-    },
-    playerId,
-  }),
-  target: sendActionFx,
+  fn: ({ playerId, amount }) =>
+    toPlayerActionMessage({
+      playerId,
+      payload: { action: PLAYER_ACTIONS.RAISE, amount },
+    }),
+  target: wsSendMessage,
 });
 
 sample({
   clock: check,
-  fn: ({ playerId }) => ({
-    payload: {
-      action: PLAYER_ACTIONS.CHECK,
-    },
-    playerId,
-  }),
-  target: sendActionFx,
+  fn: ({ playerId }) =>
+    toPlayerActionMessage({
+      playerId,
+      payload: { action: PLAYER_ACTIONS.CHECK },
+    }),
+  target: wsSendMessage,
 });

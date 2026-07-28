@@ -1,6 +1,5 @@
-import { createEffect, createEvent, createStore } from 'effector';
+import { createEvent, createStore } from 'effector';
 
-import { socket } from 'shared/api/socket';
 import type { Card } from 'shared/types/card';
 import type { Player } from 'shared/types/player';
 
@@ -13,17 +12,8 @@ import type {
 } from './types';
 import { parseCard } from './utils';
 
-export const subscribeToGameSocketFx = createEffect(() =>
-  socket.on('message', (payload: ServerGameEvent) => {
-    incomingEvent(payload);
-  })
-);
-
-export const unsubscribeFromGameSocketFx = createEffect(() =>
-  socket.off('message')
-);
-
 export const incomingEvent = createEvent<ServerGameEvent>();
+export const joinTable = createEvent();
 
 export const $gameState = createStore<GameState>(INITIAL_GAME_STATE).on(
   incomingEvent,

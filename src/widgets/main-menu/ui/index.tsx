@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { DepositModal } from 'widgets/deposit/ui';
 
+import { joinGameModel } from 'features/join-game';
+
 import { ROUTES } from 'shared/constants/routes';
 import { cn } from 'shared/utils';
 
@@ -83,6 +85,11 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
   const navigate = useNavigate();
   const isFull = room.players === room.max;
 
+  const handleJoin = async () => {
+    joinGameModel.joinGame();
+    await navigate(ROUTES.GAME_ROOM(String(room.id)));
+  };
+
   return (
     <div className={cn(styles.roomCard, isFull && styles.roomFull)}>
       <div className={styles.roomContent}>
@@ -121,7 +128,7 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
       <button
         className={cn(styles.playBtn, isFull && styles.playBtnDisabled)}
         disabled={isFull}
-        onClick={() => navigate(ROUTES.GAME_ROOM(String(room.id)))}
+        onClick={() => void handleJoin()}
       >
         {isFull ? 'МЕСТ НЕТ' : 'ИГРАТЬ'}
       </button>
@@ -143,7 +150,6 @@ export const MainMenu = () => {
         />
 
         <main className={styles.contentArea}>
-          {/* Фильтры и заголовок прилипают к верху при скролле */}
           <div className={styles.stickyHeader}>
             <Filters />
             <div className={styles.sectionHeader}>
@@ -164,7 +170,7 @@ export const MainMenu = () => {
       <DepositModal
         open={isDepositOpen}
         onClose={() => setIsDepositOpen(false)}
-        depositAddress="UQAakyZLxnYkr2DhDNKG_6qp4LcLvpCo4CArwG3fKkBYTKZC"
+        depositAddress="UQA-hgA0arLRETGFy5ccxv11acPYBUpU49X8RyqfIju3tGci"
       />
     </div>
   );

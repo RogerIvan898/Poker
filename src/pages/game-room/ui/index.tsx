@@ -13,9 +13,9 @@ import { TablePageGate } from '../model';
 import styles from './game-room.module.css';
 
 export const GameRoomPage = () => {
-  const navigate = useNavigate();
-
   useGate(TablePageGate);
+
+  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>

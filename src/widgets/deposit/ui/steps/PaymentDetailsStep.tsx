@@ -76,7 +76,6 @@ export const PaymentDetailsStep = ({
         </div>
       </div>
 
-      {/* Реквизиты для ручного перевода */}
       <div className={styles.depositDetails}>
         <div className={styles.qrWrapper}>
           <div className={styles.qr}>QR</div>
