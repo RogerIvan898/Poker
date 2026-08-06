@@ -1,62 +1,42 @@
-import { createEvent, sample } from 'effector';
+import { createEvent, merge, sample } from 'effector';
 
+import { gameModel } from 'entities/game';
 import { CLIENT_COMMANDS } from 'entities/game/model/constants';
+import { sessionModel } from 'entities/session';
 
-import { wsSendMessage } from 'shared/api/socket';
 import { PLAYER_ACTIONS } from 'shared/constants/player';
 
-import type {
-  ClientPlayerEvent,
-  PlayerActionPayloadAmount,
-  PlayerActionPayloadBase,
-} from './types';
+import type { PlayerActionPayloadAmount } from './types';
 
-export const fold = createEvent<PlayerActionPayloadBase>();
-export const call = createEvent<PlayerActionPayloadBase>();
-export const check = createEvent<PlayerActionPayloadBase>();
+export const fold = createEvent();
+export const call = createEvent();
+export const check = createEvent();
 export const raise = createEvent<PlayerActionPayloadAmount>();
 
-const toPlayerActionMessage = ({ playerId, payload }: ClientPlayerEvent) => ({
-  type: CLIENT_COMMANDS.PLAYER_ACTION,
-  payload: { playerId, payload },
+const action = (type: string, amount?: number) => ({
+  action: type,
+  ...(amount && { amount }),
 });
 
-sample({
-  clock: fold,
-  fn: ({ playerId }) =>
-    toPlayerActionMessage({
-      playerId,
-      payload: { action: PLAYER_ACTIONS.FOLD },
-    }),
-  target: wsSendMessage,
-});
+const simpleActionTriggered = merge([
+  fold.map(() => action(PLAYER_ACTIONS.FOLD)),
+  call.map(() => action(PLAYER_ACTIONS.CALL)),
+  check.map(() => action(PLAYER_ACTIONS.CHECK)),
+]);
+
+const raiseActionTriggered = raise.map(({ amount }) =>
+  action(PLAYER_ACTIONS.RAISE, amount)
+);
+
+const playerAction = merge([simpleActionTriggered, raiseActionTriggered]);
 
 sample({
-  clock: call,
-  fn: ({ playerId }) =>
-    toPlayerActionMessage({
-      playerId,
-      payload: { action: PLAYER_ACTIONS.CALL },
-    }),
-  target: wsSendMessage,
-});
-
-sample({
-  clock: raise,
-  fn: ({ playerId, amount }) =>
-    toPlayerActionMessage({
-      playerId,
-      payload: { action: PLAYER_ACTIONS.RAISE, amount },
-    }),
-  target: wsSendMessage,
-});
-
-sample({
-  clock: check,
-  fn: ({ playerId }) =>
-    toPlayerActionMessage({
-      playerId,
-      payload: { action: PLAYER_ACTIONS.CHECK },
-    }),
-  target: wsSendMessage,
+  clock: playerAction,
+  source: sessionModel.$currentUserId,
+  filter: (playerId): playerId is string => Boolean(playerId),
+  fn: (playerId, payload) => ({
+    type: CLIENT_COMMANDS.PLAYER_ACTION,
+    payload: { playerId, payload },
+  }),
+  target: gameModel.sendClientCommand,
 });

@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { X, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+
+import { Sheet } from 'shared/ui/sheet';
 
 import styles from './deposit.module.css';
-import { AmountStep } from './steps/AmountStep';
-import { PaymentDetailsStep } from './steps/PaymentDetailsStep';
+import { AmountStep } from './steps/amount-step';
+import { PaymentDetailsStep } from './steps/payment-details';
 
 export enum DepositStep {
   Amount = 1,
@@ -34,66 +36,57 @@ export const DepositModal = ({
   onCopyText,
 }: Props) => {
   const [step, setStep] = useState<DepositStep>(DepositStep.Amount);
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState(0);
 
-  if (!open) {
-    return null;
-  }
+  const handleClose = () => {
+    onClose();
+    setStep(DepositStep.Amount);
+    setAmount(0);
+  };
 
   const handleNextStep = () => setStep(DepositStep.Details);
   const handlePrevStep = () => setStep(DepositStep.Amount);
 
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <header className={styles.header}>
-          {step === DepositStep.Details ? (
-            <button
-              type="button"
-              className={styles.iconBtn}
-              onClick={handlePrevStep}
-              aria-label="Back"
-            >
-              <ArrowLeft size={18} />
-            </button>
-          ) : (
-            <div className={styles.iconPlaceholder} />
-          )}
-
-          <div className={styles.titleGroup}>
-            <h2>{STEP_CONFIG[step].title}</h2>
-            <span className={styles.stepper}>
-              {step}/{TOTAL_STEPS}
-            </span>
-          </div>
-
+    <Sheet
+      open={open}
+      onClose={handleClose}
+      title={STEP_CONFIG[step].title}
+      titleAddon={
+        <span className={styles.stepper}>
+          {step}/{TOTAL_STEPS}
+        </span>
+      }
+      leading={
+        step === DepositStep.Details ? (
           <button
             type="button"
             className={styles.iconBtn}
-            onClick={onClose}
-            aria-label="Close"
+            onClick={handlePrevStep}
+            aria-label="Back"
           >
-            <X size={18} />
+            <ArrowLeft size={18} />
           </button>
-        </header>
+        ) : undefined
+      }
+    >
+      {step === DepositStep.Amount && (
+        <AmountStep
+          key="amount"
+          amount={amount}
+          onChangeAmount={setAmount}
+          onNext={handleNextStep}
+        />
+      )}
 
-        {step === DepositStep.Amount && (
-          <AmountStep
-            amount={amount}
-            onChangeAmount={setAmount}
-            onNext={handleNextStep}
-          />
-        )}
-
-        {step === DepositStep.Details && (
-          <PaymentDetailsStep
-            amount={amount}
-            depositAddress={depositAddress}
-            memo={memo}
-            onCopyText={onCopyText}
-          />
-        )}
-      </div>
-    </div>
+      {step === DepositStep.Details && (
+        <PaymentDetailsStep
+          amount={amount}
+          depositAddress={depositAddress}
+          memo={memo}
+          onCopyText={onCopyText}
+        />
+      )}
+    </Sheet>
   );
 };

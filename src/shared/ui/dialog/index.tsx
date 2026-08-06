@@ -7,11 +7,13 @@ import styles from './dialog.module.css';
 
 interface Props {
   open: boolean;
+  title?: React.ReactNode;
   onClose: () => void;
 }
 
 export const Dialog = ({
   open,
+  title = '',
   onClose,
   children,
 }: React.PropsWithChildren<Props>) => {
@@ -23,6 +25,7 @@ export const Dialog = ({
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
         <header className={styles.header}>
+          <div className={styles.titleContainer}>{title}</div>
           <button
             type="button"
             className={styles.iconBtn}

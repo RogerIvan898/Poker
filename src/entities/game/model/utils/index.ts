@@ -2,7 +2,7 @@ import { CARD_SUIT } from 'shared/constants/cards';
 import type { Card, CardRank } from 'shared/types/card';
 import type { Player } from 'shared/types/player';
 
-import type { PlayerInfo } from '../types';
+import type { PlayerInfo, ServerGameEvent } from '../types';
 
 const SUIT_MAP = {
   h: CARD_SUIT.HEARTS,
@@ -32,3 +32,6 @@ export const buildPlayer = (playerInfo: PlayerInfo, seat: number): Player => ({
   committed: 0,
   hand: null,
 });
+
+export const isServerGameEvents = (data: unknown): data is ServerGameEvent =>
+  typeof data === 'object' && data !== null && 'type' in data;

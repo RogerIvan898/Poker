@@ -1,0 +1,80 @@
+.quickAmounts {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.quickBtn {
+  flex: 1;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--color-primary) 22%, var(--color-border-strong));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-bg));
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.quickBtn:hover {
+  background: color-mix(in srgb, var(--color-primary) 14%, var(--color-bg));
+  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border-strong));
+}
+
+.quickBtn:active {
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-bg));
+}
+
+.quickBtn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.quickBtnIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+  transition: color 0.2s;
+}
+
+.quickBtnValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+  transition: color 0.2s;
+}
+
+.quickBtn:hover .quickBtnValue {
+  color: var(--color-text);
+}
+
+@media (max-width: 600px) {
+  .quickAmounts {
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .quickBtn {
+    height: 60px;
+    gap: 10px;
+    padding: 0 16px;
+    border-radius: var(--radius-lg);
+  }
+
+  .quickBtnIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .quickBtnValue {
+    font-size: 18px;
+  }
+}

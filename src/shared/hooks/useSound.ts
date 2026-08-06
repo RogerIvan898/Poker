@@ -14,7 +14,7 @@ let audioContext: AudioContext | null = null;
 const bufferCache = new Map<string, AudioBuffer>();
 const loadPromises = new Map<string, Promise<AudioBuffer>>();
 
-const getAudioContext = () => {
+export const getAudioContext = () => {
   if (!audioContext) {
     audioContext = new AudioContext();
   }
@@ -37,6 +37,7 @@ const loadBuffer = (url: string): Promise<AudioBuffer> => {
 
   const promise = (async () => {
     const context = getAudioContext();
+
     const response = await fetch(url);
     const arrayBuffer = await response.arrayBuffer();
     const decoded = await context.decodeAudioData(arrayBuffer);
@@ -49,6 +50,16 @@ const loadBuffer = (url: string): Promise<AudioBuffer> => {
   loadPromises.set(url, promise);
 
   return promise;
+};
+
+export const preloadAllSounds = async (urls: string[]): Promise<void> => {
+  const results = await Promise.allSettled(urls.map(url => loadBuffer(url)));
+
+  results.forEach((result, index) => {
+    if (result.status === 'rejected') {
+      console.warn(`[Audio] ${urls[index]}`, result.reason);
+    }
+  });
 };
 
 export const useSound = (url: string): UseSoundResult => {

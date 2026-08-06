@@ -11,7 +11,7 @@ import styles from './player-actions.module.css';
 
 export const PlayerActions = () => {
   const [viewerId, allowedActions] = useUnit([
-    sessionModel.$viewerId,
+    sessionModel.$currentUserId,
     gameModel.$myAllowedActions,
   ]);
 

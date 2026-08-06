@@ -1,12 +1,13 @@
 .walletAddress {
     color: var(--color-info);
-    max-width: none;
 }
 
 .walletRow {
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: space-between;
+    width: 100%;
+    gap: 12px;
     font-size: large;
     font-weight: bold;
 }
@@ -16,24 +17,32 @@
     color: var(--color-primary-light);
 }
 
-.switchWalletBtn {
+.walletBtn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     width: auto;
-    height: 28px;
-    padding: 0 10px;
-    margin-left: auto;
+    height: 38px;
+    padding: 0 16px;
     border: none;
     border-radius: var(--radius-sm);
     background: color-mix(in srgb, var(--color-primary) 12%, transparent);
     color: var(--color-primary);
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
     flex-shrink: 0;
     transition: background 0.15s ease, color 0.15s ease;
+}
+
+.walletBtn p {
+    padding-bottom: 0;
+}
+
+.walletBtn:hover {
+    background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+    color: var(--color-primary-light);
 }
 
 .switchWalletBtn p {
@@ -43,4 +52,16 @@
 .switchWalletBtn:hover {
     background: color-mix(in srgb, var(--color-primary) 22%, transparent);
     color: var(--color-primary-light);
+}
+
+.setting {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.settingLabel {
+    text-transform: uppercase;
+    font-weight: bold;
 }

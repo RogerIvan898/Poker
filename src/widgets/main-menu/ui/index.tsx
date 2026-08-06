@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useUnit } from 'effector-react';
+
 import { DepositModal } from 'widgets/deposit/ui';
+import { WithdrawModal } from 'widgets/withdraw';
 
-import { joinGameModel } from 'features/join-game';
+import { roomModel } from 'entities/room';
 
-import { ROUTES } from 'shared/constants/routes';
 import { cn } from 'shared/utils';
 
 import { Header } from './header';
@@ -62,7 +64,7 @@ const ROOMS = [
 const FILTERS = ['Все', 'Кэш', 'Турниры', 'Sit & Go'];
 
 const Filters = () => {
-  const [active, setActive] = useState('Все');
+  const [active, setActive] = React.useState('Все');
 
   return (
     <div className={styles.tabsContainer}>
@@ -83,11 +85,21 @@ const Filters = () => {
 
 const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
   const navigate = useNavigate();
+  const [joinRoomFx, isJoining] = useUnit([
+    roomModel.joinRoomFx,
+    roomModel.$isJoining,
+  ]);
   const isFull = room.players === room.max;
 
   const handleJoin = async () => {
-    joinGameModel.joinGame();
-    await navigate(ROUTES.GAME_ROOM(String(room.id)));
+    try {
+      const data = await joinRoomFx(String(room.id));
+      await navigate(`/room/${data.roomId}`, {
+        state: { ticket: data.ticket, wsUrl: data.wsUrl },
+      });
+    } catch (error) {
+      console.error('Failed to join room', error);
+    }
   };
 
   return (
@@ -126,19 +138,21 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
       </div>
 
       <button
+        type="button"
         className={cn(styles.playBtn, isFull && styles.playBtnDisabled)}
-        disabled={isFull}
+        disabled={isFull || isJoining}
         onClick={() => void handleJoin()}
       >
-        {isFull ? 'МЕСТ НЕТ' : 'ИГРАТЬ'}
+        {isFull ? 'МЕСТ НЕТ' : isJoining ? 'ВХОД...' : 'ИГРАТЬ'}
       </button>
     </div>
   );
 };
 
 export const MainMenu = () => {
-  const [isDepositOpen, setIsDepositOpen] = useState(false);
-  const mockUser = { firstName: 'User', balance: 0 };
+  const [isDepositOpen, setIsDepositOpen] = React.useState(false);
+  const [isWithdrawOpen, setIsWithdrawOpen] = React.useState(false);
+  const mockUser = { firstName: 'User', balance: 42.5 };
 
   return (
     <div className={styles.appLayout}>
@@ -147,6 +161,7 @@ export const MainMenu = () => {
           userName={mockUser.firstName}
           balance={mockUser.balance}
           onDepositClick={() => setIsDepositOpen(true)}
+          onWithdrawClick={() => setIsWithdrawOpen(true)}
         />
 
         <main className={styles.contentArea}>
@@ -171,6 +186,16 @@ export const MainMenu = () => {
         open={isDepositOpen}
         onClose={() => setIsDepositOpen(false)}
         depositAddress="UQA-hgA0arLRETGFy5ccxv11acPYBUpU49X8RyqfIju3tGci"
+        memo="1049285"
+      />
+
+      <WithdrawModal
+        open={isWithdrawOpen}
+        onClose={() => setIsWithdrawOpen(false)}
+        balance={mockUser.balance}
+        onSubmit={payload => {
+          console.log('Withdraw request', payload);
+        }}
       />
     </div>
   );

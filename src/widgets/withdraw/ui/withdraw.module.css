@@ -1,0 +1,312 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.balanceCard {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'label value'
+    'hint value';
+  gap: 2px 12px;
+  padding: 14px 16px;
+  text-align: left;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.balanceCard:hover:not(:disabled) {
+  border-color: var(--color-border-hover);
+  background: color-mix(in srgb, var(--color-bg-elevated) 88%, white);
+}
+
+.balanceCard:disabled {
+  cursor: default;
+}
+
+.balanceLabel {
+  grid-area: label;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.balanceHint {
+  grid-area: hint;
+  color: var(--color-text-secondary);
+  font-size: 11px;
+}
+
+.balanceValue {
+  grid-area: value;
+  align-self: center;
+  color: var(--color-primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.label {
+  margin-bottom: 8px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.fieldHeader .label {
+  margin-bottom: 0;
+}
+
+.amountBox,
+.addressBox {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  transition: border-color 0.2s;
+}
+
+.amountBox:focus-within,
+.addressBox:focus-within {
+  border-color: var(--color-primary);
+}
+
+.fieldInvalid {
+  border-color: var(--color-danger);
+}
+
+.amountBox input,
+.addressInput {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--color-text);
+}
+
+.amountBox input {
+  font-size: 18px;
+}
+
+.amountBox span {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.maxBtn {
+  flex-shrink: 0;
+  height: 28px;
+  padding: 0 10px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-muted);
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.maxBtn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-primary) 22%, transparent);
+}
+
+.maxBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.fieldError {
+  margin: 8px 0 0;
+  color: var(--color-danger);
+  font-size: 12px;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 4px;
+  margin-bottom: 12px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+}
+
+.tab {
+  height: 40px;
+  border: none;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.tab:hover {
+  color: var(--color-text);
+}
+
+.tabActive {
+  background: var(--color-bg-muted);
+  color: var(--color-text);
+}
+
+.walletCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+}
+
+.walletLabel {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.walletAddress {
+  color: var(--color-text);
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.connectBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.connectText {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.addressSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.warningWrap > * {
+  margin-bottom: 0;
+}
+
+.addressInput {
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.primaryBtn {
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+.primaryBtn:hover:not(:disabled) {
+  background: var(--color-primary-active);
+}
+
+.primaryBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.secondaryBtn {
+  background: var(--color-bg-muted);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+}
+
+.secondaryBtn:hover {
+  background: color-mix(in srgb, var(--color-bg-muted) 85%, white);
+}
+
+@media (max-width: 600px) {
+  .content {
+    gap: 22px;
+  }
+
+  .label {
+    font-size: 15px;
+  }
+
+  .amountBox,
+  .addressBox,
+  .primaryBtn,
+  .secondaryBtn {
+    height: 60px;
+  }
+
+  .amountBox,
+  .addressBox {
+    padding: 0 18px;
+    border-radius: var(--radius-lg);
+  }
+
+  .amountBox input {
+    font-size: 22px;
+  }
+
+  .balanceValue {
+    font-size: 20px;
+  }
+
+  .tab {
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    font-size: 17px;
+    border-radius: var(--radius-lg);
+  }
+}

@@ -100,7 +100,11 @@
   }
 
   .pokerTable {
-    height: min(calc(100dvh - 152px), 58dvh);
+    height: min(
+      calc(100% - 152px),
+      calc(100dvh - var(--tg-safe-area-top) - var(--tg-safe-area-bottom) - 152px),
+      58dvh
+    );
     width: auto;
     max-width: 86vw;
     max-height: none;

@@ -74,6 +74,7 @@ export const Header = ({
               >
                 <Plus size={16} strokeWidth={2.5} />
               </button>
+
               <button
                 type="button"
                 className={cn(styles.actionBtn, styles.withdrawBtn)}

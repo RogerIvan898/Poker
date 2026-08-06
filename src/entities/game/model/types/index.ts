@@ -6,7 +6,7 @@ import type {
   PlayerStatusType,
 } from 'shared/types/player';
 
-import type { SERVER_EVENTS } from '../constants';
+import { CLIENT_COMMANDS, type SERVER_EVENTS } from '../constants';
 
 export type GameStreet =
   | 'PREFLOP'
@@ -149,3 +149,15 @@ export type ServerGameEvent =
   | BoardDealtEvent
   | ShowdownEvent
   | HandCompleteEvent;
+
+type ClientCommands = (typeof CLIENT_COMMANDS)[keyof typeof CLIENT_COMMANDS];
+
+export interface ClientGameEvent {
+  type: ClientCommands;
+  payload: unknown;
+}
+
+export interface GameConnectParams {
+  wsUrl: string;
+  ticket: string;
+}

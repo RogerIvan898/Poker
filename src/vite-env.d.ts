@@ -1,5 +1,12 @@
 /// <reference types="vite/client" />
 
+type TelegramSafeAreaInset = {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
 declare global {
   interface Window {
     Telegram?: {
@@ -7,6 +14,13 @@ declare global {
         ready: () => void;
         expand: () => void;
         initData: string;
+        setHeaderColor: (color: string) => void;
+        setBackgroundColor: (color: string) => void;
+        requestFullscreen: () => void;
+        safeAreaInset?: TelegramSafeAreaInset;
+        contentSafeAreaInset?: TelegramSafeAreaInset;
+        onEvent: (event: string, callback: () => void) => void;
+        offEvent: (event: string, callback: () => void) => void;
       };
     };
   }

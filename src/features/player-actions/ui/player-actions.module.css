@@ -1,7 +1,7 @@
 .actionContainer {
   position: fixed;
   right: 0;
-  bottom: 1rem;
+  bottom: calc(1rem + var(--tg-safe-area-bottom));
   z-index: 1000;
   display: flex;
   gap: 1rem;
@@ -16,9 +16,9 @@
 
 @media (max-width: 768px) {
   .actionContainer {
-    left: 8px;
-    right: 8px;
-    bottom: calc(env(safe-area-inset-bottom, 0px) + 12px);
+    left: calc(8px + var(--tg-safe-area-left));
+    right: calc(8px + var(--tg-safe-area-right));
+    bottom: calc(var(--tg-safe-area-bottom) + 12px);
     transform: none;
     width: auto;
     max-width: 420px;

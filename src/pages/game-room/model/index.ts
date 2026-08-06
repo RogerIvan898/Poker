@@ -1,20 +1,26 @@
-import { sample } from 'effector';
+import { createEvent, sample } from 'effector';
 import { createGate } from 'effector-react';
 
 import { gameModel } from 'entities/game';
-import type { ServerGameEvent } from 'entities/game/model/types';
+import type { RoomJoinData } from 'entities/room/types';
 
-import { wsDisconnect, wsMessageReceived } from 'shared/api/socket';
+import { initRoomModel } from 'shared/lib/initRoom';
 
 export const TablePageGate = createGate();
 
+export const roomMounted = createEvent<RoomJoinData>();
+
 sample({
-  clock: wsMessageReceived,
-  fn: message => message as ServerGameEvent,
-  target: gameModel.incomingEvent,
+  clock: roomMounted,
+  target: gameModel.connectGame,
+});
+
+sample({
+  clock: TablePageGate.open,
+  target: initRoomModel.initRoom,
 });
 
 sample({
   clock: TablePageGate.close,
-  target: wsDisconnect,
+  target: gameModel.resetTable,
 });

@@ -1,0 +1,99 @@
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 4px;
+  margin-bottom: 16px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+}
+
+.tab {
+  height: 40px;
+  border: none;
+  border-radius: calc(var(--radius-md) - 2px);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.tab:hover {
+  color: var(--color-text);
+}
+
+.tabActive {
+  background: var(--color-bg-muted);
+  color: var(--color-text);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.orDivider {
+  text-align: center;
+  margin: 20px 0;
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.qrBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.qr {
+  width: 190px;
+  height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+}
+
+.qrHint {
+  margin: 0;
+  max-width: 280px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.copyFields {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.copyFields > *:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+  .tab {
+    height: 44px;
+    font-size: 14px;
+  }
+
+  .qr {
+    width: 210px;
+    height: 210px;
+  }
+
+  .qr svg {
+    width: 190px !important;
+    height: 190px !important;
+  }
+}

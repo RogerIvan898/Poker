@@ -21,7 +21,7 @@ export const PlayersLayer = ({ tableElement }: Props) => {
     gameModel.$players,
     gameModel.$dealerSeat,
     gameModel.$activeSeat,
-    sessionModel.$viewerId,
+    sessionModel.$currentUserId,
     gameModel.$myCards,
   ]);
 

@@ -4,6 +4,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: var(--tg-safe-area-top) var(--tg-safe-area-right)
+    var(--tg-safe-area-bottom) var(--tg-safe-area-left);
   background: var(--color-overlay);
   backdrop-filter: blur(8px);
   z-index: 100;
@@ -21,13 +23,17 @@
 }
 
 .header {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   margin-bottom: 20px;
 }
 
 .iconBtn {
+  position: absolute;
+  right: 0;
   width: 32px;
   height: 32px;
   display: flex;
@@ -41,7 +47,6 @@
   transition:
     background 0.2s ease,
     color 0.2s ease;
-  margin-left: auto;
 }
 
 .iconBtn:hover {
@@ -59,4 +64,15 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
 }

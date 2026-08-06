@@ -6,6 +6,7 @@ import { cn } from 'shared/utils';
 
 import { formatAddress } from '../utils';
 
+import { Setting } from './setting';
 import styles from './settings-dialog.module.css';
 
 interface Props {
@@ -28,35 +29,38 @@ export const SettingsDialog = ({ open, onClose }: Props) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      {walletAddess ? (
-        <div className={styles.walletRow}>
-          Connected Wallet:
-          <span
-            className={cn(styles.userName, styles.walletAddress)}
-            title={walletAddess}
-          >
-            {formatAddress(walletAddess)}
-          </span>
+    <Dialog open={open} title="Settings" onClose={onClose}>
+      <Setting label="Web3 Address">
+        {walletAddess ? (
+          <div className={styles.walletRow}>
+            <span
+              className={cn(styles.userName, styles.walletAddress)}
+              title={walletAddess}
+            >
+              {formatAddress(walletAddess)}
+            </span>
+
+            <button
+              type="button"
+              className={styles.walletBtn}
+              onClick={() => void handleSwitchWallet()}
+              aria-label="Сменить кошелёк"
+              title="Сменить кошелёк"
+            >
+              <p>CHANGE</p> <RefreshCw size={14} />
+            </button>
+          </div>
+        ) : (
           <button
             type="button"
-            className={styles.switchWalletBtn}
-            onClick={() => void handleSwitchWallet()}
-            aria-label="Сменить кошелёк"
-            title="Сменить кошелёк"
+            style={{ padding: '1rem' }}
+            className={styles.walletBtn}
+            onClick={() => void tonConnectUI.openModal()}
           >
-            <p>CHANGE</p> <RefreshCw size={14} />
+            Подключить кошелёк
           </button>
-        </div>
-      ) : (
-        <button
-          type="button"
-          className={cn(styles.userName, styles.connectWalletBtn)}
-          onClick={() => void tonConnectUI.openModal()}
-        >
-          Подключить кошелёк
-        </button>
-      )}
+        )}
+      </Setting>
     </Dialog>
   );
 };

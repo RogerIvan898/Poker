@@ -5,7 +5,7 @@ import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
 import { Loader2, Wallet } from 'lucide-react';
 
 interface Props {
-  amount: string;
+  amount: number;
   depositAddress: string;
   memo?: string;
   onSuccess?: () => void;
@@ -31,9 +31,7 @@ export const PayViaWalletButton = ({
       return;
     }
 
-    const numericAmount = Number(amount);
-
-    if (Number.isNaN(numericAmount) || numericAmount <= 0) {
+    if (!Number.isFinite(amount) || amount <= 0) {
       alert('Invalid amount');
       return;
     }
@@ -62,7 +60,7 @@ export const PayViaWalletButton = ({
         messages: [
           {
             address: depositAddress,
-            amount: toNano(amount).toString(),
+            amount: toNano(amount.toString()).toString(),
             payload,
           },
         ],
