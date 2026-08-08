@@ -1,11 +1,11 @@
-export const CARD_SUIT = {
+export const CardSuit = {
   HEARTS: 'hearts',
   DIAMONDS: 'diamonds',
   CLUBS: 'clubs',
   SPADES: 'spades',
 } as const;
 
-export const CARD_RANK = {
+export const CardRank = {
   TWO: '2',
   THREE: '3',
   FOUR: '4',

@@ -1,4 +1,4 @@
-import type { PLAYER_ACTIONS } from 'shared/constants/player';
+import type { PlayerAction } from 'shared/constants/player';
 
 export interface PlayerActionPayloadBase {
   playerId: string;
@@ -9,25 +9,25 @@ export interface PlayerActionPayloadAmount extends PlayerActionPayloadBase {
 }
 
 interface PlayerFoldPayload {
-  action: typeof PLAYER_ACTIONS.FOLD;
+  action: typeof PlayerAction.FOLD;
 }
 
 interface PlayerCallPayload {
-  action: typeof PLAYER_ACTIONS.CALL;
+  action: typeof PlayerAction.CALL;
 }
 
 interface PlayerBetPayload {
-  action: typeof PLAYER_ACTIONS.BET;
+  action: typeof PlayerAction.BET;
   amount: number;
 }
 
 interface PlayerRaisePayload {
-  action: typeof PLAYER_ACTIONS.RAISE;
+  action: typeof PlayerAction.RAISE;
   amount: number;
 }
 
 interface PlayerCheckPayload {
-  action: typeof PLAYER_ACTIONS.CHECK;
+  action: typeof PlayerAction.CHECK;
 }
 
 export type ClientPlayerActionPayload =

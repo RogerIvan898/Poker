@@ -1,14 +1,14 @@
-import { CARD_SUIT } from 'shared/constants/cards';
+import { CardSuit } from 'shared/constants/cards';
 import type { Card, CardRank } from 'shared/types/card';
 import type { Player } from 'shared/types/player';
 
 import type { PlayerInfo, ServerGameEvent } from '../types';
 
 const SUIT_MAP = {
-  h: CARD_SUIT.HEARTS,
-  d: CARD_SUIT.DIAMONDS,
-  c: CARD_SUIT.CLUBS,
-  s: CARD_SUIT.SPADES,
+  h: CardSuit.HEARTS,
+  d: CardSuit.DIAMONDS,
+  c: CardSuit.CLUBS,
+  s: CardSuit.SPADES,
 } as const;
 
 export const parseCard = (cardString: string): Card => {

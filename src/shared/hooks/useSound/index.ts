@@ -1,66 +1,8 @@
 import React from 'react';
 
-type PlayOptions = {
-  onStart?: () => void;
-};
+import { bufferCache, getAudioContext, loadBuffer } from 'shared/lib/audio';
 
-type UseSoundResult = {
-  play: (options?: PlayOptions) => void;
-  ready: boolean;
-};
-
-let audioContext: AudioContext | null = null;
-
-const bufferCache = new Map<string, AudioBuffer>();
-const loadPromises = new Map<string, Promise<AudioBuffer>>();
-
-export const getAudioContext = () => {
-  if (!audioContext) {
-    audioContext = new AudioContext();
-  }
-
-  return audioContext;
-};
-
-const loadBuffer = (url: string): Promise<AudioBuffer> => {
-  const cached = bufferCache.get(url);
-
-  if (cached) {
-    return Promise.resolve(cached);
-  }
-
-  const pending = loadPromises.get(url);
-
-  if (pending) {
-    return pending;
-  }
-
-  const promise = (async () => {
-    const context = getAudioContext();
-
-    const response = await fetch(url);
-    const arrayBuffer = await response.arrayBuffer();
-    const decoded = await context.decodeAudioData(arrayBuffer);
-
-    bufferCache.set(url, decoded);
-
-    return decoded;
-  })();
-
-  loadPromises.set(url, promise);
-
-  return promise;
-};
-
-export const preloadAllSounds = async (urls: string[]): Promise<void> => {
-  const results = await Promise.allSettled(urls.map(url => loadBuffer(url)));
-
-  results.forEach((result, index) => {
-    if (result.status === 'rejected') {
-      console.warn(`[Audio] ${urls[index]}`, result.reason);
-    }
-  });
-};
+import type { PlayOptions, UseSoundResult } from './types';
 
 export const useSound = (url: string): UseSoundResult => {
   const [ready, setReady] = React.useState(() => bufferCache.has(url));
@@ -76,6 +18,7 @@ export const useSound = (url: string): UseSoundResult => {
         }
 
         const source = context.createBufferSource();
+
         source.buffer = buffer;
         source.connect(context.destination);
         source.start(0);

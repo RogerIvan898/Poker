@@ -1,4 +1,4 @@
-import { PLAYER_STATUSES } from 'shared/constants/player';
+import { PlayerStatus } from 'shared/constants/player';
 import type { Player as PlayerType } from 'shared/types/player';
 import type { DirectionType } from 'shared/types/primitives';
 import { DealerButton } from 'shared/ui/dealer-button';
@@ -37,8 +37,8 @@ export const Player = ({
 }: Props) => {
   const { status, stack, hand, name } = player;
 
-  const isSitOut = status === PLAYER_STATUSES.SITTING_OUT;
-  const isFolded = status === PLAYER_STATUSES.FOLDED;
+  const isSitOut = status === PlayerStatus.SITTING_OUT;
+  const isFolded = status === PlayerStatus.FOLDED;
 
   const { showTimer, usingBank, progress } = useTurnTimer({
     isTurn: turn,

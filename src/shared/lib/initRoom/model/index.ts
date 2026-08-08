@@ -1,14 +1,14 @@
 import { createEffect, createEvent, sample } from 'effector';
 
-import { SOUNDS } from 'shared/constants/sound';
-import { getAudioContext, preloadAllSounds } from 'shared/hooks/useSound';
+import { Sound } from 'shared/constants/sound';
+import { getAudioContext, preloadAllSounds } from 'shared/lib/audio';
 
 const SOUNDS_TO_LOAD = [
-  SOUNDS.cardDeal,
-  SOUNDS.check,
-  SOUNDS.timeBank,
-  SOUNDS.chips,
-  SOUNDS.turn,
+  Sound.CARD_DEAL,
+  Sound.CHECK,
+  Sound.TIME_BANK,
+  Sound.CHIPS,
+  Sound.TURN,
 ];
 
 const initRoomFx = createEffect(async () => {

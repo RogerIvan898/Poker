@@ -1,3 +1,3 @@
-import { DIRECTIONS } from 'shared/constants/primitives';
+import { Direction } from 'shared/constants/primitives';
 
-export type DirectionType = (typeof DIRECTIONS)[keyof typeof DIRECTIONS];
+export type DirectionType = (typeof Direction)[keyof typeof Direction];

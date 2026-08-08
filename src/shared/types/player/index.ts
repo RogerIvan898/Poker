@@ -1,12 +1,10 @@
-import type { PLAYER_ACTIONS, PLAYER_STATUSES } from 'shared/constants/player';
+import type { PlayerAction, PlayerStatus } from 'shared/constants/player';
 
 import type { Card } from '../card';
 
-export type PlayerActionType =
-  (typeof PLAYER_ACTIONS)[keyof typeof PLAYER_ACTIONS];
+export type PlayerActionType = (typeof PlayerAction)[keyof typeof PlayerAction];
 
-export type PlayerStatusType =
-  (typeof PLAYER_STATUSES)[keyof typeof PLAYER_STATUSES];
+export type PlayerStatusType = (typeof PlayerStatus)[keyof typeof PlayerStatus];
 
 export interface PlayerAction {
   type: PlayerActionType;

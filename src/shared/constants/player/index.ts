@@ -1,4 +1,4 @@
-export const PLAYER_ACTIONS = {
+export const PlayerAction = {
   BET: 'BET',
   RAISE: 'RAISE',
   CALL: 'CALL',
@@ -6,7 +6,7 @@ export const PLAYER_ACTIONS = {
   FOLD: 'FOLD',
 } as const;
 
-export const PLAYER_STATUSES = {
+export const PlayerStatus = {
   SITTING_OUT: 'SITTING_OUT',
   WAITING: 'WAITING',
   IN_GAME: 'IN_GAME',

@@ -4,10 +4,10 @@ import chipsSound from 'assets/sounds/chips.mp3';
 import timeBankSound from 'assets/sounds/time-bank.mp3';
 import turnSound from 'assets/sounds/turn.mp3';
 
-export const SOUNDS = {
-  cardDeal: cardDealSound,
-  check: checkSound,
-  timeBank: timeBankSound,
-  chips: chipsSound,
-  turn: turnSound,
+export const Sound = {
+  CARD_DEAL: cardDealSound,
+  CHECK: checkSound,
+  TIME_BANK: timeBankSound,
+  CHIPS: chipsSound,
+  TURN: turnSound,
 } as const;

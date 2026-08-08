@@ -4,7 +4,7 @@ import { gameModel } from 'entities/game';
 import { CLIENT_COMMANDS } from 'entities/game/model/constants';
 import { sessionModel } from 'entities/session';
 
-import { PLAYER_ACTIONS } from 'shared/constants/player';
+import { PlayerAction } from 'shared/constants/player';
 
 import type { PlayerActionPayloadAmount } from './types';
 
@@ -19,13 +19,13 @@ const action = (type: string, amount?: number) => ({
 });
 
 const simpleActionTriggered = merge([
-  fold.map(() => action(PLAYER_ACTIONS.FOLD)),
-  call.map(() => action(PLAYER_ACTIONS.CALL)),
-  check.map(() => action(PLAYER_ACTIONS.CHECK)),
+  fold.map(() => action(PlayerAction.FOLD)),
+  call.map(() => action(PlayerAction.CALL)),
+  check.map(() => action(PlayerAction.CHECK)),
 ]);
 
 const raiseActionTriggered = raise.map(({ amount }) =>
-  action(PLAYER_ACTIONS.RAISE, amount)
+  action(PlayerAction.RAISE, amount)
 );
 
 const playerAction = merge([simpleActionTriggered, raiseActionTriggered]);

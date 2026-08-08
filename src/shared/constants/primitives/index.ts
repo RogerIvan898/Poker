@@ -1,4 +1,4 @@
-export const DIRECTIONS = {
+export const Direction = {
   TOP: 'top',
   BOTTON: 'bottom',
   LEFT: 'left',
