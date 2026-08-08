@@ -10,7 +10,21 @@ export const useElementRect = (element: HTMLElement | null) => {
     }
 
     const update = () => {
-      setRect(element.getBoundingClientRect());
+      const next = element.getBoundingClientRect();
+
+      setRect(prev => {
+        if (
+          prev &&
+          prev.x === next.x &&
+          prev.y === next.y &&
+          prev.width === next.width &&
+          prev.height === next.height
+        ) {
+          return prev;
+        }
+
+        return next;
+      });
     };
 
     update();
