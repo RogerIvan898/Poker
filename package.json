@@ -13,9 +13,13 @@
     "format:check": "prettier --check .",
     "fix": "prettier --write . && eslint . --fix",
     "preview": "vite preview",
+    "lingui:extract": "lingui extract",
+    "lingui:compile": "lingui compile",
     "prepare": "husky"
   },
   "dependencies": {
+    "@lingui/core": "^6.6.0",
+    "@lingui/react": "^6.6.0",
     "@ton/core": "^0.63.1",
     "@tonconnect/ui-react": "^3.0.0",
     "axios": "^1.18.1",
@@ -30,6 +34,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
+    "@lingui/babel-plugin-lingui-macro": "^6.6.0",
+    "@lingui/cli": "^6.6.0",
+    "@lingui/vite-plugin": "^6.6.0",
     "@types/node": "^24.3.3",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",

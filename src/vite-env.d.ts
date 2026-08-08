@@ -1,5 +1,9 @@
 /// <reference types="vite/client" />
 
+declare module '*.po' {
+  export const messages: Record<string, string>;
+}
+
 type TelegramSafeAreaInset = {
   top: number;
   bottom: number;
@@ -14,6 +18,11 @@ declare global {
         ready: () => void;
         expand: () => void;
         initData: string;
+        initDataUnsafe?: {
+          user?: {
+            language_code?: string;
+          };
+        };
         setHeaderColor: (color: string) => void;
         setBackgroundColor: (color: string) => void;
         requestFullscreen: () => void;

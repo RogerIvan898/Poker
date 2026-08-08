@@ -1,3 +1,4 @@
+import { lingui } from '@lingui/vite-plugin';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { defineConfig, type Plugin } from 'vite';
@@ -49,7 +50,12 @@ const tonConnectManifestPlugin = (): Plugin => ({
 
 export default defineConfig({
   plugins: [
-    react(),
+    react({
+      babel: {
+        plugins: ['@lingui/babel-plugin-lingui-macro'],
+      },
+    }),
+    lingui(),
     nodePolyfills({
       include: ['buffer'],
     }),

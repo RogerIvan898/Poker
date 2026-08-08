@@ -1,7 +1,5 @@
 import React from 'react';
 
-import cardDealSound from 'assets/sounds/card-deal.mp3';
-
 import { Card } from 'entities/card';
 
 import { useSound } from 'shared/hooks/useSound';

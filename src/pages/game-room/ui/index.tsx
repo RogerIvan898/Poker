@@ -26,10 +26,7 @@ export const GameRoomPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [mountRoom, isLoading] = useUnit([
-    roomMounted,
-    initRoomModel.$isLoading,
-  ]);
+  const [isLoading] = useUnit([initRoomModel.$isLoading]);
 
   React.useEffect(() => {
     const state = location.state as LocationState | null;
@@ -39,8 +36,8 @@ export const GameRoomPage = () => {
       return;
     }
 
-    mountRoom({ wsUrl: state.wsUrl, ticket: state.ticket });
-  }, [location.state, mountRoom, navigate]);
+    roomMounted({ wsUrl: state.wsUrl, ticket: state.ticket });
+  }, [location.state, navigate]);
 
   if (isLoading) {
     return <Preloader />;
