@@ -6,12 +6,12 @@ import { useGate, useUnit } from 'effector-react';
 
 import { Preloader } from 'widgets/preloader';
 
-import { $isI18nReady, I18nGate } from '../model';
+import { i18nModel } from 'shared/lib/i18n';
 
 export const I18nProvider = ({ children }: React.PropsWithChildren) => {
-  useGate(I18nGate);
+  useGate(i18nModel.I18nGate);
 
-  const ready = useUnit($isI18nReady);
+  const ready = useUnit(i18nModel.$isI18nReady);
 
   if (!ready) {
     return <Preloader />;

@@ -2,15 +2,12 @@ import { Loader2, Spade } from 'lucide-react';
 
 import styles from './preloader.module.css';
 
-interface PreloaderProps {
+interface Props {
   label?: string;
   progress?: number;
 }
 
-export const Preloader = ({
-  label = 'Загрузка ресурсов...',
-  progress,
-}: PreloaderProps) => {
+export const Preloader = ({ label = 'Загрузка...', progress }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>

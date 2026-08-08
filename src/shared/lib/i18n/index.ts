@@ -1,1 +1,1 @@
-export { I18nProvider } from './ui';
+export * as i18nModel from './model';

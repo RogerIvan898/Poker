@@ -1,6 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 
+import { useNavigate } from '@tanstack/react-router';
 import { useUnit } from 'effector-react';
 
 import { DepositModal } from 'widgets/deposit/ui';
@@ -85,17 +85,22 @@ const Filters = () => {
 
 const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
   const navigate = useNavigate();
+
   const [joinRoomFx, isJoining] = useUnit([
     roomModel.joinRoomFx,
     roomModel.$isJoining,
   ]);
+
   const isFull = room.players === room.max;
 
   const handleJoin = async () => {
     try {
-      const data = await joinRoomFx(String(room.id));
-      await navigate(`/room/${data.roomId}`, {
-        state: { ticket: data.ticket, wsUrl: data.wsUrl },
+      const { roomId, ticket, wsUrl } = await joinRoomFx(String(room.id));
+
+      void navigate({
+        to: '/game/$roomId',
+        params: { roomId },
+        state: { ticket, wsUrl },
       });
     } catch (error) {
       console.error('Failed to join room', error);

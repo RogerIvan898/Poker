@@ -1,12 +1,24 @@
-import { i18n } from '@lingui/core';
+import { i18n, type Messages } from '@lingui/core';
 
 import { DEFAULT_LOCALE, supportedLocales, type Locale } from '../constants';
 
-export const activate = async (locale: Locale) => {
-  const { messages } = await import(`../locales/${locale}/messages.po`);
+const catalogs = import.meta.glob('../locales/*/messages.po');
 
-  i18n.load(locale, messages);
-  i18n.activate(locale);
+export const activate = async (locale: Locale) => {
+  const path = `../locales/${locale}/messages.po`;
+  const loadCatalog = catalogs[path];
+
+  if (!loadCatalog) {
+    console.error(`[i18n] Перевроды для локалии ${locale} не найдены`);
+    return;
+  }
+
+  try {
+    i18n.load(locale, (await loadCatalog()) as Messages);
+    i18n.activate(locale);
+  } catch (error) {
+    console.log(`[i18n] Ошибка при загрузке локалии ${locale}:`, error);
+  }
 };
 
 const isLocale = (value: string): value is Locale =>

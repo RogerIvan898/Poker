@@ -20,6 +20,7 @@
   "dependencies": {
     "@lingui/core": "^6.6.0",
     "@lingui/react": "^6.6.0",
+    "@tanstack/react-router": "^1.170.23",
     "@ton/core": "^0.63.1",
     "@tonconnect/ui-react": "^3.0.0",
     "axios": "^1.18.1",
@@ -29,14 +30,14 @@
     "lucide-react": "^1.25.0",
     "qrcode.react": "^4.2.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-router-dom": "^7.18.1"
+    "react-dom": "^19.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@lingui/babel-plugin-lingui-macro": "^6.6.0",
     "@lingui/cli": "^6.6.0",
     "@lingui/vite-plugin": "^6.6.0",
+    "@tanstack/router-plugin": "^1.168.27",
     "@types/node": "^24.3.3",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",

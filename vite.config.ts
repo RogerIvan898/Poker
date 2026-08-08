@@ -1,4 +1,5 @@
 import { lingui } from '@lingui/vite-plugin';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { defineConfig, type Plugin } from 'vite';
@@ -50,6 +51,16 @@ const tonConnectManifestPlugin = (): Plugin => ({
 
 export default defineConfig({
   plugins: [
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
+      enableDisablingOutdatedRouteFiles: true,
+      routesDirectory: './src/app/routes',
+      generatedRouteTree: './src/app/routeTree.gen.ts',
+      routeFileIgnorePattern: '.*\\.(test|spec|styles)\\.(ts|tsx)$',
+      quoteStyle: 'single',
+      semicolons: true,
+    }),
     react({
       babel: {
         plugins: ['@lingui/babel-plugin-lingui-macro'],
