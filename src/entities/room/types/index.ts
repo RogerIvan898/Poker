@@ -1,6 +1,5 @@
 export interface JoinRoomResponse {
   wsUrl: string;
-  ticket: string;
   expiresIn: number;
 }
 

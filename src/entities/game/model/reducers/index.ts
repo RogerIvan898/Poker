@@ -2,7 +2,7 @@ import type { Card } from 'shared/types/card';
 import type { Player } from 'shared/types/player';
 
 import type * as T from '../types';
-import { buildPlayer, parseCard } from '../utils';
+import { mapPlayerInfoToPlayer, parseCard } from '../utils';
 
 export const reducePlayerSeated = (
   state: T.GameState,
@@ -11,7 +11,10 @@ export const reducePlayerSeated = (
   ...state,
   players: {
     ...state.players,
-    [payload.seatIndex]: buildPlayer(payload.player, payload.seatIndex),
+    [payload.seatIndex]: mapPlayerInfoToPlayer(
+      payload.player,
+      payload.seatIndex
+    ),
   },
 });
 

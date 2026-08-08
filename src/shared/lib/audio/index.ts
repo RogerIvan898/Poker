@@ -41,7 +41,7 @@ export const loadBuffer = (url: string) => {
   return promise;
 };
 
-export const preloadAllSounds = async (urls: string[]): Promise<void> => {
+export const preloadSounds = async (urls: string[]) => {
   const results = await Promise.allSettled(urls.map(url => loadBuffer(url)));
 
   results.forEach((result, index) => {

@@ -1,3 +1,6 @@
+import { CardSuit } from 'shared/constants/cards';
+import { Sound } from 'shared/constants/sound';
+
 import type { GameState } from '../types';
 
 export const INITIAL_GAME_STATE: GameState = {
@@ -33,4 +36,19 @@ export const SERVER_EVENTS = {
 
 export const CLIENT_COMMANDS = {
   PLAYER_ACTION: 'CMD_PLAYER_ACTION',
+} as const;
+
+export const GAME_SOUNDS = [
+  Sound.CARD_DEAL,
+  Sound.CHECK,
+  Sound.TIME_BANK,
+  Sound.CHIPS,
+  Sound.TURN,
+];
+
+export const SuitMap = {
+  h: CardSuit.HEARTS,
+  d: CardSuit.DIAMONDS,
+  c: CardSuit.CLUBS,
+  s: CardSuit.SPADES,
 } as const;

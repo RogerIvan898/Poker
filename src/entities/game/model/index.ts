@@ -2,7 +2,6 @@ import { createEffect, createEvent, createStore, sample } from 'effector';
 
 import type { Card } from 'shared/types/card';
 import type { Player } from 'shared/types/player';
-import { createSocket } from 'shared/utils/socket';
 
 import { INITIAL_GAME_STATE, SERVER_EVENTS } from './constants';
 import * as reducers from './reducers';
@@ -13,24 +12,14 @@ import type {
   GameState,
   ServerGameEvent,
 } from './types';
-import { isServerGameEvents, parseCard } from './utils';
+import { createGameSocket, initializeAudio, parseCard } from './utils';
 
 export const incomingEvent = createEvent<ServerGameEvent>();
 
-export const connectWebSocketFx = createEffect(
-  ({ wsUrl, ticket }: GameConnectParams) => {
-    const url = new URL(wsUrl);
-    url.searchParams.set('ticket', ticket);
-
-    return createSocket(url.toString(), {
-      onMessage: data => {
-        if (isServerGameEvents(data)) {
-          incomingEvent(data);
-        } else {
-          console.warn('[WS] Recived non-game event:', data);
-        }
-      },
-    });
+export const initializeGameFx = createEffect(
+  async ({ wsUrl }: GameConnectParams) => {
+    await initializeAudio();
+    return createGameSocket(wsUrl, incomingEvent);
   }
 );
 
@@ -38,6 +27,7 @@ export const sendClientCommandFx = createEffect(
   ({ socket, command }: { socket: WebSocket | null; command: unknown }) => {
     if (!socket) {
       console.warn('[WS] Cannot send action: socket is disconnected');
+
       return;
     }
 
@@ -46,10 +36,14 @@ export const sendClientCommandFx = createEffect(
 );
 
 export const connectGame = createEvent<GameConnectParams>();
-export const resetTable = createEvent();
 export const sendClientCommand = createEvent<ClientGameEvent>();
+export const disconnectGame = createEvent();
 
-export const $socketClient = createStore<WebSocket | null>(null);
+export const $socketClient = createStore<WebSocket | null>(null)
+  .on(initializeGameFx.doneData, (_, socket) => socket)
+  .reset(disconnectGame);
+
+export const $isGameLoading = initializeGameFx.pending;
 
 export const $gameState = createStore<GameState>(INITIAL_GAME_STATE)
   .on(incomingEvent, (state, { type, payload }) => {
@@ -81,7 +75,7 @@ export const $gameState = createStore<GameState>(INITIAL_GAME_STATE)
 
     return state;
   })
-  .reset(resetTable);
+  .reset(disconnectGame);
 
 export const $myCards = createStore<Player['hand']>(null)
   .on(incomingEvent, (state, { type, payload }) => {
@@ -98,7 +92,7 @@ export const $myCards = createStore<Player['hand']>(null)
 
     return state;
   })
-  .reset(resetTable);
+  .reset(disconnectGame);
 
 export const $myAllowedActions = createStore<
   AllowedPlayerActionsEvent['payload'] | null
@@ -117,7 +111,7 @@ export const $myAllowedActions = createStore<
 
     return state;
   })
-  .reset(resetTable);
+  .reset(disconnectGame);
 
 export const $dealerSeat = $gameState.map(state => state.dealerSeat);
 export const $players = $gameState.map(state => state.players);
@@ -125,7 +119,7 @@ export const $activeSeat = $gameState.map(state => state.activeSeat);
 
 sample({
   clock: connectGame,
-  target: connectWebSocketFx,
+  target: initializeGameFx,
 });
 
 sample({
@@ -133,4 +127,10 @@ sample({
   source: $socketClient,
   fn: (socket, command) => ({ socket, command }),
   target: sendClientCommandFx,
+});
+
+sample({
+  clock: disconnectGame,
+  source: $socketClient,
+  fn: socket => socket?.close(),
 });

@@ -13,7 +13,6 @@ declare module '@tanstack/react-router' {
   }
 
   interface HistoryState {
-    ticket: string;
     wsUrl: string;
   }
 }

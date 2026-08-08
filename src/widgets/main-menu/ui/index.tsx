@@ -6,7 +6,7 @@ import { useUnit } from 'effector-react';
 import { DepositModal } from 'widgets/deposit/ui';
 import { WithdrawModal } from 'widgets/withdraw';
 
-import { roomModel } from 'entities/room';
+import { roomJoinModel } from 'features/join-room';
 
 import { cn } from 'shared/utils';
 
@@ -87,20 +87,20 @@ const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
   const navigate = useNavigate();
 
   const [joinRoomFx, isJoining] = useUnit([
-    roomModel.joinRoomFx,
-    roomModel.$isJoining,
+    roomJoinModel.joinRoomFx,
+    roomJoinModel.$isJoining,
   ]);
 
   const isFull = room.players === room.max;
 
   const handleJoin = async () => {
     try {
-      const { roomId, ticket, wsUrl } = await joinRoomFx(String(room.id));
+      const { roomId, wsUrl } = await joinRoomFx(String(room.id));
 
       void navigate({
         to: '/game/$roomId',
         params: { roomId },
-        state: { ticket, wsUrl },
+        state: { wsUrl },
       });
     } catch (error) {
       console.error('Failed to join room', error);

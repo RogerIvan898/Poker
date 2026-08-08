@@ -1,1 +1,2 @@
-export * as roomModel from './model';
+export { roomApi } from './api';
+export * from './types';

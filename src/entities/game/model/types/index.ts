@@ -159,5 +159,4 @@ export interface ClientGameEvent {
 
 export interface GameConnectParams {
   wsUrl: string;
-  ticket: string;
 }

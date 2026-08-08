@@ -1,6 +1,7 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 
-import { roomApi } from '../api';
+import { gameModel } from 'entities/game';
+import { roomApi } from 'entities/room/api';
 
 export const joinRoom = createEvent<string>();
 
@@ -10,9 +11,7 @@ export const joinRoomFx = createEffect(async (roomId: string) => {
   return { roomId, ...data };
 });
 
-export const $isJoining = createStore(false)
-  .on(joinRoomFx, () => true)
-  .on(joinRoomFx.finally, () => false);
+export const $isJoining = joinRoomFx.pending;
 
 export const $joinError = createStore<string | null>(null)
   .on(joinRoom, () => null)
@@ -23,4 +22,10 @@ export const $joinError = createStore<string | null>(null)
 sample({
   clock: joinRoom,
   target: joinRoomFx,
+});
+
+sample({
+  clock: joinRoomFx.doneData,
+  fn: ({ wsUrl }) => ({ wsUrl }),
+  target: gameModel.connectGame,
 });
