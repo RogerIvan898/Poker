@@ -5,6 +5,7 @@
 }
 
 .quickBtn {
+  position: relative;
   flex: 1;
   height: 52px;
   display: flex;
@@ -12,23 +13,26 @@
   justify-content: center;
   gap: 8px;
   padding: 0 14px;
-  border: 1px solid color-mix(in srgb, var(--color-primary) 22%, var(--color-border-strong));
+  overflow: hidden;
+  border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-bg));
+  background: var(--color-bg-elevated);
   cursor: pointer;
   transition:
     background 0.2s,
     border-color 0.2s,
-    color 0.2s;
+    transform 0.15s;
 }
 
+/* Подсветка брендом при hover */
 .quickBtn:hover {
-  background: color-mix(in srgb, var(--color-primary) 14%, var(--color-bg));
-  border-color: color-mix(in srgb, var(--color-primary) 45%, var(--color-border-strong));
+  border-color: color-mix(in srgb, var(--color-primary) 50%, var(--color-border-strong));
+  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-bg-elevated));
 }
 
 .quickBtn:active {
-  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-bg));
+  transform: scale(0.97);
+  background: color-mix(in srgb, var(--color-primary) 16%, var(--color-bg-elevated));
 }
 
 .quickBtn:focus-visible {
@@ -36,45 +40,46 @@
   outline-offset: 2px;
 }
 
+/* Микродвижение иконки — "оживление" при наведении */
 .quickBtnIcon {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   color: var(--color-primary);
-  transition: color 0.2s;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.quickBtn:hover .quickBtnIcon {
+  transform: translateY(-2px) rotate(90deg);
 }
 
 .quickBtnValue {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
   color: var(--color-text);
-  transition: color 0.2s;
 }
 
-.quickBtn:hover .quickBtnValue {
-  color: var(--color-text);
+.quickBtnUnit {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
 }
 
 @media (max-width: 600px) {
   .quickAmounts {
-    gap: 12px;
+    gap: 8px;
     margin-bottom: 24px;
   }
 
   .quickBtn {
-    height: 60px;
-    gap: 10px;
-    padding: 0 16px;
+    height: 56px;
+    padding: 0 10px;
     border-radius: var(--radius-lg);
   }
 
-  .quickBtnIcon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .quickBtnValue {
-    font-size: 18px;
+  .quickBtnUnit {
+    display: none; /* На узком экране "+ 5" читается лучше, чем "+ 5 TON" */
   }
 }

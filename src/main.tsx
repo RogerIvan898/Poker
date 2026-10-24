@@ -5,11 +5,20 @@ import { App } from 'app/App';
 import 'entities/session/model';
 
 import { appStarted } from 'shared/config/init';
+import { bootstrapMockServer } from 'shared/config/mock-server';
 import { initTelegramWebApp } from 'shared/config/telegram-webapp';
 
 import './index.css';
 
-initTelegramWebApp();
-appStarted();
+const root = document.getElementById('root');
 
-createRoot(document.getElementById('root')!).render(<App />);
+if (!root) {
+  throw new Error('Root element was not found');
+}
+
+void (async () => {
+  initTelegramWebApp();
+  await bootstrapMockServer();
+  appStarted();
+  createRoot(root).render(<App />);
+})();

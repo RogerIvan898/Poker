@@ -32,14 +32,14 @@
 
 .dealerWrap {
   position: absolute;
-  z-index: 200;
+  z-index: 12;
   perspective: 300px;
   pointer-events: none;
 }
 
 .dealer_top {
-  bottom: calc(100% + 4px);
-  left: calc(50% + 14px);
+  bottom: calc(100% - 10px);
+  left: calc(50% + 22px);
   transform: translateX(-50%);
 }
 
@@ -78,12 +78,13 @@
   }
 
   .dealer_top {
-    left: calc(50% + 10px);
+    bottom: calc(100% - 8px);
+    left: calc(50% + 18px);
   }
 
   .dealer_bottom {
-    top: calc(100% + 22px);
-    left: calc(50% + 14px);
+    top: calc(100% + 18px);
+    left: calc(50% + 18px);
   }
 
   .dealer_left {

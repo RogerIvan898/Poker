@@ -1,130 +1,187 @@
 .button {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 24px 18px 24px;
+  gap: 8px;
+  padding: 14px 28px;
   border-radius: var(--radius-md);
-  font-size: 16px;
-  font-weight: 800;
-  border: none !important;
-  outline: none !important;
-  cursor: pointer;
-  transition:
-    transform 0.1s ease,
-    box-shadow 0.1s ease,
-    filter 0.2s ease;
-  color: var(--color-text-on-primary);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
   font-family: var(--font-family);
-  box-sizing: border-box;
+  border: 1px solid transparent;
+  cursor: pointer;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--color-text-on-primary);
   -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  transition:
+    transform 0.12s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    filter 0.2s ease;
 }
 
-.button:focus,
-.button:focus-visible,
-.button:focus-within {
-  outline: none !important;
-  border: none !important;
-}
-
-.button:hover:not(:disabled) {
-  filter: brightness(1.15);
-}
-
-.button:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-  pointer-events: none;
-  filter: grayscale(0.5);
-}
-
+/* ============ PRIMARY: неоновое свечение TON ============ */
 .color-primary {
   background: linear-gradient(
-    180deg,
+    135deg,
     var(--color-primary-light) 0%,
-    var(--color-primary) 100%
+    var(--color-primary) 55%,
+    color-mix(in srgb, var(--color-primary) 75%, black) 100%
   );
   box-shadow:
-    0 4px 0 color-mix(in srgb, var(--color-primary) 55%, black),
-    0 8px 16px color-mix(in srgb, var(--color-primary) 40%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--color-primary-light) 40%, transparent),
+    0 4px 20px color-mix(in srgb, var(--color-primary) 45%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 25%, transparent);
 }
 
 .color-primary:hover:not(:disabled) {
   box-shadow:
-    0 5px 0 color-mix(in srgb, var(--color-primary) 55%, black),
-    0 10px 20px color-mix(in srgb, var(--color-primary) 50%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--color-primary-light) 60%, transparent),
+    0 6px 28px color-mix(in srgb, var(--color-primary) 65%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 25%, transparent);
 }
 
 .color-primary:active:not(:disabled) {
-  transform: translateY(4px);
+  transform: scale(0.96);
   box-shadow:
-    0 0 0 color-mix(in srgb, var(--color-primary) 55%, black),
-    0 2px 4px color-mix(in srgb, var(--color-primary) 40%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--color-primary-light) 30%, transparent),
+    0 2px 10px color-mix(in srgb, var(--color-primary) 35%, transparent),
+    inset 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
+/* ============ SECONDARY: стекло ============ */
 .color-secondary {
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--color-secondary) 80%, white) 0%,
-    var(--color-secondary) 100%
-  );
-  box-shadow:
-    0 4px 0 color-mix(in srgb, var(--color-secondary) 50%, black),
-    0 8px 12px var(--color-shadow);
+  background: color-mix(in srgb, var(--color-secondary) 35%, transparent);
+  border-color: color-mix(in srgb, var(--color-secondary) 60%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
 }
 
 .color-secondary:hover:not(:disabled) {
-  box-shadow:
-    0 5px 0 color-mix(in srgb, var(--color-secondary) 50%, black),
-    0 10px 16px var(--color-shadow);
+  background: color-mix(in srgb, var(--color-secondary) 55%, transparent);
+  border-color: color-mix(in srgb, var(--color-secondary) 90%, transparent);
 }
 
 .color-secondary:active:not(:disabled) {
-  transform: translateY(4px);
-  box-shadow:
-    0 0 0 color-mix(in srgb, var(--color-secondary) 50%, black),
-    0 2px 4px var(--color-shadow);
+  transform: scale(0.96);
 }
 
+/* ============ DANGER: пульсирующее красное свечение ============ */
 .color-danger {
   background: linear-gradient(
-    180deg,
+    135deg,
     color-mix(in srgb, var(--color-danger) 85%, white) 0%,
     var(--color-danger) 100%
   );
   box-shadow:
-    0 4px 0 color-mix(in srgb, var(--color-danger) 55%, black),
-    0 8px 14px color-mix(in srgb, var(--color-danger) 40%, transparent);
+    0 0 0 1px color-mix(in srgb, var(--color-danger) 50%, transparent),
+    0 4px 20px color-mix(in srgb, var(--color-danger) 40%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 20%, transparent);
+  animation: danger-pulse 2.4s ease-in-out infinite;
 }
 
-.color-danger:hover:not(:disabled) {
-  box-shadow:
-    0 5px 0 color-mix(in srgb, var(--color-danger) 55%, black),
-    0 10px 20px color-mix(in srgb, var(--color-danger) 50%, transparent);
+@keyframes danger-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-danger) 50%, transparent),
+      0 4px 20px color-mix(in srgb, var(--color-danger) 40%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 20%, transparent);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color-danger) 70%, transparent),
+      0 4px 32px color-mix(in srgb, var(--color-danger) 65%, transparent),
+      inset 0 1px 0 color-mix(in srgb, white 20%, transparent);
+  }
 }
 
 .color-danger:active:not(:disabled) {
-  transform: translateY(4px);
-  box-shadow:
-    0 0 0 color-mix(in srgb, var(--color-danger) 55%, black),
-    0 2px 4px color-mix(in srgb, var(--color-danger) 40%, transparent);
+  animation: none;
+  transform: scale(0.96);
 }
 
+/* ============ NEUTRAL: призрачная обводка ============ */
 .color-neutral {
-  background: color-mix(in srgb, var(--color-text) 6%, transparent);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 3px 0 color-mix(in srgb, var(--color-shadow) 40%, transparent);
+  background: transparent;
+  border-color: color-mix(in srgb, var(--color-text) 22%, transparent);
+  color: var(--color-text);
+  letter-spacing: 0.04em;
 }
 
 .color-neutral:hover:not(:disabled) {
-  box-shadow:
-    0 4px 0 color-mix(in srgb, var(--color-shadow) 40%, transparent),
-    0 6px 12px var(--color-shadow);
+  border-color: color-mix(in srgb, var(--color-text) 45%, transparent);
+  background: color-mix(in srgb, var(--color-text) 5%, transparent);
 }
 
 .color-neutral:active:not(:disabled) {
-  transform: translateY(3px);
-  box-shadow: 0 0 0 color-mix(in srgb, var(--color-shadow) 40%, transparent);
+  transform: scale(0.96);
+  background: color-mix(in srgb, var(--color-text) 10%, transparent);
+}
+
+/* ============ Shine-проход при hover (все варианты) ============ */
+.shine {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    color-mix(in srgb, white 22%, transparent) 50%,
+    transparent 60%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.button:hover:not(:disabled) .shine {
+  animation: shine-sweep 0.7s ease;
+}
+
+@keyframes shine-sweep {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* ============ Disabled ============ */
+.button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+  opacity: 0.45;
+  animation: none;
+  box-shadow: none;
+}
+
+/* ============ Фокус — заменяет убитый outline ============ */
+.button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--color-bg),
+    0 0 0 4px var(--color-primary-light);
+}
+
+/* Текст поверх shine */
+.label {
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Убираем мерцание свечения на touch-устройствах */
+@media (hover: none) {
+  .button:hover:not(:disabled) {
+    box-shadow: inherit;
+  }
+
+  .button:hover:not(:disabled) .shine {
+    animation: none;
+  }
 }

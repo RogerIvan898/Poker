@@ -9,7 +9,11 @@ interface Props {
 
 export const QuickAddOptions = ({ options, onAdd }: Props) => {
   return (
-    <div className={styles.quickAmounts}>
+    <div
+      className={styles.quickAmounts}
+      role="group"
+      aria-label="Quick add amount"
+    >
       {options.map(value => (
         <button
           key={value}
@@ -17,10 +21,12 @@ export const QuickAddOptions = ({ options, onAdd }: Props) => {
           className={styles.quickBtn}
           onClick={() => onAdd(value)}
         >
-          <span className={styles.quickBtnIcon}>
-            <Plus size={18} strokeWidth={2.25} />
+          <span className={styles.quickBtnIcon} aria-hidden>
+            <Plus size={16} strokeWidth={2.5} />
           </span>
-          <span className={styles.quickBtnValue}>{value}</span>
+          <span className={styles.quickBtnValue}>
+            {value} <span className={styles.quickBtnUnit}>TON</span>
+          </span>
         </button>
       ))}
     </div>

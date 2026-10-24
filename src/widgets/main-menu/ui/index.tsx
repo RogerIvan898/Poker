@@ -8,6 +8,10 @@ import { WithdrawModal } from 'widgets/withdraw';
 
 import { roomJoinModel } from 'features/join-room';
 
+import {
+  $mockServerEnabled,
+  setMockServerEnabled,
+} from 'shared/config/mock-server';
 import { cn } from 'shared/utils';
 
 import { Header } from './header';
@@ -62,6 +66,47 @@ const ROOMS = [
 ];
 
 const FILTERS = ['Все', 'Кэш', 'Турниры', 'Sit & Go'];
+
+const ServerModeSwitch = () => {
+  const enabled = useUnit($mockServerEnabled);
+  const [pending, setPending] = React.useState(false);
+
+  const toggle = async () => {
+    setPending(true);
+
+    try {
+      await setMockServerEnabled(!enabled);
+    } finally {
+      setPending(false);
+    }
+  };
+
+  return (
+    <div className={styles.serverSwitch}>
+      <div className={styles.serverSwitchText}>
+        <span className={styles.serverSwitchTitle}>
+          {enabled ? 'Мок-сервер' : 'Реальный сервер'}
+        </span>
+        <span className={styles.serverSwitchHint}>
+          {enabled
+            ? 'Вход за стол идёт через локальные HTTP и WebSocket'
+            : 'Вход за стол идёт на сервер из окружения'}
+        </span>
+      </div>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={enabled}
+        aria-label="Переключить мок-сервер"
+        className={styles.switchControl}
+        disabled={pending}
+        onClick={() => void toggle()}
+      >
+        <span className={styles.switchKnob} />
+      </button>
+    </div>
+  );
+};
 
 const Filters = () => {
   const [active, setActive] = React.useState('Все');
@@ -172,6 +217,7 @@ export const MainMenu = () => {
         <main className={styles.contentArea}>
           <div className={styles.stickyHeader}>
             <Filters />
+            <ServerModeSwitch />
             <div className={styles.sectionHeader}>
               <h2 className={styles.sectionTitle}>Доступные столы</h2>
               {/* <span className={styles.onlineCount}>0</span> */}

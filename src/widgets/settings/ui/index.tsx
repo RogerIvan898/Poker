@@ -1,5 +1,7 @@
+import { useState } from 'react';
+
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
-import { RefreshCw } from 'lucide-react';
+import { Check, Copy, RefreshCw, Wallet } from 'lucide-react';
 
 import { Dialog } from 'shared/ui/dialog';
 import { cn } from 'shared/utils';
@@ -15,49 +17,96 @@ interface Props {
 }
 
 export const SettingsDialog = ({ open, onClose }: Props) => {
-  const walletAddess = useTonAddress();
+  const walletAddress = useTonAddress();
   const [tonConnectUI] = useTonConnectUI();
 
-  const handleSwitchWallet = async () => {
-    if (!walletAddess) {
-      await tonConnectUI.openModal();
-      return;
-    }
+  const [isPending, setIsPending] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
-    await tonConnectUI.disconnect();
-    await tonConnectUI.openModal();
+  const connectWallet = async () => {
+    setIsPending(true);
+    try {
+      await tonConnectUI.openModal();
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const disconnectWallet = async () => {
+    setIsPending(true);
+    try {
+      await tonConnectUI.disconnect();
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const copyAddress = async () => {
+    if (!walletAddress) return;
+
+    try {
+      await navigator.clipboard.writeText(walletAddress);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 1500);
+    } catch {
+      // clipboard может быть недоступен — молча игнорируем
+    }
   };
 
   return (
-    <Dialog open={open} title="Settings" onClose={onClose}>
-      <Setting label="Web3 Address">
-        {walletAddess ? (
-          <div className={styles.walletRow}>
-            <span
-              className={cn(styles.userName, styles.walletAddress)}
-              title={walletAddess}
-            >
-              {formatAddress(walletAddess)}
-            </span>
+    <Dialog open={open} title="Настройки" onClose={onClose}>
+      <Setting label="Кошелёк">
+        {walletAddress ? (
+          <div className={styles.walletCard}>
+            <div className={styles.walletInfo}>
+              <span className={styles.walletAddress} title={walletAddress}>
+                {formatAddress(walletAddress)}
+              </span>
+
+              <div className={styles.walletActions}>
+                <button
+                  type="button"
+                  className={styles.iconBtn}
+                  onClick={() => void copyAddress()}
+                  aria-label={isCopied ? 'Скопировано' : 'Скопировать адрес'}
+                  title={isCopied ? 'Скопировано' : 'Скопировать адрес'}
+                >
+                  {isCopied ? <Check size={15} /> : <Copy size={15} />}
+                </button>
+                <button
+                  type="button"
+                  className={styles.iconBtn}
+                  onClick={() => void disconnectWallet()}
+                  disabled={isPending}
+                  aria-label="Сменить кошелёк"
+                  title="Сменить кошелёк"
+                >
+                  <RefreshCw
+                    size={15}
+                    className={cn(isPending && styles.spin)}
+                  />
+                </button>
+              </div>
+            </div>
 
             <button
               type="button"
-              className={styles.walletBtn}
-              onClick={() => void handleSwitchWallet()}
-              aria-label="Сменить кошелёк"
-              title="Сменить кошелёк"
+              className={styles.disconnectBtn}
+              onClick={() => void disconnectWallet()}
+              disabled={isPending}
             >
-              <p>CHANGE</p> <RefreshCw size={14} />
+              Отключить кошелёк
             </button>
           </div>
         ) : (
           <button
             type="button"
-            style={{ padding: '1rem' }}
-            className={styles.walletBtn}
-            onClick={() => void tonConnectUI.openModal()}
+            className={styles.connectBtn}
+            onClick={() => void connectWallet()}
+            disabled={isPending}
           >
-            Подключить кошелёк
+            <Wallet size={16} />
+            {isPending ? 'Подключение…' : 'Подключить кошелёк'}
           </button>
         )}
       </Setting>

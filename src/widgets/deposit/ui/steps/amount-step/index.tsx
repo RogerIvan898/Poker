@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { ChevronRight } from 'lucide-react';
 
 import { Alert } from 'shared/ui/alert';
+import { Logo } from 'shared/ui/logo';
 import { NumberField } from 'shared/ui/NumberField';
 
 import styles from '../../deposit.module.css';
@@ -13,31 +16,39 @@ interface Props {
   onNext: () => void;
 }
 
-const formatDraft = (value: number) => (value === 0 ? '' : String(value));
+// Только неотрицательные числа с точкой/запятой, максимум 9 знаков после запятой (nanoTON)
+const AMOUNT_RE = /^\d*[.,]?\d{0,9}$/;
+
+const formatDraft = (value: number) =>
+  value === 0 ? '' : value.toString().replace('.', ',');
 
 export const AmountStep = ({ amount, onChangeAmount, onNext }: Props) => {
   const [draft, setDraft] = useState(() => formatDraft(amount));
+
+  // Синхронизация при внешних изменениях amount (навиг backwards, quick add)
+  useEffect(() => {
+    setDraft(prev => {
+      const normalized = prev.replace(',', '.');
+      const parsed = Number(normalized);
+      return Number.isFinite(parsed) && parsed === amount
+        ? prev
+        : formatDraft(amount);
+    });
+  }, [amount]);
+
   const isValid = amount > 0;
 
   const handleInputChange = (value: string) => {
+    const normalized = value.replace(',', '.');
+
+    if (normalized !== '' && !AMOUNT_RE.test(normalized)) return;
+
     setDraft(value);
-
-    if (value === '' || value === '.') {
-      onChangeAmount(0);
-      return;
-    }
-
-    const parsed = Number(value);
-
-    if (!Number.isNaN(parsed)) {
-      onChangeAmount(parsed);
-    }
+    onChangeAmount(normalized === '' ? 0 : Number(normalized));
   };
 
   const handleQuickAdd = (value: number) => {
-    const next = amount + value;
-    onChangeAmount(next);
-    setDraft(formatDraft(next));
+    onChangeAmount(amount + value);
   };
 
   return (
@@ -46,14 +57,23 @@ export const AmountStep = ({ amount, onChangeAmount, onNext }: Props) => {
         Enter the amount you want to deposit.
       </Alert>
 
-      <label className={styles.label}>Amount</label>
+      <label className={styles.label} htmlFor="deposit-amount">
+        Amount
+      </label>
+
       <div className={styles.amountBox}>
         <NumberField
+          id="deposit-amount"
           value={draft}
           onChange={handleInputChange}
           placeholder="0.00"
+          inputMode="decimal"
+          autoComplete="off"
+          aria-invalid={!isValid && draft !== ''}
         />
-        <span>TON</span>
+        <span className={styles.amountCurrency}>
+          <Logo /> TON
+        </span>
       </div>
 
       <QuickAddOptions options={[5, 10, 20]} onAdd={handleQuickAdd} />
@@ -64,7 +84,8 @@ export const AmountStep = ({ amount, onChangeAmount, onNext }: Props) => {
         disabled={!isValid}
         onClick={onNext}
       >
-        Continue
+        <span>{isValid ? 'Continue' : 'Enter amount to continue'}</span>
+        <ChevronRight size={18} />
       </button>
     </div>
   );

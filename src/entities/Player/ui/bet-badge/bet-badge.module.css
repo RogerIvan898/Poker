@@ -1,44 +1,38 @@
 .betArea {
   position: absolute;
-  z-index: 10;
-  perspective: 500px;
+  z-index: 220;
   pointer-events: none;
-}
-
-.betAreaAmount {
-  perspective: none;
 }
 
 .amountBadge {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 6px;
   min-width: 52px;
-  padding: 5px 10px 6px;
-  border-radius: 10px;
-  background: var(--color-bg-elevated);
-  border: 1.5px solid color-mix(in srgb, var(--color-warning) 35%, transparent);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+  border: 1px solid var(--color-border);
   box-shadow: 0 4px 12px var(--color-shadow);
-  backdrop-filter: blur(8px);
 }
 
 .amountValue {
-  color: color-mix(in srgb, var(--color-warning) 80%, white);
-  font-weight: 800;
+  color: var(--color-info);
+  font-weight: 700;
   font-size: clamp(12px, 2.4vw, 15px);
   line-height: 1;
-  letter-spacing: 0.2px;
-  text-shadow: 0 1px 2px var(--color-shadow);
+  letter-spacing: -0.2px;
+  font-variant-numeric: tabular-nums;
 }
 
 .amountLogo {
-  color: var(--color-warning);
+  color: var(--color-primary-light);
   flex-shrink: 0;
 }
 
 .bet_top {
-  bottom: calc(100% + 22px);
+  bottom: calc(100% + 46px);
   left: 50%;
   --slide-x: 0px;
   --slide-y: 40px;
@@ -50,7 +44,7 @@
 }
 
 .bet_bottom {
-  top: calc(100% + 22px);
+  top: calc(100% + 30px);
   left: 50%;
   --slide-x: 0px;
   --slide-y: -40px;
@@ -121,12 +115,12 @@
 
 @media (max-width: 768px) {
   .bet_top {
-    bottom: calc(100% + 16px);
+    bottom: calc(100% + 38px);
     --slide-y: 30px;
   }
 
   .bet_bottom {
-    top: calc(100% + 16px);
+    top: calc(100% + 24px);
     --slide-y: -30px;
   }
 

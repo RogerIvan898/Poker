@@ -1,128 +1,85 @@
-.stepper {
-  font-size: 12px;
-  color: var(--color-text-muted);
-  font-weight: 500;
-}
-
-.iconBtn {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 50%;
-  background: var(--color-bg-muted);
-  color: var(--color-text-disabled);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.iconBtn:hover {
-  background: color-mix(in srgb, var(--color-bg-muted) 85%, white);
-  color: var(--color-text);
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-}
-
-.label {
-  margin-bottom: 8px;
-  color: var(--color-text-muted);
-  font-size: 13px;
-}
-
 .amountBox {
-  height: 52px;
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 16px;
-  background: var(--color-bg);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
-  margin-bottom: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-input);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+/* Свечение TON-blue при фокусе — фирменный паттерн */
 .amountBox:focus-within {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 25%, transparent);
 }
 
 .amountBox input {
   flex: 1;
   min-width: 0;
+  font-size: 32px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text);
+  background: transparent;
   border: none;
   outline: none;
-  background: transparent;
-  color: var(--color-text);
-  font-size: 18px;
 }
 
-.amountBox span {
-  color: var(--color-primary);
+.amountBox input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.5;
+}
+
+.amountCurrency {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
   font-weight: 600;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
 }
 
+/* Стрелка на primary-кнопке плавно уезжает вперёд при hover */
 .primaryBtn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
-  height: 50px;
+  height: 52px;
   border: none;
   border-radius: var(--radius-md);
   background: var(--color-primary);
   color: var(--color-text-on-primary);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
+  transition: background 0.2s, opacity 0.2s;
 }
 
 .primaryBtn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.primaryBtn:active:not(:disabled) {
   background: var(--color-primary-active);
 }
 
 .primaryBtn:disabled {
-  opacity: 0.4;
+  background: var(--color-bg-muted);
+  color: var(--color-text-secondary);
   cursor: not-allowed;
 }
 
-@media (max-width: 600px) {
-  .stepper {
-    font-size: 14px;
-  }
+.primaryBtn:not(:disabled) svg {
+  transition: transform 0.2s ease;
+}
 
-  .label {
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
-
-  .primaryBtn,
-  .amountBox {
-    height: 60px;
-  }
-
-  .amountBox {
-    padding: 0 18px;
-    gap: 12px;
-    border-radius: var(--radius-lg);
-  }
-
-  .amountBox input {
-    font-size: 22px;
-  }
-
-  .amountBox span {
-    font-size: 17px;
-  }
-
-  .primaryBtn {
-    height: 60px;
-    font-size: 17px;
-    border-radius: var(--radius-lg);
-  }
+.primaryBtn:not(:disabled):hover svg {
+  transform: translateX(3px);
 }

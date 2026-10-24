@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ArrowLeft } from 'lucide-react';
 
 import { Sheet } from 'shared/ui/sheet';
+import sheetStyles from 'shared/ui/sheet/sheet.module.css';
 
 import styles from './deposit.module.css';
 import { AmountStep } from './steps/amount-step';
@@ -59,14 +60,16 @@ export const DepositModal = ({
       }
       leading={
         step === DepositStep.Details ? (
-          <button
-            type="button"
-            className={styles.iconBtn}
-            onClick={handlePrevStep}
-            aria-label="Back"
-          >
-            <ArrowLeft size={18} />
-          </button>
+          <div className={sheetStyles.headerSide}>
+            <button
+              type="button"
+              className={sheetStyles.iconBtn}
+              onClick={handlePrevStep}
+              aria-label="Back"
+            >
+              <ArrowLeft size={18} />
+            </button>
+          </div>
         ) : undefined
       }
     >
