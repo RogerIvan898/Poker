@@ -5,7 +5,6 @@ import { call, check, fold } from '../../model';
 import styles from './base-actions.module.css';
 
 interface Props {
-  playerId: string;
   canFold: boolean;
   canCall: boolean;
   canRaise: boolean;
@@ -14,7 +13,6 @@ interface Props {
 }
 
 export const BaseActions = ({
-  playerId,
   canFold,
   canCall,
   canRaise,
@@ -25,7 +23,7 @@ export const BaseActions = ({
     <ActionButton
       color="danger"
       text={canCall ? 'Call' : 'Check'}
-      onClick={canCall ? () => call({ playerId }) : () => check({ playerId })}
+      onClick={canCall ? () => call() : () => check()}
     />
 
     {canRaise && (
@@ -37,11 +35,7 @@ export const BaseActions = ({
     )}
 
     {canFold && (
-      <ActionButton
-        color="secondary"
-        text="Fold"
-        onClick={() => fold({ playerId })}
-      />
+      <ActionButton color="secondary" text="Fold" onClick={() => fold()} />
     )}
   </div>
 );

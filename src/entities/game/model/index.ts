@@ -31,7 +31,7 @@ export const sendClientCommandFx = createEffect(
       return;
     }
 
-    socket.send(command);
+    socket.send(JSON.stringify(command));
   }
 );
 

@@ -14,7 +14,7 @@ interface Props {
   onConnectWallet: () => void;
 }
 
-export const WithdrawDestination = ({
+export const WithdrawDestinationBlock = ({
   destination,
   connectedAddress,
   customAddress,

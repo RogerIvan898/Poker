@@ -37,7 +37,6 @@ export const PlayerActions = () => {
         />
       ) : (
         <BaseActions
-          playerId={viewerId}
           canFold={allowedActions?.canFold ?? true}
           canCall={allowedActions?.canCall ?? true}
           canRaise={canPutChips}

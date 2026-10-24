@@ -12,7 +12,7 @@ export default tseslint.config([
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked,
-      reactHooks.configs['recommended-latest'],
+      reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
     ],
     languageOptions: {
@@ -35,6 +35,7 @@ export default tseslint.config([
       '@typescript-eslint/no-unsafe-argument': 'warn',
       '@typescript-eslint/no-unsafe-assignment': 'warn',
       '@typescript-eslint/no-misused-promises': 'warn',
+      'react-hooks/set-state-in-effect': 'off',
 
       'perfectionist/sort-imports': [
         'error',

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Card } from 'entities/card';
 
+import { Sound } from 'shared/constants/sound';
 import { useSound } from 'shared/hooks/useSound';
 import type { Player } from 'shared/types/player';
 import { cn } from 'shared/utils';
@@ -16,7 +17,7 @@ interface Props {
 const SECOND_CARD_DELAY_MS = 450;
 
 export const PlayerCards = ({ cards, needSound = false }: Props) => {
-  const { play: playCardSound, ready } = useSound(cardDealSound);
+  const { play: playCardSound, ready } = useSound(Sound.CARD_DEAL);
 
   const [showFirst, setShowFirst] = React.useState(false);
   const [showSecond, setShowSecond] = React.useState(false);

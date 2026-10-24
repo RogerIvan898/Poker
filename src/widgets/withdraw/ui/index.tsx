@@ -10,7 +10,7 @@ import type { WithdrawDestination, WithdrawPayload } from '../model/types';
 
 import styles from './withdraw.module.css';
 import { WithdrawAmountField } from './WithdrawAmountField';
-import { WithdrawDestination as DestinationBlock } from './WithdrawDestination';
+import { WithdrawDestinationBlock as DestinationBlock } from './WithdrawDestination';
 
 interface Props {
   open: boolean;

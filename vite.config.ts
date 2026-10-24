@@ -1,7 +1,7 @@
 import { lingui } from '@lingui/vite-plugin';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
+import { resolve } from 'node:path';
 import { defineConfig, type Plugin } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
@@ -61,12 +61,8 @@ export default defineConfig({
       quoteStyle: 'single',
       semicolons: true,
     }),
-    react({
-      babel: {
-        plugins: ['@lingui/babel-plugin-lingui-macro'],
-      },
-    }),
-    lingui(),
+    react(),
+    lingui({ macroTransform: true }),
     nodePolyfills({
       include: ['buffer'],
     }),
@@ -74,13 +70,13 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      app: resolve(__dirname, 'src/app'),
-      pages: resolve(__dirname, 'src/pages'),
-      features: resolve(__dirname, 'src/features'),
-      entities: resolve(__dirname, 'src/entities'),
-      shared: resolve(__dirname, 'src/shared'),
-      widgets: resolve(__dirname, 'src/widgets'),
-      assets: resolve(__dirname, 'src/assets'),
+      app: resolve(import.meta.dirname, 'src/app'),
+      pages: resolve(import.meta.dirname, 'src/pages'),
+      features: resolve(import.meta.dirname, 'src/features'),
+      entities: resolve(import.meta.dirname, 'src/entities'),
+      shared: resolve(import.meta.dirname, 'src/shared'),
+      widgets: resolve(import.meta.dirname, 'src/widgets'),
+      assets: resolve(import.meta.dirname, 'src/assets'),
     },
   },
   server: {
