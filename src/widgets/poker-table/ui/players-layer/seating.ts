@@ -1,23 +1,14 @@
 import type { Player } from 'shared/types/player';
 import type { DirectionType } from 'shared/types/primitives';
 
-/**
- * Вычисляет betPosition исходя из угла игрока на столе.
- * angle: 0° = верх, 90° = правый бок, 180° = низ, 270° = левый бок.
- * Бейдж ставки направлен в сторону центра стола.
- */
 export function betPositionFromAngle(angleDeg: number): DirectionType {
   const a = ((angleDeg % 360) + 360) % 360;
-  if (a > 315 || a <= 45) return 'bottom'; // игрок сверху → ставка вниз (к центру)
-  if (a > 45 && a <= 135) return 'left'; // игрок справа  → ставка влево
-  if (a > 135 && a <= 225) return 'top'; // игрок снизу   → ставка вверх
-  return 'right'; // игрок слева   → ставка вправо
+  if (a > 315 || a <= 45) return 'bottom';
+  if (a > 45 && a <= 135) return 'left';
+  if (a > 135 && a <= 225) return 'top';
+  return 'right';
 }
 
-/**
- * Раскладывает n игроков равномерно по эллипсу.
- * Текущий игрок (viewerSeat) всегда оказывается снизу (angle 180°).
- */
 export function computeSeats(
   players: Player[],
   viewerSeat: number | null,
@@ -31,12 +22,10 @@ export function computeSeats(
   const rx = rect.width * (rect.width < 380 ? 0.5 : 0.54);
   const ry = rect.height * (rect.width < 380 ? 0.46 : 0.48);
 
-  // Находим минимальный seat, чтобы нумерация шла по порядку
   const refSeat = viewerSeat ?? players[0].seat;
 
   return players.map(player => {
     const relSeat = (player.seat - refSeat + n) % n;
-    // Зритель (relSeat=0) → угол 180° (низ), остальные по часовой стрелке
     const angleDeg = (180 + (relSeat / n) * 360) % 360;
     const angleRad = ((angleDeg - 90) * Math.PI) / 180;
 

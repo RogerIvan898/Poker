@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Trans, useLingui } from '@lingui/react/macro';
 import { toNano } from '@ton/core';
 import { QRCodeSVG } from 'qrcode.react';
 
@@ -46,14 +47,26 @@ export const PaymentDetailsStep = ({
   onCopyText,
   onSuccess,
 }: Props) => {
+  const { t } = useLingui();
   const [method, setMethod] = useState<PaymentMethod>('wallet');
 
   const amountText = String(amount);
   const walletQrValue = buildTonTransferLink(depositAddress, amount, memo);
 
+  // lingui-set context="payment-method"
+  const exchangeLabel = t`Exchange`;
+  // lingui-reset
+  // lingui-set context="form-field"
+  const requiredLabel = t`Required`;
+  // lingui-reset
+
   return (
     <div className={shared.content}>
-      <div className={styles.tabs} role="tablist" aria-label="Payment method">
+      <div
+        className={styles.tabs}
+        role="tablist"
+        aria-label={t`Payment method`}
+      >
         <button
           type="button"
           role="tab"
@@ -61,7 +74,7 @@ export const PaymentDetailsStep = ({
           className={cn(styles.tab, method === 'wallet' && styles.tabActive)}
           onClick={() => setMethod('wallet')}
         >
-          Web3 Wallet
+          {t`Web3 wallet`}
         </button>
         <button
           type="button"
@@ -70,14 +83,14 @@ export const PaymentDetailsStep = ({
           className={cn(styles.tab, method === 'exchange' && styles.tabActive)}
           onClick={() => setMethod('exchange')}
         >
-          Exchange
+          {exchangeLabel}
         </button>
       </div>
 
       {method === 'wallet' ? (
         <div className={styles.panel} role="tabpanel">
-          <Alert variant="info" title="Tonkeeper / Telegram Wallet">
-            Pay in one tap via TON Connect, or scan the QR with another phone.
+          <Alert variant="info" title={t`Tonkeeper / Telegram Wallet`}>
+            {t`Pay in one tap via TON Connect, or scan the QR with another phone.`}
           </Alert>
 
           <PayViaWalletButton
@@ -86,56 +99,60 @@ export const PaymentDetailsStep = ({
             depositAddress={depositAddress}
             memo={memo}
             onSuccess={onSuccess}
-            onError={() => alert('Payment failed or rejected in wallet')}
+            onError={() => alert(t`Payment failed or rejected in wallet`)}
           />
 
-          <div className={styles.orDivider}>— or scan with Tonkeeper —</div>
+          <div
+            className={styles.orDivider}
+          >{t`— or scan with Tonkeeper —`}</div>
 
           <div className={styles.qrBlock}>
             <div className={styles.qr}>
               <QRCodeSVG value={walletQrValue} size={170} level="M" />
             </div>
             <p className={styles.qrHint}>
-              Full transfer link with address, amount
-              {memo ? ' and memo' : ''}.
+              {memo
+                ? t`Full transfer link with address, amount and memo.`
+                : t`Full transfer link with address and amount.`}
             </p>
           </div>
         </div>
       ) : (
         <div className={styles.panel} role="tabpanel">
-          <Alert variant="warning" title="Memo required">
-            When withdrawing from an exchange (Bybit, OKX, Binance), you must
-            include the Memo / comment. Without it the deposit will not be
-            credited.
+          <Alert variant="warning" title={t`Memo`}>
+            <Trans>
+              When withdrawing from an exchange (Bybit, OKX, Binance), you must
+              include the Memo. Without it the deposit will not be credited.
+            </Trans>
           </Alert>
 
           <div className={styles.qrBlock}>
             <div className={styles.qr}>
               <QRCodeSVG value={depositAddress} size={170} level="M" />
             </div>
-            <p className={styles.qrHint}>
-              Address only — easy for exchange scanners to read.
-            </p>
+            <p
+              className={styles.qrHint}
+            >{t`Address only — easy for exchange scanners to read.`}</p>
           </div>
 
           <div className={styles.copyFields}>
             <CopyField
-              label="Wallet address"
+              label={t`Wallet address`}
               value={depositAddress}
               onCopy={() => onCopyText?.(depositAddress, 'address')}
             />
 
             {memo && (
               <CopyField
-                label="Memo / Comment"
+                label={t`Memo`}
                 value={memo}
-                badgeText="Required"
+                badgeText={requiredLabel}
                 onCopy={() => onCopyText?.(memo, 'memo')}
               />
             )}
 
             <CopyField
-              label="Amount (TON)"
+              label={t`Amount (TON)`}
               value={amountText}
               onCopy={() => onCopyText?.(amountText, 'amount')}
             />

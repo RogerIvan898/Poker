@@ -1,208 +1,78 @@
 import React from 'react';
 
-import { useNavigate } from '@tanstack/react-router';
-import { useUnit } from 'effector-react';
+import { useLingui } from '@lingui/react/macro';
+import { Coins, Swords } from 'lucide-react';
 
 import { DepositModal } from 'widgets/deposit/ui';
 import { WithdrawModal } from 'widgets/withdraw';
 
-import { roomJoinModel } from 'features/join-room';
-
-import {
-  $mockServerEnabled,
-  setMockServerEnabled,
-} from 'shared/config/mock-server';
 import { cn } from 'shared/utils';
 
 import { Header } from './header';
 import styles from './main-menu.module.css';
+import { RoomCard } from './room-card';
+import {
+  filterRooms,
+  ROOM_FILTERS,
+  ROOMS,
+  roomFilterLabel,
+  type RoomFilter,
+} from './rooms';
 
-const ROOMS = [
-  {
-    id: 1,
-    name: 'Texas Hold’em',
-    type: 'Кэш',
-    blinds: '0.1/0.2',
-    players: 6,
-    max: 8,
-    minBuy: '10 TON',
-  },
-  {
-    id: 2,
-    name: 'Turbo Table',
-    type: 'Турбо',
-    blinds: '1/2',
-    players: 8,
-    max: 8,
-    minBuy: '50 TON',
-  },
-  {
-    id: 4,
-    name: 'Beginners',
-    type: 'Кэш',
-    blinds: '0.05/0.1',
-    players: 4,
-    max: 6,
-    minBuy: '2 TON',
-  },
-  {
-    id: 5,
-    name: 'Deepstack Pro',
-    type: 'Кэш',
-    blinds: '2/4',
-    players: 3,
-    max: 8,
-    minBuy: '100 TON',
-  },
-  {
-    id: 6,
-    name: 'Night Grinders',
-    type: 'Турбо',
-    blinds: '5/10',
-    players: 2,
-    max: 6,
-    minBuy: '250 TON',
-  },
-];
+const DevServerSwitch = import.meta.env.DEV
+  ? React.lazy(() =>
+      import('./dev/server-mode-switch').then(module => ({
+        default: module.ServerModeSwitch,
+      }))
+    )
+  : null;
 
-const FILTERS = ['Все', 'Кэш', 'Турниры', 'Sit & Go'];
+interface FiltersProps {
+  active: RoomFilter;
+  onChange: (filter: RoomFilter) => void;
+}
 
-const ServerModeSwitch = () => {
-  const enabled = useUnit($mockServerEnabled);
-  const [pending, setPending] = React.useState(false);
+const FILTER_ICONS = {
+  cash: Coins,
+  'heads-up': Swords,
+} as const;
 
-  const toggle = async () => {
-    setPending(true);
-
-    try {
-      await setMockServerEnabled(!enabled);
-    } finally {
-      setPending(false);
-    }
-  };
-
-  return (
-    <div className={styles.serverSwitch}>
-      <div className={styles.serverSwitchText}>
-        <span className={styles.serverSwitchTitle}>
-          {enabled ? 'Мок-сервер' : 'Реальный сервер'}
-        </span>
-        <span className={styles.serverSwitchHint}>
-          {enabled
-            ? 'Вход за стол идёт через локальные HTTP и WebSocket'
-            : 'Вход за стол идёт на сервер из окружения'}
-        </span>
-      </div>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={enabled}
-        aria-label="Переключить мок-сервер"
-        className={styles.switchControl}
-        disabled={pending}
-        onClick={() => void toggle()}
-      >
-        <span className={styles.switchKnob} />
-      </button>
-    </div>
-  );
-};
-
-const Filters = () => {
-  const [active, setActive] = React.useState('Все');
+const Filters = ({ active, onChange }: FiltersProps) => {
+  const { i18n } = useLingui();
 
   return (
     <div className={styles.tabsContainer}>
       <div className={styles.tabsScroll}>
-        {FILTERS.map(f => (
-          <button
-            key={f}
-            onClick={() => setActive(f)}
-            className={cn(styles.tabItem, active === f && styles.activeTab)}
-          >
-            {f}
-          </button>
-        ))}
+        {ROOM_FILTERS.map(filter => {
+          const Icon = filter === 'all' ? null : FILTER_ICONS[filter];
+
+          return (
+            <button
+              key={filter}
+              type="button"
+              onClick={() => onChange(filter)}
+              className={cn(
+                styles.tabItem,
+                active === filter && styles.activeTab
+              )}
+            >
+              {Icon ? <Icon size={15} strokeWidth={2.25} /> : null}
+              {i18n._(roomFilterLabel(filter))}
+            </button>
+          );
+        })}
       </div>
-    </div>
-  );
-};
-
-const RoomCard = ({ room }: { room: (typeof ROOMS)[0] }) => {
-  const navigate = useNavigate();
-
-  const [joinRoomFx, isJoining] = useUnit([
-    roomJoinModel.joinRoomFx,
-    roomJoinModel.$isJoining,
-  ]);
-
-  const isFull = room.players === room.max;
-
-  const handleJoin = async () => {
-    try {
-      const { roomId, wsUrl } = await joinRoomFx(String(room.id));
-
-      void navigate({
-        to: '/game/$roomId',
-        params: { roomId },
-        state: { wsUrl },
-      });
-    } catch (error) {
-      console.error('Failed to join room', error);
-    }
-  };
-
-  return (
-    <div className={cn(styles.roomCard, isFull && styles.roomFull)}>
-      <div className={styles.roomContent}>
-        <div className={styles.roomHeader}>
-          <h3 className={styles.roomName}>{room.name}</h3>
-          <span
-            className={cn(
-              styles.roomType,
-              room.type === 'Турбо' && styles.typeTurbo
-            )}
-          >
-            {room.type}
-          </span>
-        </div>
-
-        <div className={styles.roomDetails}>
-          <div className={styles.stat}>
-            <span className={styles.statLabel}>Блайнды</span>
-            <span className={styles.statValue}>{room.blinds}</span>
-          </div>
-          <div className={styles.statDivider} />
-          <div className={styles.stat}>
-            <span className={styles.statLabel}>Игроки</span>
-            <span className={cn(styles.statValue, isFull && styles.textAlert)}>
-              {room.players}/{room.max}
-            </span>
-          </div>
-          <div className={styles.statDivider} />
-          <div className={styles.stat}>
-            <span className={styles.statLabel}>Вход</span>
-            <span className={styles.statValue}>{room.minBuy}</span>
-          </div>
-        </div>
-      </div>
-
-      <button
-        type="button"
-        className={cn(styles.playBtn, isFull && styles.playBtnDisabled)}
-        disabled={isFull || isJoining}
-        onClick={() => void handleJoin()}
-      >
-        {isFull ? 'МЕСТ НЕТ' : isJoining ? 'ВХОД...' : 'ИГРАТЬ'}
-      </button>
     </div>
   );
 };
 
 export const MainMenu = () => {
+  const { t } = useLingui();
+  const [roomFilter, setRoomFilter] = React.useState<RoomFilter>('all');
   const [isDepositOpen, setIsDepositOpen] = React.useState(false);
   const [isWithdrawOpen, setIsWithdrawOpen] = React.useState(false);
   const mockUser = { firstName: 'User', balance: 42.5 };
+  const visibleRooms = filterRooms(ROOMS, roomFilter);
 
   return (
     <div className={styles.appLayout}>
@@ -216,19 +86,23 @@ export const MainMenu = () => {
 
         <main className={styles.contentArea}>
           <div className={styles.stickyHeader}>
-            <Filters />
-            <ServerModeSwitch />
+            <Filters active={roomFilter} onChange={setRoomFilter} />
+            {DevServerSwitch ? (
+              <React.Suspense fallback={null}>
+                <DevServerSwitch />
+              </React.Suspense>
+            ) : null}
             <div className={styles.sectionHeader}>
-              <h2 className={styles.sectionTitle}>Доступные столы</h2>
-              {/* <span className={styles.onlineCount}>0</span> */}
+              <h2 className={styles.sectionTitle}>{t`Available tables`}</h2>
             </div>
           </div>
 
           <div className={styles.roomGrid}>
-            {ROOMS.map(room => (
+            {visibleRooms.map(room => (
               <RoomCard key={room.id} room={room} />
             ))}
           </div>
+
           <div className={styles.bottomSpacer} />
         </main>
       </div>

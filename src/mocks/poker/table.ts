@@ -76,7 +76,8 @@ const readCommand = (data: unknown): ChosenAction | null => {
   }
 
   const action = (inner as { action?: unknown }).action;
-  const amount = (inner as { amount?: unknown }).amount;
+  const rawAmount = (inner as { amount?: unknown }).amount;
+  const amount = typeof rawAmount === 'number' ? rawAmount : Number(rawAmount);
 
   if (typeof action !== 'string' || !isPlayerAction(action)) {
     return null;
@@ -84,10 +85,7 @@ const readCommand = (data: unknown): ChosenAction | null => {
 
   return {
     action,
-    amount:
-      typeof amount === 'number' && Number.isFinite(amount)
-        ? amount
-        : undefined,
+    amount: Number.isFinite(amount) ? amount : undefined,
   };
 };
 
@@ -345,8 +343,12 @@ export class PokerTable {
 
   private async waitForHero(seat: Seat): Promise<ChosenAction | null> {
     const need = Math.max(0, this.currentBet - seat.committed);
-    const minRaise = this.minRaiseExtra(seat);
-    const canRaise = seat.stack > need && seat.stack >= minRaise;
+    const bankroll = seat.committed + seat.stack;
+    const minTotal = Math.min(
+      bankroll,
+      seat.committed + this.minRaiseExtra(seat)
+    );
+    const canRaise = seat.stack > need && bankroll > minTotal;
 
     this.emit({
       type: SERVER_EVENTS.ALLOWED_ACTIONS,
@@ -355,8 +357,8 @@ export class PokerTable {
         canCall: need > 0 && seat.stack > 0,
         canFold: true,
         callAmount: Math.min(need, seat.stack),
-        minRaise: canRaise ? minRaise : 1,
-        maxRaise: canRaise ? seat.stack : 0,
+        minRaise: canRaise ? minTotal : 1,
+        maxRaise: canRaise ? bankroll : 0,
       },
     });
 
@@ -388,7 +390,7 @@ export class PokerTable {
       if (roll > 0.78 && seat.stack >= this.bigBlind) {
         return {
           action: PlayerAction.BET,
-          amount: this.bigBlind * (roll > 0.92 ? 3 : 1),
+          amount: seat.committed + this.bigBlind * (roll > 0.92 ? 3 : 1),
         };
       }
 
@@ -402,7 +404,7 @@ export class PokerTable {
     if (roll > 0.84 && seat.stack > need + this.bigBlind) {
       return {
         action: PlayerAction.RAISE,
-        amount: need + this.bigBlind * 2,
+        amount: seat.committed + need + this.bigBlind * 2,
       };
     }
 
@@ -441,13 +443,7 @@ export class PokerTable {
       return;
     }
 
-    const extra = Math.min(
-      seat.stack,
-      Math.max(
-        chosen.amount ?? this.minRaiseExtra(seat),
-        this.minRaiseExtra(seat)
-      )
-    );
+    const extra = this.chipsToCommit(seat, chosen.amount);
     const previousBet = this.currentBet;
     this.takeChips(seat, extra);
 
@@ -476,6 +472,26 @@ export class PokerTable {
     seat.committed += pay;
     seat.totalCommitted += pay;
     seat.allIn = seat.stack === 0;
+  }
+
+  private chipsToCommit(seat: Seat, requested: number | undefined) {
+    const minExtra = this.minRaiseExtra(seat);
+    const bankroll = seat.committed + seat.stack;
+
+    if (requested == null) {
+      return minExtra;
+    }
+
+    if (requested >= seat.stack) {
+      return seat.stack;
+    }
+
+    const target = Math.min(
+      bankroll,
+      Math.max(requested, seat.committed + minExtra)
+    );
+
+    return Math.min(seat.stack, Math.max(minExtra, target - seat.committed));
   }
 
   private minRaiseExtra(seat: Seat) {

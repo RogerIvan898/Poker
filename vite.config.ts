@@ -61,8 +61,8 @@ export default defineConfig({
       quoteStyle: 'single',
       semicolons: true,
     }),
-    react(),
     lingui({ macroTransform: true }),
+    react(),
     nodePolyfills({
       include: ['buffer'],
     }),

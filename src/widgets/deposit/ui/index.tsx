@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useLingui } from '@lingui/react/macro';
 import { ArrowLeft } from 'lucide-react';
 
 import { Sheet } from 'shared/ui/sheet';
@@ -14,12 +15,7 @@ export enum DepositStep {
   Details = 2,
 }
 
-const STEP_CONFIG = {
-  [DepositStep.Amount]: { title: 'Deposit TON' },
-  [DepositStep.Details]: { title: 'Payment Details' },
-};
-
-const TOTAL_STEPS = Object.keys(STEP_CONFIG).length;
+const TOTAL_STEPS = 2;
 
 interface Props {
   open: boolean;
@@ -36,8 +32,12 @@ export const DepositModal = ({
   memo,
   onCopyText,
 }: Props) => {
+  const { t } = useLingui();
   const [step, setStep] = useState<DepositStep>(DepositStep.Amount);
   const [amount, setAmount] = useState(0);
+
+  const stepTitle =
+    step === DepositStep.Amount ? t`Deposit TON` : t`Payment details`;
 
   const handleClose = () => {
     onClose();
@@ -52,7 +52,7 @@ export const DepositModal = ({
     <Sheet
       open={open}
       onClose={handleClose}
-      title={STEP_CONFIG[step].title}
+      title={stepTitle}
       titleAddon={
         <span className={styles.stepper}>
           {step}/{TOTAL_STEPS}
@@ -65,7 +65,7 @@ export const DepositModal = ({
               type="button"
               className={sheetStyles.iconBtn}
               onClick={handlePrevStep}
-              aria-label="Back"
+              aria-label={t`Back`}
             >
               <ArrowLeft size={18} />
             </button>

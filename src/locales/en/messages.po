@@ -1,0 +1,266 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-24 20:14+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "— or scan with Tonkeeper —"
+msgstr "— or scan with Tonkeeper —"
+
+#. placeholder {0}: room.max
+msgid "{0, plural, one {player} other {players}}"
+msgstr "{0, plural, one {player} other {players}}"
+
+msgid "Address"
+msgstr "Address"
+
+msgid "Address only — easy for exchange scanners to read."
+msgstr "Address only — easy for exchange scanners to read."
+
+msgid "All"
+msgstr "All"
+
+msgid "Amount"
+msgstr "Amount"
+
+msgid "Amount (TON)"
+msgstr "Amount (TON)"
+
+msgid "Available balance"
+msgstr "Available balance"
+
+msgid "Available tables"
+msgstr "Available tables"
+
+msgid "Back"
+msgstr "Back"
+
+msgid "Beginners"
+msgstr "Beginners"
+
+msgctxt "poker-action"
+msgid "Bet"
+msgstr "Bet"
+
+msgid "Blinds"
+msgstr "Blinds"
+
+msgctxt "poker-action"
+msgid "Call"
+msgstr "Call"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Cash"
+msgstr "Cash"
+
+msgid "Change wallet"
+msgstr "Change wallet"
+
+msgctxt "poker-action"
+msgid "Check"
+msgstr "Check"
+
+msgid "Close"
+msgstr "Close"
+
+msgctxt "bet-manager"
+msgid "Confirm bet"
+msgstr "Confirm bet"
+
+msgid "Confirm in wallet…"
+msgstr "Confirm in wallet…"
+
+msgctxt "bet-manager"
+msgid "Confirm raise"
+msgstr "Confirm raise"
+
+msgid "Connect a wallet to withdraw in one tap"
+msgstr "Connect a wallet to withdraw in one tap"
+
+msgid "Connect wallet"
+msgstr "Connect wallet"
+
+msgid "Connect wallet to pay"
+msgstr "Connect wallet to pay"
+
+msgid "Connect wallet to withdraw"
+msgstr "Connect wallet to withdraw"
+
+msgid "Connecting…"
+msgstr "Connecting…"
+
+msgid "Continue"
+msgstr "Continue"
+
+msgid "Copied"
+msgstr "Copied"
+
+msgid "Copy address"
+msgstr "Copy address"
+
+msgid "Deepstack Pro"
+msgstr "Deepstack Pro"
+
+msgid "Deposit"
+msgstr "Deposit"
+
+msgid "Deposit address is missing"
+msgstr "Deposit address is missing"
+
+msgid "Deposit TON"
+msgstr "Deposit TON"
+
+msgid "Destination"
+msgstr "Destination"
+
+msgid "Disconnect wallet"
+msgstr "Disconnect wallet"
+
+msgid "Double-check the TON address"
+msgstr "Double-check the TON address"
+
+msgid "Enter a valid TON address"
+msgstr "Enter a valid TON address"
+
+msgid "Enter amount to continue"
+msgstr "Enter amount to continue"
+
+msgid "Enter the amount you want to deposit"
+msgstr "Enter the amount you want to deposit"
+
+msgid "Exceeds available balance"
+msgstr "Exceeds available balance"
+
+msgctxt "payment-method"
+msgid "Exchange"
+msgstr "Exchange"
+
+msgctxt "poker-action"
+msgid "Fold"
+msgstr "Fold"
+
+msgid "Full transfer link with address and amount."
+msgstr "Full transfer link with address and amount."
+
+msgid "Full transfer link with address, amount and memo."
+msgstr "Full transfer link with address, amount and memo."
+
+msgid "Heads-Up"
+msgstr "Heads-Up"
+
+msgid "HU Classic"
+msgstr "HU Classic"
+
+msgid "HU High Roller"
+msgstr "HU High Roller"
+
+msgid "Invalid amount"
+msgstr "Invalid amount"
+
+msgid "Joining…"
+msgstr "Joining…"
+
+msgid "Language"
+msgstr "Language"
+
+msgid "Loading…"
+msgstr "Loading…"
+
+msgid "Memo"
+msgstr "Memo"
+
+msgid "Mid Stakes"
+msgstr "Mid Stakes"
+
+msgid "Min buy-in"
+msgstr "Min buy-in"
+
+msgid "My wallet"
+msgstr "My wallet"
+
+#. js-lingui-explicit-id
+msgid "Pay {amount, number} TON with wallet"
+msgstr "Pay {amount, number} TON with wallet"
+
+msgid "Pay in one tap via TON Connect, or scan the QR with another phone."
+msgstr "Pay in one tap via TON Connect, or scan the QR with another phone."
+
+msgid "Payment details"
+msgstr "Payment details"
+
+msgid "Payment failed or rejected in wallet"
+msgstr "Payment failed or rejected in wallet"
+
+msgid "Payment method"
+msgstr "Payment method"
+
+msgid "Play"
+msgstr "Play"
+
+msgid "Quick add amount"
+msgstr "Quick add amount"
+
+msgctxt "poker-action"
+msgid "Raise"
+msgstr "Raise"
+
+msgctxt "form-field"
+msgid "Required"
+msgstr "Required"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Table full"
+msgstr "Table full"
+
+msgid "Tables"
+msgstr "Tables"
+
+msgid "Tap to use max"
+msgstr "Tap to use max"
+
+msgid "Texas Hold’em"
+msgstr "Texas Hold’em"
+
+msgid "TON address"
+msgstr "TON address"
+
+msgid "Tonkeeper / Telegram Wallet"
+msgstr "Tonkeeper / Telegram Wallet"
+
+msgid "Wallet"
+msgstr "Wallet"
+
+msgid "Wallet address"
+msgstr "Wallet address"
+
+msgid "Wallet connected"
+msgstr "Wallet connected"
+
+msgid "Web3 wallet"
+msgstr "Web3 wallet"
+
+msgid "When withdrawing from an exchange (Bybit, OKX, Binance), you must include the Memo. Without it the deposit will not be credited."
+msgstr "When withdrawing from an exchange (Bybit, OKX, Binance), you must include the Memo. Without it the deposit will not be credited."
+
+msgid "Withdraw"
+msgstr "Withdraw"
+
+#. js-lingui-explicit-id
+msgid "Withdraw {amount, number} TON"
+msgstr "Withdraw {amount, number} TON"
+
+msgid "Withdraw to"
+msgstr "Withdraw to"
+
+msgid "Withdraw TON"
+msgstr "Withdraw TON"
+
+msgid "Withdrawals are irreversible. Send only to a TON address — a wrong network or typo means permanent loss of funds."
+msgstr "Withdrawals are irreversible. Send only to a TON address — a wrong network or typo means permanent loss of funds."

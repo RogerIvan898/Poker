@@ -15,7 +15,7 @@ export const raise = createEvent<PlayerActionPayloadAmount>();
 
 const action = (type: string, amount?: number) => ({
   action: type,
-  ...(amount && { amount }),
+  ...(typeof amount === 'number' && Number.isFinite(amount) ? { amount } : {}),
 });
 
 const simpleActionTriggered = merge([

@@ -1,3 +1,5 @@
+import { useLingui } from '@lingui/react/macro';
+
 import { NumberField } from 'shared/ui/NumberField';
 import { cn } from 'shared/utils';
 
@@ -17,36 +19,40 @@ export const WithdrawAmountField = ({
   balance,
   onChange,
   onMax,
-}: Props) => (
-  <div className={styles.field}>
-    <div className={styles.fieldHeader}>
-      <label className={styles.label} htmlFor="withdraw-amount">
-        Amount
-      </label>
-      <button
-        type="button"
-        className={styles.maxBtn}
-        onClick={onMax}
-        disabled={balance <= 0}
+}: Props) => {
+  const { t } = useLingui();
+
+  return (
+    <div className={styles.field}>
+      <div className={styles.fieldHeader}>
+        <label className={styles.label} htmlFor="withdraw-amount">
+          {t`Amount`}
+        </label>
+        <button
+          type="button"
+          className={styles.maxBtn}
+          onClick={onMax}
+          disabled={balance <= 0}
+        >
+          MAX
+        </button>
+      </div>
+
+      <div
+        className={cn(styles.amountBox, exceedsBalance && styles.fieldInvalid)}
       >
-        MAX
-      </button>
-    </div>
+        <NumberField
+          id="withdraw-amount"
+          value={draft}
+          onChange={onChange}
+          placeholder="0.00"
+        />
+        <span>TON</span>
+      </div>
 
-    <div
-      className={cn(styles.amountBox, exceedsBalance && styles.fieldInvalid)}
-    >
-      <NumberField
-        id="withdraw-amount"
-        value={draft}
-        onChange={onChange}
-        placeholder="0.00"
-      />
-      <span>TON</span>
+      {exceedsBalance && (
+        <p className={styles.fieldError}>{t`Exceeds available balance`}</p>
+      )}
     </div>
-
-    {exceedsBalance && (
-      <p className={styles.fieldError}>Exceeds available balance</p>
-    )}
-  </div>
-);
+  );
+};

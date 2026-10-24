@@ -1,0 +1,267 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-10-24 20:14+0300\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "— or scan with Tonkeeper —"
+msgstr "— или отсканируйте в Tonkeeper —"
+
+#. placeholder {0}: room.max
+msgid "{0, plural, one {player} other {players}}"
+msgstr "{0, plural, one {игрок} few {игрока} many {игроков} other {игрока}}"
+
+msgid "Address"
+msgstr "Адрес"
+
+msgid "Address only — easy for exchange scanners to read."
+msgstr "Только адрес — удобнее для сканеров бирж."
+
+msgid "All"
+msgstr "Все"
+
+msgid "Amount"
+msgstr "Сумма"
+
+msgid "Amount (TON)"
+msgstr "Сумма (TON)"
+
+msgid "Available balance"
+msgstr "Доступный баланс"
+
+msgid "Available tables"
+msgstr "Доступные столы"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Beginners"
+msgstr "Новички"
+
+msgctxt "poker-action"
+msgid "Bet"
+msgstr "Бет"
+
+msgid "Blinds"
+msgstr "Блайнды"
+
+msgctxt "poker-action"
+msgid "Call"
+msgstr "Колл"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Cash"
+msgstr "Кэш"
+
+msgid "Change wallet"
+msgstr "Сменить кошелёк"
+
+msgctxt "poker-action"
+msgid "Check"
+msgstr "Чек"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgctxt "bet-manager"
+msgid "Confirm bet"
+msgstr "Подтвердить бет"
+
+msgid "Confirm in wallet…"
+msgstr "Подтвердить в кошельке…"
+
+msgctxt "bet-manager"
+msgid "Confirm raise"
+msgstr "Подтвердить рейз"
+
+msgid "Connect a wallet to withdraw in one tap"
+msgstr "Подключите кошелёк для вывода в один клик"
+
+msgid "Connect wallet"
+msgstr "Подключить кошелёк"
+
+msgid "Connect wallet to pay"
+msgstr "Подключить кошелёк для оплаты"
+
+msgid "Connect wallet to withdraw"
+msgstr "Подключить кошелёк для вывода"
+
+msgid "Connecting…"
+msgstr "Подключение…"
+
+msgid "Continue"
+msgstr "Продолжить"
+
+msgid "Copied"
+msgstr "Скопировано"
+
+msgid "Copy address"
+msgstr "Скопировать адрес"
+
+msgid "Deepstack Pro"
+msgstr "Deepstack Pro"
+
+msgid "Deposit"
+msgstr "Пополнить"
+
+msgid "Deposit address is missing"
+msgstr "Адрес для пополнения не указан"
+
+msgid "Deposit TON"
+msgstr "Пополнение TON"
+
+msgid "Destination"
+msgstr "Куда отправить"
+
+msgid "Disconnect wallet"
+msgstr "Отключить кошелёк"
+
+msgid "Double-check the TON address"
+msgstr "Проверьте TON-адрес"
+
+msgid "Enter a valid TON address"
+msgstr "Введите корректный TON-адрес"
+
+msgid "Enter amount to continue"
+msgstr "Введите сумму для продолжения"
+
+msgid "Enter the amount you want to deposit"
+msgstr "Введите сумму пополнения"
+
+msgid "Exceeds available balance"
+msgstr "Превышает доступный баланс"
+
+msgctxt "payment-method"
+msgid "Exchange"
+msgstr "Биржа"
+
+msgctxt "poker-action"
+msgid "Fold"
+msgstr "Фолд"
+
+msgid "Full transfer link with address and amount."
+msgstr "Полная ссылка для перевода с адресом и суммой."
+
+msgid "Full transfer link with address, amount and memo."
+msgstr "Полная ссылка для перевода с адресом, суммой и Memo."
+
+msgid "Heads-Up"
+msgstr "Хедз-ап"
+
+msgid "HU Classic"
+msgstr "HU Classic"
+
+msgid "HU High Roller"
+msgstr "HU High Roller"
+
+msgid "Invalid amount"
+msgstr "Некорректная сумма"
+
+msgid "Joining…"
+msgstr "Подключение к столу…"
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Loading…"
+msgstr "Загрузка…"
+
+msgid "Memo"
+msgstr "Memo"
+
+msgid "Mid Stakes"
+msgstr "Mid Stakes"
+
+msgid "Min buy-in"
+msgstr "Бай-ин от"
+
+msgid "My wallet"
+msgstr "Мой кошелёк"
+
+#. js-lingui-explicit-id
+msgid "Pay {amount, number} TON with wallet"
+msgstr "Оплатить {amount, number} TON кошельком"
+
+msgid "Pay in one tap via TON Connect, or scan the QR with another phone."
+msgstr "Оплатите в один клик через TON Connect или отсканируйте QR с другого телефона."
+
+msgid "Payment details"
+msgstr "Реквизиты оплаты"
+
+msgid "Payment failed or rejected in wallet"
+msgstr "Платёж не выполнен или отклонён в кошельке"
+
+msgid "Payment method"
+msgstr "Способ оплаты"
+
+msgid "Play"
+msgstr "Играть"
+
+msgid "Quick add amount"
+msgstr "Быстро добавить"
+
+msgctxt "poker-action"
+msgid "Raise"
+msgstr "Рейз"
+
+msgctxt "form-field"
+msgid "Required"
+msgstr "Обязательно"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Table full"
+msgstr "Стол заполнен"
+
+msgid "Tables"
+msgstr "Столы"
+
+msgid "Tap to use max"
+msgstr "Ввести максимум"
+
+msgid "Texas Hold’em"
+msgstr "Texas Hold’em"
+
+msgid "TON address"
+msgstr "TON-адрес"
+
+msgid "Tonkeeper / Telegram Wallet"
+msgstr "Tonkeeper / Telegram Wallet"
+
+msgid "Wallet"
+msgstr "Кошелёк"
+
+msgid "Wallet address"
+msgstr "Адрес кошелька"
+
+msgid "Wallet connected"
+msgstr "Кошелёк подключён"
+
+msgid "Web3 wallet"
+msgstr "Web3-кошелёк"
+
+msgid "When withdrawing from an exchange (Bybit, OKX, Binance), you must include the Memo. Without it the deposit will not be credited."
+msgstr "При выводе с биржи (Bybit, OKX, Binance) обязательно укажите Memo. Без него пополнение не будет зачислено."
+
+msgid "Withdraw"
+msgstr "Вывести"
+
+#. js-lingui-explicit-id
+msgid "Withdraw {amount, number} TON"
+msgstr "Вывести {amount, number} TON"
+
+msgid "Withdraw to"
+msgstr "Вывод на"
+
+msgid "Withdraw TON"
+msgstr "Вывод TON"
+
+msgid "Withdrawals are irreversible. Send only to a TON address — a wrong network or typo means permanent loss of funds."
+msgstr "Выводы необратимы. Отправляйте только на TON-адрес — неправильная сеть или опечатка означают безвозвратную потерю средств."

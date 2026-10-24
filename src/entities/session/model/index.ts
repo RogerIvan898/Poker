@@ -20,8 +20,6 @@ export const VIEWER_ID = '100';
 export const $currentUserId = createStore<string | null>(VIEWER_ID);
 export const $isAuthorized = $currentUserId.map(user => Boolean(user));
 
-// const $authPending = authFx.pending;
-
 sample({
   clock: appStarted,
   target: authFx,

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useLingui } from '@lingui/react/macro';
 import { ChevronRight } from 'lucide-react';
 
 import { Alert } from 'shared/ui/alert';
@@ -16,16 +17,15 @@ interface Props {
   onNext: () => void;
 }
 
-// Только неотрицательные числа с точкой/запятой, максимум 9 знаков после запятой (nanoTON)
 const AMOUNT_RE = /^\d*[.,]?\d{0,9}$/;
 
 const formatDraft = (value: number) =>
   value === 0 ? '' : value.toString().replace('.', ',');
 
 export const AmountStep = ({ amount, onChangeAmount, onNext }: Props) => {
+  const { t } = useLingui();
   const [draft, setDraft] = useState(() => formatDraft(amount));
 
-  // Синхронизация при внешних изменениях amount (навиг backwards, quick add)
   useEffect(() => {
     setDraft(prev => {
       const normalized = prev.replace(',', '.');
@@ -53,12 +53,12 @@ export const AmountStep = ({ amount, onChangeAmount, onNext }: Props) => {
 
   return (
     <div className={styles.content}>
-      <Alert variant="info" title="Deposit TON">
-        Enter the amount you want to deposit.
+      <Alert variant="info" title={t`Deposit TON`}>
+        {t`Enter the amount you want to deposit`}
       </Alert>
 
       <label className={styles.label} htmlFor="deposit-amount">
-        Amount
+        {t`Amount`}
       </label>
 
       <div className={styles.amountBox}>
@@ -84,7 +84,7 @@ export const AmountStep = ({ amount, onChangeAmount, onNext }: Props) => {
         disabled={!isValid}
         onClick={onNext}
       >
-        <span>{isValid ? 'Continue' : 'Enter amount to continue'}</span>
+        <span>{isValid ? t`Continue` : t`Enter amount to continue`}</span>
         <ChevronRight size={18} />
       </button>
     </div>

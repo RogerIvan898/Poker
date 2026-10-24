@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
+import { useLingui } from '@lingui/react/macro';
 import { X } from 'lucide-react';
 
 import styles from './sheet.module.css';
@@ -9,18 +10,11 @@ interface Props {
   open: boolean;
   onClose: () => void;
   title?: ReactNode;
-  /** Left side of the header (e.g. back button). */
   leading?: ReactNode;
-  /** Extra content next to the title (e.g. step indicator). */
   titleAddon?: ReactNode;
   children: ReactNode;
 }
 
-/**
- * Adaptive surface:
- * - desktop → centered dialog
- * - mobile → bottom sheet
- */
 export const Sheet = ({
   open,
   onClose,
@@ -29,6 +23,8 @@ export const Sheet = ({
   titleAddon,
   children,
 }: Props) => {
+  const { t } = useLingui();
+
   if (!open) {
     return null;
   }
@@ -55,7 +51,7 @@ export const Sheet = ({
               type="button"
               className={styles.iconBtn}
               onClick={onClose}
-              aria-label="Close"
+              aria-label={t`Close`}
             >
               <X size={18} />
             </button>

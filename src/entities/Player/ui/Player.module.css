@@ -32,33 +32,41 @@
 
 .dealerWrap {
   position: absolute;
-  z-index: 12;
+  z-index: 5;
   perspective: 300px;
   pointer-events: none;
 }
 
 .dealer_top {
-  bottom: calc(100% - 10px);
-  left: calc(50% + 22px);
-  transform: translateX(-50%);
+  bottom: calc(100% + 10px);
+  left: calc(100% - 4px);
+  top: auto;
+  right: auto;
+  transform: none;
 }
 
 .dealer_bottom {
-  top: calc(100% + 26px);
-  left: calc(50% + 18px);
-  transform: translateX(-50%);
+  top: calc(100% + 36px);
+  left: calc(100% - 4px);
+  bottom: auto;
+  right: auto;
+  transform: none;
 }
 
 .dealer_left {
-  right: calc(100% + 4px);
-  top: calc(50% - 14px);
-  transform: translateY(-50%);
+  right: calc(100% + 16px);
+  top: 12%;
+  left: auto;
+  bottom: auto;
+  transform: none;
 }
 
 .dealer_right {
-  left: calc(100% + 4px);
-  top: calc(50% + 14px);
-  transform: translateY(-50%);
+  left: calc(100% + 16px);
+  top: 12%;
+  right: auto;
+  bottom: auto;
+  transform: none;
 }
 
 .sitOut {
@@ -77,22 +85,21 @@
     width: 72px;
   }
 
-  .dealer_top {
-    bottom: calc(100% - 8px);
-    left: calc(50% + 18px);
+  .dealer_top,
+  .dealer_bottom {
+    left: calc(100% - 2px);
   }
 
   .dealer_bottom {
-    top: calc(100% + 18px);
-    left: calc(50% + 18px);
+    top: calc(100% + 28px);
   }
 
   .dealer_left {
-    top: calc(50% - 10px);
+    right: calc(100% + 10px);
   }
 
   .dealer_right {
-    top: calc(50% + 10px);
+    left: calc(100% + 10px);
   }
 
   .avatarWrap {

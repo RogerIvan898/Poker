@@ -1,10 +1,13 @@
 import React from 'react';
 
+import { useLingui } from '@lingui/react/macro';
 import { useTonWallet } from '@tonconnect/ui-react';
-import { Settings, Plus, Minus } from 'lucide-react';
+import { useUnit } from 'effector-react';
+import { Minus, Plus, Settings } from 'lucide-react';
 
 import { SettingsDialog } from 'widgets/settings/ui';
 
+import { $currentLocale } from 'shared/i18n';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils';
 
@@ -26,27 +29,25 @@ export const Header = ({
   onDepositClick,
   onWithdrawClick,
 }: Props) => {
+  const { t, i18n } = useLingui();
   const [isSettingsOpened, setIsSettingsOpened] = React.useState(false);
-
+  const locale = useUnit($currentLocale);
   const wallet = useTonWallet();
-
   const walletAddress = wallet?.account.address;
-
   const avatarLetter = userName?.trim()?.charAt(0)?.toUpperCase() || '?';
-
-  const formattedBalance = new Intl.NumberFormat('ru-RU', {
+  const formattedBalance = new Intl.NumberFormat(i18n.locale, {
     maximumFractionDigits: 2,
   }).format(balance);
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} lang={locale ?? undefined}>
       <div className={styles.headerLeft}>
         <button
           type="button"
           className={styles.avatarPlaceholder}
           disabled={Boolean(wallet)}
-          aria-label={wallet ? 'Кошелёк подключён' : 'Подключить кошелёк'}
-          title={walletAddress ?? 'Подключить кошелёк'}
+          aria-label={wallet ? t`Wallet connected` : t`Connect wallet`}
+          title={walletAddress ?? t`Connect wallet`}
         >
           {avatarUrl ? (
             <img src={avatarUrl} alt={userName} className={styles.avatarImg} />
@@ -69,8 +70,8 @@ export const Header = ({
                 type="button"
                 className={cn(styles.actionBtn, styles.depositBtn)}
                 onClick={onDepositClick}
-                aria-label="Пополнить баланс"
-                title="Пополнить"
+                aria-label={t`Deposit`}
+                title={t`Deposit`}
               >
                 <Plus size={16} strokeWidth={2.5} />
               </button>
@@ -79,8 +80,8 @@ export const Header = ({
                 type="button"
                 className={cn(styles.actionBtn, styles.withdrawBtn)}
                 onClick={onWithdrawClick}
-                aria-label="Вывести средства"
-                title="Вывести"
+                aria-label={t`Withdraw`}
+                title={t`Withdraw`}
               >
                 <Minus size={16} strokeWidth={2.5} />
               </button>
@@ -93,8 +94,8 @@ export const Header = ({
         type="button"
         className={styles.settingsBtn}
         onClick={() => setIsSettingsOpened(true)}
-        aria-label="Настройки"
-        title="Настройки"
+        aria-label={t`Settings`}
+        title={t`Settings`}
       >
         <Settings size={22} />
       </button>

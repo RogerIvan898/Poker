@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { Trans } from '@lingui/react';
+import { useLingui } from '@lingui/react/macro';
 import { beginCell, toNano } from '@ton/core';
 import { useTonConnectUI, useTonWallet } from '@tonconnect/ui-react';
 import { Loader2, Wallet } from 'lucide-react';
@@ -21,6 +23,7 @@ export const PayViaWalletButton = ({
   onError,
   className,
 }: Props) => {
+  const { t } = useLingui();
   const [tonConnectUI] = useTonConnectUI();
   const wallet = useTonWallet();
   const [isLoading, setIsLoading] = useState(false);
@@ -32,12 +35,12 @@ export const PayViaWalletButton = ({
     }
 
     if (!Number.isFinite(amount) || amount <= 0) {
-      alert('Invalid amount');
+      alert(t`Invalid amount`);
       return;
     }
 
     if (!depositAddress.trim()) {
-      alert('Deposit address is missing');
+      alert(t`Deposit address is missing`);
       return;
     }
 
@@ -75,12 +78,6 @@ export const PayViaWalletButton = ({
     }
   };
 
-  const label = wallet
-    ? isLoading
-      ? 'Confirm in Wallet...'
-      : `Pay ${amount} TON with Wallet`
-    : 'Connect Wallet to Pay';
-
   return (
     <button
       type="button"
@@ -89,7 +86,19 @@ export const PayViaWalletButton = ({
       disabled={isLoading}
     >
       {isLoading ? <Loader2 size={20} /> : <Wallet size={20} />}
-      {label}
+      {wallet ? (
+        isLoading ? (
+          t`Confirm in wallet…`
+        ) : (
+          <Trans
+            id="Pay {amount, number} TON with wallet"
+            message="Pay {amount, number} TON with wallet"
+            values={{ amount }}
+          />
+        )
+      ) : (
+        t`Connect wallet to pay`
+      )}
     </button>
   );
 };

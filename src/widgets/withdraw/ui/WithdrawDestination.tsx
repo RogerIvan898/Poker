@@ -1,3 +1,5 @@
+import { useLingui } from '@lingui/react/macro';
+
 import { Alert } from 'shared/ui/alert';
 import { cn, formatAddress, isTonAddress } from 'shared/utils';
 
@@ -22,13 +24,14 @@ export const WithdrawDestinationBlock = ({
   onCustomAddressChange,
   onConnectWallet,
 }: Props) => {
+  const { t } = useLingui();
   const addressTouched = customAddress.trim().length > 0;
   const isAddressValid = isTonAddress(customAddress);
 
   return (
     <div className={styles.field}>
-      <label className={styles.label}>Destination</label>
-      <div className={styles.tabs} role="tablist" aria-label="Destination">
+      <label className={styles.label}>{t`Destination`}</label>
+      <div className={styles.tabs} role="tablist" aria-label={t`Destination`}>
         <button
           type="button"
           role="tab"
@@ -39,7 +42,7 @@ export const WithdrawDestinationBlock = ({
           )}
           onClick={() => onDestinationChange('wallet')}
         >
-          My wallet
+          {t`My wallet`}
         </button>
         <button
           type="button"
@@ -51,14 +54,14 @@ export const WithdrawDestinationBlock = ({
           )}
           onClick={() => onDestinationChange('address')}
         >
-          Address
+          {t`Address`}
         </button>
       </div>
 
       {destination === 'wallet' ? (
         connectedAddress ? (
           <div className={styles.walletCard}>
-            <span className={styles.walletLabel}>Withdraw to</span>
+            <span className={styles.walletLabel}>{t`Withdraw to`}</span>
             <span className={styles.walletAddress} title={connectedAddress}>
               {formatAddress(connectedAddress, 6)}
             </span>
@@ -66,23 +69,22 @@ export const WithdrawDestinationBlock = ({
         ) : (
           <div className={styles.connectBlock}>
             <p className={styles.connectText}>
-              Connect a wallet to withdraw in one tap
+              {t`Connect a wallet to withdraw in one tap`}
             </p>
             <button
               type="button"
               className={styles.secondaryBtn}
               onClick={onConnectWallet}
             >
-              Connect wallet
+              {t`Connect wallet`}
             </button>
           </div>
         )
       ) : (
         <div className={styles.addressSection}>
           <div className={styles.warningWrap}>
-            <Alert variant="warning" title="Double-check the TON address">
-              Withdrawals are irreversible. Send only to a TON address — a wrong
-              network or typo means permanent loss of funds.
+            <Alert variant="warning" title={t`Double-check the TON address`}>
+              {t`Withdrawals are irreversible. Send only to a TON address — a wrong network or typo means permanent loss of funds.`}
             </Alert>
           </div>
 
@@ -99,12 +101,12 @@ export const WithdrawDestinationBlock = ({
               placeholder="UQ..."
               spellCheck={false}
               autoComplete="off"
-              aria-label="TON address"
+              aria-label={t`TON address`}
             />
           </div>
 
           {addressTouched && !isAddressValid && (
-            <p className={styles.fieldError}>Enter a valid TON address</p>
+            <p className={styles.fieldError}>{t`Enter a valid TON address`}</p>
           )}
         </div>
       )}

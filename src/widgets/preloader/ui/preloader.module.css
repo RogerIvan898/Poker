@@ -4,7 +4,7 @@
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background-color: #0d1117; /* Тёмный фоновый цвет */
+  background-color: #0d1117;
   color: #f0f6fc;
   user-select: none;
 }
@@ -25,13 +25,11 @@
   height: 80px;
 }
 
-/* Иконка в центре */
 .centerIcon {
   color: #38bdf8;
   opacity: 0.85;
 }
 
-/* Вращающийся кольцевой спиннер вокруг иконки */
 .spinner {
   position: absolute;
   color: #0284c7;
@@ -46,7 +44,6 @@
   letter-spacing: 0.02em;
 }
 
-/* Стиль полосы прогресса */
 .progressWrapper {
   display: flex;
   flex-direction: column;

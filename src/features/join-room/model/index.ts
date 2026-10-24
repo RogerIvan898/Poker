@@ -13,6 +13,10 @@ export const joinRoomFx = createEffect(async (roomId: string) => {
 
 export const $isJoining = joinRoomFx.pending;
 
+export const $joiningRoomId = createStore<string | null>(null)
+  .on(joinRoomFx, (_, roomId) => roomId)
+  .reset(joinRoomFx.finally);
+
 export const $joinError = createStore<string | null>(null)
   .on(joinRoom, () => null)
   .on(joinRoomFx.failData, (_, error) =>

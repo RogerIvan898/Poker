@@ -23,6 +23,7 @@
         "@eslint/js": "^10.0.1",
         "@lingui/babel-plugin-lingui-macro": "^6.10.0",
         "@lingui/cli": "^6.10.0",
+        "@lingui/format-po": "6.10.1",
         "@lingui/vite-plugin": "^6.10.0",
         "@tanstack/router-plugin": "^1.168.27",
         "@types/node": "^24.3.3",

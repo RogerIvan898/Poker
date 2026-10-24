@@ -1,9 +1,5 @@
 /// <reference types="vite/client" />
 
-declare module '*.po' {
-  export const messages: Record<string, string>;
-}
-
 type TelegramSafeAreaInset = {
   top: number;
   bottom: number;

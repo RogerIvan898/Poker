@@ -63,6 +63,10 @@
   border-color: var(--color-border-hover);
 }
 
+.backBtn[dir='rtl'] svg {
+  transform: scaleX(-1);
+}
+
 @media (max-width: 768px) {
   .container {
     justify-content: center;

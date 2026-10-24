@@ -39,7 +39,7 @@ export const initTelegramWebApp = () => {
     try {
       tg.requestFullscreen();
     } catch {
-      // Optional on unsupported clients.
+      void 0;
     }
   }
 

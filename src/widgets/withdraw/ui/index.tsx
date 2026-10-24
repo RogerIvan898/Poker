@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 
+import { Trans } from '@lingui/react';
+import { useLingui } from '@lingui/react/macro';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 
 import { Sheet } from 'shared/ui/sheet';
 import { formatAmountDraft, isTonAddress } from 'shared/utils';
 
-import { getWithdrawButtonLabel } from '../lib/get-withdraw-button-label';
 import type { WithdrawDestination, WithdrawPayload } from '../model/types';
 
 import styles from './withdraw.module.css';
@@ -30,6 +31,7 @@ const parseAmountDraft = (value: string) => {
 };
 
 export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
+  const { t, i18n } = useLingui();
   const connectedAddress = useTonAddress();
   const [tonConnectUI] = useTonConnectUI();
 
@@ -46,7 +48,7 @@ export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
     setDestination(connectedAddress ? 'wallet' : 'address');
   }, [open, connectedAddress]);
 
-  const formattedBalance = new Intl.NumberFormat('en-US', {
+  const formattedBalance = new Intl.NumberFormat(i18n.locale, {
     maximumFractionDigits: 2,
   }).format(balance);
 
@@ -61,6 +63,19 @@ export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
       : isTonAddress(customAddress);
 
   const canSubmit = isAmountValid && isAddressValid;
+
+  const submitLabel =
+    destination === 'wallet' && !connectedAddress ? (
+      t`Connect wallet to withdraw`
+    ) : amount > 0 ? (
+      <Trans
+        id="Withdraw {amount, number} TON"
+        message="Withdraw {amount, number} TON"
+        values={{ amount }}
+      />
+    ) : (
+      t`Withdraw`
+    );
 
   const resetForm = () => {
     setAmount(0);
@@ -108,7 +123,7 @@ export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
   };
 
   return (
-    <Sheet open={open} onClose={handleClose} title="Withdraw TON">
+    <Sheet open={open} onClose={handleClose} title={t`Withdraw TON`}>
       <div className={styles.content}>
         <button
           type="button"
@@ -116,9 +131,9 @@ export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
           onClick={handleMax}
           disabled={balance <= 0}
         >
-          <span className={styles.balanceLabel}>Available balance</span>
+          <span className={styles.balanceLabel}>{t`Available balance`}</span>
           <span className={styles.balanceValue}>{formattedBalance} TON</span>
-          <span className={styles.balanceHint}>Tap to use max</span>
+          <span className={styles.balanceHint}>{t`Tap to use max`}</span>
         </button>
 
         <WithdrawAmountField
@@ -144,11 +159,7 @@ export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
           disabled={!canSubmit}
           onClick={handleSubmit}
         >
-          {getWithdrawButtonLabel({
-            destination,
-            connectedAddress: connectedAddress || undefined,
-            amount,
-          })}
+          {submitLabel}
         </button>
       </div>
     </Sheet>

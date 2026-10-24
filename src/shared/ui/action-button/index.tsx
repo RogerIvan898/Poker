@@ -7,7 +7,7 @@ import { cn } from 'shared/utils';
 
 import styles from './action-button.module.css';
 
-type ColorIntent = 'primary' | 'secondary' | 'danger' | 'neutral';
+type ColorIntent = 'primary' | 'neutral' | 'danger';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: ColorIntent;
@@ -32,7 +32,7 @@ export const ActionButton = ({
     <button
       {...props}
       type="button"
-      className={cn(styles.button, styles[`color-${color}`], className)}
+      className={cn(styles.button, styles[color], className)}
       disabled={disabled}
       onClick={onClick}
     >

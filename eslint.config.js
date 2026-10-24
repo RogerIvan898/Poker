@@ -6,7 +6,14 @@ import tseslint from 'typescript-eslint';
 import perfectionist from 'eslint-plugin-perfectionist';
 
 export default tseslint.config([
-  { ignores: ['dist', 'public/mockServiceWorker.js'] },
+  {
+    ignores: [
+      'dist',
+      'public/mockServiceWorker.js',
+      'src/locales/**/messages.ts',
+      'scripts/**',
+    ],
+  },
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

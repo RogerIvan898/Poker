@@ -7,7 +7,7 @@ interface Props {
   progress?: number;
 }
 
-export const Preloader = ({ label = 'Загрузка...', progress }: Props) => {
+export const Preloader = ({ label = 'Loading…', progress }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>

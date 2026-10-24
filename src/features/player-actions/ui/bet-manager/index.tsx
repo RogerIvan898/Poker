@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { useLingui } from '@lingui/react/macro';
 
 import { ActionButton } from 'shared/ui/action-button';
 import { Logo } from 'shared/ui/logo';
@@ -22,10 +24,12 @@ export const BetManager = ({
   onCancel,
   variant,
 }: Props) => {
+  const { t } = useLingui();
   const [amount, setAmount] = useState(minAmount);
 
   const handleConfirm = () => {
-    raise({ playerId, amount });
+    const bet = Math.min(maxAmount, Math.max(minAmount, amount));
+    raise({ playerId, amount: bet });
     onCancel();
   };
 
@@ -35,8 +39,13 @@ export const BetManager = ({
   };
 
   useEffect(() => {
-    setAmount(minAmount);
-  }, [minAmount]);
+    setAmount(current => Math.min(maxAmount, Math.max(minAmount, current)));
+  }, [minAmount, maxAmount]);
+
+  // lingui-set context="bet-manager"
+  const confirmLabel = variant === 'bet' ? t`Confirm bet` : t`Confirm raise`;
+  // lingui-reset
+  const cancelLabel = t`Cancel`;
 
   return (
     <div className={styles.wrapper}>
@@ -67,10 +76,10 @@ export const BetManager = ({
       <div className={styles.buttonRow}>
         <ActionButton
           color="primary"
-          text={`Confirm ${variant}`}
+          text={confirmLabel}
           onClick={handleConfirm}
         />
-        <ActionButton color="danger" text="Cancel" onClick={onCancel} />
+        <ActionButton color="danger" text={cancelLabel} onClick={onCancel} />
       </div>
     </div>
   );

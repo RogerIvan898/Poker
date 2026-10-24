@@ -11,7 +11,6 @@
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* Свечение TON-blue при фокусе — фирменный паттерн */
 .amountBox:focus-within {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 25%, transparent);
@@ -44,7 +43,6 @@
   flex-shrink: 0;
 }
 
-/* Стрелка на primary-кнопке плавно уезжает вперёд при hover */
 .primaryBtn {
   display: flex;
   align-items: center;
