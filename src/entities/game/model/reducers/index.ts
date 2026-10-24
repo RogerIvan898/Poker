@@ -1,5 +1,5 @@
-import type { Card } from 'shared/types/card';
-import type { Player } from 'shared/types/player';
+import type { Card } from 'entities/card/model/types';
+import type { Player } from 'entities/player/model/types';
 
 import type * as T from '../types';
 import { mapPlayerInfoToPlayer, parseCard } from '../utils';
@@ -39,7 +39,8 @@ export const reduceHandStarted = (
 
   return {
     ...state,
-    community: payload.community.map(card => parseCard(card)),
+    community: payload.community.map(card => parseCard(card)).slice(0, 5),
+    round: 'PREFLOP',
     dealerSeat: payload.dealerSeat,
     bigBlindSeat: bigBlindSeat,
     smallBlindSeat: smallBlindSeat,
@@ -104,14 +105,29 @@ export const reduceStreetConcluded = (
 export const reduceBoardDealt = (
   state: T.GameState,
   payload: T.BoardDealtEvent['payload']
-): T.GameState => ({
-  ...state,
-  round: payload.street,
-  community: [
-    ...state.community,
-    ...payload.cards.map(card => parseCard(card)),
-  ],
-});
+): T.GameState => {
+  const incoming = payload.cards.map(card => parseCard(card));
+  const latest = incoming[incoming.length - 1];
+  let community: Card[];
+
+  if (payload.street === 'FLOP') {
+    community = incoming.slice(0, 3);
+  } else if (payload.street === 'TURN') {
+    const flop = state.community.slice(0, 3);
+    community = latest ? [...flop, latest] : flop;
+  } else if (payload.street === 'RIVER') {
+    const turnBoard = state.community.slice(0, 4);
+    community = latest ? [...turnBoard, latest] : turnBoard;
+  } else {
+    community = incoming.slice(0, 5);
+  }
+
+  return {
+    ...state,
+    round: payload.street,
+    community: community.slice(0, 5),
+  };
+};
 
 export const reduceShowdown = (
   state: T.GameState,

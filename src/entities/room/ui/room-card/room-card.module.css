@@ -35,6 +35,7 @@
 .cardFull::before {
   background: var(--color-danger);
 }
+
 .cardFull:hover {
   border-color: var(--color-border);
   box-shadow: none;
@@ -164,67 +165,23 @@
   height: 100%;
   border-radius: var(--radius-xl);
   background: var(--color-primary);
-  transition: width 0.4s ease, background 0.3s ease;
+  transition:
+    width 0.4s ease,
+    background 0.3s ease;
 }
 
 .occupancyFull {
   background: var(--color-danger);
 }
 
-.playBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  min-width: 120px;
-  height: 44px;
-  padding: 0 20px;
-  border: none;
-  border-radius: var(--radius-sm);
-  background: var(--color-primary);
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 700;
-  font-family: var(--font-family);
-  cursor: pointer;
+.action {
   flex-shrink: 0;
-  transition: transform 0.1s ease, box-shadow 0.2s ease;
-}
-
-.playBtn:focus-visible {
-  outline: 2px solid var(--color-primary-light);
-  outline-offset: 3px;
-}
-
-.playBtn:hover:not(:disabled) {
-  box-shadow: 0 4px 16px var(--color-primary-muted);
-}
-
-.playBtn:active:not(:disabled) {
-  transform: scale(0.96);
-}
-
-.playBtnDisabled {
-  background: var(--color-bg-disabled);
-  color: var(--color-text-disabled);
-  cursor: not-allowed;
-  box-shadow: none !important;
-}
-
-.spin {
-  animation: rotate 1s linear infinite;
-}
-
-@keyframes rotate {
-  to { transform: rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .card,
   .card::before,
-  .occupancyFill,
-  .playBtn,
-  .spin {
+  .occupancyFill {
     animation: none;
     transition: none;
   }
@@ -235,8 +192,8 @@
     flex-direction: column;
     align-items: stretch;
   }
-  
-  .playBtn {
+
+  .action {
     width: 100%;
   }
 }

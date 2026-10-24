@@ -1,0 +1,12 @@
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin-top: 16px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 700;
+}

@@ -18,6 +18,6 @@ declare module '@lingui/core' {
 `;
 
 writeFileSync(
-  new URL('../src/shared/i18n/register.d.ts', import.meta.url),
+  new URL('../src/shared/lib/i18n/register.d.ts', import.meta.url),
   source
 );

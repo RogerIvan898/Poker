@@ -2,9 +2,8 @@ import { createEvent, merge, sample } from 'effector';
 
 import { gameModel } from 'entities/game';
 import { CLIENT_COMMANDS } from 'entities/game/model/constants';
+import { PlayerAction } from 'entities/player/model/constants';
 import { sessionModel } from 'entities/session';
-
-import { PlayerAction } from 'shared/constants/player';
 
 import type { PlayerActionPayloadAmount } from './types';
 

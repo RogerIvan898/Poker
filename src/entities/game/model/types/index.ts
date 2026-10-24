@@ -1,10 +1,10 @@
-import type { Card } from 'shared/types/card';
+import type { Card } from 'entities/card/model/types';
 import type {
   Player,
   PlayerAction,
   PlayerActionType,
   PlayerStatusType,
-} from 'shared/types/player';
+} from 'entities/player/model/types';
 
 import { CLIENT_COMMANDS, type SERVER_EVENTS } from '../constants';
 

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import type { Card as CardType } from 'shared/types/card';
 import { cn, getSymbol } from 'shared/utils';
+
+import type { Card as CardType } from '../model/types';
 
 import styles from './card.module.css';
 

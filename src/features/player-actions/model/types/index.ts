@@ -1,4 +1,4 @@
-import type { PlayerAction } from 'shared/constants/player';
+import type { PlayerAction } from 'entities/player/model/constants';
 
 export interface PlayerActionPayloadBase {
   playerId: string;

@@ -1,6 +1,7 @@
+import type { Card, CardRank } from 'entities/card/model/types';
+import type { Player } from 'entities/player/model/types';
+
 import { getAudioContext, preloadSounds } from 'shared/lib/audio';
-import type { Card, CardRank } from 'shared/types/card';
-import type { Player } from 'shared/types/player';
 import { createSocket } from 'shared/utils/socket';
 
 import { GAME_SOUNDS, SuitMap } from '../constants';

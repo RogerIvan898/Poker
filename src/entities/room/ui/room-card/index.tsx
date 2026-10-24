@@ -1,66 +1,35 @@
+import type { ReactNode } from 'react';
+
 import { msg } from '@lingui/core/macro';
 import { Plural, useLingui } from '@lingui/react/macro';
-import { useNavigate } from '@tanstack/react-router';
-import { useUnit } from 'effector-react';
-import { Coins, Loader2, Swords, Users } from 'lucide-react';
-
-import { roomJoinModel } from 'features/join-room';
+import { Coins, Swords, Users } from 'lucide-react';
 
 import { cn } from 'shared/utils';
 
-import type { RoomListItem } from '../rooms';
+import type { RoomCardInfo, RoomMode } from '../../model/types';
 
 import styles from './room-card.module.css';
-
-export type RoomMode = 'cash' | 'heads-up';
 
 const MODE_LABELS = {
   cash: msg`Cash`,
   'heads-up': msg`Heads-Up`,
-} as const;
+} as const satisfies Record<RoomMode, ReturnType<typeof msg>>;
 
 interface Props {
-  room: RoomListItem;
+  room: RoomCardInfo;
+  action: ReactNode;
 }
 
-export const RoomCard = ({ room }: Props) => {
+export const RoomCard = ({ room, action }: Props) => {
   const { i18n, t } = useLingui();
-  const navigate = useNavigate();
-
-  const [joinRoomFx, joiningRoomId] = useUnit([
-    roomJoinModel.joinRoomFx,
-    roomJoinModel.$joiningRoomId,
-  ]);
-
   const isFull = room.players >= room.max;
   const occupancy = Math.min(100, (room.players / room.max) * 100);
-  const isJoiningRoom = joiningRoomId === String(room.id);
-  const isJoiningAny = Boolean(joiningRoomId);
-  const isJoinDisabled = isFull || isJoiningAny;
   const isHeadsUp = room.mode === 'heads-up';
-
-  const handleJoin = async () => {
-    if (isJoinDisabled) {
-      return;
-    }
-
-    try {
-      const { roomId, wsUrl } = await joinRoomFx(String(room.id));
-
-      void navigate({
-        to: '/game/$roomId',
-        params: { roomId },
-        state: { wsUrl },
-      });
-    } catch (error) {
-      console.error('Failed to join room', error);
-    }
-  };
 
   return (
     <article className={cn(styles.card, isFull && styles.cardFull)}>
       <div className={styles.header}>
-        <h3 className={styles.name}>{i18n._(room.name)}</h3>
+        <h3 className={styles.name}>{room.name}</h3>
         <div
           className={cn(
             styles.badge,
@@ -111,29 +80,7 @@ export const RoomCard = ({ room }: Props) => {
           </div>
         </div>
 
-        <button
-          type="button"
-          className={cn(
-            styles.playBtn,
-            isJoinDisabled && styles.playBtnDisabled
-          )}
-          disabled={isJoinDisabled}
-          onClick={() => void handleJoin()}
-        >
-          {isFull ? (
-            <>
-              <Users size={16} />
-              {t`Table full`}
-            </>
-          ) : isJoiningRoom ? (
-            <>
-              <Loader2 size={16} className={styles.spin} />
-              {t`Joining…`}
-            </>
-          ) : (
-            t`Play`
-          )}
-        </button>
+        <div className={styles.action}>{action}</div>
       </div>
     </article>
   );

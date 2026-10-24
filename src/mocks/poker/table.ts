@@ -1,9 +1,11 @@
 import { SERVER_EVENTS } from 'entities/game/model/constants';
 import type { ServerGameEvent } from 'entities/game/model/types';
+import { PlayerAction, PlayerStatus } from 'entities/player/model/constants';
+import type {
+  PlayerActionType,
+  PlayerStatusType,
+} from 'entities/player/model/types';
 import { VIEWER_ID } from 'entities/session/model';
-
-import { PlayerAction, PlayerStatus } from 'shared/constants/player';
-import type { PlayerActionType, PlayerStatusType } from 'shared/types/player';
 
 import type { MockRoomConfig } from '../rooms';
 
@@ -12,7 +14,7 @@ import { rankHand } from './rank';
 
 const BOT_NAMES = ['Nova', 'Rex', 'Ivy', 'Lux'] as const;
 const HERO_TURN_MS = 20_000;
-const STEP_MS = 650;
+const STEP_MS = 280;
 
 interface Seat {
   id: string;
@@ -42,16 +44,14 @@ const isPlayerAction = (value: string): value is PlayerActionType =>
   ACTION_NAMES.has(value);
 
 const readCommand = (data: unknown): ChosenAction | null => {
-  if (typeof data !== 'string') {
-    return null;
-  }
+  let parsed: unknown = data;
 
-  let parsed: unknown;
-
-  try {
-    parsed = JSON.parse(data);
-  } catch {
-    return null;
+  if (typeof data === 'string') {
+    try {
+      parsed = JSON.parse(data);
+    } catch {
+      return null;
+    }
   }
 
   if (typeof parsed !== 'object' || parsed === null) {
@@ -98,6 +98,8 @@ export class PokerTable {
 
   private closed = false;
 
+  private runId = 0;
+
   private button: number;
 
   private currentBet = 0;
@@ -134,11 +136,13 @@ export class PokerTable {
   }
 
   start() {
-    void this.loop();
+    const runId = ++this.runId;
+    void this.loop(runId);
   }
 
   dispose() {
     this.closed = true;
+    this.runId += 1;
     this.clearHeroTimer();
     this.timers.forEach(timer => clearTimeout(timer));
     this.timers.clear();
@@ -146,6 +150,17 @@ export class PokerTable {
   }
 
   handleMessage(data: unknown) {
+    if (typeof Blob !== 'undefined' && data instanceof Blob) {
+      void data.text().then(text => {
+        const action = readCommand(text);
+
+        if (action) {
+          this.resolveHero(action);
+        }
+      });
+      return;
+    }
+
     const action = readCommand(data);
 
     if (!action) {
@@ -175,15 +190,15 @@ export class PokerTable {
     };
   }
 
-  private async loop() {
-    while (!this.closed) {
+  private async loop(runId: number) {
+    while (!this.closed && runId === this.runId) {
       await this.playHand();
 
-      if (this.closed) {
+      if (this.closed || runId !== this.runId) {
         return;
       }
 
-      await this.sleep(1400);
+      await this.sleep(700);
     }
   }
 
@@ -281,12 +296,21 @@ export class PokerTable {
   }
 
   private async dealStreet(street: 'FLOP' | 'TURN' | 'RIVER', count: number) {
-    if (this.closed || this.contenders().length <= 1) {
+    const streetLength = street === 'FLOP' ? 3 : street === 'TURN' ? 4 : 5;
+
+    if (
+      this.closed ||
+      this.contenders().length <= 1 ||
+      this.board.length >= streetLength
+    ) {
       return;
     }
 
     this.collectStreet();
-    const cards = Array.from({ length: count }, () => this.draw());
+    const missing = streetLength - this.board.length;
+    const cards = Array.from({ length: Math.min(count, missing) }, () =>
+      this.draw()
+    );
     this.board.push(...cards);
     this.currentBet = 0;
     this.seats.forEach(seat => {
@@ -305,22 +329,28 @@ export class PokerTable {
 
   private async betting(firstSeat: number) {
     this.toAct = firstSeat;
+    let skipped = 0;
 
-    for (let guard = 0; guard < 48; guard += 1) {
-      if (
-        this.closed ||
-        this.contenders().length <= 1 ||
-        this.streetSettled()
-      ) {
-        return;
-      }
-
+    while (
+      !this.closed &&
+      this.contenders().length > 1 &&
+      !this.streetSettled()
+    ) {
       const seat = this.seats[this.toAct];
 
       if (!seat || seat.folded || seat.allIn) {
-        this.toAct = this.nextSeat(this.toAct);
+        const next = this.nextSeat(this.toAct);
+
+        if (next === this.toAct || skipped > this.seats.length) {
+          return;
+        }
+
+        this.toAct = next;
+        skipped += 1;
         continue;
       }
+
+      skipped = 0;
 
       this.emit({
         type: SERVER_EVENTS.TURN_CHANGED,
@@ -478,11 +508,7 @@ export class PokerTable {
     const minExtra = this.minRaiseExtra(seat);
     const bankroll = seat.committed + seat.stack;
 
-    if (requested == null) {
-      return minExtra;
-    }
-
-    if (requested >= seat.stack) {
+    if (requested == null || requested >= bankroll) {
       return seat.stack;
     }
 
@@ -491,7 +517,7 @@ export class PokerTable {
       Math.max(requested, seat.committed + minExtra)
     );
 
-    return Math.min(seat.stack, Math.max(minExtra, target - seat.committed));
+    return Math.min(seat.stack, Math.max(0, target - seat.committed));
   }
 
   private minRaiseExtra(seat: Seat) {

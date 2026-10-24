@@ -8,7 +8,7 @@ import {
 } from 'shared/config/mock-server';
 import { Switch } from 'shared/ui/switch';
 
-import styles from '../main-menu.module.css';
+import styles from './toggle-dev-mode.module.css';
 
 export const ServerModeSwitch = () => {
   const enabled = useUnit($mockServerEnabled);
@@ -24,8 +24,8 @@ export const ServerModeSwitch = () => {
   };
 
   return (
-    <div className={styles.serverSwitch}>
-      <span className={styles.serverSwitchTitle}>Mock server</span>
+    <div className={styles.switch}>
+      <span className={styles.title}>Mock server</span>
       <Switch
         checked={enabled}
         disabled={pending}

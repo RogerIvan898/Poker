@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { Card } from 'entities/card';
+import { Sound } from 'entities/game/model/sound';
 
-import { Sound } from 'shared/constants/sound';
 import { useSound } from 'shared/hooks/useSound';
-import type { Player } from 'shared/types/player';
 import { cn } from 'shared/utils';
+
+import type { Player } from '../../model/types';
 
 import styles from './player-cards.module.css';
 

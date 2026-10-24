@@ -1,7 +1,6 @@
 import React from 'react';
 
-import chipsSound from 'assets/sounds/chips.mp3';
-
+import chipsSound from 'shared/assets/sounds/chips.mp3';
 import { useSound } from 'shared/hooks/useSound';
 import type { DirectionType } from 'shared/types/primitives';
 import { Logo } from 'shared/ui/logo';

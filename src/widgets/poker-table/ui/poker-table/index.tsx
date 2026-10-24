@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { Card } from 'entities/card';
-
-import type { Card as CardType } from 'shared/types/card';
+import type { Card as CardType } from 'entities/card/model/types';
 
 import styles from './poker-table.module.css';
 

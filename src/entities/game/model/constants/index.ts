@@ -1,6 +1,6 @@
-import { CardSuit } from 'shared/constants/cards';
-import { Sound } from 'shared/constants/sound';
+import { CardSuit } from 'entities/card/model/constants';
 
+import { Sound } from '../sound';
 import type { GameState } from '../types';
 
 export const INITIAL_GAME_STATE: GameState = {

@@ -1,7 +1,7 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 
-import type { Card } from 'shared/types/card';
-import type { Player } from 'shared/types/player';
+import type { Card } from 'entities/card/model/types';
+import type { Player } from 'entities/player/model/types';
 
 import { INITIAL_GAME_STATE, SERVER_EVENTS } from './constants';
 import * as reducers from './reducers';
@@ -16,10 +16,16 @@ import { createGameSocket, initializeAudio, parseCard } from './utils';
 
 export const incomingEvent = createEvent<ServerGameEvent>();
 
+let openSocket: WebSocket | null = null;
+
 export const initializeGameFx = createEffect(
   async ({ wsUrl }: GameConnectParams) => {
+    openSocket?.close();
+    openSocket = null;
     await initializeAudio();
-    return createGameSocket(wsUrl, incomingEvent);
+    const socket = createGameSocket(wsUrl, incomingEvent);
+    openSocket = socket;
+    return socket;
   }
 );
 
@@ -132,5 +138,8 @@ sample({
 sample({
   clock: disconnectGame,
   source: $socketClient,
-  fn: socket => socket?.close(),
+  fn: socket => {
+    openSocket = null;
+    socket?.close();
+  },
 });

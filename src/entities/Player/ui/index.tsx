@@ -1,12 +1,12 @@
-import { PlayerStatus } from 'shared/constants/player';
-import type { Player as PlayerType } from 'shared/types/player';
 import type { DirectionType } from 'shared/types/primitives';
-import { DealerButton } from 'shared/ui/dealer-button';
 import { cn } from 'shared/utils';
 
 import { useTurnTimer } from '../hooks/useTurnTimer';
+import { PlayerStatus } from '../model/constants';
+import type { Player as PlayerType } from '../model/types';
 
 import { BetBadge } from './bet-badge';
+import { DealerButton } from './dealer-button';
 import { PlayerAvatar } from './player-avatar';
 import { PlayerCards } from './player-cards';
 import styles from './Player.module.css';

@@ -1,6 +1,6 @@
-import type { PlayerAction, PlayerStatus } from 'shared/constants/player';
+import type { Card } from 'entities/card/model/types';
 
-import type { Card } from '../card';
+import type { PlayerAction, PlayerStatus } from './constants';
 
 export type PlayerActionType = (typeof PlayerAction)[keyof typeof PlayerAction];
 

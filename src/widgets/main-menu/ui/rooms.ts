@@ -1,6 +1,6 @@
 import { msg } from '@lingui/core/macro';
 
-import type { RoomMode } from './room-card';
+import type { RoomMode } from 'entities/room';
 
 export type RoomListItem = {
   id: number;

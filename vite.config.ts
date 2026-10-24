@@ -76,7 +76,6 @@ export default defineConfig({
       entities: resolve(import.meta.dirname, 'src/entities'),
       shared: resolve(import.meta.dirname, 'src/shared'),
       widgets: resolve(import.meta.dirname, 'src/widgets'),
-      assets: resolve(import.meta.dirname, 'src/assets'),
     },
   },
   server: {

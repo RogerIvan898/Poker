@@ -6,11 +6,14 @@ import { Coins, Swords } from 'lucide-react';
 import { DepositModal } from 'widgets/deposit/ui';
 import { WithdrawModal } from 'widgets/withdraw';
 
+import { JoinRoomButton } from 'features/join-room';
+
+import { RoomCard } from 'entities/room';
+
 import { cn } from 'shared/utils';
 
 import { Header } from './header';
 import styles from './main-menu.module.css';
-import { RoomCard } from './room-card';
 import {
   filterRooms,
   ROOM_FILTERS,
@@ -21,7 +24,7 @@ import {
 
 const DevServerSwitch = import.meta.env.DEV
   ? React.lazy(() =>
-      import('./dev/server-mode-switch').then(module => ({
+      import('features/toggle-dev-mode').then(module => ({
         default: module.ServerModeSwitch,
       }))
     )
@@ -67,7 +70,7 @@ const Filters = ({ active, onChange }: FiltersProps) => {
 };
 
 export const MainMenu = () => {
-  const { t } = useLingui();
+  const { i18n, t } = useLingui();
   const [roomFilter, setRoomFilter] = React.useState<RoomFilter>('all');
   const [isDepositOpen, setIsDepositOpen] = React.useState(false);
   const [isWithdrawOpen, setIsWithdrawOpen] = React.useState(false);
@@ -99,7 +102,23 @@ export const MainMenu = () => {
 
           <div className={styles.roomGrid}>
             {visibleRooms.map(room => (
-              <RoomCard key={room.id} room={room} />
+              <RoomCard
+                key={room.id}
+                room={{
+                  name: i18n._(room.name),
+                  mode: room.mode,
+                  blinds: room.blinds,
+                  players: room.players,
+                  max: room.max,
+                  minBuy: room.minBuy,
+                }}
+                action={
+                  <JoinRoomButton
+                    roomId={String(room.id)}
+                    isFull={room.players >= room.max}
+                  />
+                }
+              />
             ))}
           </div>
 

@@ -10,7 +10,7 @@ import {
   LOCALES,
   supportedLocales,
   $currentLocale,
-} from 'shared/i18n';
+} from 'shared/lib/i18n';
 import { Dialog } from 'shared/ui/dialog';
 import { cn } from 'shared/utils';
 

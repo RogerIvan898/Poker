@@ -21,7 +21,7 @@ export default defineConfig({
         '**/*.test.*',
         '**/*.stories.*',
         '**/locales/**',
-        '**/main-menu/ui/dev/**',
+        '**/toggle-dev-mode/**',
       ],
     },
   ],

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import checkSoundUrl from 'assets/sounds/check.mp3';
-
+import checkSoundUrl from 'shared/assets/sounds/check.mp3';
 import { useSound } from 'shared/hooks/useSound';
 import { cn } from 'shared/utils';
 
