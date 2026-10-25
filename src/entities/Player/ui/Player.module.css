@@ -25,6 +25,14 @@
   flex-shrink: 0;
 }
 
+.stackArea {
+  position: relative;
+  width: 100%;
+  margin-top: -18px;
+  display: flex;
+  justify-content: center;
+}
+
 .stackLogo {
   width: 16px;
   height: 16px;
@@ -105,5 +113,9 @@
   .avatarWrap {
     width: 68px;
     height: 68px;
+  }
+
+  .stackArea {
+    margin-top: -14px;
   }
 }

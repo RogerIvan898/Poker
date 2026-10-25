@@ -138,6 +138,13 @@ export interface HandCompleteEvent {
   };
 }
 
+export interface DebugHolesEvent {
+  type: typeof SERVER_EVENTS.DEBUG_HOLES;
+  payload: {
+    hands: Record<number, string[]>;
+  };
+}
+
 export type ServerGameEvent =
   | PlayerSeatedEvent
   | YourCardsEvent
@@ -148,7 +155,8 @@ export type ServerGameEvent =
   | StreetConcludedEvent
   | BoardDealtEvent
   | ShowdownEvent
-  | HandCompleteEvent;
+  | HandCompleteEvent
+  | DebugHolesEvent;
 
 type ClientCommands = (typeof CLIENT_COMMANDS)[keyof typeof CLIENT_COMMANDS];
 

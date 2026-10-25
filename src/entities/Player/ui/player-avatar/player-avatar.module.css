@@ -16,6 +16,11 @@
   z-index: 1;
 }
 
+.foldedAvatar {
+  filter: grayscale(0.9) brightness(0.72);
+  opacity: 0.72;
+}
+
 .player.sitOut .avatar {
   background: linear-gradient(180deg, #888888, #667676);
   border: 3px solid rgba(255, 255, 255, 0.2);

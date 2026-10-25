@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { useLingui } from '@lingui/react/macro';
 import { useNavigate } from '@tanstack/react-router';
 import { useGate, useUnit } from 'effector-react';
@@ -13,6 +15,14 @@ import { gameModel } from 'entities/game';
 import { GamePageGate } from '../model';
 
 import styles from './game-room.module.css';
+
+const RevealCardsButton = import.meta.env.DEV
+  ? React.lazy(() =>
+      import('features/toggle-dev-mode').then(module => ({
+        default: module.RevealCardsButton,
+      }))
+    )
+  : null;
 
 export const GameRoomPage = () => {
   const { t } = useLingui();
@@ -37,6 +47,11 @@ export const GameRoomPage = () => {
         {t`Tables`}
       </button>
 
+      {RevealCardsButton ? (
+        <React.Suspense fallback={null}>
+          <RevealCardsButton />
+        </React.Suspense>
+      ) : null}
       <PokerBoard />
       <PlayerActions />
     </div>

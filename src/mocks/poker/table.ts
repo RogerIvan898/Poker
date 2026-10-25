@@ -1,4 +1,4 @@
-import { SERVER_EVENTS } from 'entities/game/model/constants';
+import { CLIENT_COMMANDS, SERVER_EVENTS } from 'entities/game/model/constants';
 import type { ServerGameEvent } from 'entities/game/model/types';
 import { PlayerAction, PlayerStatus } from 'entities/player/model/constants';
 import type {
@@ -14,7 +14,9 @@ import { rankHand } from './rank';
 
 const BOT_NAMES = ['Nova', 'Rex', 'Ivy', 'Lux'] as const;
 const HERO_TURN_MS = 20_000;
-const STEP_MS = 280;
+const BOT_ACTION_MS = 1_600;
+const STREET_PAUSE_MS = 900;
+const BETWEEN_HANDS_MS = 1_600;
 
 interface Seat {
   id: string;
@@ -43,7 +45,9 @@ const ACTION_NAMES = new Set<string>(Object.values(PlayerAction));
 const isPlayerAction = (value: string): value is PlayerActionType =>
   ACTION_NAMES.has(value);
 
-const readCommand = (data: unknown): ChosenAction | null => {
+const parseMessage = (
+  data: unknown
+): { type?: unknown; payload?: unknown } | null => {
   let parsed: unknown = data;
 
   if (typeof data === 'string') {
@@ -58,9 +62,29 @@ const readCommand = (data: unknown): ChosenAction | null => {
     return null;
   }
 
-  const message = parsed as { type?: unknown; payload?: unknown };
+  return parsed;
+};
 
-  if (message.type !== 'CMD_PLAYER_ACTION') {
+const readReveal = (data: unknown): boolean | null => {
+  const message = parseMessage(data);
+
+  if (!message || message.type !== CLIENT_COMMANDS.REVEAL_HOLES) {
+    return null;
+  }
+
+  const payload = message.payload;
+
+  if (typeof payload !== 'object' || payload === null) {
+    return null;
+  }
+
+  return Boolean((payload as { visible?: unknown }).visible);
+};
+
+const readCommand = (data: unknown): ChosenAction | null => {
+  const message = parseMessage(data);
+
+  if (!message || message.type !== CLIENT_COMMANDS.PLAYER_ACTION) {
     return null;
   }
 
@@ -110,6 +134,8 @@ export class PokerTable {
 
   private board: string[] = [];
 
+  private holesVisible = false;
+
   private pendingHero: ((action: ChosenAction | null) => void) | null = null;
 
   private heroTimer: ReturnType<typeof setTimeout> | null = null;
@@ -151,23 +177,11 @@ export class PokerTable {
 
   handleMessage(data: unknown) {
     if (typeof Blob !== 'undefined' && data instanceof Blob) {
-      void data.text().then(text => {
-        const action = readCommand(text);
-
-        if (action) {
-          this.resolveHero(action);
-        }
-      });
+      void data.text().then(text => this.applyCommand(text));
       return;
     }
 
-    const action = readCommand(data);
-
-    if (!action) {
-      return;
-    }
-
-    this.resolveHero(action);
+    this.applyCommand(data);
   }
 
   private createSeat(
@@ -198,7 +212,7 @@ export class PokerTable {
         return;
       }
 
-      await this.sleep(700);
+      await this.sleep(BETWEEN_HANDS_MS);
     }
   }
 
@@ -282,6 +296,10 @@ export class PokerTable {
       });
     }
 
+    if (this.holesVisible) {
+      this.emitHoles();
+    }
+
     await this.betting(this.nextIndex(big.seat));
 
     if (this.closed || this.contenders().length <= 1) {
@@ -323,7 +341,7 @@ export class PokerTable {
       payload: { street, cards },
     });
 
-    await this.sleep(STEP_MS);
+    await this.sleep(STREET_PAUSE_MS);
     await this.betting(this.nextIndex(this.button));
   }
 
@@ -407,7 +425,7 @@ export class PokerTable {
   }
 
   private async botAction(seat: Seat): Promise<ChosenAction | null> {
-    await this.sleep(STEP_MS);
+    await this.sleep(BOT_ACTION_MS);
 
     if (this.closed) {
       return null;
@@ -529,6 +547,41 @@ export class PokerTable {
       seat.stack,
       this.currentBet - seat.committed + this.bigBlind
     );
+  }
+
+  private applyCommand(data: unknown) {
+    const reveal = readReveal(data);
+
+    if (reveal !== null) {
+      this.holesVisible = reveal;
+      this.emitHoles();
+      return;
+    }
+
+    const action = readCommand(data);
+
+    if (action) {
+      this.resolveHero(action);
+    }
+  }
+
+  private emitHoles() {
+    const hands: Record<number, [string, string]> = {};
+
+    if (this.holesVisible) {
+      this.seats.forEach(seat => {
+        if (seat.id === VIEWER_ID) {
+          return;
+        }
+
+        hands[seat.seat] = [seat.hole[0], seat.hole[1]];
+      });
+    }
+
+    this.emit({
+      type: SERVER_EVENTS.DEBUG_HOLES,
+      payload: { hands },
+    });
   }
 
   private emitActed(

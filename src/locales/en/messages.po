@@ -23,6 +23,10 @@ msgstr "Address only — easy for exchange scanners to read."
 msgid "All"
 msgstr "All"
 
+msgctxt "poker-action"
+msgid "All in"
+msgstr "All in"
+
 msgid "Amount"
 msgstr "Amount"
 

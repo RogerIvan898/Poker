@@ -1,3 +1,8 @@
+import {
+  PokerActionBadge,
+  resolveSeatActionBadge,
+} from 'entities/poker-action';
+
 import type { DirectionType } from 'shared/types/primitives';
 import { cn } from 'shared/utils';
 
@@ -21,6 +26,7 @@ interface Props {
   onTurnTimeout?: () => void;
   turn: boolean;
   betPosition?: DirectionType;
+  reveal?: boolean;
 }
 
 export const Player = ({
@@ -32,11 +38,21 @@ export const Player = ({
   dealer = false,
   turn = false,
   betPosition = 'top',
+  reveal = false,
 }: Props) => {
   const { status, stack, hand, name } = player;
 
   const isSitOut = status === PlayerStatus.SITTING_OUT;
   const isFolded = status === PlayerStatus.FOLDED;
+  const inHand =
+    status === PlayerStatus.IN_GAME ||
+    status === PlayerStatus.RAISE ||
+    status === PlayerStatus.ALL_IN;
+
+  const seatActionBadge = resolveSeatActionBadge(
+    player.lastAction,
+    player.status
+  );
 
   const { showTimer, usingBank, progress } = useTurnTimer({
     isTurn: turn,
@@ -46,8 +62,9 @@ export const Player = ({
     playSound: currentPlayer,
   });
 
-  const canShowCards =
-    hand && hand.length >= 2 && (!isFolded || !currentPlayer);
+  const showCards =
+    (reveal && Boolean(hand)) ||
+    (inHand && !isSitOut && Boolean(hand || !currentPlayer));
 
   const cardsKey =
     hand && hand.length >= 2
@@ -58,11 +75,11 @@ export const Player = ({
     <section className={cn(styles.player, isSitOut && styles.sitOut)}>
       <div className={styles.mainContainer}>
         <div className={styles.avatarWrap}>
-          {canShowCards && (
+          {showCards && (
             <PlayerCards
               key={cardsKey}
               cards={hand}
-              needSound={currentPlayer}
+              needSound={currentPlayer && Boolean(hand)}
             />
           )}
 
@@ -81,15 +98,24 @@ export const Player = ({
           )}
         </div>
 
-        <StackBadge
-          amount={stack}
-          name={name}
-          folded={isFolded}
-          sitOut={isSitOut}
-          turnActive={showTimer}
-          turnProgress={progress}
-          usingBank={usingBank}
-        />
+        <div className={styles.stackArea}>
+          {seatActionBadge && (
+            <PokerActionBadge
+              action={seatActionBadge}
+              amount={player.lastActionAmount ?? undefined}
+            />
+          )}
+
+          <StackBadge
+            amount={stack}
+            name={name}
+            folded={isFolded}
+            sitOut={isSitOut}
+            turnActive={showTimer}
+            turnProgress={progress}
+            usingBank={usingBank}
+          />
+        </div>
 
         {player.committed > 0 && (
           <BetBadge amount={player.committed} position={betPosition} />

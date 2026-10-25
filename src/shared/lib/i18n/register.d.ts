@@ -5,6 +5,7 @@ declare module '@lingui/core' {
     messageIds:
       | '-r9TyY'
       | '06IDM-'
+      | '09qkey'
       | '1bVud8'
       | '2fn_Pp'
       | '3KJEe9'

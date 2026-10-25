@@ -5,6 +5,7 @@ import { useSound } from 'shared/hooks/useSound';
 import type { DirectionType } from 'shared/types/primitives';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils';
+import { formatCompactNumber } from 'shared/utils/format';
 
 import styles from './bet-badge.module.css';
 
@@ -15,7 +16,7 @@ interface Props {
 
 export const BetBadge = ({ amount, position }: Props) => {
   const { play: playChipsSound } = useSound(chipsSound);
-  const prevAmountRef = React.useRef(0);
+  const prevAmountRef = React.useRef(amount);
 
   React.useEffect(() => {
     if (amount > prevAmountRef.current) {
@@ -25,11 +26,15 @@ export const BetBadge = ({ amount, position }: Props) => {
     prevAmountRef.current = amount;
   }, [amount, playChipsSound]);
 
+  if (amount <= 0) return null;
+
   return (
     <div className={cn(styles.betArea, styles[`bet_${position}`])}>
       <div className={styles.amountBadge}>
-        <span className={styles.amountValue}>{amount}</span>
-        <Logo size={14} className={styles.amountLogo} />
+        <Logo size={18} className={styles.amountLogo} />
+        <span key={amount} className={styles.amountValue}>
+          {formatCompactNumber(amount)}
+        </span>
       </div>
     </div>
   );

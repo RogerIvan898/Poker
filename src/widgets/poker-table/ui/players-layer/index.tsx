@@ -17,13 +17,15 @@ interface Props {
 }
 
 export const PlayersLayer = ({ tableElement }: Props) => {
-  const [players, dealerSeat, activeSeat, viewerId, myCards] = useUnit([
-    gameModel.$players,
-    gameModel.$dealerSeat,
-    gameModel.$activeSeat,
-    sessionModel.$currentUserId,
-    gameModel.$myCards,
-  ]);
+  const [players, dealerSeat, activeSeat, viewerId, myCards, debugHoles] =
+    useUnit([
+      gameModel.$players,
+      gameModel.$dealerSeat,
+      gameModel.$activeSeat,
+      sessionModel.$currentUserId,
+      gameModel.$myCards,
+      gameModel.$debugHoles,
+    ]);
 
   const rect = useElementRect(tableElement);
 
@@ -44,7 +46,8 @@ export const PlayersLayer = ({ tableElement }: Props) => {
     <div className={styles.playersLayer}>
       {seats.map(({ player, betPosition, style }) => {
         const isViewer = player.id === viewerId;
-        const hand = isViewer && myCards ? myCards : player.hand;
+        const revealed = debugHoles[player.seat];
+        const hand = isViewer && myCards ? myCards : (revealed ?? player.hand);
 
         return (
           <div key={player.id} className={styles.seatWrapper} style={style}>
@@ -54,6 +57,7 @@ export const PlayersLayer = ({ tableElement }: Props) => {
               currentPlayer={isViewer}
               turn={player.seat === activeSeat}
               betPosition={betPosition}
+              reveal={!isViewer && Boolean(revealed)}
             />
           </div>
         );

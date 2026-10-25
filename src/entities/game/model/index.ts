@@ -83,6 +83,31 @@ export const $gameState = createStore<GameState>(INITIAL_GAME_STATE)
   })
   .reset(disconnectGame);
 
+export const $debugHoles = createStore<Record<number, [Card, Card]>>({})
+  .on(incomingEvent, (state, event) => {
+    if (event.type === SERVER_EVENTS.DEBUG_HOLES) {
+      return Object.entries(event.payload.hands).reduce(
+        (hands, [seat, cards]) => {
+          const [first, second] = cards;
+
+          if (first && second) {
+            hands[Number(seat)] = [parseCard(first), parseCard(second)];
+          }
+
+          return hands;
+        },
+        {} as Record<number, [Card, Card]>
+      );
+    }
+
+    if (event.type === SERVER_EVENTS.HAND_STARTED) {
+      return {};
+    }
+
+    return state;
+  })
+  .reset(disconnectGame);
+
 export const $myCards = createStore<Player['hand']>(null)
   .on(incomingEvent, (state, { type, payload }) => {
     if (type === SERVER_EVENTS.YOUR_CARDS) {

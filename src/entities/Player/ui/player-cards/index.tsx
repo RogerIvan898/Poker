@@ -65,18 +65,28 @@ export const PlayerCards = ({ cards, needSound = false }: Props) => {
     };
   }, [cardsKey, needSound, ready, playCardSound]);
 
-  if (!cards || cards.length < 2) {
-    return null;
-  }
+  const faceUp = Boolean(cards && cards.length >= 2);
+  const leftCard = faceUp && cards ? cards[0] : null;
+  const rightCard = faceUp && cards ? cards[1] : null;
 
   return (
     <div className={styles.cards}>
-      <div className={cn(styles.cardSlot, showFirst && styles.visible)}>
-        <Card card={cards[0]} flat />
+      <div
+        className={cn(
+          styles.cardSlot,
+          (showFirst || !faceUp) && styles.visible
+        )}
+      >
+        <Card card={leftCard} flat />
       </div>
 
-      <div className={cn(styles.cardSlot, showSecond && styles.visible)}>
-        <Card card={cards[1]} flat />
+      <div
+        className={cn(
+          styles.cardSlot,
+          (showSecond || !faceUp) && styles.visible
+        )}
+      >
+        <Card card={rightCard} flat />
       </div>
     </div>
   );

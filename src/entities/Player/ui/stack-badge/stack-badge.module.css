@@ -4,7 +4,6 @@
   width: 100%;
   min-width: clamp(88px, 18vw, 124px);
   max-width: clamp(108px, 22vw, 140px);
-  margin-top: -18px;
   padding: 7px 12px 8px;
   border-radius: 10px;
   background: var(--color-bg-elevated);
@@ -102,7 +101,6 @@
   .frame {
     min-width: 88px;
     max-width: 108px;
-    margin-top: -14px;
     padding: 6px 10px 7px;
   }
 

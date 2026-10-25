@@ -30,6 +30,8 @@ export const mapPlayerInfoToPlayer = (
   status: playerInfo.status,
   committed: 0,
   hand: null,
+  lastAction: null,
+  lastActionAmount: null,
 });
 
 const isServerGameEvents = (data: unknown): data is ServerGameEvent =>

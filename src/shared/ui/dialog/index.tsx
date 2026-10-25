@@ -22,10 +22,20 @@ export const Dialog = ({
   }
 
   return createPortal(
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
+    <div
+      className={styles.overlay}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={typeof title === 'string' ? title : undefined}
+    >
+      <div
+        className={styles.modal}
+        tabIndex={-1}
+        onClick={e => e.stopPropagation()}
+      >
         <header className={styles.header}>
-          <div className={styles.titleContainer}>{title}</div>
+          {title && <h2 className={styles.title}>{title}</h2>}
           <button
             type="button"
             className={styles.iconBtn}

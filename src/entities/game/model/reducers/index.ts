@@ -1,4 +1,5 @@
 import type { Card } from 'entities/card/model/types';
+import { PlayerAction } from 'entities/player/model/constants';
 import type { Player } from 'entities/player/model/types';
 
 import type * as T from '../types';
@@ -30,6 +31,8 @@ export const reduceHandStarted = (
         ...state.players[key],
         committed: initialBets[Number(key)] || 0,
         hand: null,
+        lastAction: null,
+        lastActionAmount: null,
       };
 
       return acc;
@@ -65,6 +68,9 @@ export const reducePlayerActed = (
       stack: payload.stack,
       status: payload.status,
       committed: state.players[payload.seat].committed + (payload.amount ?? 0),
+      lastAction: payload.action,
+      lastActionAmount:
+        payload.amount != null && payload.amount > 0 ? payload.amount : null,
     },
   },
 });
@@ -83,7 +89,18 @@ export const reduceStreetConcluded = (
 ): T.GameState => {
   const clearedPlayers = Object.keys(state.players).reduce(
     (acc, key) => {
-      acc[key] = { ...state.players[key], committed: 0 };
+      acc[key] = {
+        ...state.players[key],
+        committed: 0,
+        lastAction:
+          state.players[key].lastAction === PlayerAction.FOLD
+            ? PlayerAction.FOLD
+            : null,
+        lastActionAmount:
+          state.players[key].lastAction === PlayerAction.FOLD
+            ? state.players[key].lastActionAmount
+            : null,
+      };
       return acc;
     },
     {} as Record<string, Player>

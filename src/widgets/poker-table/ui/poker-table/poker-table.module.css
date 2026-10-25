@@ -87,8 +87,36 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -95px);
+  transform: translate(-50%, -108px);
   z-index: 5;
+  pointer-events: none;
+}
+
+.potBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 72px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--color-bg) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-text) 18%, transparent);
+  box-shadow: 0 6px 16px var(--color-shadow);
+}
+
+.potLogo {
+  color: var(--color-primary-light);
+  flex-shrink: 0;
+}
+
+.potValue {
+  color: var(--color-text);
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 768px) {
@@ -132,5 +160,19 @@
 
   .communityCards {
     gap: 8px;
+  }
+
+  .mainPotArea {
+    transform: translate(-50%, -78px);
+  }
+
+  .potBadge {
+    min-width: 64px;
+    height: 30px;
+    padding: 0 12px;
+  }
+
+  .potValue {
+    font-size: 14px;
   }
 }

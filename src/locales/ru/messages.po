@@ -24,6 +24,10 @@ msgstr "Только адрес — удобнее для сканеров би�
 msgid "All"
 msgstr "Все"
 
+msgctxt "poker-action"
+msgid "All in"
+msgstr "Олл-ин"
+
 msgid "Amount"
 msgstr "Сумма"
 

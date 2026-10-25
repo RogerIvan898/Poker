@@ -22,4 +22,6 @@ export interface Player {
   status: PlayerStatusType;
   hand: [Card, Card] | null;
   committed: number;
+  lastAction: PlayerActionType | null;
+  lastActionAmount: number | null;
 }
