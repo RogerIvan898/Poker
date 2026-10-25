@@ -1,7 +1,5 @@
 import React from 'react';
 
-import checkSoundUrl from 'shared/assets/sounds/check.mp3';
-import { useSound } from 'shared/hooks/useSound';
 import { cn } from 'shared/utils';
 
 import styles from './action-button.module.css';
@@ -20,20 +18,12 @@ export const ActionButton = ({
   disabled,
   ...props
 }: Props) => {
-  const { play: playCheckSound } = useSound(checkSoundUrl);
-
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    playCheckSound();
-    props.onClick?.(e);
-  };
-
   return (
     <button
       {...props}
       type="button"
       className={cn(styles.button, styles[color], className)}
       disabled={disabled}
-      onClick={onClick}
     >
       {text}
     </button>

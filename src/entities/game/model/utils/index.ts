@@ -4,6 +4,7 @@ import type { Player } from 'entities/player/model/types';
 import { getAudioContext, preloadSounds } from 'shared/lib/audio';
 import { createSocket } from 'shared/utils/socket';
 
+import { pokerSoundEngine } from '../../lib/poker-sound-engine';
 import { GAME_SOUNDS, SuitMap } from '../constants';
 import type { PlayerInfo, ServerGameEvent } from '../types';
 
@@ -39,6 +40,7 @@ const isServerGameEvents = (data: unknown): data is ServerGameEvent =>
 
 export const initializeAudio = async () => {
   const audioContext = getAudioContext();
+  pokerSoundEngine.init(audioContext);
 
   if (audioContext.state == 'suspended') {
     await audioContext.resume();

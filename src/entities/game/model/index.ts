@@ -3,6 +3,11 @@ import { createEffect, createEvent, createStore, sample } from 'effector';
 import type { Card } from 'entities/card/model/types';
 import type { Player } from 'entities/player/model/types';
 
+import {
+  mapPlayerActedToSound,
+  pokerSoundEngine,
+} from '../lib/poker-sound-engine';
+
 import { INITIAL_GAME_STATE, SERVER_EVENTS } from './constants';
 import * as reducers from './reducers';
 import type {
@@ -167,4 +172,17 @@ sample({
     openSocket = null;
     socket?.close();
   },
+});
+
+incomingEvent.watch(event => {
+  if (event.type !== SERVER_EVENTS.PLAYER_ACTED) {
+    return;
+  }
+
+  const sound = mapPlayerActedToSound(
+    event.payload.action,
+    event.payload.status
+  );
+
+  void pokerSoundEngine.playAction(sound);
 });
