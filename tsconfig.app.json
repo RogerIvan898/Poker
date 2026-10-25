@@ -23,7 +23,8 @@
       "entities/*": ["./src/entities/*"],
       "shared/*": ["./src/shared/*"],
       "widgets/*": ["./src/widgets/*"]
-    }
+    },
+    "types": ["node"]
   },
   "include": ["src"]
 }
