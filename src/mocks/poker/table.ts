@@ -1,4 +1,4 @@
-import { CLIENT_COMMANDS, SERVER_EVENTS } from 'entities/game/model/constants';
+import { SERVER_EVENTS } from 'entities/game/model/constants';
 import type { ServerGameEvent } from 'entities/game/model/types';
 import { PlayerAction, PlayerStatus } from 'entities/player/model/constants';
 import type {
@@ -9,6 +9,8 @@ import { VIEWER_ID } from 'entities/session/model';
 
 import type { MockRoomConfig } from '../rooms';
 
+import { chooseBotAction } from './bot-policy';
+import { readPlayerAction, readReveal, type ChosenAction } from './commands';
 import { createShuffledDeck } from './deck';
 import { rankHand } from './rank';
 
@@ -31,87 +33,9 @@ interface Seat {
   acted: boolean;
 }
 
-interface ChosenAction {
-  action: PlayerActionType;
-  amount?: number;
-}
-
 interface MockSocket {
   send: (data: string) => void;
 }
-
-const ACTION_NAMES = new Set<string>(Object.values(PlayerAction));
-
-const isPlayerAction = (value: string): value is PlayerActionType =>
-  ACTION_NAMES.has(value);
-
-const parseMessage = (
-  data: unknown
-): { type?: unknown; payload?: unknown } | null => {
-  let parsed: unknown = data;
-
-  if (typeof data === 'string') {
-    try {
-      parsed = JSON.parse(data);
-    } catch {
-      return null;
-    }
-  }
-
-  if (typeof parsed !== 'object' || parsed === null) {
-    return null;
-  }
-
-  return parsed;
-};
-
-const readReveal = (data: unknown): boolean | null => {
-  const message = parseMessage(data);
-
-  if (!message || message.type !== CLIENT_COMMANDS.REVEAL_HOLES) {
-    return null;
-  }
-
-  const payload = message.payload;
-
-  if (typeof payload !== 'object' || payload === null) {
-    return null;
-  }
-
-  return Boolean((payload as { visible?: unknown }).visible);
-};
-
-const readCommand = (data: unknown): ChosenAction | null => {
-  const message = parseMessage(data);
-
-  if (!message || message.type !== CLIENT_COMMANDS.PLAYER_ACTION) {
-    return null;
-  }
-
-  if (typeof message.payload !== 'object' || message.payload === null) {
-    return null;
-  }
-
-  const outer = message.payload as { payload?: unknown };
-  const inner = outer.payload;
-
-  if (typeof inner !== 'object' || inner === null) {
-    return null;
-  }
-
-  const action = (inner as { action?: unknown }).action;
-  const rawAmount = (inner as { amount?: unknown }).amount;
-  const amount = typeof rawAmount === 'number' ? rawAmount : Number(rawAmount);
-
-  if (typeof action !== 'string' || !isPlayerAction(action)) {
-    return null;
-  }
-
-  return {
-    action,
-    amount: Number.isFinite(amount) ? amount : undefined,
-  };
-};
 
 export class PokerTable {
   private readonly seats: Seat[];
@@ -431,32 +355,13 @@ export class PokerTable {
       return null;
     }
 
-    const need = Math.max(0, this.currentBet - seat.committed);
-    const roll = Math.random();
-
-    if (need === 0) {
-      if (roll > 0.78 && seat.stack >= this.bigBlind) {
-        return {
-          action: PlayerAction.BET,
-          amount: seat.committed + this.bigBlind * (roll > 0.92 ? 3 : 1),
-        };
-      }
-
-      return { action: PlayerAction.CHECK };
-    }
-
-    if (need > seat.stack * 0.65 && roll > 0.4) {
-      return { action: PlayerAction.FOLD };
-    }
-
-    if (roll > 0.84 && seat.stack > need + this.bigBlind) {
-      return {
-        action: PlayerAction.RAISE,
-        amount: seat.committed + need + this.bigBlind * 2,
-      };
-    }
-
-    return { action: PlayerAction.CALL };
+    return chooseBotAction({
+      need: Math.max(0, this.currentBet - seat.committed),
+      stack: seat.stack,
+      committed: seat.committed,
+      bigBlind: this.bigBlind,
+      roll: Math.random(),
+    });
   }
 
   private applyAction(seat: Seat, chosen: ChosenAction) {
@@ -558,7 +463,7 @@ export class PokerTable {
       return;
     }
 
-    const action = readCommand(data);
+    const action = readPlayerAction(data);
 
     if (action) {
       this.resolveHero(action);
