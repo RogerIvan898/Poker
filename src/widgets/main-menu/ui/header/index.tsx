@@ -97,7 +97,7 @@ export const Header = ({
         aria-label={t`Settings`}
         title={t`Settings`}
       >
-        <Settings size={22} />
+        <Settings size={28} />
       </button>
 
       <SettingsDialog
