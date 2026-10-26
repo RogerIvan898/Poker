@@ -2,6 +2,7 @@ import type { Card } from 'entities/card/model/types';
 import { PlayerAction } from 'entities/player/model/constants';
 import type { Player } from 'entities/player/model/types';
 
+import { SERVER_EVENTS } from '../constants';
 import type * as T from '../types';
 import { mapPlayerInfoToPlayer, parseCard } from '../utils';
 
@@ -187,4 +188,36 @@ export const reduceHandCompleted = (
     players: updatedPlayers,
     activeSeat: null,
   };
+};
+
+type GameEventReducer = {
+  [EventType in T.ServerGameEvent['type']]?: (
+    state: T.GameState,
+    payload: Extract<T.ServerGameEvent, { type: EventType }>['payload']
+  ) => T.GameState;
+};
+
+const gameEventReducers: GameEventReducer = {
+  [SERVER_EVENTS.PLAYER_SEATED]: reducePlayerSeated,
+  [SERVER_EVENTS.HAND_STARTED]: reduceHandStarted,
+  [SERVER_EVENTS.PLAYER_ACTED]: reducePlayerActed,
+  [SERVER_EVENTS.TURN_CHANGED]: reduceTurnChanged,
+  [SERVER_EVENTS.STREET_CONCLUDED]: reduceStreetConcluded,
+  [SERVER_EVENTS.BOARD_DEALT]: reduceBoardDealt,
+  [SERVER_EVENTS.SHOWDOWN]: reduceShowdown,
+  [SERVER_EVENTS.HAND_COMPLETED]: reduceHandCompleted,
+};
+
+export const reduceGameEvent = (
+  state: T.GameState,
+  event: T.ServerGameEvent
+): T.GameState => {
+  const reduce = gameEventReducers[event.type] as
+    | ((
+        state: T.GameState,
+        payload: T.ServerGameEvent['payload']
+      ) => T.GameState)
+    | undefined;
+
+  return reduce ? reduce(state, event.payload) : state;
 };

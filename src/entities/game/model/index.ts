@@ -8,30 +8,25 @@ import {
   pokerSoundEngine,
 } from '../lib/poker-sound-engine';
 
+import { closeOpenGameSocket, openGameSocket } from './connection';
 import { INITIAL_GAME_STATE, SERVER_EVENTS } from './constants';
-import * as reducers from './reducers';
+import {
+  reduceAllowedActions,
+  reduceDebugHoles,
+  reduceMyCards,
+} from './projections';
+import { reduceGameEvent } from './reducers';
 import type {
   AllowedPlayerActionsEvent,
   ClientGameEvent,
   GameConnectParams,
-  GameState,
   ServerGameEvent,
 } from './types';
-import { createGameSocket, initializeAudio, parseCard } from './utils';
 
 export const incomingEvent = createEvent<ServerGameEvent>();
 
-let openSocket: WebSocket | null = null;
-
-export const initializeGameFx = createEffect(
-  async ({ wsUrl }: GameConnectParams) => {
-    openSocket?.close();
-    openSocket = null;
-    await initializeAudio();
-    const socket = createGameSocket(wsUrl, incomingEvent);
-    openSocket = socket;
-    return socket;
-  }
+export const initializeGameFx = createEffect((params: GameConnectParams) =>
+  openGameSocket(params, incomingEvent)
 );
 
 export const sendClientCommandFx = createEffect(
@@ -56,97 +51,22 @@ export const $socketClient = createStore<WebSocket | null>(null)
 
 export const $isGameLoading = initializeGameFx.pending;
 
-export const $gameState = createStore<GameState>(INITIAL_GAME_STATE)
-  .on(incomingEvent, (state, { type, payload }) => {
-    switch (type) {
-      case SERVER_EVENTS.PLAYER_SEATED:
-        return reducers.reducePlayerSeated(state, payload);
-
-      case SERVER_EVENTS.HAND_STARTED:
-        return reducers.reduceHandStarted(state, payload);
-
-      case SERVER_EVENTS.PLAYER_ACTED:
-        return reducers.reducePlayerActed(state, payload);
-
-      case SERVER_EVENTS.TURN_CHANGED:
-        return reducers.reduceTurnChanged(state, payload);
-
-      case SERVER_EVENTS.STREET_CONCLUDED:
-        return reducers.reduceStreetConcluded(state, payload);
-
-      case SERVER_EVENTS.BOARD_DEALT:
-        return reducers.reduceBoardDealt(state, payload);
-
-      case SERVER_EVENTS.SHOWDOWN:
-        return reducers.reduceShowdown(state, payload);
-
-      case SERVER_EVENTS.HAND_COMPLETED:
-        return reducers.reduceHandCompleted(state, payload);
-    }
-
-    return state;
-  })
+export const $gameState = createStore(INITIAL_GAME_STATE)
+  .on(incomingEvent, reduceGameEvent)
   .reset(disconnectGame);
 
 export const $debugHoles = createStore<Record<number, [Card, Card]>>({})
-  .on(incomingEvent, (state, event) => {
-    if (event.type === SERVER_EVENTS.DEBUG_HOLES) {
-      return Object.entries(event.payload.hands).reduce(
-        (hands, [seat, cards]) => {
-          const [first, second] = cards;
-
-          if (first && second) {
-            hands[Number(seat)] = [parseCard(first), parseCard(second)];
-          }
-
-          return hands;
-        },
-        {} as Record<number, [Card, Card]>
-      );
-    }
-
-    if (event.type === SERVER_EVENTS.HAND_STARTED) {
-      return {};
-    }
-
-    return state;
-  })
+  .on(incomingEvent, reduceDebugHoles)
   .reset(disconnectGame);
 
 export const $myCards = createStore<Player['hand']>(null)
-  .on(incomingEvent, (state, { type, payload }) => {
-    if (type === SERVER_EVENTS.YOUR_CARDS) {
-      return payload.cards.map(card => parseCard(card)) as [Card, Card];
-    }
-
-    if (
-      type === SERVER_EVENTS.HAND_STARTED ||
-      type === SERVER_EVENTS.HAND_COMPLETED
-    ) {
-      return null;
-    }
-
-    return state;
-  })
+  .on(incomingEvent, reduceMyCards)
   .reset(disconnectGame);
 
 export const $myAllowedActions = createStore<
   AllowedPlayerActionsEvent['payload'] | null
 >(null)
-  .on(incomingEvent, (state, event) => {
-    if (event.type === SERVER_EVENTS.ALLOWED_ACTIONS) {
-      return event.payload;
-    }
-
-    if (
-      event.type === SERVER_EVENTS.PLAYER_ACTED ||
-      event.type === SERVER_EVENTS.STREET_CONCLUDED
-    ) {
-      return null;
-    }
-
-    return state;
-  })
+  .on(incomingEvent, reduceAllowedActions)
   .reset(disconnectGame);
 
 export const $dealerSeat = $gameState.map(state => state.dealerSeat);
@@ -168,10 +88,7 @@ sample({
 sample({
   clock: disconnectGame,
   source: $socketClient,
-  fn: socket => {
-    openSocket = null;
-    socket?.close();
-  },
+  fn: closeOpenGameSocket,
 });
 
 incomingEvent.watch(event => {
@@ -179,10 +96,7 @@ incomingEvent.watch(event => {
     return;
   }
 
-  const sound = mapPlayerActedToSound(
-    event.payload.action,
-    event.payload.status
+  void pokerSoundEngine.playAction(
+    mapPlayerActedToSound(event.payload.action, event.payload.status)
   );
-
-  void pokerSoundEngine.playAction(sound);
 });
