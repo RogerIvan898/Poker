@@ -8,6 +8,7 @@ import { cn } from 'shared/utils';
 
 import { useTurnTimer } from '../hooks/useTurnTimer';
 import { PlayerStatus } from '../model/constants';
+import { shouldShowHoleCards } from '../model/hole-cards';
 import type { Player as PlayerType } from '../model/types';
 
 import { BetBadge } from './bet-badge';
@@ -44,10 +45,6 @@ export const Player = ({
 
   const isSitOut = status === PlayerStatus.SITTING_OUT;
   const isFolded = status === PlayerStatus.FOLDED;
-  const inHand =
-    status === PlayerStatus.IN_GAME ||
-    status === PlayerStatus.RAISE ||
-    status === PlayerStatus.ALL_IN;
 
   const seatActionBadge = resolveSeatActionBadge(
     player.lastAction,
@@ -62,9 +59,12 @@ export const Player = ({
     playSound: currentPlayer,
   });
 
-  const showCards =
-    (reveal && Boolean(hand)) ||
-    (inHand && !isSitOut && Boolean(hand || !currentPlayer));
+  const showCards = shouldShowHoleCards({
+    hand,
+    status,
+    currentPlayer,
+    reveal,
+  });
 
   const cardsKey =
     hand && hand.length >= 2
