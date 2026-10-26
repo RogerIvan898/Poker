@@ -3,13 +3,9 @@ import { createEffect, createEvent, createStore, sample } from 'effector';
 import type { Card } from 'entities/card/model/types';
 import type { Player } from 'entities/player/model/types';
 
-import {
-  mapPlayerActedToSound,
-  pokerSoundEngine,
-} from '../lib/poker-sound-engine';
-
+import { watchPlayerActionSounds } from './action-sounds';
 import { closeOpenGameSocket, openGameSocket } from './connection';
-import { INITIAL_GAME_STATE, SERVER_EVENTS } from './constants';
+import { INITIAL_GAME_STATE } from './constants';
 import {
   reduceAllowedActions,
   reduceDebugHoles,
@@ -91,12 +87,4 @@ sample({
   fn: closeOpenGameSocket,
 });
 
-incomingEvent.watch(event => {
-  if (event.type !== SERVER_EVENTS.PLAYER_ACTED) {
-    return;
-  }
-
-  void pokerSoundEngine.playAction(
-    mapPlayerActedToSound(event.payload.action, event.payload.status)
-  );
-});
+watchPlayerActionSounds(incomingEvent);

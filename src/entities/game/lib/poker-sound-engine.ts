@@ -1,9 +1,3 @@
-import { PlayerAction, PlayerStatus } from 'entities/player/model/constants';
-import type {
-  PlayerActionType,
-  PlayerStatusType,
-} from 'entities/player/model/types';
-
 import { getAudioContext } from 'shared/lib/audio';
 
 export type PokerSoundAction =
@@ -14,28 +8,27 @@ export type PokerSoundAction =
   | 'raise'
   | 'all-in';
 
-export const mapPlayerActedToSound = (
-  action: PlayerActionType,
-  status: PlayerStatusType
-): PokerSoundAction => {
-  if (status === PlayerStatus.ALL_IN) {
-    return 'all-in';
-  }
+interface ClickRecipe {
+  pitch: number;
+  volume: number;
+  soft: boolean;
+}
 
-  switch (action) {
-    case PlayerAction.FOLD:
-      return 'fold';
-    case PlayerAction.CHECK:
-      return 'check';
-    case PlayerAction.CALL:
-      return 'call';
-    case PlayerAction.BET:
-      return 'bet';
-    case PlayerAction.RAISE:
-      return 'raise';
-    default:
-      return 'call';
-  }
+interface SoundRecipe {
+  clicks: ClickRecipe[];
+  swoosh: boolean;
+}
+
+const ACTION_SOUND_RECIPES: Record<PokerSoundAction, SoundRecipe> = {
+  fold: { clicks: [], swoosh: true },
+  check: { clicks: [{ pitch: 1, volume: 1, soft: true }], swoosh: false },
+  call: { clicks: [{ pitch: 1, volume: 0.8, soft: false }], swoosh: false },
+  bet: { clicks: [{ pitch: 1.25, volume: 0.9, soft: false }], swoosh: false },
+  raise: { clicks: [{ pitch: 1.6, volume: 1, soft: false }], swoosh: false },
+  'all-in': {
+    clicks: [{ pitch: 0.6, volume: 1.3, soft: false }],
+    swoosh: true,
+  },
 };
 
 export class PokerSoundEngine {
@@ -169,27 +162,14 @@ export class PokerSoundEngine {
   async playAction(action: PokerSoundAction) {
     try {
       await this.resume();
+      const recipe = ACTION_SOUND_RECIPES[action];
 
-      switch (action) {
-        case 'fold':
-          this.playSingleSwoosh();
-          break;
-        case 'check':
-          this.playSingleClick(1.0, 1.0, true);
-          break;
-        case 'call':
-          this.playSingleClick(1.0, 0.8, false);
-          break;
-        case 'bet':
-          this.playSingleClick(1.25, 0.9, false);
-          break;
-        case 'raise':
-          this.playSingleClick(1.6, 1.0, false);
-          break;
-        case 'all-in':
-          this.playSingleClick(0.6, 1.3, false);
-          this.playSingleSwoosh();
-          break;
+      recipe.clicks.forEach(({ pitch, volume, soft }) => {
+        this.playSingleClick(pitch, volume, soft);
+      });
+
+      if (recipe.swoosh) {
+        this.playSingleSwoosh();
       }
     } catch (error) {
       console.error('Audio playback failed:', error);
