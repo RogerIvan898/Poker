@@ -1,6 +1,7 @@
 import { CardSuit } from 'entities/card/model/constants';
 
-import { Sound } from '../sound';
+import { Sound } from 'shared/assets/sounds';
+
 import type { GameState } from '../types';
 
 export const INITIAL_GAME_STATE: GameState = {

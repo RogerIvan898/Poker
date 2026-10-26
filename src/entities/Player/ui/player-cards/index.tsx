@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Card } from 'entities/card';
-import { Sound } from 'entities/game/model/sound';
 
+import { Sound } from 'shared/assets/sounds';
 import { useSound } from 'shared/hooks/useSound';
 import { cn } from 'shared/utils';
 

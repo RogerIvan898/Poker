@@ -6,9 +6,8 @@ import {
   sample,
 } from 'effector';
 
-import { gameModel } from 'entities/game';
-import { SERVER_EVENTS } from 'entities/game/model/constants';
-import type { AllowedPlayerActionsEvent } from 'entities/game/model/types';
+import { gameModel, SERVER_EVENTS } from 'entities/game';
+import type { AllowedPlayerActionsEvent } from 'entities/game';
 
 import { call, check, fold, raise } from './actions';
 

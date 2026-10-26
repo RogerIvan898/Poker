@@ -3,7 +3,7 @@ import React from 'react';
 import { useLingui } from '@lingui/react/macro';
 import { Coins, Swords } from 'lucide-react';
 
-import { DepositModal } from 'widgets/deposit/ui';
+import { DepositModal } from 'widgets/deposit';
 import { WithdrawModal } from 'widgets/withdraw';
 
 import { JoinRoomButton } from 'features/join-room';

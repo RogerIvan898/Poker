@@ -5,7 +5,7 @@ import { useTonWallet } from '@tonconnect/ui-react';
 import { useUnit } from 'effector-react';
 import { Minus, Plus, Settings } from 'lucide-react';
 
-import { SettingsDialog } from 'widgets/settings/ui';
+import { SettingsDialog } from 'widgets/settings';
 
 import { $currentLocale } from 'shared/lib/i18n';
 import { Logo } from 'shared/ui/logo';

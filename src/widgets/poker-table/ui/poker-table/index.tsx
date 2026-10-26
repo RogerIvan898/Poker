@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Card } from 'entities/card';
-import type { Card as CardType } from 'entities/card/model/types';
+import type { CardType } from 'entities/card';
 
 import { Logo } from 'shared/ui/logo';
 

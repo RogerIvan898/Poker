@@ -1,7 +1,7 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 
 import { gameModel } from 'entities/game';
-import { roomApi } from 'entities/room/api';
+import { roomApi } from 'entities/room';
 
 export const joinRoom = createEvent<string>();
 

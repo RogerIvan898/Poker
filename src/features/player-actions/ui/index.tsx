@@ -3,7 +3,7 @@ import React from 'react';
 import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
-import { PlayerStatus } from 'entities/player/model/constants';
+import { PlayerStatus } from 'entities/player';
 import { sessionModel } from 'entities/session';
 
 import { ActionPanel } from './action-panel';

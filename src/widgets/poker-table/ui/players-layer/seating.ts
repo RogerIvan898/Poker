@@ -1,4 +1,4 @@
-import type { Player } from 'entities/player/model/types';
+import type { PlayerType as Player } from 'entities/player';
 
 import type { DirectionType } from 'shared/types/primitives';
 
