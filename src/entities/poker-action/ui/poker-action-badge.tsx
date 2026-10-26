@@ -10,7 +10,7 @@ import {
   type PokerActionBadgeType,
 } from '../model/types';
 
-import { ACTION_VARIANT } from './action-presentation';
+import { ACTION_PRESENTATION } from './action-presentation';
 import styles from './poker-action-badge.module.css';
 
 interface Props {
@@ -36,17 +36,17 @@ export const PokerActionBadge = ({ action, amount }: Props) => {
   // lingui-reset
 
   const label = labels[action];
-  const variant = ACTION_VARIANT[action];
+  const presentation = ACTION_PRESENTATION[action];
   const showAmount =
     amount != null && amount > 0 && action !== PlayerAction.FOLD;
 
   return (
     <div className={styles.root}>
       <Badge
-        variant={variant}
+        variant={presentation.variant}
         className={cn(
           styles.compact,
-          action === PokerActionBadgeKind.ALL_IN && styles.allInWarningBorder
+          presentation.warningBorder && styles.allInWarningBorder
         )}
       >
         {label}

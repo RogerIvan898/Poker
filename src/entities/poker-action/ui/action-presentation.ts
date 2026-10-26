@@ -7,11 +7,27 @@ import {
   type PokerActionBadgeType,
 } from '../model/types';
 
-export const ACTION_VARIANT: Record<PokerActionBadgeType, BadgeVariant> = {
-  [PlayerAction.FOLD]: 'neutral',
-  [PlayerAction.CHECK]: 'warning',
-  [PlayerAction.CALL]: 'primary',
-  [PlayerAction.BET]: 'success',
-  [PlayerAction.RAISE]: 'success',
-  [PokerActionBadgeKind.ALL_IN]: 'success',
+export interface ActionPresentation {
+  variant: BadgeVariant;
+  warningBorder: boolean;
+}
+
+const plain = (variant: BadgeVariant): ActionPresentation => ({
+  variant,
+  warningBorder: false,
+});
+
+export const ACTION_PRESENTATION: Record<
+  PokerActionBadgeType,
+  ActionPresentation
+> = {
+  [PlayerAction.FOLD]: plain('neutral'),
+  [PlayerAction.CHECK]: plain('warning'),
+  [PlayerAction.CALL]: plain('primary'),
+  [PlayerAction.BET]: plain('success'),
+  [PlayerAction.RAISE]: plain('success'),
+  [PokerActionBadgeKind.ALL_IN]: {
+    variant: 'success',
+    warningBorder: true,
+  },
 };
