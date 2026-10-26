@@ -21,6 +21,7 @@ declare module '@lingui/core' {
       | '9Kl6Ee'
       | 'Aq4_nE'
       | 'BXWBDv'
+      | 'CwrLCL'
       | 'DctLbF'
       | 'Du6bPw'
       | 'DzHUbu'
@@ -59,6 +60,7 @@ declare module '@lingui/core' {
       | '_rHUhS'
       | 'biXKcP'
       | 'bzTqTA'
+      | 'cy5xCt'
       | 'dEgA5A'
       | 'fqGr_r'
       | 'fyXE69'
@@ -85,6 +87,7 @@ declare module '@lingui/core' {
       | 'xGVfLh'
       | 'y77mgB'
       | 'ybZ5L6'
+      | 'yi1g1g'
       | 'yz7wBu';
   }
 }

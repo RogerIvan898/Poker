@@ -57,6 +57,10 @@ msgctxt "poker-action"
 msgid "Call"
 msgstr "Колл"
 
+msgctxt "poker-pre-action"
+msgid "Call Any"
+msgstr "Колл любой"
+
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -69,6 +73,10 @@ msgstr "Сменить кошелёк"
 msgctxt "poker-action"
 msgid "Check"
 msgstr "Чек"
+
+msgctxt "poker-pre-action"
+msgid "Check / Fold"
+msgstr "Чек / Пас"
 
 msgid "Close"
 msgstr "Закрыть"
@@ -148,6 +156,10 @@ msgstr "Биржа"
 msgctxt "poker-action"
 msgid "Fold"
 msgstr "Фолд"
+
+msgctxt "poker-pre-action"
+msgid "Fold"
+msgstr "Авто-фолд"
 
 msgid "Full transfer link with address and amount."
 msgstr "Полная ссылка для перевода с адресом и суммой."

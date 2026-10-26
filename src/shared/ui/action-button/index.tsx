@@ -9,6 +9,7 @@ type ColorIntent = 'primary' | 'neutral' | 'danger';
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: ColorIntent;
   text?: string;
+  isActive?: boolean;
 }
 
 export const ActionButton = ({
@@ -16,16 +17,22 @@ export const ActionButton = ({
   text,
   className,
   disabled,
+  isActive = false,
   ...props
 }: Props) => {
   return (
     <button
       {...props}
       type="button"
-      className={cn(styles.button, styles[color], className)}
+      className={cn(
+        styles.button,
+        styles[color],
+        isActive && styles.active,
+        className
+      )}
       disabled={disabled}
     >
-      {text}
+      {text ? <span className={styles.label}>{text}</span> : null}
     </button>
   );
 };
