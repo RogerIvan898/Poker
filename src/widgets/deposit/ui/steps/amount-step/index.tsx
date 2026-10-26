@@ -5,7 +5,7 @@ import { ChevronRight } from 'lucide-react';
 
 import { Alert } from 'shared/ui/alert';
 import { Logo } from 'shared/ui/logo';
-import { NumberField } from 'shared/ui/NumberField';
+import { NumberField } from 'shared/ui/number-field';
 
 import styles from '../../deposit.module.css';
 

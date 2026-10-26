@@ -1,7 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 import { useUnit } from 'effector-react';
 
-import { ActionButton } from 'shared/ui/action-button';
+import { Button } from 'shared/ui/button';
 
 import { $preAction, setPreAction, type PreAction } from '../../model';
 import styles from '../base-actions/base-actions.module.css';
@@ -22,21 +22,21 @@ export const PreActions = () => {
 
   return (
     <div className={styles.buttonRow}>
-      <ActionButton
+      <Button
         color="neutral"
         text={checkFoldLabel}
         isActive={activeAction === 'check_fold'}
         onClick={() => toggle('check_fold')}
       />
 
-      <ActionButton
+      <Button
         color="neutral"
         text={callAnyLabel}
         isActive={activeAction === 'call_any'}
         onClick={() => toggle('call_any')}
       />
 
-      <ActionButton
+      <Button
         color="neutral"
         text={autoFoldLabel}
         isActive={activeAction === 'auto_fold'}

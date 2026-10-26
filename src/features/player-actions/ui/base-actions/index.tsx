@@ -1,6 +1,6 @@
 import { useLingui } from '@lingui/react/macro';
 
-import { ActionButton } from 'shared/ui/action-button';
+import { Button } from 'shared/ui/button';
 
 import { call, check, fold } from '../../model/actions';
 
@@ -34,17 +34,17 @@ export const BaseActions = ({
   return (
     <div className={styles.buttonRow}>
       {canFold && (
-        <ActionButton color="danger" text={foldLabel} onClick={() => fold()} />
+        <Button color="danger" text={foldLabel} onClick={() => fold()} />
       )}
 
-      <ActionButton
+      <Button
         color="neutral"
         text={canCall ? callLabel : checkLabel}
         onClick={canCall ? () => call() : () => check()}
       />
 
       {canRaise && (
-        <ActionButton
+        <Button
           color="primary"
           text={isBet ? betLabel : raiseLabel}
           onClick={onRaiseClick}

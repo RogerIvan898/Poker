@@ -2,7 +2,7 @@ import React from 'react';
 
 import { cn } from 'shared/utils';
 
-import styles from './action-button.module.css';
+import styles from './button.module.css';
 
 type ColorIntent = 'primary' | 'neutral' | 'danger';
 
@@ -12,7 +12,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isActive?: boolean;
 }
 
-export const ActionButton = ({
+export const Button = ({
   color = 'primary',
   text,
   className,

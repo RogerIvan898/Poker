@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useLingui } from '@lingui/react/macro';
 
-import { ActionButton } from 'shared/ui/action-button';
+import { Button } from 'shared/ui/button';
 import { Logo } from 'shared/ui/logo';
 
 import { raise } from '../../model';
@@ -74,12 +74,8 @@ export const BetManager = ({
       />
 
       <div className={styles.buttonRow}>
-        <ActionButton
-          color="primary"
-          text={confirmLabel}
-          onClick={handleConfirm}
-        />
-        <ActionButton color="danger" text={cancelLabel} onClick={onCancel} />
+        <Button color="primary" text={confirmLabel} onClick={handleConfirm} />
+        <Button color="danger" text={cancelLabel} onClick={onCancel} />
       </div>
     </div>
   );
