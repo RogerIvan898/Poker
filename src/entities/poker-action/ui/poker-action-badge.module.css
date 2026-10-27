@@ -20,11 +20,11 @@
   box-shadow: 0 3px 10px var(--color-shadow);
 }
 
-.allInWarningBorder {
+.allInBorder {
   box-shadow:
     0 3px 10px var(--color-shadow),
-    0 0 12px color-mix(in srgb, var(--color-success) 40%, transparent),
-    inset 0 0 0 1.5px var(--color-warning);
+    0 0 12px color-mix(in srgb, var(--color-bg-elevated) 40%, transparent),
+    inset 0 0 0 1.5px var(--color-bg-elevated);
 }
 
 @media (max-width: 768px) {

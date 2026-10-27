@@ -73,6 +73,14 @@
     0 0 22px color-mix(in srgb, var(--color-info) 55%, transparent);
 }
 
+.active {
+  background:var(--color-primary-active);
+  color: var(--color-text-on-primary);
+  box-shadow:
+    0 6px 16px var(--color-shadow),
+    0 0 18px color-mix(in srgb, var(--color-primary-active) 45%, transparent);
+}
+
 @media (max-width: 768px) {
   .badge {
     min-width: 92px;

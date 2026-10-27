@@ -46,7 +46,7 @@ export const PokerActionBadge = ({ action, amount }: Props) => {
         variant={presentation.variant}
         className={cn(
           styles.compact,
-          presentation.warningBorder && styles.allInWarningBorder
+          presentation.warningBorder && styles.allInBorder
         )}
       >
         {label}

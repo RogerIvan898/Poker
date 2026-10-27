@@ -24,10 +24,10 @@ export const ACTION_PRESENTATION: Record<
   [PlayerAction.FOLD]: plain('neutral'),
   [PlayerAction.CHECK]: plain('warning'),
   [PlayerAction.CALL]: plain('primary'),
-  [PlayerAction.BET]: plain('success'),
-  [PlayerAction.RAISE]: plain('success'),
+  [PlayerAction.BET]: plain('primary'),
+  [PlayerAction.RAISE]: plain('active'),
   [PokerActionBadgeKind.ALL_IN]: {
-    variant: 'success',
+    variant: 'primary',
     warningBorder: true,
   },
 };

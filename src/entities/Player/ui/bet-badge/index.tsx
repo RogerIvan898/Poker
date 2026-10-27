@@ -1,7 +1,3 @@
-import React from 'react';
-
-import chipsSound from 'shared/assets/sounds/chips.mp3';
-import { useSound } from 'shared/hooks/useSound';
 import type { DirectionType } from 'shared/types/primitives';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils';
@@ -15,17 +11,6 @@ interface Props {
 }
 
 export const BetBadge = ({ amount, position }: Props) => {
-  const { play: playChipsSound } = useSound(chipsSound);
-  const prevAmountRef = React.useRef(amount);
-
-  React.useEffect(() => {
-    if (amount > prevAmountRef.current) {
-      playChipsSound();
-    }
-
-    prevAmountRef.current = amount;
-  }, [amount, playChipsSound]);
-
   if (amount <= 0) return null;
 
   return (

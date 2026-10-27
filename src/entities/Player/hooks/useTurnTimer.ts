@@ -1,7 +1,6 @@
 import React from 'react';
 
 import timeBankSound from 'shared/assets/sounds/time-bank.mp3';
-import turnSound from 'shared/assets/sounds/turn.mp3';
 import { useSound } from 'shared/hooks/useSound';
 
 export const useTurnTimer = ({
@@ -17,18 +16,8 @@ export const useTurnTimer = ({
   onTurnTimeout?: () => void;
   playSound?: boolean;
 }) => {
-  const { play: playTurnSound } = useSound(turnSound);
   const { play: playTimeBankSound } = useSound(timeBankSound);
-  const wasTurnRef = React.useRef(false);
   const wasUsingBankRef = React.useRef(false);
-
-  React.useEffect(() => {
-    if (playSound && isTurn && !wasTurnRef.current) {
-      playTurnSound();
-    }
-
-    wasTurnRef.current = isTurn;
-  }, [isTurn, playSound, playTurnSound]);
 
   const [remainingMs, setRemainingMs] = React.useState(turnDurationSec * 1000);
   const [usingBank, setUsingBank] = React.useState(false);

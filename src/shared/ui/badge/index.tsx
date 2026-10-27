@@ -10,7 +10,8 @@ export type BadgeVariant =
   | 'success'
   | 'warning'
   | 'danger'
-  | 'highlight';
+  | 'highlight'
+  | 'active';
 
 interface Props {
   variant: BadgeVariant;
