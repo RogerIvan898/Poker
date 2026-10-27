@@ -3,6 +3,7 @@ import '@lingui/core';
 declare module '@lingui/core' {
   interface Register {
     messageIds:
+      | '-iDKH2'
       | '-r9TyY'
       | '06IDM-'
       | '09qkey'
@@ -16,11 +17,11 @@ declare module '@lingui/core' {
       | '6V3Ea3'
       | '6_z3QH'
       | '8-4V8D'
-      | '8ppIlz'
       | '93kedn'
       | '9Kl6Ee'
       | 'Aq4_nE'
       | 'BXWBDv'
+      | 'Cjoh7u'
       | 'CwrLCL'
       | 'DctLbF'
       | 'Du6bPw'
@@ -67,12 +68,12 @@ declare module '@lingui/core' {
       | 'gtdJ43'
       | 'h4aX3r'
       | 'hehnjM'
+      | 'hxSm_m'
       | 'iH8pgl'
       | 'iPejCw'
       | 'kLFuS4'
       | 'kQuoug'
       | 'kj3M8S'
-      | 'o8SE13'
       | 'oHo6hA'
       | 'pR_Hvi'
       | 'qzU_FH'
@@ -84,10 +85,12 @@ declare module '@lingui/core' {
       | 't8Lc2X'
       | 'vXIe7J'
       | 'wMXvOa'
+      | 'woOR_K'
       | 'xGVfLh'
       | 'y77mgB'
       | 'ybZ5L6'
       | 'yi1g1g'
-      | 'yz7wBu';
+      | 'yz7wBu'
+      | 'ztHEEc';
   }
 }

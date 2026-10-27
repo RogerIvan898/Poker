@@ -16,10 +16,11 @@ const isPlayerInHand = (status: string | undefined) =>
   status === PlayerStatus.ALL_IN;
 
 export const PlayerActions = () => {
-  const [viewerId, allowedActions, players] = useUnit([
+  const [viewerId, allowedActions, players, gameState] = useUnit([
     sessionModel.$currentUserId,
     gameModel.$myAllowedActions,
     gameModel.$players,
+    gameModel.$gameState,
   ]);
 
   const [isChangingAmount, setIsChangingAmount] = React.useState(false);
@@ -50,6 +51,17 @@ export const PlayerActions = () => {
           playerId={viewerId}
           minAmount={allowedActions?.minRaise ?? 0}
           maxAmount={allowedActions?.maxRaise ?? 1000}
+          bigBlind={gameState.bigBlind}
+          pot={
+            gameState.pot +
+            Object.values(players).reduce(
+              (sum, player) => sum + player.committed,
+              0
+            )
+          }
+          callAmount={allowedActions?.callAmount ?? 0}
+          committed={viewer?.committed ?? 0}
+          preflop={gameState.round === 'PREFLOP'}
           onCancel={() => setIsChangingAmount(false)}
           variant={canBet ? 'bet' : 'raise'}
         />

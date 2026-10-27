@@ -23,6 +23,10 @@ msgstr "Address only — easy for exchange scanners to read."
 msgid "All"
 msgstr "All"
 
+msgctxt "bet-manager"
+msgid "All in"
+msgstr "All in"
+
 msgctxt "poker-action"
 msgid "All in"
 msgstr "All in"
@@ -48,6 +52,10 @@ msgstr "Beginners"
 msgctxt "poker-action"
 msgid "Bet"
 msgstr "Bet"
+
+msgctxt "bet-manager"
+msgid "Bet {amount}"
+msgstr "Bet {amount}"
 
 msgid "Blinds"
 msgstr "Blinds"
@@ -80,16 +88,8 @@ msgstr "Check / Fold"
 msgid "Close"
 msgstr "Close"
 
-msgctxt "bet-manager"
-msgid "Confirm bet"
-msgstr "Confirm bet"
-
 msgid "Confirm in wallet…"
 msgstr "Confirm in wallet…"
-
-msgctxt "bet-manager"
-msgid "Confirm raise"
-msgstr "Confirm raise"
 
 msgid "Connect a wallet to withdraw in one tap"
 msgstr "Connect a wallet to withdraw in one tap"
@@ -187,6 +187,10 @@ msgstr "Language"
 msgid "Loading…"
 msgstr "Loading…"
 
+msgctxt "bet-manager"
+msgid "Max"
+msgstr "Max"
+
 msgid "Memo"
 msgstr "Memo"
 
@@ -218,12 +222,20 @@ msgstr "Payment method"
 msgid "Play"
 msgstr "Play"
 
+msgctxt "bet-manager"
+msgid "Pot"
+msgstr "Pot"
+
 msgid "Quick add amount"
 msgstr "Quick add amount"
 
 msgctxt "poker-action"
 msgid "Raise"
 msgstr "Raise"
+
+msgctxt "bet-manager"
+msgid "Raise to {amount}"
+msgstr "Raise to {amount}"
 
 msgctxt "form-field"
 msgid "Required"

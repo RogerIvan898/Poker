@@ -44,7 +44,11 @@
 }
 
 .primary {
-  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-light),
+    var(--color-primary)
+  );
   color: var(--color-text-on-primary);
   box-shadow:
     0 0 18px color-mix(in srgb, var(--color-primary) 55%, transparent),
@@ -58,20 +62,31 @@
 }
 
 .neutral {
-  background: color-mix(in srgb, var(--color-secondary) 40%, var(--color-bg-elevated));
+  background: color-mix(
+    in srgb,
+    var(--color-secondary) 40%,
+    var(--color-bg-elevated)
+  );
   color: var(--color-text);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-text) 15%, transparent);
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--color-text) 15%, transparent);
 }
 
 .neutral:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--color-secondary) 65%, var(--color-bg-elevated));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-text) 30%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--color-secondary) 65%,
+    var(--color-bg-elevated)
+  );
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--color-text) 30%, transparent);
 }
 
 .danger {
   background: transparent;
   color: var(--color-danger);
-  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--color-danger) 60%, transparent);
+  box-shadow: inset 0 0 0 1.5px
+    color-mix(in srgb, var(--color-danger) 60%, transparent);
 }
 
 .danger:hover:not(:disabled) {
@@ -83,14 +98,44 @@
   outline-color: var(--color-danger);
 }
 
+.warning {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-danger) 75%, white),
+    var(--color-danger)
+  );
+  color: var(--color-text-on-primary);
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--color-danger) 55%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 25%, transparent);
+}
+
+.warning:hover:not(:disabled) {
+  box-shadow:
+    0 0 30px color-mix(in srgb, var(--color-danger) 80%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 25%, transparent);
+}
+
+.warning:focus-visible {
+  outline-color: var(--color-danger);
+}
+
 .button.active {
-  background: color-mix(in srgb, var(--color-primary) 15%, var(--color-bg-elevated));
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 15%,
+    var(--color-bg-elevated)
+  );
   color: var(--color-primary-light);
   box-shadow: inset 0 0 0 2px var(--color-primary-light);
 }
 
 .button.active:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--color-primary) 25%, var(--color-bg-elevated));
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 25%,
+    var(--color-bg-elevated)
+  );
 }
 
 .label {

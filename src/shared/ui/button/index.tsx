@@ -4,7 +4,7 @@ import { cn } from 'shared/utils';
 
 import styles from './button.module.css';
 
-type ColorIntent = 'primary' | 'neutral' | 'danger';
+type ColorIntent = 'primary' | 'neutral' | 'danger' | 'warning';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: ColorIntent;

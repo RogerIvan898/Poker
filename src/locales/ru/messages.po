@@ -24,6 +24,10 @@ msgstr "Только адрес — удобнее для сканеров би�
 msgid "All"
 msgstr "Все"
 
+msgctxt "bet-manager"
+msgid "All in"
+msgstr "Олл-ин"
+
 msgctxt "poker-action"
 msgid "All in"
 msgstr "Олл-ин"
@@ -49,6 +53,10 @@ msgstr "Новички"
 msgctxt "poker-action"
 msgid "Bet"
 msgstr "Бет"
+
+msgctxt "bet-manager"
+msgid "Bet {amount}"
+msgstr "Бет {amount}"
 
 msgid "Blinds"
 msgstr "Блайнды"
@@ -81,16 +89,8 @@ msgstr "Чек / Пас"
 msgid "Close"
 msgstr "Закрыть"
 
-msgctxt "bet-manager"
-msgid "Confirm bet"
-msgstr "Подтвердить бет"
-
 msgid "Confirm in wallet…"
 msgstr "Подтвердить в кошельке…"
-
-msgctxt "bet-manager"
-msgid "Confirm raise"
-msgstr "Подтвердить рейз"
 
 msgid "Connect a wallet to withdraw in one tap"
 msgstr "Подключите кошелёк для вывода в один клик"
@@ -188,6 +188,10 @@ msgstr "Язык"
 msgid "Loading…"
 msgstr "Загрузка…"
 
+msgctxt "bet-manager"
+msgid "Max"
+msgstr "Макс"
+
 msgid "Memo"
 msgstr "Memo"
 
@@ -219,12 +223,20 @@ msgstr "Способ оплаты"
 msgid "Play"
 msgstr "Играть"
 
+msgctxt "bet-manager"
+msgid "Pot"
+msgstr "Пот"
+
 msgid "Quick add amount"
 msgstr "Быстро добавить"
 
 msgctxt "poker-action"
 msgid "Raise"
 msgstr "Рейз"
+
+msgctxt "bet-manager"
+msgid "Raise to {amount}"
+msgstr "Рейз до {amount}"
 
 msgctxt "form-field"
 msgid "Required"
