@@ -7,6 +7,12 @@ import { watchPlayerActionSounds } from './action-sounds';
 import { closeOpenGameSocket, openGameSocket } from './connection';
 import { INITIAL_GAME_STATE } from './constants';
 import {
+  bindGameQueue,
+  clearActiveSeat,
+  collectingBets,
+  resetEventQueue,
+} from './event-queue';
+import {
   reduceAllowedActions,
   reduceDebugHoles,
   reduceMyCards,
@@ -22,7 +28,7 @@ import type {
 export const incomingEvent = createEvent<ServerGameEvent>();
 
 export const initializeGameFx = createEffect((params: GameConnectParams) =>
-  openGameSocket(params, incomingEvent)
+  openGameSocket(params)
 );
 
 export const sendClientCommandFx = createEffect(
@@ -49,6 +55,11 @@ export const $isGameLoading = initializeGameFx.pending;
 
 export const $gameState = createStore(INITIAL_GAME_STATE)
   .on(incomingEvent, reduceGameEvent)
+  .on(clearActiveSeat, state => ({ ...state, activeSeat: null }))
+  .reset(disconnectGame);
+
+export const $collectingBets = createStore(false)
+  .on(collectingBets, (_, collecting) => collecting)
   .reset(disconnectGame);
 
 export const $debugHoles = createStore<Record<number, [Card, Card]>>({})
@@ -84,7 +95,15 @@ sample({
 sample({
   clock: disconnectGame,
   source: $socketClient,
-  fn: closeOpenGameSocket,
+  fn: socket => {
+    resetEventQueue();
+    closeOpenGameSocket(socket);
+  },
+});
+
+bindGameQueue({
+  emit: incomingEvent,
+  readState: () => $gameState.getState(),
 });
 
 watchPlayerActionSounds(incomingEvent);

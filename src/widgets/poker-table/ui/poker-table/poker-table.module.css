@@ -89,6 +89,8 @@
   top: 50%;
   transform: translate(-50%, -108px);
   z-index: 5;
+  min-width: 72px;
+  min-height: 34px;
   pointer-events: none;
 }
 

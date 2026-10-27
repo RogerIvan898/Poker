@@ -18,4 +18,4 @@ export const mapPlayerActedToSound = (
   action: PlayerActionType,
   status: PlayerStatusType
 ): PokerSoundAction =>
-  status === PlayerStatus.ALL_IN ? 'all-in' : ACTION_SOUNDS[action];
+  status === PlayerStatus.ALL_IN ? 'raise' : ACTION_SOUNDS[action];

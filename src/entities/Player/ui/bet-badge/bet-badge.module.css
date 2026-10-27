@@ -19,7 +19,8 @@
     color-mix(in srgb, var(--color-bg-elevated) 95%, white) 0%,
     var(--color-bg-elevated) 100%
   );
-  border: 1.5px solid color-mix(in srgb, var(--color-primary) 45%, var(--color-border-strong));
+  border: 1.5px solid
+    color-mix(in srgb, var(--color-primary) 45%, var(--color-border-strong));
   box-shadow:
     0 6px 18px var(--color-shadow),
     0 0 20px color-mix(in srgb, var(--color-primary) 28%, transparent),
@@ -62,7 +63,9 @@
 .amountLogo {
   color: var(--color-primary-light);
   flex-shrink: 0;
-  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--color-primary) 60%, transparent));
+  filter: drop-shadow(
+    0 0 4px color-mix(in srgb, var(--color-primary) 60%, transparent)
+  );
 }
 
 .bet_top {
@@ -73,7 +76,8 @@
   --slide-end-x: 0px;
   --slide-end-y: 0px;
   transform: translateX(-50%);
-  animation: chipSlideOutCentered 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: chipSlideOutCentered 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)
+    forwards;
 }
 
 .bet_bottom {
@@ -84,7 +88,8 @@
   --slide-end-x: 0px;
   --slide-end-y: 0px;
   transform: translateX(-50%);
-  animation: chipSlideOutCentered 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation: chipSlideOutCentered 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)
+    forwards;
 }
 
 .bet_left {
@@ -109,33 +114,43 @@
   animation: chipSlideOutSide 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
+.collect {
+  visibility: hidden;
+}
+
 @keyframes chipSlideOutCentered {
   0% {
     opacity: 0;
-    transform: translateX(-50%) translate(var(--slide-x), var(--slide-y)) scale(0.65);
+    transform: translateX(-50%) translate(var(--slide-x), var(--slide-y))
+      scale(0.65);
   }
   70% {
     opacity: 1;
-    transform: translateX(-50%) translate(var(--slide-end-x), calc(var(--slide-end-y) - 5px)) scale(1.05);
+    transform: translateX(-50%)
+      translate(var(--slide-end-x), calc(var(--slide-end-y) - 5px)) scale(1.05);
   }
   100% {
     opacity: 1;
-    transform: translateX(-50%) translate(var(--slide-end-x), var(--slide-end-y)) scale(1);
+    transform: translateX(-50%)
+      translate(var(--slide-end-x), var(--slide-end-y)) scale(1);
   }
 }
 
 @keyframes chipSlideOutSide {
   0% {
     opacity: 0;
-    transform: translateY(-50%) translate(var(--slide-x), var(--slide-y)) scale(0.65);
+    transform: translateY(-50%) translate(var(--slide-x), var(--slide-y))
+      scale(0.65);
   }
   70% {
     opacity: 1;
-    transform: translateY(-50%) translate(var(--slide-end-x), calc(var(--slide-end-y) - 5px)) scale(1.05);
+    transform: translateY(-50%)
+      translate(var(--slide-end-x), calc(var(--slide-end-y) - 5px)) scale(1.05);
   }
   100% {
     opacity: 1;
-    transform: translateY(-50%) translate(var(--slide-end-x), var(--slide-end-y)) scale(1);
+    transform: translateY(-50%)
+      translate(var(--slide-end-x), var(--slide-end-y)) scale(1);
   }
 }
 

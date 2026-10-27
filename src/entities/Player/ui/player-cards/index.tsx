@@ -18,7 +18,7 @@ interface Props {
 const SECOND_CARD_DELAY_MS = 450;
 
 export const PlayerCards = ({ cards, needSound = false }: Props) => {
-  const { play: playCardSound, ready } = useSound(Sound.CARD_DEAL);
+  const { play: playCardSound, ready } = useSound(Sound.CARD_REVEAL);
 
   const [showFirst, setShowFirst] = React.useState(false);
   const [showSecond, setShowSecond] = React.useState(false);

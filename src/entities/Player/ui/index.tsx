@@ -28,6 +28,8 @@ interface Props {
   turn: boolean;
   betPosition?: DirectionType;
   reveal?: boolean;
+  winAmount?: number;
+  winId?: number;
 }
 
 export const Player = ({
@@ -40,6 +42,8 @@ export const Player = ({
   turn = false,
   betPosition = 'top',
   reveal = false,
+  winAmount,
+  winId,
 }: Props) => {
   const { status, stack, hand, name } = player;
 
@@ -114,11 +118,17 @@ export const Player = ({
             turnActive={showTimer}
             turnProgress={progress}
             usingBank={usingBank}
+            winAmount={winAmount}
+            winId={winId}
           />
         </div>
 
         {player.committed > 0 && (
-          <BetBadge amount={player.committed} position={betPosition} />
+          <BetBadge
+            amount={player.committed}
+            position={betPosition}
+            seat={player.seat}
+          />
         )}
       </div>
     </section>

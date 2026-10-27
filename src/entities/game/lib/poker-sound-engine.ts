@@ -1,12 +1,6 @@
 import { getAudioContext } from 'shared/lib/audio';
 
-export type PokerSoundAction =
-  | 'fold'
-  | 'check'
-  | 'call'
-  | 'bet'
-  | 'raise'
-  | 'all-in';
+export type PokerSoundAction = 'fold' | 'check' | 'call' | 'bet' | 'raise';
 
 interface ClickRecipe {
   pitch: number;
@@ -25,10 +19,6 @@ const ACTION_SOUND_RECIPES: Record<PokerSoundAction, SoundRecipe> = {
   call: { clicks: [{ pitch: 1, volume: 0.8, soft: false }], swoosh: false },
   bet: { clicks: [{ pitch: 1.25, volume: 0.9, soft: false }], swoosh: false },
   raise: { clicks: [{ pitch: 1.6, volume: 1, soft: false }], swoosh: false },
-  'all-in': {
-    clicks: [{ pitch: 0.6, volume: 1.3, soft: false }],
-    swoosh: true,
-  },
 };
 
 export class PokerSoundEngine {

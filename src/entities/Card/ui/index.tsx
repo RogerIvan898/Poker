@@ -9,10 +9,16 @@ import styles from './card.module.css';
 interface Props {
   card: CardType | null;
   flat?: boolean;
+  onReveal?: () => void;
 }
 
-export const Card = ({ card, flat = false }: Props) => {
+export const Card = ({ card, flat = false, onReveal }: Props) => {
   const ref = React.useRef<HTMLDivElement | null>(null);
+  const onRevealRef = React.useRef(onReveal);
+
+  React.useEffect(() => {
+    onRevealRef.current = onReveal;
+  }, [onReveal]);
 
   React.useEffect(() => {
     const element = ref.current;
@@ -22,6 +28,7 @@ export const Card = ({ card, flat = false }: Props) => {
     }
 
     element.classList.add(flat ? styles.playFlat : styles.play);
+    onRevealRef.current?.();
 
     const onEnd = () => {
       element.style.transform = flat

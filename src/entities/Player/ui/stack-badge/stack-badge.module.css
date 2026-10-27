@@ -1,3 +1,10 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .frame {
   position: relative;
   z-index: 12;

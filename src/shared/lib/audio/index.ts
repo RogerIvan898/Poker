@@ -41,6 +41,34 @@ export const loadBuffer = (url: string) => {
   return promise;
 };
 
+export const playBuffered = (url: string, volume = 1) => {
+  const start = (buffer: AudioBuffer) => {
+    const context = getAudioContext();
+
+    if (context.state === 'suspended') {
+      void context.resume();
+    }
+
+    const source = context.createBufferSource();
+    const gain = context.createGain();
+
+    gain.gain.value = volume;
+    source.buffer = buffer;
+    source.connect(gain);
+    gain.connect(context.destination);
+    source.start(0);
+  };
+
+  const cached = bufferCache.get(url);
+
+  if (cached) {
+    start(cached);
+    return;
+  }
+
+  void loadBuffer(url).then(start);
+};
+
 export const preloadSounds = async (urls: string[]) => {
   const results = await Promise.allSettled(urls.map(url => loadBuffer(url)));
 

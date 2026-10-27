@@ -41,7 +41,13 @@ export const CLIENT_COMMANDS = {
   REVEAL_HOLES: 'CMD_REVEAL_HOLES',
 } as const;
 
-export const GAME_SOUNDS = [Sound.CARD_DEAL, Sound.CHECK, Sound.TIME_BANK];
+export const GAME_SOUNDS = [
+  Sound.CARD_DEAL,
+  Sound.CARD_REVEAL,
+  Sound.CHECK,
+  Sound.CHIPS,
+  Sound.TIME_BANK,
+];
 
 export const SuitMap = {
   h: CardSuit.HEARTS,
