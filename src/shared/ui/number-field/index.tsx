@@ -1,66 +1,32 @@
-import React from 'react';
+import type React from 'react';
 
-import { Copy, Check } from 'lucide-react';
+import { sanitizeNumber } from './utils';
 
-import styles from './copy-field.module.css';
-
-interface CopyFieldProps {
-  label: string;
+export interface Props extends Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'onChange' | 'value'
+> {
   value: string;
-  badgeText?: string;
-  onCopy?: (value: string) => void;
+  onChange: (value: string) => void;
+  maxDecimals?: number;
 }
 
-export const CopyField = ({
-  label,
+export const NumberField = ({
   value,
-  badgeText,
-  onCopy,
-}: CopyFieldProps) => {
-  const [copied, setCopied] = React.useState(false);
-  const timerRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined
-  );
-
-  React.useEffect(() => {
-    return () => clearTimeout(timerRef.current);
-  }, []);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(value);
-
-      setCopied(true);
-      onCopy?.(value);
-
-      clearTimeout(timerRef.current);
-
-      timerRef.current = setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-    } catch (err) {
-      console.error('Failed to copy: ', err);
-    }
-  };
+  onChange,
+  maxDecimals = 2,
+  inputMode = 'decimal',
+  ...props
+}: Props) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    onChange(sanitizeNumber(e.target.value, maxDecimals));
 
   return (
-    <div className={styles.fieldGroup}>
-      <div className={styles.fieldHeader}>
-        <span>{label}</span>
-        {badgeText && <b>{badgeText}</b>}
-      </div>
-      <div className={styles.fieldBox}>
-        <span className={styles.text}>{value}</span>
-        <button
-          className={styles.copyBtn}
-          onClick={handleCopy}
-          type="button"
-          aria-label={copied ? 'Скопировано' : 'Скопировать'}
-          title={copied ? 'Скопировано' : 'Скопировать'}
-        >
-          {copied ? <Check size={16} /> : <Copy size={16} />}
-        </button>
-      </div>
-    </div>
+    <input
+      {...props}
+      value={value}
+      onChange={handleChange}
+      inputMode={inputMode}
+    />
   );
 };

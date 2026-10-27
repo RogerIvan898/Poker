@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React from 'react';
 
 import { Copy, Check } from 'lucide-react';
 
@@ -17,15 +17,30 @@ export const CopyField = ({
   badgeText,
   onCopy,
 }: CopyFieldProps) => {
-  const [copied, setCopied] = useState(false);
+  const [copied, setCopied] = React.useState(false);
+  const timerRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
+  );
 
-  const handleCopy = () => {
-    void navigator.clipboard.writeText(value);
+  React.useEffect(() => {
+    return () => clearTimeout(timerRef.current);
+  }, []);
 
-    setCopied(true);
-    onCopy?.(value);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(value);
 
-    setTimeout(() => setCopied(false), 1500);
+      setCopied(true);
+      onCopy?.(value);
+
+      clearTimeout(timerRef.current);
+
+      timerRef.current = setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
   };
 
   return (
@@ -36,7 +51,13 @@ export const CopyField = ({
       </div>
       <div className={styles.fieldBox}>
         <span className={styles.text}>{value}</span>
-        <button className={styles.copyBtn} onClick={handleCopy} type="button">
+        <button
+          className={styles.copyBtn}
+          onClick={handleCopy}
+          type="button"
+          aria-label={copied ? 'Скопировано' : 'Скопировать'}
+          title={copied ? 'Скопировано' : 'Скопировать'}
+        >
           {copied ? <Check size={16} /> : <Copy size={16} />}
         </button>
       </div>
