@@ -37,6 +37,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
   const [
     players,
     dealerSeat,
+    { smallBlindSeat, bigBlindSeat },
     activeSeat,
     viewerId,
     myCards,
@@ -45,6 +46,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
   ] = useUnit([
     gameModel.$players,
     gameModel.$dealerSeat,
+    gameModel.$gameState,
     gameModel.$activeSeat,
     sessionModel.$currentUserId,
     gameModel.$myCards,
@@ -257,12 +259,19 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
         const isViewer = player.id === viewerId;
         const revealed = debugHoles[player.seat];
         const hand = isViewer && myCards ? myCards : (revealed ?? player.hand);
+        const blindRole =
+          player.seat === smallBlindSeat
+            ? 'sb'
+            : player.seat === bigBlindSeat
+              ? 'bb'
+              : null;
 
         return (
           <div key={player.id} className={styles.seatWrapper} style={style}>
             <Player
               player={{ ...player, hand }}
               dealer={player.seat === dealerSeat}
+              blindRole={blindRole}
               currentPlayer={isViewer}
               turn={player.seat === activeSeat}
               betPosition={betPosition}

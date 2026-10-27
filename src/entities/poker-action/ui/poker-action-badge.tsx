@@ -32,6 +32,8 @@ export const PokerActionBadge = ({ action, amount }: Props) => {
     [PlayerAction.BET]: t`Bet`,
     [PlayerAction.RAISE]: t`Raise`,
     [PokerActionBadgeKind.ALL_IN]: t`All in`,
+    [PokerActionBadgeKind.SB]: t`SB`,
+    [PokerActionBadgeKind.BB]: t`BB`,
   };
   // lingui-reset
 

@@ -46,16 +46,16 @@ msgstr "Available tables"
 msgid "Back"
 msgstr "Back"
 
+msgctxt "poker-action"
+msgid "BB"
+msgstr "BB"
+
 msgid "Beginners"
 msgstr "Beginners"
 
 msgctxt "poker-action"
 msgid "Bet"
 msgstr "Bet"
-
-msgctxt "bet-manager"
-msgid "Bet {amount}"
-msgstr "Bet {amount}"
 
 msgid "Blinds"
 msgstr "Blinds"
@@ -233,13 +233,13 @@ msgctxt "poker-action"
 msgid "Raise"
 msgstr "Raise"
 
-msgctxt "bet-manager"
-msgid "Raise to {amount}"
-msgstr "Raise to {amount}"
-
 msgctxt "form-field"
 msgid "Required"
 msgstr "Required"
+
+msgctxt "poker-action"
+msgid "SB"
+msgstr "SB"
 
 msgid "Settings"
 msgstr "Settings"

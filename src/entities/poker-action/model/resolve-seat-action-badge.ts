@@ -8,7 +8,8 @@ import { PokerActionBadgeKind, type PokerActionBadgeType } from './types';
 
 export const resolveSeatActionBadge = (
   lastAction: PlayerActionType | null,
-  status: PlayerStatusType
+  status: PlayerStatusType,
+  blindRole?: 'sb' | 'bb' | null
 ): PokerActionBadgeType | null => {
   if (status === PlayerStatus.ALL_IN) {
     return PokerActionBadgeKind.ALL_IN;
@@ -18,5 +19,17 @@ export const resolveSeatActionBadge = (
     return PlayerAction.FOLD;
   }
 
-  return lastAction;
+  if (lastAction) {
+    return lastAction;
+  }
+
+  if (blindRole === 'sb') {
+    return PokerActionBadgeKind.SB;
+  }
+
+  if (blindRole === 'bb') {
+    return PokerActionBadgeKind.BB;
+  }
+
+  return null;
 };

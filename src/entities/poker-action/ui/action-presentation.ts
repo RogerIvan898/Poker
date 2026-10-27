@@ -30,4 +30,6 @@ export const ACTION_PRESENTATION: Record<
     variant: 'primary',
     warningBorder: true,
   },
+  [PokerActionBadgeKind.SB]: plain('primary'),
+  [PokerActionBadgeKind.BB]: plain('primary'),
 };

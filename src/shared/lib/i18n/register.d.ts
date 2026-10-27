@@ -21,7 +21,6 @@ declare module '@lingui/core' {
       | '9Kl6Ee'
       | 'Aq4_nE'
       | 'BXWBDv'
-      | 'Cjoh7u'
       | 'CwrLCL'
       | 'DctLbF'
       | 'Du6bPw'
@@ -63,12 +62,12 @@ declare module '@lingui/core' {
       | 'bzTqTA'
       | 'cy5xCt'
       | 'dEgA5A'
+      | 'dk49I-'
       | 'fqGr_r'
       | 'fyXE69'
       | 'gtdJ43'
       | 'h4aX3r'
       | 'hehnjM'
-      | 'hxSm_m'
       | 'iH8pgl'
       | 'iPejCw'
       | 'kLFuS4'
@@ -91,6 +90,7 @@ declare module '@lingui/core' {
       | 'ybZ5L6'
       | 'yi1g1g'
       | 'yz7wBu'
+      | 'zKgNNN'
       | 'ztHEEc';
   }
 }

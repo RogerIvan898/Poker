@@ -47,16 +47,16 @@ msgstr "Доступные столы"
 msgid "Back"
 msgstr "Назад"
 
+msgctxt "poker-action"
+msgid "BB"
+msgstr "ББ"
+
 msgid "Beginners"
 msgstr "Новички"
 
 msgctxt "poker-action"
 msgid "Bet"
 msgstr "Бет"
-
-msgctxt "bet-manager"
-msgid "Bet {amount}"
-msgstr "Бет {amount}"
 
 msgid "Blinds"
 msgstr "Блайнды"
@@ -234,13 +234,13 @@ msgctxt "poker-action"
 msgid "Raise"
 msgstr "Рейз"
 
-msgctxt "bet-manager"
-msgid "Raise to {amount}"
-msgstr "Рейз до {amount}"
-
 msgctxt "form-field"
 msgid "Required"
 msgstr "Обязательно"
+
+msgctxt "poker-action"
+msgid "SB"
+msgstr "МБ"
 
 msgid "Settings"
 msgstr "Настройки"

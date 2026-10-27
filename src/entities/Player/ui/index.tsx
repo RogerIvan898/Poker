@@ -1,5 +1,9 @@
+import { useUnit } from 'effector-react';
+
+import { gameModel } from 'entities/game';
 import {
   PokerActionBadge,
+  PokerActionBadgeKind,
   resolveSeatActionBadge,
 } from 'entities/poker-action';
 
@@ -22,6 +26,7 @@ interface Props {
   player: PlayerType;
   currentPlayer?: boolean;
   dealer: boolean;
+  blindRole?: 'sb' | 'bb' | null;
   turnDurationSec?: number;
   timeBankSec?: number;
   onTurnTimeout?: () => void;
@@ -39,6 +44,7 @@ export const Player = ({
   timeBankSec = 10,
   onTurnTimeout,
   dealer = false,
+  blindRole = null,
   turn = false,
   betPosition = 'top',
   reveal = false,
@@ -50,9 +56,12 @@ export const Player = ({
   const isSitOut = status === PlayerStatus.SITTING_OUT;
   const isFolded = status === PlayerStatus.FOLDED;
 
+  const collecting = useUnit(gameModel.$collectingBets);
+
   const seatActionBadge = resolveSeatActionBadge(
     player.lastAction,
-    player.status
+    player.status,
+    blindRole
   );
 
   const { showTimer, usingBank, progress } = useTurnTimer({
@@ -103,10 +112,15 @@ export const Player = ({
         </div>
 
         <div className={styles.stackArea}>
-          {seatActionBadge && (
+          {seatActionBadge && !collecting && (
             <PokerActionBadge
               action={seatActionBadge}
-              amount={player.lastActionAmount ?? undefined}
+              amount={
+                seatActionBadge === PokerActionBadgeKind.SB ||
+                seatActionBadge === PokerActionBadgeKind.BB
+                  ? undefined
+                  : (player.lastActionAmount ?? undefined)
+              }
             />
           )}
 
