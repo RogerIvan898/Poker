@@ -4,9 +4,17 @@ import { Sound } from 'shared/assets/sounds';
 import { playBuffered } from 'shared/lib/audio';
 import { delay } from 'shared/lib/delay';
 
+import { playAllInRunout } from './all-in-runout';
 import { SERVER_EVENTS } from './constants';
 import { transitionToNextStreet } from './street-transition';
-import type { GameState, ServerGameEvent } from './types';
+import type {
+  BoardDealtEvent,
+  GameState,
+  HandCompleteEvent,
+  ServerGameEvent,
+  ShowdownEvent,
+  StreetConcludedEvent,
+} from './types';
 
 export const collectingBets = createEvent<boolean>();
 export const clearActiveSeat = createEvent();
@@ -65,7 +73,18 @@ const run = async (gen: number) => {
 
   while (queue.length && gen === generation) {
     if (isStreetEvent(queue[0])) {
-      await playStreet(gen);
+      await delay(0);
+
+      if (gen !== generation) {
+        break;
+      }
+
+      if (isAllInRunout(queue)) {
+        await playRunout(gen);
+      } else {
+        await playStreet(gen);
+      }
+
       continue;
     }
 
@@ -104,6 +123,104 @@ const run = async (gen: number) => {
   if (queue.length && gen === generation) {
     void run(gen);
   }
+};
+
+const isAllInRunout = (events: ServerGameEvent[]) =>
+  events.some(event => event.type === SERVER_EVENTS.SHOWDOWN) &&
+  events.some(event => event.type === SERVER_EVENTS.BOARD_DEALT);
+
+const isRunoutEvent = (event: ServerGameEvent | undefined) =>
+  event?.type === SERVER_EVENTS.STREET_CONCLUDED ||
+  event?.type === SERVER_EVENTS.BOARD_DEALT ||
+  event?.type === SERVER_EVENTS.SHOWDOWN ||
+  event?.type === SERVER_EVENTS.HAND_COMPLETED;
+
+const playRunout = async (gen: number) => {
+  let street: StreetConcludedEvent | undefined;
+  let showdown: ShowdownEvent | undefined;
+  const boards: BoardDealtEvent[] = [];
+  let completed: HandCompleteEvent | undefined;
+
+  while (isRunoutEvent(queue[0]) && gen === generation) {
+    const event = queue.shift();
+
+    if (event?.type === SERVER_EVENTS.STREET_CONCLUDED) {
+      street = event;
+    } else if (event?.type === SERVER_EVENTS.SHOWDOWN) {
+      showdown = event;
+    } else if (event?.type === SERVER_EVENTS.BOARD_DEALT) {
+      boards.push(event);
+    } else if (event?.type === SERVER_EVENTS.HAND_COMPLETED) {
+      completed = event;
+    }
+  }
+
+  const hadBets = Object.values(readState().players).some(
+    player => player.committed > 0
+  );
+  const potSize = street
+    ? street.payload.main +
+      street.payload.sidePots.reduce((sum, pot) => sum + pot.amount, 0)
+    : 0;
+
+  clearActiveSeat();
+
+  let streetApplied = false;
+  const applyStreet = () => {
+    if (streetApplied || !street) {
+      return;
+    }
+
+    streetApplied = true;
+    collectingBets(false);
+    emit(street);
+  };
+
+  await playAllInRunout(
+    {
+      hadBets,
+      potSize,
+      showdown: Boolean(showdown),
+      streets: boards.map(board => board.payload),
+    },
+    {
+      cancelled: () => gen !== generation,
+      collectToPot: () => {
+        collectingBets(true);
+        playBuffered(Sound.CHIPS, 0.4);
+      },
+      applyStreet,
+      revealHands: () => {
+        if (!showdown) {
+          return;
+        }
+
+        emit(showdown);
+        playBuffered(Sound.CARD_REVEAL);
+      },
+      dealStreet: (streetName, cards) => {
+        emit({
+          type: SERVER_EVENTS.BOARD_DEALT,
+          payload: {
+            street: streetName,
+            cards: streetName === 'FLOP' ? cards : cards.slice(-1),
+          },
+        });
+      },
+      declareWinner: () => {
+        if (completed) {
+          emit(completed);
+        }
+      },
+    }
+  );
+
+  if (gen !== generation) {
+    return;
+  }
+
+  collectingBets(false);
+  applyStreet();
 };
 
 const playStreet = async (gen: number) => {

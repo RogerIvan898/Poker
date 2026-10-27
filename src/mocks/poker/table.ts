@@ -1,3 +1,4 @@
+import { allInRunoutDuration } from 'entities/game/model/all-in-runout';
 import { SERVER_EVENTS } from 'entities/game/model/constants';
 import type { ServerGameEvent } from 'entities/game/model/types';
 import { PlayerAction, PlayerStatus } from 'entities/player/model/constants';
@@ -231,8 +232,20 @@ export class PokerTable {
       return;
     }
 
+    if (await this.tryRunout()) {
+      return;
+    }
+
     await this.dealStreet('FLOP', 3);
+    if (this.closed || (await this.tryRunout())) {
+      return;
+    }
+
     await this.dealStreet('TURN', 1);
+    if (this.closed || (await this.tryRunout())) {
+      return;
+    }
+
     await this.dealStreet('RIVER', 1);
     this.finish();
   }
@@ -505,6 +518,93 @@ export class PokerTable {
         status,
       },
     });
+  }
+
+  private handIsRunout() {
+    const live = this.seats.filter(seat => !seat.folded);
+
+    return live.length >= 2 && live.filter(seat => !seat.allIn).length <= 1;
+  }
+
+  private async tryRunout() {
+    if (this.closed || !this.handIsRunout()) {
+      return false;
+    }
+
+    await this.emitAllInRunout();
+    return true;
+  }
+
+  private drawRemainingStreets() {
+    const plan = [
+      ['FLOP', 3],
+      ['TURN', 4],
+      ['RIVER', 5],
+    ] as const;
+    const dealt: { street: 'FLOP' | 'TURN' | 'RIVER'; cards: string[] }[] = [];
+
+    for (const [street, length] of plan) {
+      if (this.board.length >= length) {
+        continue;
+      }
+
+      const cards: string[] = [];
+
+      while (this.board.length < length) {
+        const card = this.draw();
+        this.board.push(card);
+        cards.push(card);
+      }
+
+      dealt.push({ street, cards });
+    }
+
+    return dealt;
+  }
+
+  private async emitAllInRunout() {
+    this.collectStreet();
+    const streets = this.drawRemainingStreets();
+    const pot = this.seats.reduce((sum, seat) => sum + seat.totalCommitted, 0);
+    const alive = this.contenders();
+    const soleWinner = alive[0];
+
+    if (!soleWinner) {
+      return;
+    }
+
+    const winners =
+      alive.length <= 1
+        ? [
+            {
+              seatIndex: soleWinner.seat,
+              amountWon: pot,
+              combinationName: 'Uncontested',
+            },
+          ]
+        : this.showdown(alive, pot);
+
+    streets.forEach(street => {
+      this.emit({
+        type: SERVER_EVENTS.BOARD_DEALT,
+        payload: street,
+      });
+    });
+
+    winners.forEach(winner => {
+      const seat = this.seats.find(item => item.seat === winner.seatIndex);
+
+      if (seat) {
+        seat.stack += winner.amountWon;
+      }
+    });
+
+    this.emit({
+      type: SERVER_EVENTS.HAND_COMPLETED,
+      payload: { winners },
+    });
+
+    await this.sleep(allInRunoutDuration(streets));
   }
 
   private finish() {
