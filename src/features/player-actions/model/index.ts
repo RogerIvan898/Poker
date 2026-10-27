@@ -4,8 +4,10 @@ import './pre-action';
 export { call, check, fold, raise } from './actions';
 export {
   $preAction,
+  canPreAct,
+  chipsToCall,
   clearPreAction,
-  resolvePreAction,
+  formatCallBb,
   setPreAction,
   type PreAction,
 } from './pre-action';

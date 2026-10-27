@@ -7,11 +7,20 @@ import {
 } from 'effector';
 
 import { gameModel, SERVER_EVENTS } from 'entities/game';
-import type { AllowedPlayerActionsEvent } from 'entities/game';
+import { sessionModel } from 'entities/session';
 
 import { call, check, fold, raise } from './actions';
+import {
+  canPreAct,
+  chipsToCall,
+  decidePreAction,
+  isPreActionStale,
+  type PreAction,
+  type PreActionDecision,
+} from './pre-action-rules';
 
-export type PreAction = 'check_fold' | 'call_any' | 'auto_fold';
+export type { PreAction } from './pre-action-rules';
+export { canPreAct, chipsToCall, formatCallBb } from './pre-action-rules';
 
 export const setPreAction = createEvent<PreAction | null>();
 export const clearPreAction = createEvent();
@@ -20,67 +29,88 @@ export const $preAction = createStore<PreAction | null>(null)
   .on(setPreAction, (_, action) => action)
   .reset(clearPreAction);
 
-export const resolvePreAction = (
-  preAction: PreAction,
-  allowed: AllowedPlayerActionsEvent['payload']
-) => {
-  switch (preAction) {
-    case 'check_fold':
-      if (allowed.canCheck) {
-        check();
-      } else {
-        fold();
-      }
-      return;
-
-    case 'call_any':
-      if (allowed.canCall) {
-        call();
-      } else if (allowed.canCheck) {
-        check();
-      } else {
-        fold();
-      }
-      return;
-
-    case 'auto_fold':
-      if (allowed.canCall) {
-        fold();
-      } else if (allowed.canCheck) {
-        check();
-      } else {
-        fold();
-      }
-      return;
+const runDecision = (decision: PreActionDecision) => {
+  if (decision === 'check') {
+    check();
+    return;
   }
+
+  if (decision === 'fold') {
+    fold();
+    return;
+  }
+
+  call();
 };
 
+let running = false;
+
 const runPreActionFx = createEffect(
-  ({
-    preAction,
-    allowed,
-  }: {
-    preAction: PreAction;
-    allowed: AllowedPlayerActionsEvent['payload'];
-  }) => {
-    resolvePreAction(preAction, allowed);
+  ([preAction, allowed]: [
+    PreAction,
+    { canCheck: boolean; canCall: boolean },
+  ]) => {
+    if (running) {
+      return;
+    }
+
+    running = true;
+
+    try {
+      const decision = decidePreAction(preAction, allowed);
+
+      if (decision) {
+        runDecision(decision);
+      }
+    } finally {
+      running = false;
+    }
   }
 );
 
 sample({
   clock: gameModel.$myAllowedActions,
   source: $preAction,
-  filter: (preAction, allowedActions) =>
-    preAction !== null && allowedActions !== null,
-  fn: (preAction, allowedActions) => ({
-    preAction: preAction!,
-    allowed: allowedActions!,
-  }),
+  filter: (preAction, allowed) => preAction !== null && allowed !== null,
+  fn: (preAction, allowed) =>
+    [preAction, allowed] as [
+      PreAction,
+      { canCheck: boolean; canCall: boolean },
+    ],
   target: runPreActionFx,
 });
 
 sample({
-  clock: runPreActionFx.done,
+  clock: gameModel.$myAllowedActions,
+  source: $preAction,
+  filter: (preAction, allowed) => preAction !== null && allowed !== null,
+  target: clearPreAction,
+});
+
+sample({
+  clock: gameModel.$gameState,
+  source: {
+    preAction: $preAction,
+    userId: sessionModel.$currentUserId,
+  },
+  filter: ({ preAction, userId }, state) => {
+    if (!preAction || !userId) {
+      return false;
+    }
+
+    const viewer = Object.values(state.players).find(
+      player => player.id === userId
+    );
+
+    if (!viewer || !canPreAct(viewer.status)) {
+      return true;
+    }
+
+    return isPreActionStale(
+      preAction,
+      chipsToCall(state.currentBet, viewer.committed, viewer.stack)
+    );
+  },
   target: clearPreAction,
 });
 

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { useLingui } from '@lingui/react/macro';
 
-import { pokerSoundEngine } from 'entities/game/lib/poker-sound-engine';
-
 import { Button } from 'shared/ui/button';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils';
@@ -63,11 +61,6 @@ export const BetManager = ({
   const commit = (value: number) => {
     setAmount(legal(value));
     setDraft(null);
-  };
-
-  const nudge = (value: number) => {
-    void pokerSoundEngine.playSoftCollection(1.5);
-    commit(value);
   };
 
   useEffect(() => {
@@ -159,7 +152,7 @@ export const BetManager = ({
                   amount === value &&
                   styles.shortcutActive
               )}
-              onClick={() => nudge(value)}
+              onClick={() => commit(value)}
             >
               {preset.label}
             </button>
@@ -173,7 +166,7 @@ export const BetManager = ({
           className={styles.step}
           aria-label="-1 BB"
           disabled={amount <= minAmount}
-          onClick={() => nudge(amount - step)}
+          onClick={() => commit(amount - step)}
         >
           −
         </button>
@@ -198,7 +191,7 @@ export const BetManager = ({
           className={styles.step}
           aria-label="+1 BB"
           disabled={amount >= maxAmount}
-          onClick={() => nudge(amount + step)}
+          onClick={() => commit(amount + step)}
         >
           +
         </button>

@@ -10,6 +10,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: ColorIntent;
   text?: string;
   isActive?: boolean;
+  singleLine?: boolean;
 }
 
 export const Button = ({
@@ -18,6 +19,7 @@ export const Button = ({
   className,
   disabled,
   isActive = false,
+  singleLine = false,
   ...props
 }: Props) => {
   return (
@@ -32,7 +34,11 @@ export const Button = ({
       )}
       disabled={disabled}
     >
-      {text ? <span className={styles.label}>{text}</span> : null}
+      {text ? (
+        <span className={cn(styles.label, singleLine && styles.singleLine)}>
+          {text}
+        </span>
+      ) : null}
     </button>
   );
 };

@@ -60,21 +60,37 @@ export const reduceHandStarted = (
 export const reducePlayerActed = (
   state: T.GameState,
   payload: T.PlayerActedEvent['payload']
-): T.GameState => ({
-  ...state,
-  players: {
-    ...state.players,
-    [payload.seat]: {
-      ...state.players[payload.seat],
-      stack: payload.stack,
-      status: payload.status,
-      committed: state.players[payload.seat].committed + (payload.amount ?? 0),
-      lastAction: payload.action,
-      lastActionAmount:
-        payload.amount != null && payload.amount > 0 ? payload.amount : null,
+): T.GameState => {
+  const player = state.players[payload.seat];
+
+  if (!player) {
+    return state;
+  }
+
+  const committed = player.committed + (payload.amount ?? 0);
+  const raised =
+    payload.action === PlayerAction.BET ||
+    payload.action === PlayerAction.RAISE;
+
+  return {
+    ...state,
+    currentBet: raised
+      ? Math.max(state.currentBet, committed)
+      : state.currentBet,
+    players: {
+      ...state.players,
+      [payload.seat]: {
+        ...player,
+        stack: payload.stack,
+        status: payload.status,
+        committed,
+        lastAction: payload.action,
+        lastActionAmount:
+          payload.amount != null && payload.amount > 0 ? payload.amount : null,
+      },
     },
-  },
-});
+  };
+};
 
 export const reduceTurnChanged = (
   state: T.GameState,

@@ -65,8 +65,12 @@ msgid "Call"
 msgstr "Call"
 
 msgctxt "poker-pre-action"
-msgid "Call Any"
-msgstr "Call Any"
+msgid "Call"
+msgstr "Call"
+
+msgctxt "poker-pre-action"
+msgid "Call {callBb} BB"
+msgstr "Call {callBb} BB"
 
 msgid "Cancel"
 msgstr "Cancel"
@@ -78,6 +82,10 @@ msgid "Change wallet"
 msgstr "Change wallet"
 
 msgctxt "poker-action"
+msgid "Check"
+msgstr "Check"
+
+msgctxt "poker-pre-action"
 msgid "Check"
 msgstr "Check"
 
@@ -153,10 +161,6 @@ msgid "Exchange"
 msgstr "Exchange"
 
 msgctxt "poker-action"
-msgid "Fold"
-msgstr "Fold"
-
-msgctxt "poker-pre-action"
 msgid "Fold"
 msgstr "Fold"
 

@@ -11,11 +11,11 @@ const ACTION_SOUNDS: Record<PlayerActionType, PokerSoundAction> = {
   [PlayerAction.CHECK]: 'check',
   [PlayerAction.CALL]: 'call',
   [PlayerAction.BET]: 'bet',
-  [PlayerAction.RAISE]: 'raise',
+  [PlayerAction.RAISE]: 'bet',
 };
 
 export const mapPlayerActedToSound = (
   action: PlayerActionType,
   status: PlayerStatusType
 ): PokerSoundAction =>
-  status === PlayerStatus.ALL_IN ? 'raise' : ACTION_SOUNDS[action];
+  status === PlayerStatus.ALL_IN ? 'allin' : ACTION_SOUNDS[action];

@@ -3,17 +3,13 @@ import React from 'react';
 import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
-import { PlayerStatus } from 'entities/player';
 import { sessionModel } from 'entities/session';
+
+import { canPreAct } from '../model';
 
 import { ActionPanel } from './action-panel';
 import { BetManager } from './bet-manager';
 import styles from './player-actions.module.css';
-
-const isPlayerInHand = (status: string | undefined) =>
-  status === PlayerStatus.IN_GAME ||
-  status === PlayerStatus.RAISE ||
-  status === PlayerStatus.ALL_IN;
 
 export const PlayerActions = () => {
   const [viewerId, allowedActions, players, gameState] = useUnit([
@@ -37,8 +33,7 @@ export const PlayerActions = () => {
   }
 
   const viewer = Object.values(players).find(player => player.id === viewerId);
-  const inHand = isPlayerInHand(viewer?.status);
-  const showPreActions = inHand && !isMyTurn;
+  const showPreActions = canPreAct(viewer?.status) && !isMyTurn;
 
   const canBet = !allowedActions?.canCall || allowedActions.minRaise === 0;
   const canPutChips =

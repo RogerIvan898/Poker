@@ -146,3 +146,11 @@
   word-break: break-word;
   max-width: 100%;
 }
+
+.singleLine {
+  display: block;
+  white-space: nowrap;
+  word-break: normal;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+}

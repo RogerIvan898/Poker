@@ -4,14 +4,13 @@
   bottom: 100%;
   transform: translateX(-50%);
   z-index: 13;
-  max-width: calc(100% - 4px);
   pointer-events: none;
 }
 
 .compact {
   min-width: 0;
   width: max-content;
-  max-width: 100%;
+  max-width: none;
   height: 22px;
   padding: 0 8px;
   border-radius: 6px;
