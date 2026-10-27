@@ -149,6 +149,24 @@ export class PokerSoundEngine {
     noiseSrc.stop(time + 0.12);
   }
 
+  async playSoftCollection(volume = 0.55) {
+    try {
+      await this.resume();
+
+      if (!this.context || !this.masterGain) {
+        return;
+      }
+
+      const gain = this.context.createGain();
+      gain.gain.value = volume;
+      gain.connect(this.masterGain);
+      playSoftCollection(this.context, gain, this.context.currentTime + 0.01);
+      window.setTimeout(() => gain.disconnect(), 380);
+    } catch (error) {
+      console.error('Audio playback failed:', error);
+    }
+  }
+
   async playAction(action: PokerSoundAction) {
     try {
       await this.resume();
@@ -166,5 +184,141 @@ export class PokerSoundEngine {
     }
   }
 }
+
+const createNoiseBuffer = (context: AudioContext, duration: number) => {
+  const buffer = context.createBuffer(
+    1,
+    Math.ceil(context.sampleRate * duration),
+    context.sampleRate
+  );
+  const channel = buffer.getChannelData(0);
+
+  for (let index = 0; index < channel.length; index += 1) {
+    const white = Math.random() * 2 - 1;
+    channel[index] = white * (0.76 + 0.24 * Math.sin(index * 0.19));
+  }
+
+  return buffer;
+};
+
+const addNoiseLayer = (
+  context: AudioContext,
+  destination: AudioNode,
+  startTime: number,
+  config: {
+    duration: number;
+    frequency: number;
+    q?: number;
+    type?: BiquadFilterType;
+    level: number;
+    attack?: number;
+    pan?: number;
+  }
+) => {
+  const {
+    duration,
+    frequency,
+    q = 0.8,
+    type = 'bandpass',
+    level,
+    attack = 0.001,
+    pan = 0,
+  } = config;
+  const source = context.createBufferSource();
+  source.buffer = createNoiseBuffer(context, duration + 0.01);
+
+  const filter = context.createBiquadFilter();
+  filter.type = type;
+  filter.frequency.setValueAtTime(frequency, startTime);
+  filter.Q.setValueAtTime(q, startTime);
+
+  const envelope = context.createGain();
+  envelope.gain.setValueAtTime(0.0001, startTime);
+  envelope.gain.exponentialRampToValueAtTime(
+    Math.max(0.0002, level),
+    startTime + attack
+  );
+  envelope.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+
+  let output: AudioNode = envelope;
+
+  if (typeof context.createStereoPanner === 'function') {
+    const panner = context.createStereoPanner();
+    panner.pan.setValueAtTime(pan, startTime);
+    envelope.connect(panner);
+    output = panner;
+  }
+
+  source.connect(filter);
+  filter.connect(envelope);
+  output.connect(destination);
+  source.start(startTime);
+  source.stop(startTime + duration + 0.015);
+};
+
+const addShortSlide = (
+  context: AudioContext,
+  destination: AudioNode,
+  startTime: number,
+  duration: number,
+  level = 0.035,
+  pan = 0
+) => {
+  addNoiseLayer(context, destination, startTime, {
+    duration,
+    frequency: 1350 + Math.random() * 650,
+    q: 0.35,
+    type: 'lowpass',
+    level,
+    attack: 0.008,
+    pan,
+  });
+};
+
+const addChipClack = (
+  context: AudioContext,
+  destination: AudioNode,
+  startTime: number,
+  intensity = 1,
+  pan = 0
+) => {
+  const variation = 0.86 + Math.random() * 0.28;
+
+  addNoiseLayer(context, destination, startTime, {
+    duration: 0.012 + Math.random() * 0.008,
+    frequency: 2600 + Math.random() * 1700,
+    q: 0.65 + Math.random() * 0.8,
+    level: 0.19 * intensity * variation,
+    attack: 0.0006,
+    pan,
+  });
+  addNoiseLayer(context, destination, startTime + 0.0007, {
+    duration: 0.026 + Math.random() * 0.018,
+    frequency: 850 + Math.random() * 850,
+    q: 0.55 + Math.random() * 0.6,
+    level: 0.11 * intensity * variation,
+    attack: 0.0012,
+    pan: pan * 0.7,
+  });
+  addNoiseLayer(context, destination, startTime + 0.001, {
+    duration: 0.018 + Math.random() * 0.012,
+    frequency: 520 + Math.random() * 420,
+    q: 0.45,
+    type: 'lowpass',
+    level: 0.07 * intensity * variation,
+    attack: 0.001,
+    pan: pan * 0.5,
+  });
+};
+
+const playSoftCollection = (
+  context: AudioContext,
+  destination: AudioNode,
+  now: number
+) => {
+  addShortSlide(context, destination, now, 0.085, 0.027, -0.12);
+  addChipClack(context, destination, now + 0.012, 0.72, -0.1);
+  addChipClack(context, destination, now + 0.067, 0.55, 0.12);
+};
 
 export const pokerSoundEngine = new PokerSoundEngine();
