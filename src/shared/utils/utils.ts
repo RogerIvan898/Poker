@@ -13,8 +13,21 @@ export const getSymbol = (suit: string) => {
   }
 };
 
-export const cn = (...classes: (string | undefined | boolean)[]) =>
-  classes.filter(Boolean).join(' ');
+export function cn(
+  ...args: (string | number | boolean | undefined | null)[]
+): string {
+  let result = '';
+
+  for (const value of args) {
+    if (!value) continue;
+
+    if (result) result += ' ';
+
+    result += value;
+  }
+
+  return result;
+}
 
 export const getInitialLetter = (name: string) =>
   name ? name.charAt(0).toUpperCase() : '?';
