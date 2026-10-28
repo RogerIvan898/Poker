@@ -1,5 +1,7 @@
 import { Loader2, Spade } from 'lucide-react';
 
+import { clamp } from 'shared/utils';
+
 import styles from './preloader.module.css';
 
 interface Props {
@@ -23,7 +25,7 @@ export const Preloader = ({ label = 'Loading…', progress }: Props) => {
             <div className={styles.track}>
               <div
                 className={styles.bar}
-                style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
+                style={{ width: `${clamp(progress, 0, 100)}%` }}
               />
             </div>
             <span className={styles.progressText}>{Math.round(progress)}%</span>

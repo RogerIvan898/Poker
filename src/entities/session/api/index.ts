@@ -1,4 +1,4 @@
-import { http } from 'shared/api/http';
+import { http } from 'shared/api';
 
 export const authApi = {
   login: (initData: string) => http.post<null>('/auth/login', { initData }),

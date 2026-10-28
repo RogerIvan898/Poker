@@ -2,10 +2,8 @@ import { PlayerAction } from 'entities/player/model/constants';
 
 import type { BadgeVariant } from 'shared/ui/badge';
 
-import {
-  PokerActionBadgeKind,
-  type PokerActionBadgeType,
-} from '../model/types';
+import { PokerActionBadgeKind } from '../model/constants';
+import type { PokerActionBadgeType } from '../model/types';
 
 export interface ActionPresentation {
   variant: BadgeVariant;

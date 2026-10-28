@@ -7,6 +7,7 @@ import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { Sheet } from 'shared/ui/sheet';
 import { formatAmountDraft, isTonAddress } from 'shared/utils';
 
+import { parseAmountDraft } from '../lib/parse-amount-draft';
 import type { WithdrawDestination, WithdrawPayload } from '../model/types';
 
 import styles from './withdraw.module.css';
@@ -19,16 +20,6 @@ interface Props {
   balance: number;
   onSubmit?: (payload: WithdrawPayload) => void;
 }
-
-const parseAmountDraft = (value: string) => {
-  if (value === '' || value === '.') {
-    return 0;
-  }
-
-  const parsed = Number(value);
-
-  return Number.isNaN(parsed) ? null : parsed;
-};
 
 export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
   const { t, i18n } = useLingui();

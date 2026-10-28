@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { Trans, useLingui } from '@lingui/react/macro';
-import { toNano } from '@ton/core';
 import { QRCodeSVG } from 'qrcode.react';
 
 import { PayViaWalletButton } from 'features/pay-via-wallet';
@@ -10,11 +9,11 @@ import { Alert } from 'shared/ui/alert';
 import { CopyField } from 'shared/ui/copy-field';
 import { cn } from 'shared/utils';
 
+import { buildTonTransferLink } from '../../../lib/ton-transfer';
+import type { PaymentMethod } from '../../../model/types';
 import shared from '../../deposit.module.css';
 
 import styles from './payment-details.module.css';
-
-type PaymentMethod = 'wallet' | 'exchange';
 
 interface Props {
   amount: number;
@@ -23,22 +22,6 @@ interface Props {
   onCopyText?: (text: string, type: 'address' | 'memo' | 'amount') => void;
   onSuccess?: () => void;
 }
-
-const buildTonTransferLink = (
-  address: string,
-  amount: number,
-  memo?: string
-) => {
-  const params = new URLSearchParams({
-    amount: toNano(amount.toString()).toString(),
-  });
-
-  if (memo) {
-    params.set('text', memo);
-  }
-
-  return `ton://transfer/${address}?${params.toString()}`;
-};
 
 export const PaymentDetailsStep = ({
   amount,

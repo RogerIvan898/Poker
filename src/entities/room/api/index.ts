@@ -1,4 +1,4 @@
-import { http } from 'shared/api/http';
+import { http } from 'shared/api';
 
 import type { JoinRoomResponse } from '../types';
 

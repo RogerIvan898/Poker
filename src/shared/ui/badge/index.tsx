@@ -3,15 +3,9 @@ import type { ReactNode } from 'react';
 import { cn } from 'shared/utils';
 
 import styles from './badge.module.css';
+import type { BadgeVariant } from './types';
 
-export type BadgeVariant =
-  | 'neutral'
-  | 'primary'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'highlight'
-  | 'active';
+export type { BadgeVariant } from './types';
 
 interface Props {
   variant: BadgeVariant;

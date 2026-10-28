@@ -4,11 +4,10 @@ import { PlayerAction } from 'entities/player/model/constants';
 
 import { Badge } from 'shared/ui/badge';
 import { cn } from 'shared/utils';
+import { formatChipAmount } from 'shared/utils/format';
 
-import {
-  PokerActionBadgeKind,
-  type PokerActionBadgeType,
-} from '../model/types';
+import { PokerActionBadgeKind } from '../model/constants';
+import type { PokerActionBadgeType } from '../model/types';
 
 import { ACTION_PRESENTATION } from './action-presentation';
 import styles from './poker-action-badge.module.css';
@@ -17,9 +16,6 @@ interface Props {
   action: PokerActionBadgeType;
   amount?: number;
 }
-
-const formatAmount = (value: number) =>
-  Number.isInteger(value) ? String(value) : value.toFixed(2);
 
 export const PokerActionBadge = ({ action, amount }: Props) => {
   const { t } = useLingui();
@@ -52,7 +48,7 @@ export const PokerActionBadge = ({ action, amount }: Props) => {
         )}
       >
         {label}
-        {showAmount ? ` ${formatAmount(amount)}` : null}
+        {showAmount ? ` ${formatChipAmount(amount)}` : null}
       </Badge>
     </div>
   );

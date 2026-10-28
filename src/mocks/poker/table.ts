@@ -8,6 +8,8 @@ import type {
 } from 'entities/player/model/types';
 import { VIEWER_ID } from 'entities/session/model';
 
+import { clamp } from 'shared/utils';
+
 import type { MockRoomConfig } from '../rooms';
 
 import { chooseBotAction } from './bot-policy';
@@ -448,12 +450,9 @@ export class PokerTable {
       return seat.stack;
     }
 
-    const target = Math.min(
-      bankroll,
-      Math.max(requested, seat.committed + minExtra)
-    );
+    const target = clamp(requested, seat.committed + minExtra, bankroll);
 
-    return Math.min(seat.stack, Math.max(0, target - seat.committed));
+    return clamp(target - seat.committed, 0, seat.stack);
   }
 
   private minRaiseExtra(seat: Seat) {

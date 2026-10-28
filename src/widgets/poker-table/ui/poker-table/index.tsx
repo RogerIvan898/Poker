@@ -6,6 +6,7 @@ import type { CardType } from 'entities/card';
 import { Sound } from 'shared/assets/sounds';
 import { useSound } from 'shared/hooks/useSound';
 import { Logo } from 'shared/ui/logo';
+import { formatChipAmount } from 'shared/utils/format';
 
 import styles from './poker-table.module.css';
 
@@ -14,9 +15,6 @@ interface Props {
   pot: number;
   showPot?: boolean;
 }
-
-const formatPot = (amount: number) =>
-  Number.isInteger(amount) ? String(amount) : amount.toFixed(2);
 
 export const PokerTable = React.forwardRef<HTMLDivElement, Props>(
   ({ cards = [], pot, showPot = pot > 0 }, ref) => {
@@ -31,7 +29,9 @@ export const PokerTable = React.forwardRef<HTMLDivElement, Props>(
               {showPot && (
                 <div className={styles.potBadge}>
                   <Logo size={16} className={styles.potLogo} />
-                  <span className={styles.potValue}>{formatPot(pot)}</span>
+                  <span className={styles.potValue}>
+                    {formatChipAmount(pot)}
+                  </span>
                 </div>
               )}
             </div>

@@ -4,7 +4,7 @@ import type {
   PlayerStatusType,
 } from 'entities/player/model/types';
 
-import type { PokerSoundAction } from './poker-sound-engine';
+import type { PokerSoundAction } from './types';
 
 const ACTION_SOUNDS: Record<PlayerActionType, PokerSoundAction> = {
   [PlayerAction.FOLD]: 'fold',

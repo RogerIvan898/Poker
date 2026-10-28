@@ -4,9 +4,10 @@ import { useLingui } from '@lingui/react/macro';
 
 import { Button } from 'shared/ui/button';
 import { Logo } from 'shared/ui/logo';
-import { cn } from 'shared/utils';
+import { clamp, cn } from 'shared/utils';
 
 import { raise } from '../../model';
+import { potRaiseTo, type BetPreset } from '../../model/pot-raise';
 
 import styles from './bet-manager.module.css';
 
@@ -22,21 +23,6 @@ interface Props {
   onCancel: () => void;
   variant: 'bet' | 'raise';
 }
-
-interface Preset {
-  label: string;
-  value: number;
-}
-
-const clamp = (value: number, min: number, max: number) =>
-  Math.min(max, Math.max(min, value));
-
-const potRaiseTo = (
-  fraction: number,
-  pot: number,
-  callAmount: number,
-  committed: number
-) => committed + callAmount + fraction * (pot + callAmount);
 
 export const BetManager = ({
   playerId,
@@ -111,7 +97,7 @@ export const BetManager = ({
   // lingui-reset
   const cancelLabel = t`Cancel`;
 
-  const presets: Preset[] = preflop
+  const presets: BetPreset[] = preflop
     ? [
         { label: '2.2 BB', value: bigBlind * 2.2 },
         { label: '3 BB', value: bigBlind * 3 },

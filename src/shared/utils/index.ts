@@ -1,3 +1,8 @@
+import { clamp as clampToRange } from './clamp';
+
+export const clamp: (value: number, min: number, max: number) => number =
+  clampToRange;
+
 export const getSymbol = (suit: string) => {
   switch (suit) {
     case 'hearts':

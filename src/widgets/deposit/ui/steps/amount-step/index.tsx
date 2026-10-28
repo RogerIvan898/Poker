@@ -7,6 +7,7 @@ import { Alert } from 'shared/ui/alert';
 import { Logo } from 'shared/ui/logo';
 import { NumberField } from 'shared/ui/number-field';
 
+import { AMOUNT_RE, formatDepositDraft } from '../../../lib/amount-draft';
 import styles from '../../deposit.module.css';
 
 import { QuickAddOptions } from './QuickAddOptions';
@@ -17,14 +18,9 @@ interface Props {
   onNext: () => void;
 }
 
-const AMOUNT_RE = /^\d*[.,]?\d{0,9}$/;
-
-const formatDraft = (value: number) =>
-  value === 0 ? '' : value.toString().replace('.', ',');
-
 export const AmountStep = ({ amount, onChangeAmount, onNext }: Props) => {
   const { t } = useLingui();
-  const [draft, setDraft] = useState(() => formatDraft(amount));
+  const [draft, setDraft] = useState(() => formatDepositDraft(amount));
 
   useEffect(() => {
     setDraft(prev => {
@@ -32,7 +28,7 @@ export const AmountStep = ({ amount, onChangeAmount, onNext }: Props) => {
       const parsed = Number(normalized);
       return Number.isFinite(parsed) && parsed === amount
         ? prev
-        : formatDraft(amount);
+        : formatDepositDraft(amount);
     });
   }, [amount]);
 

@@ -15,11 +15,10 @@ import {
   chipsToCall,
   decidePreAction,
   isPreActionStale,
-  type PreAction,
-  type PreActionDecision,
 } from './pre-action-rules';
+import type { PreAction, PreActionDecision } from './types';
 
-export type { PreAction } from './pre-action-rules';
+export type { PreAction } from './types';
 export { canPreAct, chipsToCall, formatCallBb } from './pre-action-rules';
 
 export const setPreAction = createEvent<PreAction | null>();

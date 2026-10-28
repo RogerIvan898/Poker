@@ -3,11 +3,10 @@ import React from 'react';
 import { cn } from 'shared/utils';
 
 import styles from './button.module.css';
-
-type ColorIntent = 'primary' | 'neutral' | 'danger' | 'warning';
+import type { ButtonColor } from './types';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  color?: ColorIntent;
+  color?: ButtonColor;
   text?: string;
   isActive?: boolean;
   singleLine?: boolean;

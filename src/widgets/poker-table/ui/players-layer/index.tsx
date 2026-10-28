@@ -10,28 +10,18 @@ import { sessionModel } from 'entities/session';
 import { useElementRect } from 'shared/hooks/useElementRect';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils';
+import { formatChipAmount } from 'shared/utils/format';
 
 import styles from './players-layer.module.css';
 import { computeSeats } from './seating';
+import type { CollectFlight, PotFlight } from './types';
 
 const POT_MOVE_MS = 750;
-
-interface Flight {
-  seat: number;
-  amount: number;
-  fromX: number;
-  fromY: number;
-  toX: number;
-  toY: number;
-}
 
 interface Props {
   tableElement: HTMLDivElement | null;
   onHidePot: (hidden: boolean) => void;
 }
-
-const formatPot = (amount: number) =>
-  Number.isInteger(amount) ? String(amount) : amount.toFixed(2);
 
 export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
   const [
@@ -58,19 +48,11 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
   const [wins, setWins] = React.useState<
     Record<number, { amount: number; id: number }>
   >({});
-  const [flights, setFlights] = React.useState<Flight[] | null>(null);
+  const [flights, setFlights] = React.useState<PotFlight[] | null>(null);
   const [flightId, setFlightId] = React.useState(0);
   const [atWinner, setAtWinner] = React.useState(false);
   const [collectFlights, setCollectFlights] = React.useState<
-    | {
-        seat: string;
-        amount: number;
-        fromX: number;
-        fromY: number;
-        toX: number;
-        toY: number;
-      }[]
-    | null
+    CollectFlight[] | null
   >(null);
   const [collectAtPot, setCollectAtPot] = React.useState(false);
 
@@ -239,7 +221,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
           }}
         >
           <Logo size={16} className={styles.potFlightLogo} />
-          <span>{formatPot(flight.amount)}</span>
+          <span>{formatChipAmount(flight.amount)}</span>
         </div>
       ))}
       {flights?.map(flight => (
@@ -252,7 +234,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
           }}
         >
           <Logo size={16} className={styles.potFlightLogo} />
-          <span>{formatPot(flight.amount)}</span>
+          <span>{formatChipAmount(flight.amount)}</span>
         </div>
       ))}
       {seats.map(({ player, betPosition, style }) => {

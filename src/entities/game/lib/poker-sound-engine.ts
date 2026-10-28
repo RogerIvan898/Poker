@@ -1,34 +1,9 @@
 import { getAudioContext } from 'shared/lib/audio';
 
-export type PokerSoundAction = 'fold' | 'check' | 'call' | 'bet' | 'allin';
+import { ACTION_SOUND_RECIPES } from './constants';
+import type { PokerSoundAction } from './types';
 
-interface ClickRecipe {
-  pitch: number;
-  volume: number;
-  soft: boolean;
-  delay?: number;
-}
-
-interface SoundRecipe {
-  clicks: ClickRecipe[];
-  swoosh: boolean;
-  rumble?: boolean;
-}
-
-const ACTION_SOUND_RECIPES: Record<PokerSoundAction, SoundRecipe> = {
-  fold: { clicks: [], swoosh: true },
-  check: { clicks: [{ pitch: 1, volume: 1, soft: true }], swoosh: false },
-  call: { clicks: [{ pitch: 1, volume: 0.8, soft: false }], swoosh: false },
-  bet: { clicks: [{ pitch: 1.25, volume: 0.9, soft: false }], swoosh: false },
-  allin: {
-    clicks: [
-      { pitch: 1.25, volume: 0.9, soft: false },
-      { pitch: 0.9, volume: 0.55, soft: false, delay: 0.055 },
-    ],
-    swoosh: false,
-    rumble: true,
-  },
-};
+export type { PokerSoundAction } from './types';
 
 export class PokerSoundEngine {
   private context: AudioContext | null = null;

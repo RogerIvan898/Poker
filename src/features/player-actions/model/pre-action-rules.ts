@@ -1,11 +1,6 @@
-export type PreAction = 'check' | 'check_fold' | 'call';
+import { clamp } from 'shared/utils';
 
-export type PreActionDecision = 'check' | 'fold' | 'call';
-
-export interface PreActionOptions {
-  canCheck: boolean;
-  canCall: boolean;
-}
+import type { PreAction, PreActionDecision, PreActionOptions } from './types';
 
 const PRE_ACT_STATUSES = new Set(['IN_GAME', 'RAISE']);
 
@@ -16,7 +11,7 @@ export const chipsToCall = (
   currentBet: number,
   committed: number,
   stack: number
-) => Math.min(Math.max(0, stack), Math.max(0, currentBet - committed));
+) => clamp(currentBet - committed, 0, Math.max(0, stack));
 
 export const formatCallBb = (amount: number, bigBlind: number) => {
   if (bigBlind <= 0) {

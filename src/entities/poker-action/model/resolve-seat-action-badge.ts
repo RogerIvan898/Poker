@@ -4,7 +4,8 @@ import type {
   PlayerStatusType,
 } from 'entities/player/model/types';
 
-import { PokerActionBadgeKind, type PokerActionBadgeType } from './types';
+import { PokerActionBadgeKind } from './constants';
+import type { PokerActionBadgeType } from './types';
 
 export const resolveSeatActionBadge = (
   lastAction: PlayerActionType | null,
