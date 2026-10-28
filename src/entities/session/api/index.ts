@@ -1,6 +1,6 @@
-import { http } from 'shared/api';
+import { api } from 'shared/api';
 
 export const authApi = {
-  login: (initData: string) => http.post<null>('/auth/login', { initData }),
-  getMe: () => http.get<null>('/auth/me'),
+  login: (initData: string) => api.post<null>('/auth/login', { initData }),
+  getMe: () => api.get<null>('/auth/me'),
 };
