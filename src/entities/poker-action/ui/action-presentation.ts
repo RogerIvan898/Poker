@@ -1,5 +1,4 @@
 import { PlayerAction } from 'entities/player/model/constants';
-
 import type { BadgeVariant } from 'shared/ui/badge';
 
 import { PokerActionBadgeKind } from '../model/constants';

@@ -4,7 +4,6 @@ import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
 import { CLIENT_COMMANDS } from 'entities/game';
-
 import { $mockServerEnabled } from 'shared/config/mock-server';
 import { cn } from 'shared/utils';
 

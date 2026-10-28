@@ -1,5 +1,4 @@
 import type { PlayerType as Player } from 'entities/player';
-
 import type { DirectionType } from 'shared/types/primitives';
 
 export function betPositionFromAngle(angleDeg: number): DirectionType {

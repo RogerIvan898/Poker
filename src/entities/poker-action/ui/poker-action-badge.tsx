@@ -1,7 +1,6 @@
 import { useLingui } from '@lingui/react/macro';
 
 import { PlayerAction } from 'entities/player/model/constants';
-
 import { Badge } from 'shared/ui/badge';
 import { cn } from 'shared/utils';
 import { formatChipAmount } from 'shared/utils/format';

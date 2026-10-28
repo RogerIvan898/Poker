@@ -7,7 +7,6 @@ import type {
   PlayerStatusType,
 } from 'entities/player/model/types';
 import { VIEWER_ID } from 'entities/session/model';
-
 import { clamp } from 'shared/utils';
 
 import type { MockRoomConfig } from '../rooms';

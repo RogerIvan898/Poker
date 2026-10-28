@@ -1,9 +1,1 @@
-export interface WSMessage {
-  type: string;
-  payload?: unknown;
-}
-
-export interface ConnectParams {
-  playerId: string;
-  baseUrl?: string;
-}
+export { type ConnectParams, type WSMessage } from './web-socket';

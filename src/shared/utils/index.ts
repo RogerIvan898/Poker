@@ -1,29 +1,9 @@
-import { clamp as clampToRange } from './clamp';
-
-export const clamp: (value: number, min: number, max: number) => number =
-  clampToRange;
-
-export const getSymbol = (suit: string) => {
-  switch (suit) {
-    case 'hearts':
-      return '♥';
-    case 'diamonds':
-      return '♦';
-    case 'clubs':
-      return '♣';
-    case 'spades':
-      return '♠';
-    default:
-      return '';
-  }
-};
-
-export const cn = (...classes: (string | undefined | boolean)[]) =>
-  classes.filter(Boolean).join(' ');
-
-export const getInitialLetter = (name: string) =>
-  name ? name.charAt(0).toUpperCase() : '?';
-
-export { formatAddress } from './format-address';
-export { formatAmountDraft } from './format-amount-draft';
-export { isTonAddress } from './is-ton-address';
+export {
+  clamp,
+  cn,
+  formatAddress,
+  formatAmountDraft,
+  getInitialLetter,
+  getSymbol,
+  isTonAddress,
+} from './utils';

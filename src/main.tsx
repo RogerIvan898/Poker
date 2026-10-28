@@ -1,9 +1,7 @@
 import { createRoot } from 'react-dom/client';
 
 import { App } from 'app/App';
-
 import 'entities/session/model';
-
 import { appStarted } from 'shared/config/init';
 import { bootstrapMockServer } from 'shared/config/mock-server';
 import { initTelegramWebApp } from 'shared/config/telegram-webapp';
