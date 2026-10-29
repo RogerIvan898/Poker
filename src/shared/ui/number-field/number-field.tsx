@@ -1,8 +1,8 @@
 import type React from 'react';
 
-import { sanitizeNumber } from './utils';
+import { sanitizeNumber } from 'shared/utils/format';
 
-export interface Props extends Omit<
+interface Props extends Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   'onChange' | 'value'
 > {

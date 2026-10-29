@@ -31,3 +31,17 @@ export const truncateMiddle = (
 
 export const getInitialLetter = (value: string, fallback = ''): string =>
   value.trim().charAt(0).toUpperCase() || fallback;
+
+export const sanitizeNumber = (value: string, maxDecimals: number) => {
+  const [int = '', ...rest] = value
+    .replace(',', '.')
+    .replace(/[^0-9.]/g, '')
+    .replace(/^0+(?=\d)/, '')
+    .split('.');
+
+  if (maxDecimals === 0 || rest.length === 0) {
+    return int;
+  }
+
+  return `${int}.${rest.join('').slice(0, maxDecimals)}`;
+};
