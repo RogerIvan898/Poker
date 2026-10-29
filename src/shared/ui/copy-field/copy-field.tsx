@@ -4,19 +4,14 @@ import { Copy, Check } from 'lucide-react';
 
 import styles from './copy-field.module.css';
 
-interface CopyFieldProps {
+interface Props {
   label: string;
   value: string;
   badgeText?: string;
   onCopy?: (value: string) => void;
 }
 
-export const CopyField = ({
-  label,
-  value,
-  badgeText,
-  onCopy,
-}: CopyFieldProps) => {
+export const CopyField = ({ label, value, badgeText, onCopy }: Props) => {
   const [copied, setCopied] = React.useState(false);
   const timerRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined

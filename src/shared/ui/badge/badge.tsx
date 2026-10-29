@@ -5,8 +5,6 @@ import { cn } from 'shared/utils/cn';
 import styles from './badge.module.css';
 import type { BadgeVariant } from './types';
 
-export type { BadgeVariant } from './types';
-
 interface Props {
   variant: BadgeVariant;
   children: ReactNode;
