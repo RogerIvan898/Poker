@@ -1,14 +1,15 @@
 import { useLingui } from '@lingui/react/macro';
 import { Plus } from 'lucide-react';
 
-import styles from './amount-step.module.css';
+import styles from './quick-add-options.module.css';
 
 interface Props {
   options: number[];
   onAdd: (value: number) => void;
+  disabled?: boolean;
 }
 
-export const QuickAddOptions = ({ options, onAdd }: Props) => {
+export const QuickAddOptions = ({ options, onAdd, disabled }: Props) => {
   const { t } = useLingui();
 
   return (
@@ -23,9 +24,10 @@ export const QuickAddOptions = ({ options, onAdd }: Props) => {
           type="button"
           className={styles.quickBtn}
           onClick={() => onAdd(value)}
+          disabled={disabled}
         >
           <span className={styles.quickBtnContent}>
-            <span className={styles.quickBtnIcon} aria-hidden>
+            <span className={styles.quickBtnIcon} aria-hidden="true">
               <Plus size={16} strokeWidth={2.5} />
             </span>
             <span className={styles.quickBtnValue}>

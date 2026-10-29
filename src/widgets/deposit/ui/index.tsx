@@ -1,1 +1,1 @@
-export { DepositModal } from './deposit';
+export { DepositDialog } from './deposit-dialog';

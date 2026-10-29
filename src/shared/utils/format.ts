@@ -45,3 +45,14 @@ export const sanitizeNumber = (value: string, maxDecimals: number) => {
 
   return `${int}.${rest.join('').slice(0, maxDecimals)}`;
 };
+
+export const parseNumericInput = (value: string): number | null => {
+  const trimmed = value.trim();
+  if (trimmed === '') {
+    return null;
+  }
+
+  const parsed = Number(trimmed.replace(',', '.'));
+
+  return Number.isFinite(parsed) ? parsed : null;
+};

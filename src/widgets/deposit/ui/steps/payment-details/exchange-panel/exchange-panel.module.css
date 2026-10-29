@@ -1,0 +1,14 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.copyFields {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.copyFields > *:last-child {
+  margin-bottom: 0;
+}
