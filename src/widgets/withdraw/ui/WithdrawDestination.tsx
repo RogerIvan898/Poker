@@ -3,7 +3,7 @@ import { useLingui } from '@lingui/react/macro';
 import { Alert } from 'shared/ui/alert';
 import { cn } from 'shared/utils/cn';
 import { truncateMiddle } from 'shared/utils/format';
-import { isTonAddress } from 'shared/utils/ton';
+import { isValidTonAddress } from 'shared/utils/ton';
 
 import type { WithdrawDestination } from '../model';
 
@@ -28,7 +28,7 @@ export const WithdrawDestinationBlock = ({
 }: Props) => {
   const { t } = useLingui();
   const addressTouched = customAddress.trim().length > 0;
-  const isAddressValid = isTonAddress(customAddress);
+  const isAddressValid = isValidTonAddress(customAddress);
 
   return (
     <div className={styles.field}>
