@@ -3,7 +3,7 @@ import React from 'react';
 import { Card } from 'entities/card';
 import { Sound } from 'shared/assets/sounds';
 import { useSound } from 'shared/lib/audio';
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import type { Player } from '../../model';
 

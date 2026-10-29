@@ -1,7 +1,8 @@
 import { useLingui } from '@lingui/react/macro';
 
 import { Badge, type BadgeVariant } from 'shared/ui/badge';
-import { cn, formatChipAmount } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
+import { formatChipAmount } from 'shared/utils/format';
 
 import { PlayerAction, SeatBadgeKind, type SeatActionBadge } from '../../model';
 

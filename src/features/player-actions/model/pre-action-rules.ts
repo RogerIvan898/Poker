@@ -1,4 +1,4 @@
-import { clamp } from 'shared/utils';
+import { clamp } from 'shared/utils/math';
 
 import type { PreAction, PreActionDecision, PreActionOptions } from './types';
 

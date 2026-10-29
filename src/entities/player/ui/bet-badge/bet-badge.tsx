@@ -1,5 +1,6 @@
 import { Logo } from 'shared/ui/logo';
-import { cn, formatCompactNumber } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
+import { formatCompactNumber } from 'shared/utils/format';
 
 import type { BetPosition } from '../../model';
 

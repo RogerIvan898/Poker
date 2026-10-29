@@ -1,4 +1,4 @@
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import { useTurnTimer } from '../hooks';
 import {

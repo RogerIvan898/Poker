@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import { getSuitSymbol } from '../lib';
 import type { Card as CardType } from '../model';

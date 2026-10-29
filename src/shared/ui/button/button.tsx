@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import styles from './button.module.css';
 import type { ButtonColor } from './types';

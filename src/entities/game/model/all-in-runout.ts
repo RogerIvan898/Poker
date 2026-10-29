@@ -1,4 +1,4 @@
-import { delay } from 'shared/utils';
+import { delay } from 'shared/utils/delay';
 
 import type { GameStreet } from './types';
 

@@ -4,7 +4,7 @@ import type { ServerGameEvent } from 'entities/game/model/types';
 import { PlayerAction, PlayerStatus } from 'entities/player';
 import type { PlayerActionType, PlayerStatusType } from 'entities/player';
 import { VIEWER_ID } from 'entities/session/model';
-import { clamp } from 'shared/utils';
+import { clamp } from 'shared/utils/math';
 
 import type { MockRoomConfig } from '../rooms';
 

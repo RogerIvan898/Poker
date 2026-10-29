@@ -5,7 +5,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useUnit } from 'effector-react';
 import { Loader2, Users } from 'lucide-react';
 
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import { $joiningRoomId, joinRoomFx } from '../model';
 

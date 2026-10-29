@@ -5,7 +5,7 @@ import type { CardType } from 'entities/card';
 import { Sound } from 'shared/assets/sounds';
 import { useSound } from 'shared/lib/audio';
 import { Logo } from 'shared/ui/logo';
-import { formatChipAmount } from 'shared/utils';
+import { formatChipAmount } from 'shared/utils/format';
 
 import styles from './poker-table.module.css';
 

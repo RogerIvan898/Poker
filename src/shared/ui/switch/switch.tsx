@@ -1,4 +1,4 @@
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import styles from './switch.module.css';
 

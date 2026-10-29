@@ -7,7 +7,8 @@ import { Minus, Plus, Settings } from 'lucide-react';
 
 import { $currentLocale } from 'shared/lib/i18n';
 import { Logo } from 'shared/ui/logo';
-import { cn, getInitialLetter } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
+import { getInitialLetter } from 'shared/utils/format';
 import { SettingsDialog } from 'widgets/settings';
 
 import styles from './header.module.css';

@@ -1,7 +1,9 @@
 import { useLingui } from '@lingui/react/macro';
 
 import { Alert } from 'shared/ui/alert';
-import { cn, formatAddress, isTonAddress } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
+import { formatAddress } from 'shared/utils/format';
+import { isTonAddress } from 'shared/utils/ton';
 
 import type { WithdrawDestination } from '../model';
 

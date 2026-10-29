@@ -5,7 +5,7 @@ import { Coins, Swords } from 'lucide-react';
 
 import { RoomCard } from 'entities/room';
 import { JoinRoomButton } from 'features/join-room';
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 import { DepositModal } from 'widgets/deposit';
 import { WithdrawModal } from 'widgets/withdraw';
 

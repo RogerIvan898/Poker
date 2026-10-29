@@ -6,9 +6,10 @@ import { useUnit } from 'effector-react';
 import { SERVER_EVENTS, gameModel } from 'entities/game';
 import { Player } from 'entities/player';
 import { sessionModel } from 'entities/session';
-import { useElementRect } from 'shared/hooks';
+import { useElementRect } from 'shared/hooks/use-element-rect';
 import { Logo } from 'shared/ui/logo';
-import { cn, formatChipAmount } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
+import { formatChipAmount } from 'shared/utils/format';
 
 import styles from './players-layer.module.css';
 import { computeSeats } from './seating';

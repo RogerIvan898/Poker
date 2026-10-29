@@ -1,7 +1,7 @@
 import { useLingui } from '@lingui/react/macro';
 
 import { NumberField } from 'shared/ui/number-field';
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import styles from './withdraw.module.css';
 

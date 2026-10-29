@@ -6,7 +6,7 @@ import { QRCodeSVG } from 'qrcode.react';
 import { PayViaWalletButton } from 'features/pay-via-wallet';
 import { Alert } from 'shared/ui/alert';
 import { CopyField } from 'shared/ui/copy-field';
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import { buildTonTransferLink } from '../../../lib';
 import type { PaymentMethod } from '../../../model';

@@ -4,7 +4,7 @@ import { msg } from '@lingui/core/macro';
 import { Plural, useLingui } from '@lingui/react/macro';
 import { Coins, Swords, Users } from 'lucide-react';
 
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import type { RoomCardInfo, RoomMode } from '../../model';
 

@@ -1,4 +1,5 @@
-import { cn, getInitialLetter } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
+import { getInitialLetter } from 'shared/utils/format';
 
 import styles from './player-avatar.module.css';
 

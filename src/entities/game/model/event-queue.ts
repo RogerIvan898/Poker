@@ -2,7 +2,7 @@ import { createEvent } from 'effector';
 
 import { Sound } from 'shared/assets/sounds';
 import { playBuffered } from 'shared/lib/audio';
-import { delay } from 'shared/utils';
+import { delay } from 'shared/utils/delay';
 
 import { playAllInRunout } from './all-in-runout';
 import { SERVER_EVENTS } from './constants';

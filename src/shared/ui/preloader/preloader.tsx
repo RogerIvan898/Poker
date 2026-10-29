@@ -1,6 +1,6 @@
 import { Loader2, Spade } from 'lucide-react';
 
-import { clamp } from 'shared/utils';
+import { clamp } from 'shared/utils/math';
 
 import styles from './preloader.module.css';
 

@@ -4,7 +4,8 @@ import { useLingui } from '@lingui/react/macro';
 
 import { Button } from 'shared/ui/button';
 import { Logo } from 'shared/ui/logo';
-import { cn, clamp } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
+import { clamp } from 'shared/utils/math';
 
 import { potRaiseTo, raise, type BetPreset } from '../../model';
 

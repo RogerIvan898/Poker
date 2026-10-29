@@ -12,7 +12,8 @@ import {
   $currentLocale,
 } from 'shared/lib/i18n';
 import { Dialog } from 'shared/ui/dialog';
-import { cn, formatAddress } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
+import { formatAddress } from 'shared/utils/format';
 
 import { Setting } from './setting';
 import styles from './settings-dialog.module.css';

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useUnit } from 'effector-react';
 
 import { CLIENT_COMMANDS, gameModel } from 'entities/game';
-import { cn } from 'shared/utils';
+import { cn } from 'shared/utils/cn';
 
 import { $mockServerEnabled } from '../model';
 

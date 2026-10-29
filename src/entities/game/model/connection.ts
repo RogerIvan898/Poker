@@ -1,5 +1,5 @@
 import { getAudioContext, preloadSounds } from 'shared/lib/audio';
-import { createSocket } from 'shared/lib/socket';
+import { createSocket } from 'shared/lib/websocket';
 
 import { pokerSoundEngine } from '../lib';
 
