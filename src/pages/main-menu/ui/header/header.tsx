@@ -51,7 +51,7 @@ export const Header = ({
           {avatarUrl ? (
             <img src={avatarUrl} alt={userName} className={styles.avatarImg} />
           ) : (
-            getInitialLetter(userName)
+            getInitialLetter(userName, '?')
           )}
         </button>
 

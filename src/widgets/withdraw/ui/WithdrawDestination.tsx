@@ -2,7 +2,7 @@ import { useLingui } from '@lingui/react/macro';
 
 import { Alert } from 'shared/ui/alert';
 import { cn } from 'shared/utils/cn';
-import { formatAddress } from 'shared/utils/format';
+import { truncateMiddle } from 'shared/utils/format';
 import { isTonAddress } from 'shared/utils/ton';
 
 import type { WithdrawDestination } from '../model';
@@ -65,7 +65,7 @@ export const WithdrawDestinationBlock = ({
           <div className={styles.walletCard}>
             <span className={styles.walletLabel}>{t`Withdraw to`}</span>
             <span className={styles.walletAddress} title={connectedAddress}>
-              {formatAddress(connectedAddress, 6)}
+              {truncateMiddle(connectedAddress, 6)}
             </span>
           </div>
         ) : (

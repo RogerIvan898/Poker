@@ -9,7 +9,7 @@ import { sessionModel } from 'entities/session';
 import { useElementRect } from 'shared/hooks/use-element-rect';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils/cn';
-import { formatChipAmount } from 'shared/utils/format';
+import { formatAmount } from 'shared/utils/format';
 
 import styles from './players-layer.module.css';
 import { computeSeats } from './seating';
@@ -220,7 +220,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
           }}
         >
           <Logo size={16} className={styles.potFlightLogo} />
-          <span>{formatChipAmount(flight.amount)}</span>
+          <span>{formatAmount(flight.amount)}</span>
         </div>
       ))}
       {flights?.map(flight => (
@@ -233,7 +233,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
           }}
         >
           <Logo size={16} className={styles.potFlightLogo} />
-          <span>{formatChipAmount(flight.amount)}</span>
+          <span>{formatAmount(flight.amount)}</span>
         </div>
       ))}
       {seats.map(({ player, betPosition, style }) => {

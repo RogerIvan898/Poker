@@ -2,7 +2,7 @@ import { useLingui } from '@lingui/react/macro';
 
 import { Badge, type BadgeVariant } from 'shared/ui/badge';
 import { cn } from 'shared/utils/cn';
-import { formatChipAmount } from 'shared/utils/format';
+import { formatAmount } from 'shared/utils/format';
 
 import { PlayerAction, SeatBadgeKind, type SeatActionBadge } from '../../model';
 
@@ -53,7 +53,7 @@ export const ActionBadge = ({ action, amount }: Props) => {
         )}
       >
         {labels[action]}
-        {showAmount ? ` ${formatChipAmount(amount)}` : null}
+        {showAmount ? ` ${formatAmount(amount)}` : null}
       </Badge>
     </div>
   );

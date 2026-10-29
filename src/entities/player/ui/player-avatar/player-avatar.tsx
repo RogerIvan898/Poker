@@ -17,6 +17,6 @@ export const PlayerAvatar = ({ name, folded, currentPlayer }: Props) => (
       currentPlayer && styles.currentPlayer
     )}
   >
-    {getInitialLetter(name)}
+    {getInitialLetter(name, '?')}
   </div>
 );

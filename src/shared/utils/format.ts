@@ -1,5 +1,5 @@
-export const formatChipAmount = (value: number) =>
-  Number.isInteger(value) ? String(value) : value.toFixed(2);
+export const formatAmount = (value: number, fractionDigits = 2) =>
+  Number.isInteger(value) ? String(value) : value.toFixed(fractionDigits);
 
 export const formatCompactNumber = (value: number): string => {
   if (value >= 1_000_000) {
@@ -17,8 +17,17 @@ export const formatCompactNumber = (value: number): string => {
   return String(value);
 };
 
-export const formatAddress = (address: string, edge = 4) =>
-  `${address.slice(0, edge)}...${address.slice(-edge)}`;
+export const truncateMiddle = (
+  value: string,
+  chars = 4,
+  separator = '...'
+): string => {
+  if (value.length <= chars * 2 + separator.length) {
+    return value;
+  }
 
-export const getInitialLetter = (name: string) =>
-  name.trim().charAt(0).toUpperCase() || '?';
+  return `${value.slice(0, chars)}${separator}${value.slice(-chars)}`;
+};
+
+export const getInitialLetter = (value: string, fallback = ''): string =>
+  value.trim().charAt(0).toUpperCase() || fallback;

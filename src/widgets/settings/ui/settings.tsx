@@ -13,7 +13,7 @@ import {
 } from 'shared/lib/i18n';
 import { Dialog } from 'shared/ui/dialog';
 import { cn } from 'shared/utils/cn';
-import { formatAddress } from 'shared/utils/format';
+import { truncateMiddle } from 'shared/utils/format';
 
 import { Setting } from './setting';
 import styles from './settings-dialog.module.css';
@@ -88,7 +88,7 @@ export const SettingsDialog = ({ open, onClose }: Props) => {
             <div className={styles.walletCard}>
               <div className={styles.walletInfo}>
                 <span className={styles.walletAddress} title={walletAddress}>
-                  {formatAddress(walletAddress)}
+                  {truncateMiddle(walletAddress)}
                 </span>
 
                 <div className={styles.walletActions}>
