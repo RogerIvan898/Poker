@@ -4,7 +4,7 @@ import { Trans } from '@lingui/react';
 import { useLingui } from '@lingui/react/macro';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 
-import { Sheet } from 'shared/ui/sheet';
+import { Dialog } from 'shared/ui/dialog';
 import { isValidTonAddress } from 'shared/utils/ton';
 
 import { formatAmountDraft, parseAmountDraft } from '../lib';
@@ -114,7 +114,12 @@ export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
   };
 
   return (
-    <Sheet open={open} onClose={handleClose} title={t`Withdraw TON`}>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      title={t`Withdraw TON`}
+      variant="bottom"
+    >
       <div className={styles.content}>
         <button
           type="button"
@@ -153,6 +158,6 @@ export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
           {submitLabel}
         </button>
       </div>
-    </Sheet>
+    </Dialog>
   );
 };

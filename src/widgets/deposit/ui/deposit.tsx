@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useLingui } from '@lingui/react/macro';
 import { ArrowLeft } from 'lucide-react';
 
-import { Sheet } from 'shared/ui/sheet';
+import { Dialog } from 'shared/ui/dialog';
 import sheetStyles from 'shared/ui/sheet/sheet.module.css';
 
 import styles from './deposit.module.css';
@@ -49,9 +49,10 @@ export const DepositModal = ({
   const handlePrevStep = () => setStep(DepositStep.Amount);
 
   return (
-    <Sheet
+    <Dialog
       open={open}
       onClose={handleClose}
+      variant="bottom"
       title={stepTitle}
       titleAddon={
         <span className={styles.stepper}>
@@ -90,6 +91,6 @@ export const DepositModal = ({
           onCopyText={onCopyText}
         />
       )}
-    </Sheet>
+    </Dialog>
   );
 };
