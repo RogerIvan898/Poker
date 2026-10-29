@@ -10,7 +10,7 @@ import styles from './deposit.module.css';
 import { AmountStep } from './steps/amount-step';
 import { PaymentDetailsStep } from './steps/payment-details';
 
-export enum DepositStep {
+enum DepositStep {
   Amount = 1,
   Details = 2,
 }

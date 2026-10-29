@@ -1,4 +1,4 @@
-import { PlayerAction } from 'entities/player/model/constants';
+import { PlayerAction } from 'entities/player';
 
 import type { ChosenAction } from './commands';
 

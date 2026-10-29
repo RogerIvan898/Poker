@@ -1,9 +1,10 @@
 import { createRoot } from 'react-dom/client';
 
 import { App } from 'app/App';
-import 'entities/session/model';
+import 'entities/session';
+// Importing the model segment only keeps the dev-only switch UI out of the production bundle.
+import { bootstrapMockServer } from 'features/mock-server/model';
 import { appStarted } from 'shared/config/init';
-import { bootstrapMockServer } from 'shared/config/mock-server';
 import { initTelegramWebApp } from 'shared/config/telegram-webapp';
 
 import './index.css';

@@ -1,4 +1,3 @@
 export { roomApi } from './api';
-export type { RoomCardInfo, RoomMode } from './model/types';
-export { RoomCard } from './ui/room-card';
-export * from './types';
+export type { JoinRoomResponse, RoomCardInfo, RoomMode } from './model';
+export { RoomCard } from './ui';

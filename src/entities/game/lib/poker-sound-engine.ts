@@ -3,9 +3,7 @@ import { getAudioContext } from 'shared/lib/audio';
 import { ACTION_SOUND_RECIPES } from './constants';
 import type { PokerSoundAction } from './types';
 
-export type { PokerSoundAction } from './types';
-
-export class PokerSoundEngine {
+class PokerSoundEngine {
   private context: AudioContext | null = null;
 
   private masterGain: GainNode | null = null;

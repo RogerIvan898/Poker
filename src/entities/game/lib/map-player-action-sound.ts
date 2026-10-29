@@ -1,8 +1,9 @@
-import { PlayerAction, PlayerStatus } from 'entities/player/model/constants';
-import type {
-  PlayerActionType,
-  PlayerStatusType,
-} from 'entities/player/model/types';
+import {
+  PlayerAction,
+  PlayerStatus,
+  type PlayerActionType,
+  type PlayerStatusType,
+} from 'entities/player';
 
 import type { PokerSoundAction } from './types';
 
@@ -14,7 +15,7 @@ const ACTION_SOUNDS: Record<PlayerActionType, PokerSoundAction> = {
   [PlayerAction.RAISE]: 'bet',
 };
 
-export const mapPlayerActedToSound = (
+export const getPlayerActionSound = (
   action: PlayerActionType,
   status: PlayerStatusType
 ): PokerSoundAction =>

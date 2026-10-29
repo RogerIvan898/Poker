@@ -1,6 +1,6 @@
 import { CLIENT_COMMANDS } from 'entities/game/model/constants';
-import { PlayerAction } from 'entities/player/model/constants';
-import type { PlayerActionType } from 'entities/player/model/types';
+import { PlayerAction } from 'entities/player';
+import type { PlayerActionType } from 'entities/player';
 
 export interface ChosenAction {
   action: PlayerActionType;

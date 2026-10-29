@@ -4,9 +4,7 @@ export const bufferCache = new Map<string, AudioBuffer>();
 const loadPromises = new Map<string, Promise<AudioBuffer>>();
 
 export const getAudioContext = () => {
-  if (!audioContext) {
-    audioContext = new AudioContext();
-  }
+  audioContext ??= new AudioContext();
 
   return audioContext;
 };
@@ -41,32 +39,32 @@ export const loadBuffer = (url: string) => {
   return promise;
 };
 
+export const startBuffer = (buffer: AudioBuffer, volume = 1) => {
+  const context = getAudioContext();
+
+  if (context.state === 'suspended') {
+    void context.resume();
+  }
+
+  const source = context.createBufferSource();
+  const gain = context.createGain();
+
+  gain.gain.value = volume;
+  source.buffer = buffer;
+  source.connect(gain);
+  gain.connect(context.destination);
+  source.start(0);
+};
+
 export const playBuffered = (url: string, volume = 1) => {
-  const start = (buffer: AudioBuffer) => {
-    const context = getAudioContext();
-
-    if (context.state === 'suspended') {
-      void context.resume();
-    }
-
-    const source = context.createBufferSource();
-    const gain = context.createGain();
-
-    gain.gain.value = volume;
-    source.buffer = buffer;
-    source.connect(gain);
-    gain.connect(context.destination);
-    source.start(0);
-  };
-
   const cached = bufferCache.get(url);
 
   if (cached) {
-    start(cached);
+    startBuffer(cached, volume);
     return;
   }
 
-  void loadBuffer(url).then(start);
+  void loadBuffer(url).then(buffer => startBuffer(buffer, volume));
 };
 
 export const preloadSounds = async (urls: string[]) => {

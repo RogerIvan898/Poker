@@ -16,10 +16,7 @@ import {
   decidePreAction,
   isPreActionStale,
 } from './pre-action-rules';
-import type { PreAction, PreActionDecision } from './types';
-
-export type { PreAction } from './types';
-export { canPreAct, chipsToCall, formatCallBb } from './pre-action-rules';
+import type { PreAction, PreActionDecision, PreActionOptions } from './types';
 
 export const setPreAction = createEvent<PreAction | null>();
 export const clearPreAction = createEvent();
@@ -45,10 +42,7 @@ const runDecision = (decision: PreActionDecision) => {
 let running = false;
 
 const runPreActionFx = createEffect(
-  ([preAction, allowed]: [
-    PreAction,
-    { canCheck: boolean; canCall: boolean },
-  ]) => {
+  ([preAction, allowed]: [PreAction, PreActionOptions]) => {
     if (running) {
       return;
     }
@@ -72,10 +66,7 @@ sample({
   source: $preAction,
   filter: (preAction, allowed) => preAction !== null && allowed !== null,
   fn: (preAction, allowed) =>
-    [preAction, allowed] as [
-      PreAction,
-      { canCheck: boolean; canCall: boolean },
-    ],
+    [preAction, allowed] as [PreAction, PreActionOptions],
   target: runPreActionFx,
 });
 

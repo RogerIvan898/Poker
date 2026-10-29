@@ -1,8 +1,8 @@
-import { createStore } from 'effector';
-import { createEffect, sample } from 'effector';
+import { createEffect, createStore, sample } from 'effector';
 
-import { authApi } from 'entities/session/api';
 import { appStarted } from 'shared/config/init';
+
+import { authApi } from '../api';
 
 const authFx = createEffect(() => {
   const tg = window.Telegram?.WebApp;
@@ -17,7 +17,6 @@ const authFx = createEffect(() => {
 export const VIEWER_ID = '100';
 
 export const $currentUserId = createStore<string | null>(VIEWER_ID);
-export const $isAuthorized = $currentUserId.map(user => Boolean(user));
 
 sample({
   clock: appStarted,

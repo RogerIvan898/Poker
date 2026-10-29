@@ -3,7 +3,7 @@ import { useLingui } from '@lingui/react/macro';
 import { Alert } from 'shared/ui/alert';
 import { cn, formatAddress, isTonAddress } from 'shared/utils';
 
-import type { WithdrawDestination } from '../model/types';
+import type { WithdrawDestination } from '../model';
 
 import styles from './withdraw.module.css';
 

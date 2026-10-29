@@ -1,7 +1,6 @@
 import type { Event } from 'effector';
 
-import { mapPlayerActedToSound } from '../lib/map-player-action-sound';
-import { pokerSoundEngine } from '../lib/poker-sound-engine';
+import { getPlayerActionSound, pokerSoundEngine } from '../lib';
 
 import { SERVER_EVENTS } from './constants';
 import type { ServerGameEvent } from './types';
@@ -13,7 +12,7 @@ export const watchPlayerActionSounds = (events: Event<ServerGameEvent>) => {
     }
 
     void pokerSoundEngine.playAction(
-      mapPlayerActedToSound(event.payload.action, event.payload.status)
+      getPlayerActionSound(event.payload.action, event.payload.status)
     );
   });
 };

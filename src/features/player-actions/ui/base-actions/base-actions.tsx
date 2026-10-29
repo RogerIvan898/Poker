@@ -2,7 +2,7 @@ import { useLingui } from '@lingui/react/macro';
 
 import { Button } from 'shared/ui/button';
 
-import { call, check, fold } from '../../model/actions';
+import { call, check, fold } from '../../model';
 
 import styles from './base-actions.module.css';
 

@@ -8,8 +8,8 @@ import { Alert } from 'shared/ui/alert';
 import { CopyField } from 'shared/ui/copy-field';
 import { cn } from 'shared/utils';
 
-import { buildTonTransferLink } from '../../../lib/ton-transfer';
-import type { PaymentMethod } from '../../../model/types';
+import { buildTonTransferLink } from '../../../lib';
+import type { PaymentMethod } from '../../../model';
 import shared from '../../deposit.module.css';
 
 import styles from './payment-details.module.css';

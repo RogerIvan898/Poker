@@ -1,11 +1,8 @@
 import { allInRunoutDuration } from 'entities/game/model/all-in-runout';
 import { SERVER_EVENTS } from 'entities/game/model/constants';
 import type { ServerGameEvent } from 'entities/game/model/types';
-import { PlayerAction, PlayerStatus } from 'entities/player/model/constants';
-import type {
-  PlayerActionType,
-  PlayerStatusType,
-} from 'entities/player/model/types';
+import { PlayerAction, PlayerStatus } from 'entities/player';
+import type { PlayerActionType, PlayerStatusType } from 'entities/player';
 import { VIEWER_ID } from 'entities/session/model';
 import { clamp } from 'shared/utils';
 

@@ -1,7 +1,6 @@
-import type { PlayerType as Player } from 'entities/player';
-import type { DirectionType } from 'shared/types/primitives';
+import type { BetPosition, PlayerType as Player } from 'entities/player';
 
-export function betPositionFromAngle(angleDeg: number): DirectionType {
+function betPositionFromAngle(angleDeg: number): BetPosition {
   const a = ((angleDeg % 360) + 360) % 360;
   if (a > 315 || a <= 45) return 'bottom';
   if (a > 45 && a <= 135) return 'left';

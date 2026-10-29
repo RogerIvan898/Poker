@@ -8,3 +8,9 @@ export interface RoomCardInfo {
   max: number;
   minBuy: string;
 }
+
+export interface JoinRoomResponse {
+  wsUrl: string;
+  ticket?: string;
+  expiresIn: number;
+}

@@ -1,9 +1,8 @@
-import type { Card } from 'entities/card/model/types';
-import type { Player } from 'entities/player/model/types';
+import { parseCard, type CardType as Card } from 'entities/card';
+import type { PlayerType as Player } from 'entities/player';
 
 import { SERVER_EVENTS } from './constants';
 import type { AllowedPlayerActionsEvent, ServerGameEvent } from './types';
-import { parseCard } from './utils';
 
 export const reduceMyCards = (
   cards: Player['hand'],

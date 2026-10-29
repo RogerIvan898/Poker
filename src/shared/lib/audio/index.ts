@@ -1,7 +1,2 @@
-export {
-  bufferCache,
-  getAudioContext,
-  loadBuffer,
-  playBuffered,
-  preloadSounds,
-} from './audio';
+export { getAudioContext, playBuffered, preloadSounds } from './audio';
+export { useSound } from './use-sound';

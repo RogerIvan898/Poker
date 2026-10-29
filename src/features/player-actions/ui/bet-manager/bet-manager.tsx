@@ -4,10 +4,9 @@ import { useLingui } from '@lingui/react/macro';
 
 import { Button } from 'shared/ui/button';
 import { Logo } from 'shared/ui/logo';
-import { clamp, cn } from 'shared/utils';
+import { cn, clamp } from 'shared/utils';
 
-import { raise } from '../../model';
-import { potRaiseTo, type BetPreset } from '../../model/pot-raise';
+import { potRaiseTo, raise, type BetPreset } from '../../model';
 
 import styles from './bet-manager.module.css';
 

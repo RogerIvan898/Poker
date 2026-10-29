@@ -1,1 +1,1 @@
-export { DepositModal, DepositStep } from './deposit';
+export { DepositModal } from './deposit';

@@ -53,7 +53,7 @@ export const CopyField = ({
         <span className={styles.text}>{value}</span>
         <button
           className={styles.copyBtn}
-          onClick={handleCopy}
+          onClick={() => void handleCopy()}
           type="button"
           aria-label={copied ? 'Скопировано' : 'Скопировать'}
           title={copied ? 'Скопировано' : 'Скопировать'}

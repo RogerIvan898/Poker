@@ -4,7 +4,7 @@ import { I18nProvider as LinguiProvider } from '@lingui/react';
 import { useGate, useUnit } from 'effector-react';
 
 import { $isI18nReady, i18n, I18nGate, waitForLocale } from 'shared/lib/i18n';
-import { Preloader } from 'widgets/preloader';
+import { Preloader } from 'shared/ui/preloader';
 
 const LocaleReady = ({ children }: { children: ReactNode }) => {
   const ready = useUnit($isI18nReady);

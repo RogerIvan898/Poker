@@ -1,7 +1,7 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 
-import type { Card } from 'entities/card/model/types';
-import type { Player } from 'entities/player/model/types';
+import type { CardType as Card } from 'entities/card';
+import type { PlayerType as Player } from 'entities/player';
 
 import { watchPlayerActionSounds } from './action-sounds';
 import { closeOpenGameSocket, openGameSocket } from './connection';
@@ -27,11 +27,11 @@ import type {
 
 export const incomingEvent = createEvent<ServerGameEvent>();
 
-export const initializeGameFx = createEffect((params: GameConnectParams) =>
+const initializeGameFx = createEffect((params: GameConnectParams) =>
   openGameSocket(params)
 );
 
-export const sendClientCommandFx = createEffect(
+const sendClientCommandFx = createEffect(
   ({ socket, command }: { socket: WebSocket | null; command: unknown }) => {
     if (!socket) {
       console.warn('[WS] Cannot send action: socket is disconnected');
@@ -47,7 +47,7 @@ export const connectGame = createEvent<GameConnectParams>();
 export const sendClientCommand = createEvent<ClientGameEvent>();
 export const disconnectGame = createEvent();
 
-export const $socketClient = createStore<WebSocket | null>(null)
+const $socketClient = createStore<WebSocket | null>(null)
   .on(initializeGameFx.doneData, (_, socket) => socket)
   .reset(disconnectGame);
 

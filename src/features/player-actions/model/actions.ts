@@ -4,12 +4,12 @@ import { CLIENT_COMMANDS, gameModel } from 'entities/game';
 import { PlayerAction } from 'entities/player';
 import { sessionModel } from 'entities/session';
 
-import type { PlayerActionPayloadAmount } from './types';
+import type { RaisePayload } from './types';
 
 export const fold = createEvent();
 export const call = createEvent();
 export const check = createEvent();
-export const raise = createEvent<PlayerActionPayloadAmount>();
+export const raise = createEvent<RaisePayload>();
 
 const action = (type: string, amount?: number) => ({
   action: type,

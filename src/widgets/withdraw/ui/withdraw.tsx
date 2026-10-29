@@ -5,10 +5,10 @@ import { useLingui } from '@lingui/react/macro';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 
 import { Sheet } from 'shared/ui/sheet';
-import { formatAmountDraft, isTonAddress } from 'shared/utils';
+import { isTonAddress } from 'shared/utils';
 
-import { parseAmountDraft } from '../lib/parse-amount-draft';
-import type { WithdrawDestination, WithdrawPayload } from '../model/types';
+import { formatAmountDraft, parseAmountDraft } from '../lib';
+import type { WithdrawDestination, WithdrawPayload } from '../model';
 
 import styles from './withdraw.module.css';
 import { WithdrawAmountField } from './WithdrawAmountField';

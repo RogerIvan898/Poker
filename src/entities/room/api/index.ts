@@ -1,1 +1,1 @@
-export { roomApi } from './room';
+export { roomApi } from './room-api';

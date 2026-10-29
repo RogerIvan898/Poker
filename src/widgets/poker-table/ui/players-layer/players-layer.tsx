@@ -6,10 +6,9 @@ import { useUnit } from 'effector-react';
 import { SERVER_EVENTS, gameModel } from 'entities/game';
 import { Player } from 'entities/player';
 import { sessionModel } from 'entities/session';
-import { useElementRect } from 'shared/hooks/useElementRect';
+import { useElementRect } from 'shared/hooks';
 import { Logo } from 'shared/ui/logo';
-import { cn } from 'shared/utils';
-import { formatChipAmount } from 'shared/utils/format';
+import { cn, formatChipAmount } from 'shared/utils';
 
 import styles from './players-layer.module.css';
 import { computeSeats } from './seating';
@@ -259,6 +258,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
               reveal={!isViewer && Boolean(revealed)}
               winAmount={wins[player.seat]?.amount}
               winId={wins[player.seat]?.id}
+              collecting={collecting}
             />
           </div>
         );

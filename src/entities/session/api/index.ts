@@ -1,1 +1,1 @@
-export { authApi } from './session';
+export { authApi } from './auth-api';

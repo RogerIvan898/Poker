@@ -7,7 +7,7 @@ import { Alert } from 'shared/ui/alert';
 import { Logo } from 'shared/ui/logo';
 import { NumberField } from 'shared/ui/number-field';
 
-import { AMOUNT_RE, formatDepositDraft } from '../../../lib/amount-draft';
+import { AMOUNT_RE, formatDepositDraft } from '../../../lib';
 import styles from '../../deposit.module.css';
 
 import { QuickAddOptions } from './QuickAddOptions';

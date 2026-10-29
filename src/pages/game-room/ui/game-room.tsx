@@ -7,8 +7,8 @@ import { ArrowLeft } from 'lucide-react';
 
 import { gameModel } from 'entities/game';
 import { PlayerActions } from 'features/player-actions';
+import { Preloader } from 'shared/ui/preloader';
 import { PokerBoard } from 'widgets/poker-table';
-import { Preloader } from 'widgets/preloader';
 
 import { GamePageGate } from '../model';
 
@@ -16,7 +16,7 @@ import styles from './game-room.module.css';
 
 const RevealCardsButton = import.meta.env.DEV
   ? React.lazy(() =>
-      import('features/toggle-dev-mode').then(module => ({
+      import('features/mock-server').then(module => ({
         default: module.RevealCardsButton,
       }))
     )

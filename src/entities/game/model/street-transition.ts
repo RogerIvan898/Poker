@@ -1,4 +1,4 @@
-import { delay } from 'shared/lib/delay';
+import { delay } from 'shared/utils';
 
 const READ_ACTION_MS = 700;
 const COLLECT_CHIPS_MS = 450;

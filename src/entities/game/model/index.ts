@@ -8,11 +8,10 @@ export {
   $myAllowedActions,
   $myCards,
   $players,
-  $socketClient,
   connectGame,
   disconnectGame,
   incomingEvent,
-  initializeGameFx,
   sendClientCommand,
-  sendClientCommandFx,
 } from './game';
+export { CLIENT_COMMANDS, SERVER_EVENTS } from './constants';
+export type { AllowedPlayerActionsEvent, PlayerInfo } from './types';

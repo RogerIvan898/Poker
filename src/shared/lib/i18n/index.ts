@@ -1,4 +1,4 @@
-export { i18n } from './instance';
+export { i18n } from '@lingui/core';
 export {
   DEFAULT_LOCALE,
   LOCALES,

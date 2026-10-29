@@ -6,7 +6,7 @@ import { Coins, Swords, Users } from 'lucide-react';
 
 import { cn } from 'shared/utils';
 
-import type { RoomCardInfo, RoomMode } from '../../model/types';
+import type { RoomCardInfo, RoomMode } from '../../model';
 
 import styles from './room-card.module.css';
 

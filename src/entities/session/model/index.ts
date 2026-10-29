@@ -1,1 +1,1 @@
-export { $currentUserId, $isAuthorized, VIEWER_ID } from './session';
+export { $currentUserId, VIEWER_ID } from './session';
