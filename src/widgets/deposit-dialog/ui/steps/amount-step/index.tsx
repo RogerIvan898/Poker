@@ -7,7 +7,7 @@ import { Alert } from 'shared/ui/alert';
 import { Logo } from 'shared/ui/logo';
 import { NumberField } from 'shared/ui/number-field';
 import { parseNumericInput } from 'shared/utils/format';
-import { toDepositInputValue } from 'widgets/deposit/utils';
+import { toDepositInputValue } from 'widgets/deposit-dialog/utils';
 
 import styles from '../../deposit.module.css';
 

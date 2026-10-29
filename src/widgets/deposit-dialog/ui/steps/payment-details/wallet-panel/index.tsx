@@ -2,7 +2,7 @@ import { useLingui } from '@lingui/react/macro';
 
 import { PayViaWalletButton } from 'features/pay-via-wallet';
 import { Alert } from 'shared/ui/alert';
-import { buildTonTransferLink } from 'widgets/deposit/utils';
+import { buildTonTransferLink } from 'widgets/deposit-dialog/utils';
 
 import shared from '../../deposit.module.css';
 import { QrBlock } from '../qr-block';

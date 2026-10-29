@@ -6,7 +6,7 @@ import { Coins, Swords } from 'lucide-react';
 import { RoomCard } from 'entities/room';
 import { JoinRoomButton } from 'features/join-room';
 import { cn } from 'shared/utils/cn';
-import { DepositModal } from 'widgets/deposit';
+import { DepositDialog } from 'widgets/deposit-dialog';
 import { WithdrawModal } from 'widgets/withdraw';
 
 import {
@@ -125,7 +125,7 @@ export const MenuPage = () => {
           </main>
         </div>
 
-        <DepositModal
+        <DepositDialog
           open={isDepositOpen}
           onClose={() => setIsDepositOpen(false)}
           depositAddress="UQA-hgA0arLRETGFy5ccxv11acPYBUpU49X8RyqfIju3tGci"
