@@ -66,15 +66,25 @@ export const isBlindBadge = (badge: SeatActionBadge) =>
   badge === SeatBadgeKind.SB || badge === SeatBadgeKind.BB;
 
 const DEALER_OFFSET_RAD = (55 * Math.PI) / 180;
+const DEALER_OFFSET_COS = Math.cos(DEALER_OFFSET_RAD);
+const DEALER_OFFSET_SIN = Math.sin(DEALER_OFFSET_RAD);
 
-const rotate = ({ x, y }: SeatDirection, angle: number): SeatDirection => ({
-  x: x * Math.cos(angle) - y * Math.sin(angle),
-  y: x * Math.sin(angle) + y * Math.cos(angle),
+const rotate = (
+  { x, y }: SeatDirection,
+  cos: number,
+  sin: number
+): SeatDirection => ({
+  x: x * cos - y * sin,
+  y: x * sin + y * cos,
 });
 
 export const getDealerDirection = (towardCenter: SeatDirection) => {
-  const clockwise = rotate(towardCenter, DEALER_OFFSET_RAD);
-  const counterClockwise = rotate(towardCenter, -DEALER_OFFSET_RAD);
+  const clockwise = rotate(towardCenter, DEALER_OFFSET_COS, DEALER_OFFSET_SIN);
+  const counterClockwise = rotate(
+    towardCenter,
+    DEALER_OFFSET_COS,
+    -DEALER_OFFSET_SIN
+  );
 
   return counterClockwise.y < clockwise.y - 1e-6 ? counterClockwise : clockwise;
 };
@@ -82,7 +92,15 @@ export const getDealerDirection = (towardCenter: SeatDirection) => {
 export const findPlayerById = (
   players: Record<string | number, Player>,
   id: string | null
-) => (id ? Object.values(players).find(player => player.id === id) : undefined);
+) => {
+  if (!id) return undefined;
+
+  for (const key in players) {
+    if (players[key].id === id) return players[key];
+  }
+
+  return undefined;
+};
 
 export const getHandKey = (hand: Player['hand']) =>
   hand && hand.length >= 2

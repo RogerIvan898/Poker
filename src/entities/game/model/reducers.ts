@@ -44,7 +44,7 @@ const reduceHandStarted = (
 
   return {
     ...state,
-    community: payload.community.map(card => parseCard(card)).slice(0, 5),
+    community: payload.community.slice(0, 5).map(card => parseCard(card)),
     round: 'PREFLOP',
     dealerSeat: payload.dealerSeat,
     bigBlindSeat: bigBlindSeat,
