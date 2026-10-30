@@ -41,7 +41,6 @@ export const loadBuffer = (url: string) => {
 
   loadPromises.set(url, promise);
 
-  // Drop failed loads so the next call can retry instead of reusing the rejection.
   promise.catch(() => loadPromises.delete(url));
 
   return promise;

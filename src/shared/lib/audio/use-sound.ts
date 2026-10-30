@@ -50,9 +50,7 @@ export const useSound = (url: string) => {
           setReady(true);
         }
       })
-      .catch(() => {
-        // On failure `ready` stays false; play() retries and logs.
-      });
+      .catch(() => undefined);
 
     return () => {
       isMounted = false;
