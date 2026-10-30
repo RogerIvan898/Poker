@@ -9,9 +9,9 @@ import { Dialog } from 'shared/ui/dialog';
 import { formatAmountDraft, isValidTonAddress, parseAmountDraft } from '../lib';
 import type { WithdrawDestination, WithdrawPayload } from '../model';
 
+import { WithdrawAmountField } from './withdraw-amount-field';
+import { WithdrawDestinationBlock as DestinationBlock } from './withdraw-destination';
 import styles from './withdraw.module.css';
-import { WithdrawAmountField } from './WithdrawAmountField';
-import { WithdrawDestinationBlock as DestinationBlock } from './WithdrawDestination';
 
 interface Props {
   open: boolean;
