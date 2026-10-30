@@ -135,6 +135,21 @@ const isRunoutEvent = (event: ServerGameEvent | undefined) =>
   event?.type === SERVER_EVENTS.SHOWDOWN ||
   event?.type === SERVER_EVENTS.HAND_COMPLETED;
 
+const hasCommittedBets = () =>
+  Object.values(readState().players).some(player => player.committed > 0);
+
+const getTotalPot = (street: StreetConcludedEvent) =>
+  street.payload.main +
+  street.payload.sidePots.reduce((sum, pot) => sum + pot.amount, 0);
+
+const toBoardDealt = (
+  street: BoardDealtEvent['payload']['street'],
+  cards: string[]
+): BoardDealtEvent => ({
+  type: SERVER_EVENTS.BOARD_DEALT,
+  payload: { street, cards: street === 'FLOP' ? cards : cards.slice(-1) },
+});
+
 const playRunout = async (gen: number) => {
   let street: StreetConcludedEvent | undefined;
   let showdown: ShowdownEvent | undefined;
@@ -155,13 +170,8 @@ const playRunout = async (gen: number) => {
     }
   }
 
-  const hadBets = Object.values(readState().players).some(
-    player => player.committed > 0
-  );
-  const potSize = street
-    ? street.payload.main +
-      street.payload.sidePots.reduce((sum, pot) => sum + pot.amount, 0)
-    : 0;
+  const hadBets = hasCommittedBets();
+  const potSize = street ? getTotalPot(street) : 0;
 
   clearActiveSeat();
 
@@ -199,13 +209,7 @@ const playRunout = async (gen: number) => {
         playBuffered(Sound.CARD_REVEAL);
       },
       dealStreet: (streetName, cards) => {
-        emit({
-          type: SERVER_EVENTS.BOARD_DEALT,
-          payload: {
-            street: streetName,
-            cards: streetName === 'FLOP' ? cards : cards.slice(-1),
-          },
-        });
+        emit(toBoardDealt(streetName, cards));
       },
       declareWinner: () => {
         if (completed) {
@@ -238,14 +242,9 @@ const playStreet = async (gen: number) => {
     return;
   }
 
-  const hadBets = Object.values(readState().players).some(
-    player => player.committed > 0
-  );
+  const hadBets = hasCommittedBets();
   const potSize =
-    street?.type === SERVER_EVENTS.STREET_CONCLUDED
-      ? street.payload.main +
-        street.payload.sidePots.reduce((sum, pot) => sum + pot.amount, 0)
-      : 0;
+    street?.type === SERVER_EVENTS.STREET_CONCLUDED ? getTotalPot(street) : 0;
   const nextCards =
     board?.type === SERVER_EVENTS.BOARD_DEALT ? board.payload.cards : [];
   const streetName =
@@ -280,13 +279,7 @@ const playStreet = async (gen: number) => {
           return;
         }
 
-        emit({
-          type: SERVER_EVENTS.BOARD_DEALT,
-          payload: {
-            street: streetName,
-            cards: streetName === 'FLOP' ? cards : cards.slice(-1),
-          },
-        });
+        emit(toBoardDealt(streetName, cards));
       },
     }
   );
