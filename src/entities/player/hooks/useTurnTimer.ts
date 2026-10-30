@@ -35,6 +35,12 @@ export const useTurnTimer = ({
     wasUsingBankRef.current = usingBank;
   }, [isTurn, usingBank, playSound, playTimeBankSound]);
 
+  const onTurnTimeoutRef = React.useRef(onTurnTimeout);
+
+  React.useEffect(() => {
+    onTurnTimeoutRef.current = onTurnTimeout;
+  }, [onTurnTimeout]);
+
   const rafRef = React.useRef<number | null>(null);
   const endRef = React.useRef<number | null>(null);
   const bankEndRef = React.useRef<number | null>(null);
@@ -71,7 +77,7 @@ export const useTurnTimer = ({
         setRemainingMs(Math.max(0, bankRemaining));
 
         if (bankRemaining <= 0) {
-          onTurnTimeout?.();
+          onTurnTimeoutRef.current?.();
           return;
         }
 
@@ -79,7 +85,7 @@ export const useTurnTimer = ({
         return;
       }
 
-      onTurnTimeout?.();
+      onTurnTimeoutRef.current?.();
     };
 
     rafRef.current = requestAnimationFrame(tick);
@@ -88,11 +94,12 @@ export const useTurnTimer = ({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
     };
-  }, [isTurn, turnDurationSec, timeBankSec, onTurnTimeout]);
+  }, [isTurn, turnDurationSec, timeBankSec]);
 
   const remainingSeconds = Math.ceil(remainingMs / 1000);
   const totalMs = (usingBank ? timeBankSec : turnDurationSec) * 1000;
-  const progress = isTurn ? Math.max(0, Math.min(1, remainingMs / totalMs)) : 0;
+  const progress =
+    isTurn && totalMs > 0 ? Math.max(0, Math.min(1, remainingMs / totalMs)) : 0;
 
   return {
     remainingMs,
