@@ -1,8 +1,10 @@
-import React from 'react';
-
 import { Copy, Check } from 'lucide-react';
 
+import { useCopyToClipboard } from 'shared/lib/clipboard';
+
 import styles from './copy-field.module.css';
+
+const COPIED_RESET_MS = 2000;
 
 interface Props {
   label: string;
@@ -12,27 +14,12 @@ interface Props {
 }
 
 export const CopyField = ({ label, value, badgeText, onCopy }: Props) => {
-  const [copied, setCopied] = React.useState(false);
-  const timerRef = React.useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined
-  );
-
-  React.useEffect(() => {
-    return () => clearTimeout(timerRef.current);
-  }, []);
+  const { copied, copy } = useCopyToClipboard(COPIED_RESET_MS);
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(value);
-
-      setCopied(true);
+      await copy(value);
       onCopy?.(value);
-
-      clearTimeout(timerRef.current);
-
-      timerRef.current = setTimeout(() => {
-        setCopied(false);
-      }, 2000);
     } catch (err) {
       console.error('Failed to copy: ', err);
     }

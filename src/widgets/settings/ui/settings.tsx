@@ -5,6 +5,7 @@ import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 import { useUnit } from 'effector-react';
 import { Check, Copy, RefreshCw, Wallet } from 'lucide-react';
 
+import { useCopyToClipboard } from 'shared/lib/clipboard';
 import {
   changeLocale,
   LOCALES,
@@ -18,6 +19,8 @@ import { truncateMiddle } from 'shared/utils/format';
 import { Setting } from './setting';
 import styles from './settings-dialog.module.css';
 
+const COPIED_RESET_MS = 1500;
+
 interface Props {
   open: boolean;
   onClose: () => void;
@@ -30,33 +33,25 @@ export const SettingsDialog = ({ open, onClose }: Props) => {
   const [currentLocale, setLocale] = useUnit([$currentLocale, changeLocale]);
 
   const [isPending, setIsPending] = useState(false);
-  const [isCopied, setIsCopied] = useState(false);
+  const { copied: isCopied, copy } = useCopyToClipboard(COPIED_RESET_MS);
 
-  const connectWallet = async () => {
+  const runPending = async (action: () => Promise<unknown>) => {
     setIsPending(true);
     try {
-      await tonConnectUI.openModal();
+      await action();
     } finally {
       setIsPending(false);
     }
   };
 
-  const disconnectWallet = async () => {
-    setIsPending(true);
-    try {
-      await tonConnectUI.disconnect();
-    } finally {
-      setIsPending(false);
-    }
-  };
+  const connectWallet = () => runPending(() => tonConnectUI.openModal());
+  const disconnectWallet = () => runPending(() => tonConnectUI.disconnect());
 
   const copyAddress = async () => {
     if (!walletAddress) return;
 
     try {
-      await navigator.clipboard.writeText(walletAddress);
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 1500);
+      await copy(walletAddress);
     } catch {
       void 0;
     }
