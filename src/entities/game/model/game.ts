@@ -92,13 +92,15 @@ sample({
   target: sendClientCommandFx,
 });
 
+const disconnectGameFx = createEffect((socket: WebSocket | null) => {
+  resetEventQueue();
+  closeOpenGameSocket(socket);
+});
+
 sample({
   clock: disconnectGame,
   source: $socketClient,
-  fn: socket => {
-    resetEventQueue();
-    closeOpenGameSocket(socket);
-  },
+  target: disconnectGameFx,
 });
 
 bindGameQueue({
