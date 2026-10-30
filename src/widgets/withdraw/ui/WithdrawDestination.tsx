@@ -3,8 +3,8 @@ import { useLingui } from '@lingui/react/macro';
 import { Alert } from 'shared/ui/alert';
 import { cn } from 'shared/utils/cn';
 import { truncateMiddle } from 'shared/utils/format';
-import { isValidTonAddress } from 'shared/utils/ton';
 
+import { isValidTonAddress } from '../lib';
 import type { WithdrawDestination } from '../model';
 
 import styles from './withdraw.module.css';

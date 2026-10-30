@@ -5,9 +5,8 @@ import { useLingui } from '@lingui/react/macro';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 
 import { Dialog } from 'shared/ui/dialog';
-import { isValidTonAddress } from 'shared/utils/ton';
 
-import { formatAmountDraft, parseAmountDraft } from '../lib';
+import { formatAmountDraft, isValidTonAddress, parseAmountDraft } from '../lib';
 import type { WithdrawDestination, WithdrawPayload } from '../model';
 
 import styles from './withdraw.module.css';
