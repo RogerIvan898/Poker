@@ -5,6 +5,7 @@ import { useLingui } from '@lingui/react/macro';
 import { Button } from 'shared/ui/button';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils/cn';
+import { parseNumericInput } from 'shared/utils/format';
 import { clamp } from 'shared/utils/math';
 
 import { potRaiseTo, raise, type BetPreset } from '../../model';
@@ -54,10 +55,10 @@ export const BetManager = ({
   }, [minAmount, maxAmount]);
 
   const handleConfirm = () => {
-    const typed = draft === null ? amount : Number(draft);
+    const typed = draft === null ? null : parseNumericInput(draft);
     raise({
       playerId,
-      amount: legal(Number.isFinite(typed) ? typed : amount),
+      amount: legal(typed ?? amount),
     });
     onCancel();
   };
@@ -65,9 +66,9 @@ export const BetManager = ({
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const next = event.target.value;
     setDraft(next);
-    const value = Number(next);
+    const value = parseNumericInput(next);
 
-    if (!Number.isFinite(value)) {
+    if (value === null) {
       return;
     }
 
@@ -82,8 +83,8 @@ export const BetManager = ({
   };
 
   const handleBlur = () => {
-    const value = Number(draft);
-    commit(Number.isFinite(value) ? value : amount);
+    const value = draft === null ? null : parseNumericInput(draft);
+    commit(value ?? amount);
   };
 
   // lingui-set context="bet-manager"
@@ -117,10 +118,8 @@ export const BetManager = ({
       ];
 
   const isAllIn = amount >= maxAmount;
-  const belowMin =
-    draft !== null &&
-    Number(draft) < minAmount &&
-    Number.isFinite(Number(draft));
+  const draftValue = draft === null ? null : parseNumericInput(draft);
+  const belowMin = draftValue !== null && draftValue < minAmount;
 
   return (
     <div className={styles.wrapper}>
