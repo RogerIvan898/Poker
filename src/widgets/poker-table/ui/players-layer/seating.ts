@@ -1,40 +1,62 @@
 import type { BetPosition, PlayerType as Player } from 'entities/player';
 
-function betPositionFromAngle(angleDeg: number): BetPosition {
-  const a = ((angleDeg % 360) + 360) % 360;
-  if (a > 315 || a <= 45) return 'bottom';
-  if (a > 45 && a <= 135) return 'left';
-  if (a > 135 && a <= 225) return 'top';
-  return 'right';
+export interface SeatLayout {
+  player: Player;
+  betPosition: BetPosition;
+  x: number;
+  y: number;
 }
 
-export function computeSeats(
+interface TableSize {
+  width: number;
+  height: number;
+}
+
+const COMPACT_TABLE_WIDTH = 380;
+
+const ELLIPSE_SCALE = {
+  compact: { x: 0.5, y: 0.46 },
+  regular: { x: 0.54, y: 0.48 },
+};
+
+const FULL_TURN_DEG = 360;
+
+const getBetPosition = (angleDeg: number): BetPosition => {
+  if (angleDeg <= 45 || angleDeg > 315) return 'top';
+  if (angleDeg <= 135) return 'right';
+  if (angleDeg <= 225) return 'bottom';
+  return 'left';
+};
+
+export const computeSeats = (
   players: Player[],
   viewerSeat: number | null,
-  rect: { width: number; height: number }
-) {
-  const n = players.length;
-  if (!n) return [];
+  table: TableSize
+): SeatLayout[] => {
+  const count = players.length;
 
-  const cx = rect.width / 2;
-  const cy = rect.height / 2;
-  const rx = rect.width * (rect.width < 380 ? 0.5 : 0.54);
-  const ry = rect.height * (rect.width < 380 ? 0.46 : 0.48);
+  if (!count) return [];
 
-  const refSeat = viewerSeat ?? players[0].seat;
+  const scale =
+    table.width < COMPACT_TABLE_WIDTH
+      ? ELLIPSE_SCALE.compact
+      : ELLIPSE_SCALE.regular;
+  const centerX = table.width / 2;
+  const centerY = table.height / 2;
+  const radiusX = table.width * scale.x;
+  const radiusY = table.height * scale.y;
+  const referenceSeat = viewerSeat ?? players[0].seat;
 
   return players.map(player => {
-    const relSeat = (player.seat - refSeat + n) % n;
-    const angleDeg = (180 + (relSeat / n) * 360) % 360;
-    const angleRad = ((angleDeg - 90) * Math.PI) / 180;
-
-    const x = cx + Math.cos(angleRad) * rx;
-    const y = cy + Math.sin(angleRad) * ry;
+    const position = (player.seat - referenceSeat + count) % count;
+    const angleDeg = (position / count) * FULL_TURN_DEG;
+    const angleRad = (angleDeg * Math.PI) / 180;
 
     return {
       player,
-      betPosition: betPositionFromAngle(angleDeg),
-      style: { left: `${x}px`, top: `${y}px` },
+      betPosition: getBetPosition(angleDeg),
+      x: centerX - Math.sin(angleRad) * radiusX,
+      y: centerY + Math.cos(angleRad) * radiusY,
     };
   });
-}
+};

@@ -1,18 +1,24 @@
 import React from 'react';
 
 import { SERVER_EVENTS, gameModel } from 'entities/game';
-import { sessionModel } from 'entities/session';
 
 import { getPotCenter } from './get-pot-center';
-import { computeSeats } from './seating';
+import type { SeatLayout } from './seating';
 import type { PotFlight } from './types';
 
 const POT_MOVE_MS = 750;
 
 export const usePotFlights = (
   tableElement: HTMLDivElement | null,
+  seats: SeatLayout[],
   onHidePot: (hidden: boolean) => void
 ) => {
+  const seatsRef = React.useRef(seats);
+
+  React.useEffect(() => {
+    seatsRef.current = seats;
+  }, [seats]);
+
   const [wins, setWins] = React.useState<
     Record<number, { amount: number; id: number }>
   >({});
@@ -37,14 +43,8 @@ export const usePotFlights = (
         const tableRect = tableElement.getBoundingClientRect();
         const { x: fromX, y: fromY } = getPotCenter(tableElement, tableRect);
 
-        const playerList = Object.values(gameModel.$players.getState());
-        const viewerSeat =
-          playerList.find(
-            player => player.id === sessionModel.$currentUserId.getState()
-          )?.seat ?? null;
-        const seatLayout = computeSeats(playerList, viewerSeat, tableRect);
         const next = event.payload.winners.flatMap(winner => {
-          const seat = seatLayout.find(
+          const seat = seatsRef.current.find(
             item => item.player.seat === winner.seatIndex
           );
 
@@ -58,8 +58,8 @@ export const usePotFlights = (
               amount: winner.amountWon,
               fromX,
               fromY,
-              toX: Number.parseFloat(seat.style.left),
-              toY: Number.parseFloat(seat.style.top),
+              toX: seat.x,
+              toY: seat.y,
             },
           ];
         });

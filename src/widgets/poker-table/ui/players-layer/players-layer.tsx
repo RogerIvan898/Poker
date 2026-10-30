@@ -47,11 +47,6 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
     collecting,
     tableElement
   );
-  const { wins, flights, flightId, atWinner } = usePotFlights(
-    tableElement,
-    onHidePot
-  );
-
   const seats = React.useMemo(() => {
     if (!rect) return [];
 
@@ -60,6 +55,12 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
 
     return computeSeats(playerList, viewerSeat, rect);
   }, [players, viewerId, rect]);
+
+  const { wins, flights, flightId, atWinner } = usePotFlights(
+    tableElement,
+    seats,
+    onHidePot
+  );
 
   if (!tableElement || !rect || !seats.length) {
     return null;
@@ -93,7 +94,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
           <span>{formatAmount(flight.amount)}</span>
         </div>
       ))}
-      {seats.map(({ player, betPosition, style }) => {
+      {seats.map(({ player, betPosition, x, y }) => {
         const isViewer = player.id === viewerId;
         const revealed = debugHoles[player.seat];
         const hand = isViewer && myCards ? myCards : (revealed ?? player.hand);
@@ -105,7 +106,11 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
               : null;
 
         return (
-          <div key={player.id} className={styles.seatWrapper} style={style}>
+          <div
+            key={player.id}
+            className={styles.seatWrapper}
+            style={{ left: x, top: y }}
+          >
             <Player
               player={{ ...player, hand }}
               dealer={player.seat === dealerSeat}
