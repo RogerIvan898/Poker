@@ -42,6 +42,7 @@ export const BetManager = ({
   const [draft, setDraft] = useState<string | null>(null);
 
   const step = bigBlind > 0 ? bigBlind : 1;
+  const draftValue = draft === null ? null : parseNumericInput(draft);
   const legal = (value: number) =>
     clamp(Math.round(value), minAmount, maxAmount);
 
@@ -55,10 +56,9 @@ export const BetManager = ({
   }, [minAmount, maxAmount]);
 
   const handleConfirm = () => {
-    const typed = draft === null ? null : parseNumericInput(draft);
     raise({
       playerId,
-      amount: legal(typed ?? amount),
+      amount: legal(draftValue ?? amount),
     });
     onCancel();
   };
@@ -83,8 +83,7 @@ export const BetManager = ({
   };
 
   const handleBlur = () => {
-    const value = draft === null ? null : parseNumericInput(draft);
-    commit(value ?? amount);
+    commit(draftValue ?? amount);
   };
 
   // lingui-set context="bet-manager"
@@ -118,7 +117,6 @@ export const BetManager = ({
       ];
 
   const isAllIn = amount >= maxAmount;
-  const draftValue = draft === null ? null : parseNumericInput(draft);
   const belowMin = draftValue !== null && draftValue < minAmount;
 
   return (
