@@ -26,6 +26,11 @@ export const loadBuffer = (url: string) => {
     const context = getAudioContext();
 
     const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load sound: ${url} (${response.status})`);
+    }
+
     const arrayBuffer = await response.arrayBuffer();
     const decoded = await context.decodeAudioData(arrayBuffer);
 
@@ -35,6 +40,9 @@ export const loadBuffer = (url: string) => {
   })();
 
   loadPromises.set(url, promise);
+
+  // Drop failed loads so the next call can retry instead of reusing the rejection.
+  promise.catch(() => loadPromises.delete(url));
 
   return promise;
 };
@@ -64,7 +72,9 @@ export const playBuffered = (url: string, volume = 1) => {
     return;
   }
 
-  void loadBuffer(url).then(buffer => startBuffer(buffer, volume));
+  loadBuffer(url)
+    .then(buffer => startBuffer(buffer, volume))
+    .catch((error: unknown) => console.warn(`[Audio] ${url}`, error));
 };
 
 export const preloadSounds = async (urls: string[]) => {

@@ -27,11 +27,16 @@ export const useSound = (url: string) => {
 
       pendingPlaysRef.current.push(options ?? {});
 
-      void loadBuffer(url).then(buffer => {
-        const queued = pendingPlaysRef.current.splice(0);
+      loadBuffer(url)
+        .then(buffer => {
+          const queued = pendingPlaysRef.current.splice(0);
 
-        queued.forEach(({ onStart }) => run(buffer, onStart));
-      });
+          queued.forEach(({ onStart }) => run(buffer, onStart));
+        })
+        .catch((error: unknown) => {
+          pendingPlaysRef.current = [];
+          console.warn(`[Audio] ${url}`, error);
+        });
     },
     [url]
   );
@@ -39,11 +44,15 @@ export const useSound = (url: string) => {
   React.useEffect(() => {
     let isMounted = true;
 
-    void loadBuffer(url).then(() => {
-      if (isMounted) {
-        setReady(true);
-      }
-    });
+    loadBuffer(url)
+      .then(() => {
+        if (isMounted) {
+          setReady(true);
+        }
+      })
+      .catch(() => {
+        // On failure `ready` stays false; play() retries and logs.
+      });
 
     return () => {
       isMounted = false;
