@@ -1,6 +1,7 @@
 .card {
-  width: clamp(44px, 11vw, 84px);
+  width: var(--card-width, clamp(44px, 11vw, 84px));
   aspect-ratio: 64 / 92;
+  container-type: inline-size;
   border-radius: 10px;
   background: #ffffff;
   box-shadow: 0 6px 14px var(--color-shadow);
@@ -36,20 +37,19 @@
 
 .cardCornerTop,
 .cardCornerBottom {
-  font-size: clamp(9px, 2.2vw, 14px);
+  font-size: clamp(9px, 18cqw, 14px);
   line-height: 1;
 }
 
 .cardSuitSmall {
   margin-left: 2px;
-  font-size: clamp(9px, 2.2vw, 14px);
+  font-size: clamp(9px, 18cqw, 14px);
 }
 
 .cardCenter {
-  font-size: clamp(18px, 5vw, 32px);
+  font-size: clamp(16px, 40cqw, 32px);
   text-align: center;
   line-height: 1;
-  margin-top: 6px;
 }
 
 .suit_hearts .cardCenter,

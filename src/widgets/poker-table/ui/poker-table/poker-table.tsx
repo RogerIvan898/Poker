@@ -29,18 +29,24 @@ export const PokerTable = ({
       <div className={styles.pokerTable} ref={ref}>
         <div className={styles.tableRail} />
         <div className={styles.tableSurface}>
-          <div className={styles.mainPotArea} data-pot>
-            {showPot && (
-              <div className={styles.potBadge}>
-                <Logo size={16} className={styles.potLogo} />
-                <span className={styles.potValue}>{formatAmount(pot)}</span>
-              </div>
-            )}
-          </div>
-          <div className={styles.communityCards}>
-            {cards.map(c => (
-              <Card key={`${c.rank}-${c.suit}`} card={c} onReveal={playDeal} />
-            ))}
+          <div className={styles.boardCenter}>
+            <div className={styles.mainPotArea} data-pot>
+              {showPot && (
+                <div className={styles.potBadge}>
+                  <Logo size={16} className={styles.potLogo} />
+                  <span className={styles.potValue}>{formatAmount(pot)}</span>
+                </div>
+              )}
+            </div>
+            <div className={styles.communityCards}>
+              {cards.map(c => (
+                <Card
+                  key={`${c.rank}-${c.suit}`}
+                  card={c}
+                  onReveal={playDeal}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

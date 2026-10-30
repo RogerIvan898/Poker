@@ -12,6 +12,7 @@
 
 .pokerTable {
   position: relative;
+  container-type: size;
   width: min(96vw, 920px);
   max-height: min(72dvh, 460px);
   aspect-ratio: 2 / 1;
@@ -71,27 +72,35 @@
   z-index: 1;
 }
 
-.communityCards {
+.boardCenter {
+  --board-gap: clamp(4px, 1.6cqw, 12px);
+
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(6px, 2cqh, 14px);
+  transform: translate(-50%, -50%);
 }
 
 .mainPotArea {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -108px);
-  z-index: 5;
-  min-width: 72px;
+  display: flex;
+  justify-content: center;
   min-height: 34px;
   pointer-events: none;
+}
+
+.communityCards {
+  --card-width: min(84px, calc((80cqw - 4 * var(--board-gap)) / 5));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--board-gap);
+  min-height: calc(var(--card-width) * 92 / 64);
 }
 
 .potBadge {
@@ -132,7 +141,9 @@
   .pokerTable {
     height: min(
       calc(100% - 152px),
-      calc(100dvh - var(--tg-safe-area-top) - var(--tg-safe-area-bottom) - 152px),
+      calc(
+        100dvh - var(--tg-safe-area-top) - var(--tg-safe-area-bottom) - 152px
+      ),
       58dvh
     );
     width: auto;
@@ -160,12 +171,8 @@
     inset: 6%;
   }
 
-  .communityCards {
-    gap: 8px;
-  }
-
   .mainPotArea {
-    transform: translate(-50%, -78px);
+    min-height: 30px;
   }
 
   .potBadge {
