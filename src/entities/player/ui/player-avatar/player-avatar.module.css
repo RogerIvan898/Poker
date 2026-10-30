@@ -29,9 +29,9 @@
 
 @media (max-width: 768px) {
   .avatar {
-    width: 68px;
-    height: 68px;
-    font-size: 20px;
+    width: 52px;
+    height: 52px;
+    font-size: 18px;
     border-width: 2px;
   }
 }

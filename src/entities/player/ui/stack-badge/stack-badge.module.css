@@ -117,16 +117,16 @@
 
 @media (max-width: 768px) {
   .frame {
-    min-width: 88px;
-    max-width: 108px;
-    padding: 6px 10px 7px;
+    min-width: 76px;
+    max-width: 92px;
+    padding: 4px 8px 5px;
   }
 
   .name {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .stackAmount {
-    font-size: 14px;
+    font-size: 13px;
   }
 }

@@ -40,4 +40,12 @@
   .cardSlot + .cardSlot {
     margin-left: -18px;
   }
+
+  .large {
+    transform: translate(-50%, -72%) scale(0.85);
+  }
+
+  .large .cardSlot + .cardSlot {
+    margin-left: -12px;
+  }
 }

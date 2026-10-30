@@ -1,6 +1,11 @@
 .betArea {
-  --bet-distance: 124px;
-  --bet-slide: 46px;
+  --bet-base-distance: clamp(72px, 22cqmin, 108px);
+  --bet-vertical-extra: 24px;
+  --bet-distance: calc(
+    var(--bet-base-distance) + var(--to-center-abs-y) *
+      var(--bet-vertical-extra)
+  );
+  --bet-slide: 40px;
 
   position: absolute;
   top: 50%;
@@ -115,18 +120,24 @@
 
 @media (max-width: 768px) {
   .amountBadge {
-    min-width: 72px;
-    height: 34px;
-    padding: 0 14px;
-    gap: 6px;
+    min-width: 0;
+    height: 26px;
+    padding: 0 10px;
+    gap: 4px;
   }
 
   .amountValue {
-    font-size: 15px;
+    font-size: 13px;
+  }
+
+  .amountLogo {
+    width: 14px;
+    height: 14px;
   }
 
   .betArea {
-    --bet-distance: 94px;
-    --bet-slide: 36px;
+    --bet-base-distance: clamp(56px, 18cqmin, 84px);
+    --bet-vertical-extra: 34px;
+    --bet-slide: 24px;
   }
 }

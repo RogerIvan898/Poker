@@ -67,19 +67,19 @@
 
 @media (max-width: 768px) {
   .mainContainer {
-    width: 72px;
+    width: 64px;
   }
 
   .dealerWrap {
-    --dealer-distance: 60px;
+    --dealer-distance: 48px;
   }
 
   .avatarWrap {
-    width: 68px;
-    height: 68px;
+    width: 52px;
+    height: 52px;
   }
 
   .stackArea {
-    margin-top: -14px;
+    margin-top: -10px;
   }
 }

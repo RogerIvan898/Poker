@@ -12,11 +12,16 @@ import styles from './player-cards.module.css';
 interface Props {
   cards: Player['hand'];
   needSound?: boolean;
+  large?: boolean;
 }
 
 const SECOND_CARD_DELAY_MS = 450;
 
-export const PlayerCards = ({ cards, needSound = false }: Props) => {
+export const PlayerCards = ({
+  cards,
+  needSound = false,
+  large = false,
+}: Props) => {
   const { play: playCardSound, ready } = useSound(Sound.CARD_REVEAL);
 
   const [showFirst, setShowFirst] = React.useState(false);
@@ -69,7 +74,7 @@ export const PlayerCards = ({ cards, needSound = false }: Props) => {
   const rightCard = faceUp && cards ? cards[1] : null;
 
   return (
-    <div className={styles.cards}>
+    <div className={cn(styles.cards, large && styles.large)}>
       <div
         className={cn(
           styles.cardSlot,

@@ -90,6 +90,7 @@ const PlayerView = ({
   const directionVars = {
     '--to-center-x': towardCenter.x,
     '--to-center-y': towardCenter.y,
+    '--to-center-abs-y': Math.abs(towardCenter.y),
     '--dealer-x': dealerDirection.x,
     '--dealer-y': dealerDirection.y,
   } as React.CSSProperties;
@@ -108,6 +109,7 @@ const PlayerView = ({
               key={cardsKey}
               cards={hand}
               needSound={currentPlayer && Boolean(hand)}
+              large={currentPlayer}
             />
           )}
 
