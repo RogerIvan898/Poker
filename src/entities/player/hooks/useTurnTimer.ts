@@ -3,6 +3,8 @@ import React from 'react';
 import { Sound } from 'shared/assets/sounds';
 import { useSound } from 'shared/lib/audio';
 
+const MS_IN_SECOND = 1000;
+
 export const useTurnTimer = ({
   isTurn,
   turnDurationSec,
@@ -17,95 +19,52 @@ export const useTurnTimer = ({
   playSound?: boolean;
 }) => {
   const { play: playTimeBankSound } = useSound(Sound.TIME_BANK);
-  const wasUsingBankRef = React.useRef(false);
-
-  const [remainingMs, setRemainingMs] = React.useState(turnDurationSec * 1000);
   const [usingBank, setUsingBank] = React.useState(false);
 
-  React.useEffect(() => {
-    if (!isTurn) {
-      wasUsingBankRef.current = false;
-      return;
-    }
-
-    if (playSound && usingBank && !wasUsingBankRef.current) {
-      playTimeBankSound();
-    }
-
-    wasUsingBankRef.current = usingBank;
-  }, [isTurn, usingBank, playSound, playTimeBankSound]);
-
   const onTurnTimeoutRef = React.useRef(onTurnTimeout);
+  const playSoundRef = React.useRef(playSound);
 
   React.useEffect(() => {
     onTurnTimeoutRef.current = onTurnTimeout;
-  }, [onTurnTimeout]);
-
-  const rafRef = React.useRef<number | null>(null);
-  const endRef = React.useRef<number | null>(null);
-  const bankEndRef = React.useRef<number | null>(null);
+    playSoundRef.current = playSound;
+  }, [onTurnTimeout, playSound]);
 
   React.useEffect(() => {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-
-    endRef.current = null;
-    bankEndRef.current = null;
     setUsingBank(false);
-    setRemainingMs(turnDurationSec * 1000);
 
-    if (!isTurn) return;
+    if (!isTurn) {
+      return;
+    }
 
-    const start = performance.now();
-    endRef.current = start + turnDurationSec * 1000;
+    let bankTimer: number | undefined;
 
-    const tick = () => {
-      const now = performance.now();
-
-      if (endRef.current && now < endRef.current) {
-        setRemainingMs(endRef.current - now);
-        rafRef.current = requestAnimationFrame(tick);
+    const turnTimer = window.setTimeout(() => {
+      if (timeBankSec <= 0) {
+        onTurnTimeoutRef.current?.();
         return;
       }
 
-      if (timeBankSec > 0) {
-        if (!bankEndRef.current) {
-          bankEndRef.current = now + timeBankSec * 1000;
-          setUsingBank(true);
-        }
+      setUsingBank(true);
 
-        const bankRemaining = bankEndRef.current - now;
-        setRemainingMs(Math.max(0, bankRemaining));
-
-        if (bankRemaining <= 0) {
-          onTurnTimeoutRef.current?.();
-          return;
-        }
-
-        rafRef.current = requestAnimationFrame(tick);
-        return;
+      if (playSoundRef.current) {
+        playTimeBankSound();
       }
 
-      onTurnTimeoutRef.current?.();
-    };
-
-    rafRef.current = requestAnimationFrame(tick);
+      bankTimer = window.setTimeout(
+        () => onTurnTimeoutRef.current?.(),
+        timeBankSec * MS_IN_SECOND
+      );
+    }, turnDurationSec * MS_IN_SECOND);
 
     return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      rafRef.current = null;
+      window.clearTimeout(turnTimer);
+      window.clearTimeout(bankTimer);
     };
-  }, [isTurn, turnDurationSec, timeBankSec]);
-
-  const remainingSeconds = Math.ceil(remainingMs / 1000);
-  const totalMs = (usingBank ? timeBankSec : turnDurationSec) * 1000;
-  const progress =
-    isTurn && totalMs > 0 ? Math.max(0, Math.min(1, remainingMs / totalMs)) : 0;
+  }, [isTurn, turnDurationSec, timeBankSec, playTimeBankSound]);
 
   return {
-    remainingMs,
-    remainingSeconds,
-    usingBank,
     showTimer: isTurn,
-    progress,
+    usingBank,
+    phaseDurationMs: (usingBank ? timeBankSec : turnDurationSec) * MS_IN_SECOND,
   };
 };

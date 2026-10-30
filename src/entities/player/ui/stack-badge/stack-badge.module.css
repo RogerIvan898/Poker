@@ -16,7 +16,6 @@
   background: var(--color-bg-elevated);
   border: 1.5px solid color-mix(in srgb, var(--color-primary) 40%, transparent);
   box-shadow: 0 4px 14px var(--color-shadow);
-  backdrop-filter: blur(10px);
   pointer-events: none;
   overflow: hidden;
 }
@@ -42,7 +41,19 @@
   border-radius: inherit;
   z-index: 0;
   pointer-events: none;
-  will-change: transform;
+  animation-name: timerDrain;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes timerDrain {
+  from {
+    transform: scaleX(1);
+  }
+
+  to {
+    transform: scaleX(0);
+  }
 }
 
 .timerFillBank {

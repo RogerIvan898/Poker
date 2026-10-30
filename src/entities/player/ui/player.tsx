@@ -1,4 +1,4 @@
-import type React from 'react';
+import React from 'react';
 
 import { cn } from 'shared/utils/cn';
 
@@ -28,6 +28,7 @@ const DEFAULT_DIRECTION: SeatDirection = { x: 0, y: -1 };
 
 interface Props {
   player: PlayerType;
+  hand?: PlayerType['hand'];
   currentPlayer?: boolean;
   dealer: boolean;
   blindRole?: BlindRole | null;
@@ -43,8 +44,9 @@ interface Props {
   winId?: number;
 }
 
-export const Player = ({
+const PlayerView = ({
   player,
+  hand = player.hand,
   currentPlayer = false,
   turnDurationSec = 15,
   timeBankSec = 10,
@@ -58,7 +60,7 @@ export const Player = ({
   winId,
   collecting = false,
 }: Props) => {
-  const { status, stack, hand, name } = player;
+  const { status, stack, name } = player;
 
   const isSitOut = status === PlayerStatus.SITTING_OUT;
   const isFolded = status === PlayerStatus.FOLDED;
@@ -69,7 +71,7 @@ export const Player = ({
     blindRole
   );
 
-  const { showTimer, usingBank, progress } = useTurnTimer({
+  const { showTimer, usingBank, phaseDurationMs } = useTurnTimer({
     isTurn: turn,
     turnDurationSec,
     timeBankSec,
@@ -140,7 +142,7 @@ export const Player = ({
             folded={isFolded}
             sitOut={isSitOut}
             turnActive={showTimer}
-            turnProgress={progress}
+            turnDurationMs={phaseDurationMs}
             usingBank={usingBank}
             winAmount={winAmount}
             winId={winId}
@@ -158,3 +160,5 @@ export const Player = ({
     </section>
   );
 };
+
+export const Player = React.memo(PlayerView);
