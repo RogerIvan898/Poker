@@ -1,8 +1,8 @@
-import type { BetPosition, PlayerType as Player } from 'entities/player';
+import type { PlayerType as Player, SeatDirection } from 'entities/player';
 
 export interface SeatLayout {
   player: Player;
-  betPosition: BetPosition;
+  towardCenter: SeatDirection;
   x: number;
   y: number;
 }
@@ -20,13 +20,6 @@ const ELLIPSE_SCALE = {
 };
 
 const FULL_TURN_DEG = 360;
-
-const getBetPosition = (angleDeg: number): BetPosition => {
-  if (angleDeg <= 45 || angleDeg > 315) return 'top';
-  if (angleDeg <= 135) return 'right';
-  if (angleDeg <= 225) return 'bottom';
-  return 'left';
-};
 
 export const computeSeats = (
   players: Player[],
@@ -58,11 +51,18 @@ export const computeSeats = (
     const angleDeg = (position / count) * FULL_TURN_DEG;
     const angleRad = (angleDeg * Math.PI) / 180;
 
+    const x = centerX - Math.sin(angleRad) * radiusX;
+    const y = centerY + Math.cos(angleRad) * radiusY;
+    const distance = Math.hypot(centerX - x, centerY - y) || 1;
+
     return {
       player,
-      betPosition: getBetPosition(angleDeg),
-      x: centerX - Math.sin(angleRad) * radiusX,
-      y: centerY + Math.cos(angleRad) * radiusY,
+      towardCenter: {
+        x: (centerX - x) / distance,
+        y: (centerY - y) / distance,
+      },
+      x,
+      y,
     };
   });
 };

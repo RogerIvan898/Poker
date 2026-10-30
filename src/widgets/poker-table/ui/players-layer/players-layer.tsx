@@ -94,7 +94,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
           <span>{formatAmount(flight.amount)}</span>
         </div>
       ))}
-      {seats.map(({ player, betPosition, x, y }) => {
+      {seats.map(({ player, towardCenter, x, y }) => {
         const isViewer = player.id === viewerId;
         const revealed = debugHoles[player.seat];
         const hand = isViewer && myCards ? myCards : (revealed ?? player.hand);
@@ -117,7 +117,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
               blindRole={blindRole}
               currentPlayer={isViewer}
               turn={player.seat === activeSeat}
-              betPosition={betPosition}
+              towardCenter={towardCenter}
               reveal={!isViewer && Boolean(revealed)}
               winAmount={wins[player.seat]?.amount}
               winId={wins[player.seat]?.id}

@@ -14,8 +14,11 @@ export type SeatActionBadge = PlayerActionType | SeatBadgeKindType;
 
 export type BlindRole = 'sb' | 'bb';
 
-/** Side of the seat where the player's bet and dealer button are drawn. */
-export type BetPosition = 'top' | 'bottom' | 'left' | 'right';
+/** Unit vector from the seat to the table center, in screen coordinates. */
+export interface SeatDirection {
+  x: number;
+  y: number;
+}
 
 export interface Player {
   id: string;

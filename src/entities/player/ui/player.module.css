@@ -39,42 +39,19 @@
 }
 
 .dealerWrap {
+  --dealer-distance: 84px;
+
   position: absolute;
+  top: 50%;
+  left: 50%;
   z-index: 5;
   perspective: 300px;
   pointer-events: none;
-}
-
-.dealer_top {
-  bottom: calc(100% + 10px);
-  left: calc(100% - 4px);
-  top: auto;
-  right: auto;
-  transform: none;
-}
-
-.dealer_bottom {
-  top: calc(100% + 36px);
-  left: calc(100% - 4px);
-  bottom: auto;
-  right: auto;
-  transform: none;
-}
-
-.dealer_left {
-  right: calc(100% + 16px);
-  top: 12%;
-  left: auto;
-  bottom: auto;
-  transform: none;
-}
-
-.dealer_right {
-  left: calc(100% + 16px);
-  top: 12%;
-  right: auto;
-  bottom: auto;
-  transform: none;
+  transform: translate(-50%, -50%)
+    translate(
+      calc(var(--dealer-x) * var(--dealer-distance)),
+      calc(var(--dealer-y) * var(--dealer-distance))
+    );
 }
 
 .sitOut {
@@ -93,21 +70,8 @@
     width: 72px;
   }
 
-  .dealer_top,
-  .dealer_bottom {
-    left: calc(100% - 2px);
-  }
-
-  .dealer_bottom {
-    top: calc(100% + 28px);
-  }
-
-  .dealer_left {
-    right: calc(100% + 10px);
-  }
-
-  .dealer_right {
-    left: calc(100% + 10px);
+  .dealerWrap {
+    --dealer-distance: 60px;
   }
 
   .avatarWrap {

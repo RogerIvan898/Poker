@@ -2,27 +2,20 @@ import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils/cn';
 import { formatCompactNumber } from 'shared/utils/format';
 
-import type { BetPosition } from '../../model';
-
 import styles from './bet-badge.module.css';
 
 interface Props {
   amount: number;
-  position: BetPosition;
   seat: number;
   collecting: boolean;
 }
 
-export const BetBadge = ({ amount, position, seat, collecting }: Props) => {
+export const BetBadge = ({ amount, seat, collecting }: Props) => {
   if (amount <= 0) return null;
 
   return (
     <div
-      className={cn(
-        styles.betArea,
-        styles[`bet_${position}`],
-        collecting && styles.collect
-      )}
+      className={cn(styles.betArea, collecting && styles.collect)}
       data-bet={amount}
       data-bet-seat={seat}
     >

@@ -7,6 +7,7 @@ import {
   type PlayerActionType,
   type PlayerStatusType,
   type SeatActionBadge,
+  type SeatDirection,
 } from '../model';
 
 const STATUSES_IN_HAND = new Set<PlayerStatusType>([
@@ -63,3 +64,17 @@ export const resolveSeatActionBadge = (
 
 export const isBlindBadge = (badge: SeatActionBadge) =>
   badge === SeatBadgeKind.SB || badge === SeatBadgeKind.BB;
+
+const DEALER_OFFSET_RAD = (55 * Math.PI) / 180;
+
+const rotate = ({ x, y }: SeatDirection, angle: number): SeatDirection => ({
+  x: x * Math.cos(angle) - y * Math.sin(angle),
+  y: x * Math.sin(angle) + y * Math.cos(angle),
+});
+
+export const getDealerDirection = (towardCenter: SeatDirection) => {
+  const clockwise = rotate(towardCenter, DEALER_OFFSET_RAD);
+  const counterClockwise = rotate(towardCenter, -DEALER_OFFSET_RAD);
+
+  return counterClockwise.y < clockwise.y - 1e-6 ? counterClockwise : clockwise;
+};

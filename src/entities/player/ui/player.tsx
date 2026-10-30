@@ -1,16 +1,19 @@
+import type React from 'react';
+
 import { cn } from 'shared/utils/cn';
 
 import { useTurnTimer } from '../hooks';
 import {
+  getDealerDirection,
   isBlindBadge,
   resolveSeatActionBadge,
   shouldShowHoleCards,
 } from '../lib';
 import {
   PlayerStatus,
-  type BetPosition,
   type BlindRole,
   type Player as PlayerType,
+  type SeatDirection,
 } from '../model';
 
 import { ActionBadge } from './action-badge';
@@ -21,6 +24,8 @@ import { PlayerCards } from './player-cards';
 import styles from './player.module.css';
 import { StackBadge } from './stack-badge';
 
+const DEFAULT_DIRECTION: SeatDirection = { x: 0, y: -1 };
+
 interface Props {
   player: PlayerType;
   currentPlayer?: boolean;
@@ -30,7 +35,7 @@ interface Props {
   timeBankSec?: number;
   onTurnTimeout?: () => void;
   turn: boolean;
-  betPosition?: BetPosition;
+  towardCenter?: SeatDirection;
   /** Bets are flying into the pot: hide seat badges and animate bet chips. */
   collecting?: boolean;
   reveal?: boolean;
@@ -47,7 +52,7 @@ export const Player = ({
   dealer = false,
   blindRole = null,
   turn = false,
-  betPosition = 'top',
+  towardCenter = DEFAULT_DIRECTION,
   reveal = false,
   winAmount,
   winId,
@@ -79,6 +84,14 @@ export const Player = ({
     reveal,
   });
 
+  const dealerDirection = getDealerDirection(towardCenter);
+  const directionVars = {
+    '--to-center-x': towardCenter.x,
+    '--to-center-y': towardCenter.y,
+    '--dealer-x': dealerDirection.x,
+    '--dealer-y': dealerDirection.y,
+  } as React.CSSProperties;
+
   const cardsKey =
     hand && hand.length >= 2
       ? `${hand[0].rank}-${hand[0].suit}|${hand[1].rank}-${hand[1].suit}`
@@ -86,7 +99,7 @@ export const Player = ({
 
   return (
     <section className={cn(styles.player, isSitOut && styles.sitOut)}>
-      <div className={styles.mainContainer}>
+      <div className={styles.mainContainer} style={directionVars}>
         <div className={styles.avatarWrap}>
           {showCards && (
             <PlayerCards
@@ -103,9 +116,7 @@ export const Player = ({
           />
 
           {dealer && (
-            <div
-              className={cn(styles.dealerWrap, styles[`dealer_${betPosition}`])}
-            >
+            <div className={styles.dealerWrap}>
               <DealerButton compact />
             </div>
           )}
@@ -139,7 +150,6 @@ export const Player = ({
         {player.committed > 0 && (
           <BetBadge
             amount={player.committed}
-            position={betPosition}
             seat={player.seat}
             collecting={collecting}
           />
