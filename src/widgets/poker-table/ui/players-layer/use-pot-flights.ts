@@ -45,7 +45,7 @@ export const usePotFlights = (
 
         const next = event.payload.winners.flatMap(winner => {
           const seat = seatsRef.current.find(
-            item => item.player.seat === winner.seatIndex
+            item => item.seat === winner.seatIndex
           );
 
           if (!seat) {

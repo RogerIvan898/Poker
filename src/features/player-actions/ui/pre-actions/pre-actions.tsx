@@ -17,20 +17,22 @@ import styles from '../base-actions/base-actions.module.css';
 
 export const PreActions = () => {
   const { t } = useLingui();
-  const [activeAction, setActive, userId, players, gameState] = useUnit([
-    $preAction,
-    setPreAction,
-    sessionModel.$currentUserId,
-    gameModel.$players,
-    gameModel.$gameState,
-  ]);
+  const [activeAction, setActive, userId, players, currentBet, bigBlind] =
+    useUnit([
+      $preAction,
+      setPreAction,
+      sessionModel.$currentUserId,
+      gameModel.$players,
+      gameModel.$currentBet,
+      gameModel.$bigBlind,
+    ]);
 
   const viewer = Object.values(players).find(player => player.id === userId);
   const toCall =
     viewer && canPreAct(viewer.status)
-      ? chipsToCall(gameState.currentBet, viewer.committed, viewer.stack)
+      ? chipsToCall(currentBet, viewer.committed, viewer.stack)
       : 0;
-  const callBb = formatCallBb(toCall, gameState.bigBlind);
+  const callBb = formatCallBb(toCall, bigBlind);
 
   const toggle = (action: PreAction) => {
     setActive(activeAction === action ? null : action);

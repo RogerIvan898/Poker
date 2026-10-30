@@ -12,11 +12,13 @@ import { BetManager } from './bet-manager';
 import styles from './player-actions.module.css';
 
 export const PlayerActions = () => {
-  const [viewerId, allowedActions, players, gameState] = useUnit([
+  const [viewerId, allowedActions, players, pot, bigBlind, round] = useUnit([
     sessionModel.$currentUserId,
     gameModel.$myAllowedActions,
     gameModel.$players,
-    gameModel.$gameState,
+    gameModel.$pot,
+    gameModel.$bigBlind,
+    gameModel.$round,
   ]);
 
   const [isChangingAmount, setIsChangingAmount] = React.useState(false);
@@ -46,9 +48,9 @@ export const PlayerActions = () => {
           playerId={viewerId}
           minAmount={allowedActions?.minRaise ?? 0}
           maxAmount={allowedActions?.maxRaise ?? 1000}
-          bigBlind={gameState.bigBlind}
+          bigBlind={bigBlind}
           pot={
-            gameState.pot +
+            pot +
             Object.values(players).reduce(
               (sum, player) => sum + player.committed,
               0
@@ -56,7 +58,7 @@ export const PlayerActions = () => {
           }
           callAmount={allowedActions?.callAmount ?? 0}
           committed={viewer?.committed ?? 0}
-          preflop={gameState.round === 'PREFLOP'}
+          preflop={round === 'PREFLOP'}
           onCancel={() => setIsChangingAmount(false)}
           variant={canBet ? 'bet' : 'raise'}
         />

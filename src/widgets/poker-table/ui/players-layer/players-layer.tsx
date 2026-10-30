@@ -25,7 +25,8 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
   const [
     players,
     dealerSeat,
-    { smallBlindSeat, bigBlindSeat },
+    smallBlindSeat,
+    bigBlindSeat,
     activeSeat,
     viewerId,
     myCards,
@@ -34,7 +35,8 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
   ] = useUnit([
     gameModel.$players,
     gameModel.$dealerSeat,
-    gameModel.$gameState,
+    gameModel.$smallBlindSeat,
+    gameModel.$bigBlindSeat,
     gameModel.$activeSeat,
     sessionModel.$currentUserId,
     gameModel.$myCards,
@@ -47,14 +49,20 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
     collecting,
     tableElement
   );
+  const playerList = Object.values(players);
+  const viewerSeat =
+    playerList.find(player => player.id === viewerId)?.seat ?? null;
+  const seatNumbersKey = playerList.map(player => player.seat).join(',');
+
   const seats = React.useMemo(() => {
-    if (!rect) return [];
+    if (!rect || !seatNumbersKey) return [];
 
-    const playerList = Object.values(players);
-    const viewerSeat = playerList.find(p => p.id === viewerId)?.seat ?? null;
-
-    return computeSeats(playerList, viewerSeat, rect);
-  }, [players, viewerId, rect]);
+    return computeSeats(
+      seatNumbersKey.split(',').map(Number),
+      viewerSeat,
+      rect
+    );
+  }, [seatNumbersKey, viewerSeat, rect]);
 
   const { wins, flights, flightId, atWinner } = usePotFlights(
     tableElement,
@@ -94,7 +102,11 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
           <span>{formatAmount(flight.amount)}</span>
         </div>
       ))}
-      {seats.map(({ player, towardCenter, x, y }) => {
+      {seats.map(({ seat, towardCenter, x, y }) => {
+        const player = players[seat];
+
+        if (!player) return null;
+
         const isViewer = player.id === viewerId;
         const revealed = debugHoles[player.seat];
         const hand = isViewer && myCards ? myCards : (revealed ?? player.hand);
@@ -112,7 +124,8 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
             style={{ left: x, top: y }}
           >
             <Player
-              player={{ ...player, hand }}
+              player={player}
+              hand={hand}
               dealer={player.seat === dealerSeat}
               blindRole={blindRole}
               currentPlayer={isViewer}

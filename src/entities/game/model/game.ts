@@ -79,6 +79,13 @@ export const $myAllowedActions = createStore<
 export const $dealerSeat = $gameState.map(state => state.dealerSeat);
 export const $players = $gameState.map(state => state.players);
 export const $activeSeat = $gameState.map(state => state.activeSeat);
+export const $smallBlindSeat = $gameState.map(state => state.smallBlindSeat);
+export const $bigBlindSeat = $gameState.map(state => state.bigBlindSeat);
+export const $bigBlind = $gameState.map(state => state.bigBlind);
+export const $currentBet = $gameState.map(state => state.currentBet);
+export const $pot = $gameState.map(state => state.pot);
+export const $community = $gameState.map(state => state.community);
+export const $round = $gameState.map(state => state.round);
 
 sample({
   clock: connectGame,

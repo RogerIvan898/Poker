@@ -9,19 +9,19 @@ import styles from './poker-board.module.css';
 import { PokerTable } from './poker-table';
 
 export const PokerBoard = () => {
-  const [gameState] = useUnit([gameModel.$gameState]);
+  const [community, pot] = useUnit([gameModel.$community, gameModel.$pot]);
 
   const [tableElement, setTableElement] = React.useState<HTMLDivElement | null>(
     null
   );
   const [hidePot, setHidePot] = React.useState(false);
-  const showPot = !hidePot && gameState.pot > 0;
+  const showPot = !hidePot && pot > 0;
 
   return (
     <div className={styles.board}>
       <PokerTable
-        cards={gameState.community}
-        pot={gameState.pot}
+        cards={community}
+        pot={pot}
         showPot={showPot}
         ref={setTableElement}
       />
