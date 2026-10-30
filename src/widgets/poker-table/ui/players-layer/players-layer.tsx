@@ -6,7 +6,7 @@ import { useUnit } from 'effector-react';
 import { gameModel } from 'entities/game';
 import { findPlayerById, Player } from 'entities/player';
 import { sessionModel } from 'entities/session';
-import { useElementRect } from 'shared/hooks/use-element-rect';
+import { useElementSize } from 'shared/hooks/use-element-size';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils/cn';
 import { formatAmount } from 'shared/utils/format';
@@ -44,7 +44,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
     gameModel.$collectingBets,
   ]);
 
-  const rect = useElementRect(tableElement);
+  const tableSize = useElementSize(tableElement);
   const { collectFlights, collectAtPot } = useCollectFlights(
     collecting,
     tableElement
@@ -54,14 +54,14 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
   const seatNumbersKey = playerList.map(player => player.seat).join(',');
 
   const seats = React.useMemo(() => {
-    if (!rect || !seatNumbersKey) return [];
+    if (!tableSize || !seatNumbersKey) return [];
 
     return computeSeats(
       seatNumbersKey.split(',').map(Number),
       viewerSeat,
-      rect
+      tableSize
     );
-  }, [seatNumbersKey, viewerSeat, rect]);
+  }, [seatNumbersKey, viewerSeat, tableSize]);
 
   const { wins, flights, flightId, atWinner } = usePotFlights(
     tableElement,
@@ -69,7 +69,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
     onHidePot
   );
 
-  if (!tableElement || !rect || !seats.length) {
+  if (!tableElement || !tableSize || !seats.length) {
     return null;
   }
 
