@@ -4,6 +4,7 @@ import { PlayerAction, type PlayerType as Player } from 'entities/player';
 import { mapPlayerInfoToPlayer } from '../lib';
 
 import { SERVER_EVENTS } from './constants';
+import { getTotalPot } from './pot';
 import type * as T from './types';
 
 const reducePlayerSeated = (
@@ -122,15 +123,10 @@ const reduceStreetConcluded = (
     {} as Record<string, Player>
   );
 
-  const totalSidePots = payload.sidePots.reduce(
-    (sum, sp) => sum + sp.amount,
-    0
-  );
-
   return {
     ...state,
     players: clearedPlayers,
-    pot: payload.main + totalSidePots,
+    pot: getTotalPot(payload),
     currentBet: 0,
   };
 };

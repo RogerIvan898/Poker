@@ -6,6 +6,7 @@ import { delay } from 'shared/utils/delay';
 
 import { playAllInRunout } from './all-in-runout';
 import { SERVER_EVENTS } from './constants';
+import { getTotalPot } from './pot';
 import { transitionToNextStreet } from './street-transition';
 import type {
   BoardDealtEvent,
@@ -138,10 +139,6 @@ const isRunoutEvent = (event: ServerGameEvent | undefined) =>
 const hasCommittedBets = () =>
   Object.values(readState().players).some(player => player.committed > 0);
 
-const getTotalPot = (street: StreetConcludedEvent) =>
-  street.payload.main +
-  street.payload.sidePots.reduce((sum, pot) => sum + pot.amount, 0);
-
 const toBoardDealt = (
   street: BoardDealtEvent['payload']['street'],
   cards: string[]
@@ -171,7 +168,7 @@ const playRunout = async (gen: number) => {
   }
 
   const hadBets = hasCommittedBets();
-  const potSize = street ? getTotalPot(street) : 0;
+  const potSize = street ? getTotalPot(street.payload) : 0;
 
   clearActiveSeat();
 
@@ -244,7 +241,9 @@ const playStreet = async (gen: number) => {
 
   const hadBets = hasCommittedBets();
   const potSize =
-    street?.type === SERVER_EVENTS.STREET_CONCLUDED ? getTotalPot(street) : 0;
+    street?.type === SERVER_EVENTS.STREET_CONCLUDED
+      ? getTotalPot(street.payload)
+      : 0;
   const nextCards =
     board?.type === SERVER_EVENTS.BOARD_DEALT ? board.payload.cards : [];
   const streetName =
