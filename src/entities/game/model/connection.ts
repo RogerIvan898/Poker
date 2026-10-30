@@ -12,6 +12,7 @@ import {
 import type { GameConnectParams, ServerGameEvent } from './types';
 
 let openSocket: WebSocket | null = null;
+let connectionId = 0;
 
 const isServerGameEvent = (data: unknown): data is ServerGameEvent =>
   typeof data === 'object' && data !== null && 'type' in data;
@@ -39,10 +40,18 @@ const createGameSocket = (wsUrl: string) =>
   });
 
 export const openGameSocket = async ({ wsUrl }: GameConnectParams) => {
+  connectionId += 1;
+  const currentId = connectionId;
+
   resetEventQueue();
   openSocket?.close();
   openSocket = null;
   await initializeAudio();
+
+  if (currentId !== connectionId) {
+    return null;
+  }
+
   const socket = createGameSocket(wsUrl);
   openSocket = socket;
   queueMicrotask(markGameQueueLive);
@@ -50,6 +59,8 @@ export const openGameSocket = async ({ wsUrl }: GameConnectParams) => {
 };
 
 export const closeOpenGameSocket = (socket: WebSocket | null) => {
+  connectionId += 1;
+  openSocket?.close();
   openSocket = null;
   socket?.close();
 };
