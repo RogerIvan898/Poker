@@ -6,8 +6,6 @@ import { Coins, Swords } from 'lucide-react';
 import { RoomCard } from 'entities/room';
 import { JoinRoomButton } from 'features/join-room';
 import { cn } from 'shared/utils/cn';
-import { DepositDialog } from 'widgets/deposit-dialog';
-import { WithdrawModal } from 'widgets/withdraw';
 
 import {
   filterRooms,
@@ -19,6 +17,21 @@ import {
 
 import { Header } from './header';
 import styles from './main-menu.module.css';
+
+const loadDepositDialog = () => import('widgets/deposit-dialog');
+const loadWithdrawModal = () => import('widgets/withdraw');
+
+const DepositDialog = React.lazy(() =>
+  loadDepositDialog().then(module => ({ default: module.DepositDialog }))
+);
+const WithdrawModal = React.lazy(() =>
+  loadWithdrawModal().then(module => ({ default: module.WithdrawModal }))
+);
+
+const prefetchWalletDialogs = () => {
+  void loadDepositDialog();
+  void loadWithdrawModal();
+};
 
 const DevServerSwitch = import.meta.env.DEV
   ? React.lazy(() =>
@@ -75,6 +88,18 @@ export const MenuPage = () => {
   const mockUser = { firstName: 'User', balance: 42.5 };
   const visibleRooms = filterRooms(ROOMS, roomFilter);
 
+  React.useEffect(() => {
+    if (typeof window.requestIdleCallback !== 'function') {
+      const timer = window.setTimeout(prefetchWalletDialogs, 1500);
+
+      return () => window.clearTimeout(timer);
+    }
+
+    const handle = window.requestIdleCallback(prefetchWalletDialogs);
+
+    return () => window.cancelIdleCallback(handle);
+  }, []);
+
   return (
     <div className={styles.page}>
       <div className={styles.appLayout}>
@@ -125,21 +150,27 @@ export const MenuPage = () => {
           </main>
         </div>
 
-        <DepositDialog
-          open={isDepositOpen}
-          onClose={() => setIsDepositOpen(false)}
-          depositAddress="UQA-hgA0arLRETGFy5ccxv11acPYBUpU49X8RyqfIju3tGci"
-          memo="1049285"
-        />
+        <React.Suspense fallback={null}>
+          {isDepositOpen && (
+            <DepositDialog
+              open
+              onClose={() => setIsDepositOpen(false)}
+              depositAddress="UQA-hgA0arLRETGFy5ccxv11acPYBUpU49X8RyqfIju3tGci"
+              memo="1049285"
+            />
+          )}
 
-        <WithdrawModal
-          open={isWithdrawOpen}
-          onClose={() => setIsWithdrawOpen(false)}
-          balance={mockUser.balance}
-          onSubmit={payload => {
-            console.log('Withdraw request', payload);
-          }}
-        />
+          {isWithdrawOpen && (
+            <WithdrawModal
+              open
+              onClose={() => setIsWithdrawOpen(false)}
+              balance={mockUser.balance}
+              onSubmit={payload => {
+                console.log('Withdraw request', payload);
+              }}
+            />
+          )}
+        </React.Suspense>
       </div>
     </div>
   );
