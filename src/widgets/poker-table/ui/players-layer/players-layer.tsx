@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 import { useUnit } from 'effector-react';
 
-import { SERVER_EVENTS, gameModel } from 'entities/game';
+import { gameModel } from 'entities/game';
 import { Player } from 'entities/player';
 import { sessionModel } from 'entities/session';
 import { useElementRect } from 'shared/hooks/use-element-rect';
@@ -13,9 +13,8 @@ import { formatAmount } from 'shared/utils/format';
 
 import styles from './players-layer.module.css';
 import { computeSeats } from './seating';
-import type { CollectFlight, PotFlight } from './types';
-
-const POT_MOVE_MS = 750;
+import { useCollectFlights } from './use-collect-flights';
+import { usePotFlights } from './use-pot-flights';
 
 interface Props {
   tableElement: HTMLDivElement | null;
@@ -44,156 +43,14 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
   ]);
 
   const rect = useElementRect(tableElement);
-  const [wins, setWins] = React.useState<
-    Record<number, { amount: number; id: number }>
-  >({});
-  const [flights, setFlights] = React.useState<PotFlight[] | null>(null);
-  const [flightId, setFlightId] = React.useState(0);
-  const [atWinner, setAtWinner] = React.useState(false);
-  const [collectFlights, setCollectFlights] = React.useState<
-    CollectFlight[] | null
-  >(null);
-  const [collectAtPot, setCollectAtPot] = React.useState(false);
-
-  React.useLayoutEffect(() => {
-    if (!collecting || !tableElement) {
-      setCollectFlights(null);
-      setCollectAtPot(false);
-      return;
-    }
-
-    const tableRect = tableElement.getBoundingClientRect();
-    const potEl = tableElement.querySelector('[data-pot]');
-    const bets = [...tableElement.querySelectorAll<HTMLElement>('[data-bet]')];
-
-    if (bets.length === 0) {
-      return;
-    }
-
-    const potRect = potEl?.getBoundingClientRect();
-    const toX = potRect
-      ? potRect.left - tableRect.left + potRect.width / 2
-      : tableRect.width / 2;
-    const toY = potRect
-      ? potRect.top - tableRect.top + potRect.height / 2
-      : tableRect.height / 2;
-
-    setCollectAtPot(false);
-    setCollectFlights(
-      bets.map(bet => {
-        const betRect = bet.getBoundingClientRect();
-
-        return {
-          seat: bet.dataset.betSeat ?? '',
-          amount: Number(bet.dataset.bet),
-          fromX: betRect.left - tableRect.left + betRect.width / 2,
-          fromY: betRect.top - tableRect.top + betRect.height / 2,
-          toX,
-          toY,
-        };
-      })
-    );
-
-    let secondFrame = 0;
-    const firstFrame = requestAnimationFrame(() => {
-      secondFrame = requestAnimationFrame(() => setCollectAtPot(true));
-    });
-
-    return () => {
-      cancelAnimationFrame(firstFrame);
-      cancelAnimationFrame(secondFrame);
-    };
-  }, [collecting, tableElement]);
-
-  React.useEffect(
-    () =>
-      gameModel.incomingEvent.watch(event => {
-        if (event.type === SERVER_EVENTS.HAND_STARTED) {
-          setFlights(null);
-          setAtWinner(false);
-          onHidePot(false);
-          return;
-        }
-
-        if (event.type !== SERVER_EVENTS.HAND_COMPLETED || !tableElement) {
-          return;
-        }
-
-        const tableRect = tableElement.getBoundingClientRect();
-        const potEl = tableElement.querySelector('[data-pot]');
-        let fromX = tableRect.width / 2;
-        let fromY = tableRect.height / 2;
-
-        if (potEl) {
-          const potRect = potEl.getBoundingClientRect();
-          fromX = potRect.left - tableRect.left + potRect.width / 2;
-          fromY = potRect.top - tableRect.top + potRect.height / 2;
-        }
-
-        const playerList = Object.values(gameModel.$players.getState());
-        const viewerSeat =
-          playerList.find(
-            player => player.id === sessionModel.$currentUserId.getState()
-          )?.seat ?? null;
-        const seatLayout = computeSeats(playerList, viewerSeat, tableRect);
-        const next = event.payload.winners.flatMap(winner => {
-          const seat = seatLayout.find(
-            item => item.player.seat === winner.seatIndex
-          );
-
-          if (!seat) {
-            return [];
-          }
-
-          return [
-            {
-              seat: winner.seatIndex,
-              amount: winner.amountWon,
-              fromX,
-              fromY,
-              toX: Number.parseFloat(seat.style.left),
-              toY: Number.parseFloat(seat.style.top),
-            },
-          ];
-        });
-
-        if (!next.length) {
-          return;
-        }
-
-        setWins(current => {
-          const updated = { ...current };
-
-          event.payload.winners.forEach(winner => {
-            updated[winner.seatIndex] = {
-              amount: winner.amountWon,
-              id: (current[winner.seatIndex]?.id ?? 0) + 1,
-            };
-          });
-
-          return updated;
-        });
-        setFlights(next);
-        setAtWinner(false);
-        setFlightId(id => id + 1);
-        onHidePot(true);
-      }),
-    [onHidePot, tableElement]
+  const { collectFlights, collectAtPot } = useCollectFlights(
+    collecting,
+    tableElement
   );
-
-  React.useEffect(() => {
-    if (!flights) {
-      return;
-    }
-
-    const frame = requestAnimationFrame(() => setAtWinner(true));
-    const done = window.setTimeout(() => setFlights(null), POT_MOVE_MS);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      window.clearTimeout(done);
-    };
-  }, [flightId, flights]);
+  const { wins, flights, flightId, atWinner } = usePotFlights(
+    tableElement,
+    onHidePot
+  );
 
   const seats = React.useMemo(() => {
     if (!rect) return [];
