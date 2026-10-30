@@ -6,7 +6,7 @@ import { Alert } from 'shared/ui/alert';
 import { cn } from 'shared/utils/cn';
 
 import type { PaymentMethod } from '../../../types';
-import shared from '../../deposit.module.css';
+import shared from '../../deposit-dialog.module.css';
 
 import { ExchangePanel } from './exchange-panel';
 import styles from './payment-details.module.css';

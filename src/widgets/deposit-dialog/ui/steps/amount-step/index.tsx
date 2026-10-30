@@ -9,7 +9,7 @@ import { NumberField } from 'shared/ui/number-field';
 import { parseNumericInput } from 'shared/utils/format';
 import { toDepositInputValue } from 'widgets/deposit-dialog/utils';
 
-import styles from '../../deposit.module.css';
+import styles from '../../deposit-dialog.module.css';
 
 import { QUICK_ADD_OPTIONS } from './constants';
 import { QuickAddOptions } from './quick-add-options';

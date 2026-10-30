@@ -4,7 +4,7 @@ import { PayViaWalletButton } from 'features/pay-via-wallet';
 import { Alert } from 'shared/ui/alert';
 import { buildTonTransferLink } from 'widgets/deposit-dialog/utils';
 
-import shared from '../../deposit.module.css';
+import shared from '../../../deposit-dialog.module.css';
 import { QrBlock } from '../qr-block';
 
 import styles from './wallet-panel.module.css';

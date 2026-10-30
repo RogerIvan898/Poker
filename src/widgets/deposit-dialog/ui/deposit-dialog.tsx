@@ -9,7 +9,7 @@ import { DEPOSIT_STEP, DEPOSIT_STEPS_TOTAL } from '../constants';
 import type { DepositStep } from '../types';
 import { getDepositStepNumber } from '../utils';
 
-import styles from './deposit.module.css';
+import styles from './deposit-dialog.module.css';
 import { AmountStep } from './steps/amount-step';
 import { PaymentDetailsStep } from './steps/payment-details';
 
