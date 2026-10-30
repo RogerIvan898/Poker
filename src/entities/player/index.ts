@@ -7,4 +7,5 @@ export {
   type PlayerStatusType,
   type SeatDirection,
 } from './model';
+export { findPlayerById } from './lib';
 export { Player } from './ui';

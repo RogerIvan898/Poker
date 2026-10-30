@@ -5,6 +5,7 @@ import { Sound } from 'shared/assets/sounds';
 import { useSound } from 'shared/lib/audio';
 import { cn } from 'shared/utils/cn';
 
+import { getHandKey } from '../../lib';
 import type { Player } from '../../model';
 
 import styles from './player-cards.module.css';
@@ -27,10 +28,7 @@ export const PlayerCards = ({
   const [showFirst, setShowFirst] = React.useState(false);
   const [showSecond, setShowSecond] = React.useState(false);
 
-  const cardsKey =
-    cards && cards.length >= 2
-      ? `${cards[0].rank}-${cards[0].suit}|${cards[1].rank}-${cards[1].suit}`
-      : '';
+  const cardsKey = getHandKey(cards) ?? '';
 
   React.useEffect(() => {
     if (!cardsKey) {

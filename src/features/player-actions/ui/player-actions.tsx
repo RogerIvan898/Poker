@@ -3,6 +3,7 @@ import React from 'react';
 import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
+import { findPlayerById } from 'entities/player';
 import { sessionModel } from 'entities/session';
 
 import { canPreAct } from '../model';
@@ -34,7 +35,7 @@ export const PlayerActions = () => {
     return null;
   }
 
-  const viewer = Object.values(players).find(player => player.id === viewerId);
+  const viewer = findPlayerById(players, viewerId);
   const showPreActions = canPreAct(viewer?.status) && !isMyTurn;
 
   const canBet = !allowedActions?.canCall || allowedActions.minRaise === 0;

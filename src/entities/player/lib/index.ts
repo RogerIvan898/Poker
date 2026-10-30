@@ -78,3 +78,13 @@ export const getDealerDirection = (towardCenter: SeatDirection) => {
 
   return counterClockwise.y < clockwise.y - 1e-6 ? counterClockwise : clockwise;
 };
+
+export const findPlayerById = (
+  players: Record<string | number, Player>,
+  id: string | null
+) => (id ? Object.values(players).find(player => player.id === id) : undefined);
+
+export const getHandKey = (hand: Player['hand']) =>
+  hand && hand.length >= 2
+    ? `${hand[0].rank}-${hand[0].suit}|${hand[1].rank}-${hand[1].suit}`
+    : null;

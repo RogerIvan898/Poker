@@ -5,6 +5,7 @@ import { cn } from 'shared/utils/cn';
 import { useTurnTimer } from '../hooks';
 import {
   getDealerDirection,
+  getHandKey,
   isBlindBadge,
   resolveSeatActionBadge,
   shouldShowHoleCards,
@@ -95,10 +96,7 @@ const PlayerView = ({
     '--dealer-y': dealerDirection.y,
   } as React.CSSProperties;
 
-  const cardsKey =
-    hand && hand.length >= 2
-      ? `${hand[0].rank}-${hand[0].suit}|${hand[1].rank}-${hand[1].suit}`
-      : 'hidden';
+  const cardsKey = getHandKey(hand) ?? 'hidden';
 
   return (
     <section className={cn(styles.player, isSitOut && styles.sitOut)}>

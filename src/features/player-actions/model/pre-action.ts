@@ -7,6 +7,7 @@ import {
 } from 'effector';
 
 import { gameModel, SERVER_EVENTS } from 'entities/game';
+import { findPlayerById } from 'entities/player';
 import { sessionModel } from 'entities/session';
 
 import { call, check, fold, raise } from './actions';
@@ -88,9 +89,7 @@ sample({
       return false;
     }
 
-    const viewer = Object.values(state.players).find(
-      player => player.id === userId
-    );
+    const viewer = findPlayerById(state.players, userId);
 
     if (!viewer || !canPreAct(viewer.status)) {
       return true;

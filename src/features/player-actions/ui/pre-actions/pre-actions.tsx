@@ -2,6 +2,7 @@ import { useLingui } from '@lingui/react/macro';
 import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
+import { findPlayerById } from 'entities/player';
 import { sessionModel } from 'entities/session';
 import { Button } from 'shared/ui/button';
 
@@ -27,7 +28,7 @@ export const PreActions = () => {
       gameModel.$bigBlind,
     ]);
 
-  const viewer = Object.values(players).find(player => player.id === userId);
+  const viewer = findPlayerById(players, userId);
   const toCall =
     viewer && canPreAct(viewer.status)
       ? chipsToCall(currentBet, viewer.committed, viewer.stack)

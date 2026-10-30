@@ -4,7 +4,7 @@ import { createPortal } from 'react-dom';
 import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
-import { Player } from 'entities/player';
+import { findPlayerById, Player } from 'entities/player';
 import { sessionModel } from 'entities/session';
 import { useElementRect } from 'shared/hooks/use-element-rect';
 import { Logo } from 'shared/ui/logo';
@@ -50,8 +50,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
     tableElement
   );
   const playerList = Object.values(players);
-  const viewerSeat =
-    playerList.find(player => player.id === viewerId)?.seat ?? null;
+  const viewerSeat = findPlayerById(players, viewerId)?.seat ?? null;
   const seatNumbersKey = playerList.map(player => player.seat).join(',');
 
   const seats = React.useMemo(() => {
