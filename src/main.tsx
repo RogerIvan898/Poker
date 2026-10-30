@@ -17,7 +17,9 @@ if (!root) {
 
 void (async () => {
   initTelegramWebApp();
-  await bootstrapMockServer();
+  await bootstrapMockServer().catch((error: unknown) => {
+    console.error('[MockServer] Failed to start', error);
+  });
   appStarted();
   createRoot(root).render(<App />);
 })();
