@@ -15,7 +15,7 @@ interface TableSize {
 const COMPACT_TABLE_WIDTH = 380;
 
 const ELLIPSE_SCALE = {
-  compact: { x: 0.4, y: 0.44 },
+  compact: { x: 0.54, y: 0.52 },
   regular: { x: 0.54, y: 0.48 },
 };
 

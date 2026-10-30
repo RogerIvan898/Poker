@@ -94,7 +94,7 @@
 }
 
 .communityCards {
-  --card-width: min(84px, calc((80cqw - 4 * var(--board-gap)) / 5));
+  --card-width: min(84px, calc((88cqw - 4 * var(--board-gap)) / 5));
 
   display: flex;
   align-items: center;
@@ -132,6 +132,8 @@
 
 @media (max-width: 768px) {
   .tableContainer {
+    --seat-gutter: 52px;
+
     justify-content: center;
     align-items: center;
     padding: 0;
@@ -147,7 +149,7 @@
       58dvh
     );
     width: auto;
-    max-width: 86vw;
+    max-width: calc(100vw - 2 * var(--seat-gutter));
     max-height: none;
     aspect-ratio: 5 / 7;
   }
