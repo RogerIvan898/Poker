@@ -46,9 +46,15 @@ export const computeSeats = (
   const radiusX = table.width * scale.x;
   const radiusY = table.height * scale.y;
   const referenceSeat = viewerSeat ?? players[0].seat;
+  const seatSpan = Math.max(...players.map(player => player.seat)) + 1;
+  const distanceFromReference = (seat: number) =>
+    (((seat - referenceSeat) % seatSpan) + seatSpan) % seatSpan;
+  const orderedSeats = players
+    .map(player => player.seat)
+    .sort((a, b) => distanceFromReference(a) - distanceFromReference(b));
 
   return players.map(player => {
-    const position = (player.seat - referenceSeat + count) % count;
+    const position = orderedSeats.indexOf(player.seat);
     const angleDeg = (position / count) * FULL_TURN_DEG;
     const angleRad = (angleDeg * Math.PI) / 180;
 
