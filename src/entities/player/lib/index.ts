@@ -92,15 +92,7 @@ export const getDealerDirection = (towardCenter: SeatDirection) => {
 export const findPlayerById = (
   players: Record<string | number, Player>,
   id: string | null
-) => {
-  if (!id) return undefined;
-
-  for (const key in players) {
-    if (players[key].id === id) return players[key];
-  }
-
-  return undefined;
-};
+) => (id ? Object.values(players).find(player => player.id === id) : undefined);
 
 export const getHandKey = (hand: Player['hand']) =>
   hand && hand.length >= 2
