@@ -8,7 +8,7 @@ import { Minus, Plus, Settings } from 'lucide-react';
 import { $currentLocale } from 'shared/lib/i18n';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils/cn';
-import { getInitialLetter } from 'shared/utils/format';
+import { formatBalance, getInitialLetter } from 'shared/utils/format';
 import { SettingsDialog } from 'widgets/settings';
 
 import styles from './header.module.css';
@@ -34,9 +34,7 @@ export const Header = ({
   const locale = useUnit($currentLocale);
   const wallet = useTonWallet();
   const walletAddress = wallet?.account.address;
-  const formattedBalance = new Intl.NumberFormat(i18n.locale, {
-    maximumFractionDigits: 2,
-  }).format(balance);
+  const formattedBalance = formatBalance(balance, i18n.locale);
 
   return (
     <header className={styles.header} lang={locale ?? undefined}>

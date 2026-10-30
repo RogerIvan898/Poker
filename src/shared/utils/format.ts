@@ -56,3 +56,6 @@ export const parseNumericInput = (value: string): number | null => {
 
   return Number.isFinite(parsed) ? parsed : null;
 };
+
+export const formatBalance = (value: number, locale: string) =>
+  new Intl.NumberFormat(locale, { maximumFractionDigits: 2 }).format(value);

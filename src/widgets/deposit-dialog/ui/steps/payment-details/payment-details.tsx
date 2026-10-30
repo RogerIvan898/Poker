@@ -6,6 +6,7 @@ import { Alert } from 'shared/ui/alert';
 import { cn } from 'shared/utils/cn';
 
 import type { PaymentMethod } from '../../../types';
+import { formatTonAmount } from '../../../utils';
 import shared from '../../deposit-dialog.module.css';
 
 import { ExchangePanel } from './exchange-panel';
@@ -87,7 +88,7 @@ export const PaymentDetailsStep = ({
         />
       ) : (
         <ExchangePanel
-          amountText={Number(amount.toFixed(9)).toString()}
+          amountText={formatTonAmount(amount)}
           depositAddress={depositAddress}
           memo={memo}
           onCopyText={onCopyText}

@@ -5,6 +5,7 @@ import { useLingui } from '@lingui/react/macro';
 import { useTonAddress, useTonConnectUI } from '@tonconnect/ui-react';
 
 import { Dialog } from 'shared/ui/dialog';
+import { formatBalance } from 'shared/utils/format';
 
 import { formatAmountDraft, isValidTonAddress, parseAmountDraft } from '../lib';
 import type { WithdrawDestination, WithdrawPayload } from '../model';
@@ -38,9 +39,7 @@ export const WithdrawModal = ({ open, onClose, balance, onSubmit }: Props) => {
     setDestination(connectedAddress ? 'wallet' : 'address');
   }, [open, connectedAddress]);
 
-  const formattedBalance = new Intl.NumberFormat(i18n.locale, {
-    maximumFractionDigits: 2,
-  }).format(balance);
+  const formattedBalance = formatBalance(balance, i18n.locale);
 
   const targetAddress =
     destination === 'wallet' ? connectedAddress : customAddress.trim();
