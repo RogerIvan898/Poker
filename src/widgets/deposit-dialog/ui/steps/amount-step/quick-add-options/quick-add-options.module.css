@@ -32,8 +32,16 @@
 }
 
 .quickBtn:hover {
-  border-color: color-mix(in srgb, var(--color-primary) 50%, var(--color-border-strong));
-  background: color-mix(in srgb, var(--color-primary) 10%, var(--color-bg-elevated));
+  border-color: color-mix(
+    in srgb,
+    var(--color-primary) 50%,
+    var(--color-border-strong)
+  );
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 10%,
+    var(--color-bg-elevated)
+  );
 }
 
 .quickBtn:hover .quickBtnContent {
@@ -41,7 +49,11 @@
 }
 
 .quickBtn:active {
-  background: color-mix(in srgb, var(--color-primary) 16%, var(--color-bg-elevated));
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 16%,
+    var(--color-bg-elevated)
+  );
 }
 
 .quickBtn:active .quickBtnContent {

@@ -96,6 +96,9 @@ msgstr "Подключить кошелёк для оплаты"
 msgid "Connect wallet to withdraw"
 msgstr "Подключить кошелёк для вывода"
 
+msgid "Connected"
+msgstr "Подключено"
+
 msgid "Connecting…"
 msgstr "Подключение…"
 
@@ -129,6 +132,9 @@ msgstr "Куда отправить"
 msgid "Disconnect wallet"
 msgstr "Отключить кошелёк"
 
+msgid "Disconnecting…"
+msgstr "Отключение…"
+
 msgid "Double-check the TON address"
 msgstr "Проверьте TON-адрес"
 
@@ -146,6 +152,9 @@ msgstr "Превышает доступный баланс"
 
 msgid "Exchange"
 msgstr "Биржа"
+
+msgid "Failed to copy address"
+msgstr "Не удалось скопировать адрес"
 
 msgid "Fold"
 msgstr "Фолд"
@@ -188,9 +197,6 @@ msgstr "Mid Stakes"
 
 msgid "Min buy-in"
 msgstr "Бай-ин от"
-
-msgid "Mute sound"
-msgstr "Выключить звук"
 
 msgid "My wallet"
 msgstr "Мой кошелёк"
@@ -241,6 +247,12 @@ msgstr "Настройки"
 msgid "Sound"
 msgstr "Звук"
 
+msgid "Sound off"
+msgstr "Звук выключен"
+
+msgid "Sound on"
+msgstr "Звук включён"
+
 msgid "Table full"
 msgstr "Стол заполнен"
 
@@ -258,9 +270,6 @@ msgstr "TON-адрес"
 
 msgid "Tonkeeper / Telegram Wallet"
 msgstr "Tonkeeper / Telegram Wallet"
-
-msgid "Unmute sound"
-msgstr "Включить звук"
 
 msgid "Waiting for next hand..."
 msgstr "Ожидание следующей раздачи..."

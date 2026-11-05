@@ -5,7 +5,7 @@ export const DEPOSIT_STEP = {
   Details: 'details',
 } as const satisfies Record<string, DepositStep>;
 
-export const DEPOSIT_STEPS_TOTAL = [
+export const DEPOSIT_STEPS = [
   DEPOSIT_STEP.Amount,
   DEPOSIT_STEP.Details,
 ] as const satisfies readonly DepositStep[];

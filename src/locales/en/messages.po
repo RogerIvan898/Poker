@@ -95,6 +95,9 @@ msgstr "Connect wallet to pay"
 msgid "Connect wallet to withdraw"
 msgstr "Connect wallet to withdraw"
 
+msgid "Connected"
+msgstr "Connected"
+
 msgid "Connecting…"
 msgstr "Connecting…"
 
@@ -128,6 +131,9 @@ msgstr "Destination"
 msgid "Disconnect wallet"
 msgstr "Disconnect wallet"
 
+msgid "Disconnecting…"
+msgstr "Disconnecting…"
+
 msgid "Double-check the TON address"
 msgstr "Double-check the TON address"
 
@@ -145,6 +151,9 @@ msgstr "Exceeds available balance"
 
 msgid "Exchange"
 msgstr "Exchange"
+
+msgid "Failed to copy address"
+msgstr "Failed to copy address"
 
 msgid "Fold"
 msgstr "Fold"
@@ -187,9 +196,6 @@ msgstr "Mid Stakes"
 
 msgid "Min buy-in"
 msgstr "Min buy-in"
-
-msgid "Mute sound"
-msgstr "Mute sound"
 
 msgid "My wallet"
 msgstr "My wallet"
@@ -240,6 +246,12 @@ msgstr "Settings"
 msgid "Sound"
 msgstr "Sound"
 
+msgid "Sound off"
+msgstr "Sound off"
+
+msgid "Sound on"
+msgstr "Sound on"
+
 msgid "Table full"
 msgstr "Table full"
 
@@ -257,9 +269,6 @@ msgstr "TON address"
 
 msgid "Tonkeeper / Telegram Wallet"
 msgstr "Tonkeeper / Telegram Wallet"
-
-msgid "Unmute sound"
-msgstr "Unmute sound"
 
 msgid "Waiting for next hand..."
 msgstr "Waiting for next hand..."

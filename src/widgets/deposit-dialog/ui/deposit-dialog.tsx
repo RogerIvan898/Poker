@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 
 import { Dialog, DialogHeaderButton } from 'shared/ui/dialog';
 
-import { DEPOSIT_STEP, DEPOSIT_STEPS_TOTAL } from '../constants';
+import { DEPOSIT_STEP, DEPOSIT_STEPS } from '../constants';
 import type { DepositStep } from '../types';
 import { getDepositStepNumber } from '../utils';
 
@@ -57,7 +57,7 @@ export const DepositDialog = ({
       title={stepTitle}
       titleAddon={
         <span className={styles.stepper}>
-          {getDepositStepNumber(step)}/{DEPOSIT_STEPS_TOTAL}
+          {getDepositStepNumber(step)}/{DEPOSIT_STEPS.length}
         </span>
       }
       leading={

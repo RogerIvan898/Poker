@@ -1,6 +1,6 @@
 import { toNano } from '@ton/core';
 
-import { DEPOSIT_STEPS_TOTAL } from '../constants';
+import { DEPOSIT_STEPS } from '../constants';
 import type { DepositStep } from '../types';
 
 const TON_DECIMALS = 9;
@@ -33,4 +33,4 @@ export const buildTonTransferLink = (
 };
 
 export const getDepositStepNumber = (step: DepositStep): number =>
-  DEPOSIT_STEPS_TOTAL.indexOf(step) + 1;
+  DEPOSIT_STEPS.indexOf(step) + 1;
