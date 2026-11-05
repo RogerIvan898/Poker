@@ -217,6 +217,9 @@ msgstr "Pay in one tap via TON Connect, or scan the QR with another phone."
 msgid "Payment details"
 msgstr "Payment details"
 
+msgid "Payment failed"
+msgstr "Payment failed"
+
 msgid "Payment failed or rejected in wallet"
 msgstr "Payment failed or rejected in wallet"
 
@@ -266,6 +269,9 @@ msgstr "TON address"
 msgid "Tonkeeper / Telegram Wallet"
 msgstr "Tonkeeper / Telegram Wallet"
 
+msgid "Waiting for next hand..."
+msgstr "Waiting for next hand..."
+
 msgid "Wallet"
 msgstr "Wallet"
 
@@ -296,3 +302,6 @@ msgstr "Withdraw TON"
 
 msgid "Withdrawals are irreversible. Send only to a TON address — a wrong network or typo means permanent loss of funds."
 msgstr "Withdrawals are irreversible. Send only to a TON address — a wrong network or typo means permanent loss of funds."
+
+msgid "You folded"
+msgstr "You folded"

@@ -87,6 +87,25 @@ export const BetManager = ({
     }
   };
 
+  const range = maxAmount - minAmount;
+  const fillPercent = range > 0 ? ((amount - minAmount) / range) * 100 : 100;
+
+  // Mobile WebViews often cancel the native range drag (pointercancel) or
+  // only move it when the thumb itself is grabbed. Map the finger position
+  // to a value directly so dragging anywhere on the track updates the bet.
+  const setFromTouch = (event: React.TouchEvent<HTMLInputElement>) => {
+    const touch = event.touches[0];
+
+    if (!touch) {
+      return;
+    }
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const ratio = clamp((touch.clientX - rect.left) / rect.width, 0, 1);
+
+    commit(minAmount + ratio * range);
+  };
+
   const handleBlur = () => {
     commit(draftValue ?? amount);
   };
@@ -144,9 +163,7 @@ export const BetManager = ({
               type="button"
               className={cn(
                 styles.shortcut,
-                preset.label === maxLabel &&
-                  amount === value &&
-                  styles.shortcutActive
+                amount === value && styles.shortcutActive
               )}
               disabled={preset.value < minAmount}
               onClick={() => commit(value)}
@@ -198,6 +215,9 @@ export const BetManager = ({
         type="range"
         value={amount}
         onChange={event => commit(Number(event.target.value))}
+        onTouchStart={setFromTouch}
+        onTouchMove={setFromTouch}
+        style={{ '--fill': `${fillPercent}%` } as React.CSSProperties}
         min={minAmount}
         max={maxAmount}
         step={1 / CHIP_PRECISION}

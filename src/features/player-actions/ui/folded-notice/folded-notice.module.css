@@ -1,0 +1,46 @@
+.notice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 48px;
+  text-align: center;
+  animation: noticeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.title {
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  font-size: 13px;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes noticeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notice,
+  .subtitle {
+    animation: none;
+  }
+}

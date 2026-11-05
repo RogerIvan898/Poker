@@ -3,7 +3,7 @@ import React from 'react';
 import { useUnit } from 'effector-react';
 
 import { gameModel } from 'entities/game';
-import { findPlayerById } from 'entities/player';
+import { findPlayerById, PlayerStatus } from 'entities/player';
 import { sessionModel } from 'entities/session';
 
 import { canPreAct } from '../model';
@@ -67,6 +67,7 @@ export const PlayerActions = () => {
         <ActionPanel
           isMyTurn={isMyTurn}
           showPreActions={showPreActions}
+          hasFolded={viewer?.status === PlayerStatus.FOLDED}
           canFold={allowedActions?.canFold ?? true}
           canCall={allowedActions?.canCall ?? true}
           canRaise={canPutChips}

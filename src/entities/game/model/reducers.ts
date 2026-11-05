@@ -1,5 +1,9 @@
 import { parseCard, type CardType as Card } from 'entities/card';
-import { PlayerAction, type PlayerType as Player } from 'entities/player';
+import {
+  PlayerAction,
+  PlayerStatus,
+  type PlayerType as Player,
+} from 'entities/player';
 
 import { mapPlayerInfoToPlayer } from '../lib';
 
@@ -31,6 +35,11 @@ const reduceHandStarted = (
     (acc, key) => {
       acc[key] = {
         ...state.players[key],
+        // A fold only lasts for its hand.
+        status:
+          state.players[key].status === PlayerStatus.FOLDED
+            ? PlayerStatus.IN_GAME
+            : state.players[key].status,
         committed: initialBets[Number(key)] || 0,
         hand: null,
         lastAction: null,

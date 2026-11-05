@@ -27,7 +27,10 @@
     right: calc(8px + var(--tg-safe-area-right));
     bottom: calc(var(--tg-safe-area-bottom) + 12px);
     transform: none;
-    width: min(460px, calc(100vw - 16px - var(--tg-safe-area-left) - var(--tg-safe-area-right)));
+    width: min(
+      460px,
+      calc(100vw - 16px - var(--tg-safe-area-left) - var(--tg-safe-area-right))
+    );
     max-width: none;
     margin: 0 auto;
     padding: 10px;

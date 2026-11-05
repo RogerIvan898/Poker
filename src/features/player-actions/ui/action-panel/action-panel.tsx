@@ -1,9 +1,11 @@
 import { BaseActions } from '../base-actions';
+import { FoldedNotice } from '../folded-notice';
 import { PreActions } from '../pre-actions';
 
 interface Props {
   isMyTurn: boolean;
   showPreActions: boolean;
+  hasFolded: boolean;
   canFold: boolean;
   canCall: boolean;
   canRaise: boolean;
@@ -14,6 +16,7 @@ interface Props {
 export const ActionPanel = ({
   isMyTurn,
   showPreActions,
+  hasFolded,
   canFold,
   canCall,
   canRaise,
@@ -30,6 +33,10 @@ export const ActionPanel = ({
         onRaiseClick={onRaiseClick}
       />
     );
+  }
+
+  if (hasFolded) {
+    return <FoldedNotice />;
   }
 
   if (showPreActions) {

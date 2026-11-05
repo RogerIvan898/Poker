@@ -218,6 +218,9 @@ msgstr "Оплатите в один клик через TON Connect или от
 msgid "Payment details"
 msgstr "Реквизиты оплаты"
 
+msgid "Payment failed"
+msgstr "Платёж не прошёл"
+
 msgid "Payment failed or rejected in wallet"
 msgstr "Платёж не выполнен или отклонён в кошельке"
 
@@ -267,6 +270,9 @@ msgstr "TON-адрес"
 msgid "Tonkeeper / Telegram Wallet"
 msgstr "Tonkeeper / Telegram Wallet"
 
+msgid "Waiting for next hand..."
+msgstr "Ожидание следующей раздачи..."
+
 msgid "Wallet"
 msgstr "Кошелёк"
 
@@ -297,3 +303,6 @@ msgstr "Вывод TON"
 
 msgid "Withdrawals are irreversible. Send only to a TON address — a wrong network or typo means permanent loss of funds."
 msgstr "Выводы необратимы. Отправляйте только на TON-адрес — неправильная сеть или опечатка означают безвозвратную потерю средств."
+
+msgid "You folded"
+msgstr "Вы сбросили карты"
