@@ -74,6 +74,9 @@ msgstr "Check"
 msgid "Check / Fold"
 msgstr "Check / Fold"
 
+msgid "Check your connection and try again."
+msgstr "Check your connection and try again."
+
 msgid "Close"
 msgstr "Close"
 
@@ -103,6 +106,9 @@ msgstr "Copied"
 
 msgid "Copy address"
 msgstr "Copy address"
+
+msgid "Couldn't load the page"
+msgstr "Couldn't load the page"
 
 msgid "Deepstack Pro"
 msgstr "Deepstack Pro"
@@ -218,6 +224,9 @@ msgstr "Raise"
 
 msgid "Required"
 msgstr "Required"
+
+msgid "Retry"
+msgstr "Retry"
 
 msgid "SB"
 msgstr "SB"

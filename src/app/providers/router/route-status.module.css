@@ -1,0 +1,28 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 100dvh;
+  padding: 24px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.hint {
+  margin: 0 0 8px;
+  color: color-mix(in srgb, var(--color-text) 60%, transparent);
+  font-size: 14px;
+}
+
+.error > button {
+  width: min(240px, 100%);
+}

@@ -75,6 +75,9 @@ msgstr "Чек"
 msgid "Check / Fold"
 msgstr "Чек / Пас"
 
+msgid "Check your connection and try again."
+msgstr "Проверьте подключение и попробуйте снова."
+
 msgid "Close"
 msgstr "Закрыть"
 
@@ -104,6 +107,9 @@ msgstr "Скопировано"
 
 msgid "Copy address"
 msgstr "Скопировать адрес"
+
+msgid "Couldn't load the page"
+msgstr "Не удалось загрузить страницу"
 
 msgid "Deepstack Pro"
 msgstr "Deepstack Pro"
@@ -219,6 +225,9 @@ msgstr "Рейз"
 
 msgid "Required"
 msgstr "Обязательно"
+
+msgid "Retry"
+msgstr "Повторить"
 
 msgid "SB"
 msgstr "МБ"

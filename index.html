@@ -5,12 +5,56 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <title>Vite + React + TS</title>
+  <style>
+    /* Boot loader: painted before any JS so slow networks never show a blank
+       screen. React replaces it when the app mounts into #root. */
+    html,
+    body {
+      margin: 0;
+      background: #0d1117;
+    }
+
+    .boot-loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    .boot-loader__spinner {
+      width: 56px;
+      height: 56px;
+      border: 4px solid rgba(2, 132, 199, 0.25);
+      border-top-color: #0284c7;
+      border-radius: 50%;
+      animation: boot-spin 1s linear infinite;
+    }
+
+    @keyframes boot-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .boot-loader__spinner {
+        animation-duration: 3s;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <div class="boot-loader" role="status" aria-label="Loading">
+      <div class="boot-loader__spinner"></div>
+    </div>
+  </div>
+  <!-- Kept synchronous (the app reads window.Telegram on start) but placed
+       after the boot loader so a slow telegram.org doesn't block first paint. -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 
