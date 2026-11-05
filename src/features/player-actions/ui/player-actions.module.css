@@ -2,7 +2,7 @@
   position: fixed;
   right: 0;
   bottom: calc(1rem + var(--tg-safe-area-bottom));
-  z-index: 1000;
+  z-index: 900;
   display: flex;
   gap: 1rem;
   padding: 1rem;

@@ -1,4 +1,20 @@
 .sections {
+  /* Shared look for every on/off option (language, sound) so selected and
+     unselected states match across settings. */
+  --option-on-border: color-mix(in srgb, var(--color-primary) 45%, transparent);
+  --option-on-bg: color-mix(
+    in srgb,
+    var(--color-primary) 12%,
+    var(--color-bg-elevated)
+  );
+  --option-on-text: var(--color-text);
+  --option-on-icon: var(--color-primary);
+  --option-off-border: var(--color-border);
+  --option-off-bg: color-mix(in srgb, var(--color-text) 3%, transparent);
+  --option-off-text: color-mix(in srgb, var(--color-text) 55%, transparent);
+  --option-off-icon: color-mix(in srgb, var(--color-text) 45%, transparent);
+  --option-hover-border: var(--color-border-hover);
+
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -15,22 +31,21 @@
   min-width: 0;
   height: 40px;
   padding: 0 12px;
-  border: 1px solid var(--color-border-strong);
+  border: 2px solid var(--option-off-border);
   border-radius: var(--radius-sm);
-  background: var(--color-bg-elevated);
-  color: var(--color-text);
+  background: var(--option-off-bg);
+  color: var(--option-off-text);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition:
     border-color 0.15s ease,
     background 0.15s ease,
-    color 0.15s ease,
-    box-shadow 0.15s ease;
+    color 0.15s ease;
 }
 
-.langBtn:hover {
-  border-color: var(--color-border-hover);
+.langBtn[aria-pressed='false']:hover {
+  border-color: var(--option-hover-border);
 }
 
 .langBtn:focus-visible {
@@ -39,10 +54,11 @@
 }
 
 .langBtn[aria-pressed='true'] {
-  border-color: var(--color-primary);
-  background: color-mix(in srgb, var(--color-primary) 14%, transparent);
-  color: var(--color-primary-light);
-  box-shadow: inset 0 0 0 1px var(--color-primary);
+  border-color: var(--option-on-border);
+  /* 1.5px border + 1px inset = 2.5px, without shifting the layout. */
+  box-shadow: inset 0 0 0 1px var(--option-on-border);
+  background: var(--option-on-bg);
+  color: var(--option-on-text);
 }
 
 .iconBtn {
@@ -88,18 +104,32 @@
   width: 100%;
   min-height: 46px;
   padding: 8px 10px;
-  border: 1px solid var(--color-border-strong);
+  border: 2px solid var(--option-off-border);
   border-radius: var(--radius-sm);
-  background: var(--color-bg-elevated);
-  color: var(--color-text);
+  background: var(--option-off-bg);
+  color: var(--option-off-text);
   cursor: pointer;
   transition:
     border-color 0.15s ease,
-    background 0.15s ease;
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
-.soundRow:hover {
-  border-color: var(--color-border-hover);
+.soundRow[aria-checked='false']:hover {
+  border-color: var(--option-hover-border);
+}
+
+/* On: tinted with the primary color. Off: dimmed, neutral tile. */
+.soundRow[aria-checked='true'] {
+  border-color: var(--option-on-border);
+  /* 1.5px border + 1px inset = 2.5px, without shifting the layout. */
+  box-shadow: inset 0 0 0 1px var(--option-on-border);
+  background: var(--option-on-bg);
+  color: var(--option-on-text);
+}
+
+.soundRow[aria-checked='false'] .soundIcon {
+  color: var(--option-off-icon);
 }
 
 .soundRow:focus-visible {
@@ -112,7 +142,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--color-primary);
+  color: var(--option-on-icon);
 }
 
 .soundText {
@@ -173,7 +203,11 @@
   flex-shrink: 0;
   padding: 4px 8px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--color-success, #22c55e) 14%, transparent);
+  background: color-mix(
+    in srgb,
+    var(--color-success, #22c55e) 14%,
+    transparent
+  );
   color: var(--color-success, #22c55e);
   font-size: 12px;
   font-weight: 700;

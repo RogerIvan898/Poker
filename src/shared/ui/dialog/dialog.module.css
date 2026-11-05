@@ -8,8 +8,9 @@
     var(--tg-safe-area-bottom) var(--tg-safe-area-left);
   background: var(--color-overlay);
   backdrop-filter: blur(8px);
-  /* Above the in-game action panel (1000) so it can't be clicked through. */
-  z-index: 1100;
+  /* Layering: action panel (900) < our dialogs < TonConnect modal (1000),
+     so dialogs can't be clicked through and the wallet modal opens on top. */
+  z-index: 950;
 }
 
 .panel {
