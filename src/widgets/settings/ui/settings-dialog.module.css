@@ -1,20 +1,4 @@
 .sections {
-  /* Shared look for every on/off option (language, sound) so selected and
-     unselected states match across settings. */
-  --option-on-border: color-mix(in srgb, var(--color-primary) 45%, transparent);
-  --option-on-bg: color-mix(
-    in srgb,
-    var(--color-primary) 12%,
-    var(--color-bg-elevated)
-  );
-  --option-on-text: var(--color-text);
-  --option-on-icon: var(--color-primary);
-  --option-off-border: var(--color-border);
-  --option-off-bg: color-mix(in srgb, var(--color-text) 3%, transparent);
-  --option-off-text: color-mix(in srgb, var(--color-text) 55%, transparent);
-  --option-off-icon: color-mix(in srgb, var(--color-text) 45%, transparent);
-  --option-hover-border: var(--color-border-hover);
-
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -247,7 +231,7 @@
   border: none;
   border-radius: var(--radius-sm);
   background: var(--color-primary);
-  color: var(--color-primary-contrast, #fff);
+  color: var(--color-text-on-primary);
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;

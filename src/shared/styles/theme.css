@@ -3,7 +3,11 @@
   --color-primary-hover: #0082c8;
   --color-primary-active: #0084cf;
   --color-primary-light: #30b6ff;
-  --color-primary-muted: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  --color-primary-muted: color-mix(
+    in srgb,
+    var(--color-primary) 12%,
+    transparent
+  );
 
   --color-secondary: #4c5a6b;
 
@@ -39,4 +43,20 @@
   --radius-lg: 16px;
   --radius-xl: 24px;
   --font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+
+  /* Selected / unselected look shared by option-like controls
+     (settings options, withdraw destination tabs). */
+  --option-on-border: color-mix(in srgb, var(--color-primary) 45%, transparent);
+  --option-on-bg: color-mix(
+    in srgb,
+    var(--color-primary) 12%,
+    var(--color-bg-elevated)
+  );
+  --option-on-text: var(--color-text);
+  --option-on-icon: var(--color-primary);
+  --option-off-border: var(--color-border);
+  --option-off-bg: color-mix(in srgb, var(--color-text) 3%, transparent);
+  --option-off-text: color-mix(in srgb, var(--color-text) 55%, transparent);
+  --option-off-icon: color-mix(in srgb, var(--color-text) 45%, transparent);
+  --option-hover-border: var(--color-border-hover);
 }

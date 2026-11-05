@@ -20,7 +20,7 @@
   margin: 0;
   max-width: 280px;
   text-align: center;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 12px;
   line-height: 1.4;
 }

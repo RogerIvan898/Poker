@@ -19,7 +19,7 @@
   margin-bottom: 16px;
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
-  background: var(--color-bg-elevated);
+  background: var(--color-bg-input);
 }
 
 .amountBox:focus-within {
@@ -47,21 +47,26 @@
   border: none;
   border-radius: var(--radius-md);
   background: var(--color-primary);
-  color: var(--color-on-primary);
+  color: var(--color-text-on-primary);
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition:
     background 0.2s,
-    opacity 0.2s;
+    color 0.2s;
 }
 
 .primaryBtn:hover:not(:disabled) {
-  background: color-mix(in srgb, var(--color-primary) 90%, black);
+  background: var(--color-primary-hover);
+}
+
+.primaryBtn:active:not(:disabled) {
+  background: var(--color-primary-active);
 }
 
 .primaryBtn:disabled {
-  opacity: 0.5;
+  background: var(--color-bg-muted);
+  color: var(--color-text-secondary);
   cursor: not-allowed;
 }
 

@@ -24,7 +24,6 @@
 
 .balanceCard:hover:not(:disabled) {
   border-color: var(--color-border-hover);
-  background: color-mix(in srgb, var(--color-bg-elevated) 88%, white);
 }
 
 .balanceCard:disabled {
@@ -33,7 +32,7 @@
 
 .balanceLabel {
   grid-area: label;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 13px;
 }
 
@@ -65,7 +64,7 @@
 
 .label {
   margin-bottom: 8px;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 13px;
   font-weight: 500;
 }
@@ -81,7 +80,7 @@
   align-items: center;
   gap: 10px;
   padding: 0 16px;
-  background: var(--color-bg);
+  background: var(--color-bg-input);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
   transition: border-color 0.2s;
@@ -158,10 +157,10 @@
 
 .tab {
   height: 40px;
-  border: none;
+  border: 1.5px solid transparent;
   border-radius: calc(var(--radius-md) - 2px);
   background: transparent;
-  color: var(--color-text-muted);
+  color: var(--option-off-text);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -175,8 +174,9 @@
 }
 
 .tabActive {
-  background: var(--color-bg-muted);
-  color: var(--color-text);
+  border-color: var(--option-on-border);
+  background: var(--option-on-bg);
+  color: var(--option-on-text);
 }
 
 .walletCard {
@@ -190,7 +190,7 @@
 }
 
 .walletLabel {
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 12px;
 }
 
@@ -209,7 +209,7 @@
 
 .connectText {
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 13px;
   line-height: 1.4;
 }
@@ -243,7 +243,10 @@
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 
 .primaryBtn {
@@ -252,11 +255,16 @@
 }
 
 .primaryBtn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.primaryBtn:active:not(:disabled) {
   background: var(--color-primary-active);
 }
 
 .primaryBtn:disabled {
-  opacity: 0.4;
+  background: var(--color-bg-muted);
+  color: var(--color-text-secondary);
   cursor: not-allowed;
 }
 
@@ -267,7 +275,7 @@
 }
 
 .secondaryBtn:hover {
-  background: color-mix(in srgb, var(--color-bg-muted) 85%, white);
+  border-color: var(--color-border-hover);
 }
 
 @media (max-width: 600px) {

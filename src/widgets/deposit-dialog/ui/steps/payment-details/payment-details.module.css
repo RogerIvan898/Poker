@@ -14,7 +14,7 @@
   border: none;
   border-radius: calc(var(--radius-md) - 2px);
   background: transparent;
-  color: var(--color-text-muted);
+  color: var(--color-text-secondary);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
