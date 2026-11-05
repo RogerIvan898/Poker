@@ -70,7 +70,7 @@ export const Header = ({
                 aria-label={t`Deposit`}
                 title={t`Deposit`}
               >
-                <Plus size={16} strokeWidth={2.5} />
+                <Plus size={20} strokeWidth={2.5} />
               </button>
 
               <button
@@ -80,7 +80,7 @@ export const Header = ({
                 aria-label={t`Withdraw`}
                 title={t`Withdraw`}
               >
-                <Minus size={16} strokeWidth={2.5} />
+                <Minus size={20} strokeWidth={2.5} />
               </button>
             </div>
           </div>

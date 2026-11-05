@@ -20,8 +20,9 @@
 }
 
 .avatarPlaceholder {
-  width: 42px;
-  height: 42px;
+  /* Same height as the name + balance block (18 + 4 + 36). */
+  width: 58px;
+  height: 58px;
   border-radius: var(--radius-sm);
   background: linear-gradient(
     135deg,
@@ -33,7 +34,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 20px;
   flex-shrink: 0;
   overflow: hidden;
   box-shadow: 0 2px 8px var(--color-primary-muted);
@@ -59,7 +60,7 @@
 }
 
 .userName {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.2;
   color: var(--color-text);
@@ -78,21 +79,23 @@
 .balanceBadge {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  height: 36px;
+  box-sizing: border-box;
   background: var(--color-border);
-  padding: 4px 10px;
+  padding: 0 12px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
 }
 
 .tonIcon {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
 
 .balanceValue {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--color-info);
   letter-spacing: -0.2px;
@@ -105,8 +108,8 @@
 
 .actionBtn {
   position: relative;
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border-radius: var(--radius-sm);
   border: none;
   display: flex;
@@ -147,8 +150,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  /* Centered on the header (the avatar's center). It sits far from the
+     balance row on wide screens, so lining it up with that row looks off. */
+  align-self: center;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: transparent;
   border: none;
@@ -168,9 +174,30 @@
   transform: scale(0.9) rotate(30deg);
 }
 
-/* Keep the 28px look but give fingers a ~40px tap target. */
+/* Extend the 36px buttons to a ~44px tap target. */
 .actionBtn::after {
   content: '';
   position: absolute;
-  inset: -6px -3px;
+  inset: -4px -3px;
+}
+
+.settingsBtn svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Very narrow phones: tighten the left block so the gear keeps a gap. */
+@media (max-width: 360px) {
+  .header {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .headerLeft {
+    gap: 10px;
+  }
+
+  .balanceRow {
+    gap: 6px;
+  }
 }
