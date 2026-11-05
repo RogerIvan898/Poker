@@ -8,7 +8,8 @@
     var(--tg-safe-area-bottom) var(--tg-safe-area-left);
   background: var(--color-overlay);
   backdrop-filter: blur(8px);
-  z-index: 200;
+  /* Above the in-game action panel (1000) so it can't be clicked through. */
+  z-index: 1100;
 }
 
 .panel {

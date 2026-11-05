@@ -188,6 +188,9 @@ msgstr "Mid Stakes"
 msgid "Min buy-in"
 msgstr "Min buy-in"
 
+msgid "Mute sound"
+msgstr "Mute sound"
+
 msgid "My wallet"
 msgstr "My wallet"
 
@@ -234,6 +237,9 @@ msgstr "SB"
 msgid "Settings"
 msgstr "Settings"
 
+msgid "Sound"
+msgstr "Sound"
+
 msgid "Table full"
 msgstr "Table full"
 
@@ -251,6 +257,9 @@ msgstr "TON address"
 
 msgid "Tonkeeper / Telegram Wallet"
 msgstr "Tonkeeper / Telegram Wallet"
+
+msgid "Unmute sound"
+msgstr "Unmute sound"
 
 msgid "Waiting for next hand..."
 msgstr "Waiting for next hand..."

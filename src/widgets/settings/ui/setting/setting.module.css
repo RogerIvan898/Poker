@@ -1,0 +1,31 @@
+.setting {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settingHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settingLabel {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary, var(--color-text));
+  opacity: 0.75;
+}
+
+.settingDescription {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--color-text-secondary, var(--color-text));
+  opacity: 0.75;
+}
+
+.settingControl {
+  min-width: 0;
+}

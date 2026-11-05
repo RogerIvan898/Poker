@@ -1,4 +1,4 @@
-import { getAudioContext } from 'shared/lib/audio';
+import { getAudioContext, isSoundEnabled } from 'shared/lib/audio';
 
 import { ACTION_SOUND_RECIPES } from './constants';
 import type { PokerSoundAction } from './types';
@@ -178,6 +178,10 @@ class PokerSoundEngine {
   }
 
   async playAction(action: PokerSoundAction) {
+    if (!isSoundEnabled()) {
+      return;
+    }
+
     try {
       if (!this.context) {
         this.init();

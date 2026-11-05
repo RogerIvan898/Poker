@@ -3,12 +3,13 @@ import React from 'react';
 import { useLingui } from '@lingui/react/macro';
 import { useNavigate } from '@tanstack/react-router';
 import { useGate, useUnit } from 'effector-react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Settings } from 'lucide-react';
 
 import { gameModel } from 'entities/game';
 import { PlayerActions } from 'features/player-actions';
 import { Preloader } from 'shared/ui/preloader';
 import { PokerBoard } from 'widgets/poker-table';
+import { SettingsDialog } from 'widgets/settings';
 
 import { GamePageGate } from '../model';
 
@@ -28,6 +29,7 @@ export const GameRoomPage = () => {
 
   const navigate = useNavigate();
   const [isLoading] = useUnit([gameModel.$isGameLoading]);
+  const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 
   if (isLoading) {
     return <Preloader label={t`Loading…`} />;
@@ -44,6 +46,21 @@ export const GameRoomPage = () => {
         <ArrowLeft size={14} strokeWidth={2.25} />
         {t`Tables`}
       </button>
+
+      <button
+        type="button"
+        className={styles.settingsBtn}
+        onClick={() => setIsSettingsOpen(true)}
+        aria-label={t`Settings`}
+        title={t`Settings`}
+      >
+        <Settings size={18} />
+      </button>
+
+      <SettingsDialog
+        open={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
 
       {RevealCardsButton ? (
         <React.Suspense fallback={null}>

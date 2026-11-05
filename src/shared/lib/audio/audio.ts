@@ -1,3 +1,5 @@
+import { isSoundEnabled } from './sound-setting';
+
 let audioContext: AudioContext | null = null;
 
 export const bufferCache = new Map<string, AudioBuffer>();
@@ -47,6 +49,10 @@ export const loadBuffer = (url: string) => {
 };
 
 export const startBuffer = (buffer: AudioBuffer, volume = 1) => {
+  if (!isSoundEnabled()) {
+    return;
+  }
+
   const context = getAudioContext();
 
   // While suspended the context clock is frozen, so anything started now
