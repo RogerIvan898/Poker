@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useLingui } from '@lingui/react/macro';
+import { useRouter } from '@tanstack/react-router';
 import { Coins, Swords } from 'lucide-react';
 
 import { RoomCard } from 'entities/room';
@@ -88,18 +89,28 @@ export const MenuPage = () => {
   const [isWithdrawOpen, setIsWithdrawOpen] = React.useState(false);
   const mockUser = { firstName: 'User', balance: 42.5 };
   const visibleRooms = filterRooms(ROOMS, roomFilter);
+  const router = useRouter();
 
   React.useEffect(() => {
+    const prefetch = () => {
+      prefetchWalletDialogs();
+      // The game route is code-split; without this, the first "Play" shows
+      // the router's generic loader while its chunk downloads.
+      router
+        .loadRouteChunk(router.routesById['/game/$roomId'])
+        ?.catch(() => undefined);
+    };
+
     if (typeof window.requestIdleCallback !== 'function') {
-      const timer = window.setTimeout(prefetchWalletDialogs, 1500);
+      const timer = window.setTimeout(prefetch, 1500);
 
       return () => window.clearTimeout(timer);
     }
 
-    const handle = window.requestIdleCallback(prefetchWalletDialogs);
+    const handle = window.requestIdleCallback(prefetch);
 
     return () => window.cancelIdleCallback(handle);
-  }, []);
+  }, [router]);
 
   return (
     <div className={styles.page}>

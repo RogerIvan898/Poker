@@ -7,12 +7,12 @@ import { ArrowLeft, Settings } from 'lucide-react';
 
 import { gameModel } from 'entities/game';
 import { PlayerActions } from 'features/player-actions';
-import { Preloader } from 'shared/ui/preloader';
 import { PokerBoard } from 'widgets/poker-table';
 import { SettingsDialog } from 'widgets/settings';
 
 import { GamePageGate } from '../model';
 
+import { GameLoader } from './game-loader';
 import styles from './game-room.module.css';
 
 const RevealCardsButton = import.meta.env.DEV
@@ -32,7 +32,7 @@ export const GameRoomPage = () => {
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 
   if (isLoading) {
-    return <Preloader label={t`Loading…`} />;
+    return <GameLoader />;
   }
 
   return (

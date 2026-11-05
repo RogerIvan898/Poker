@@ -14,6 +14,9 @@ msgstr "— or scan with Tonkeeper —"
 msgid "{0, plural, one {player} other {players}}"
 msgstr "{0, plural, one {player} other {players}}"
 
+msgid "Aces are taking their seats..."
+msgstr "Aces are taking their seats..."
+
 msgid "Address"
 msgstr "Address"
 
@@ -76,6 +79,15 @@ msgstr "Check / Fold"
 
 msgid "Check your connection and try again."
 msgstr "Check your connection and try again."
+
+msgid "Checking game server availability..."
+msgstr "Checking game server availability..."
+
+msgid "Checking player positions..."
+msgstr "Checking player positions..."
+
+msgid "Checking that the dealer is ready..."
+msgstr "Checking that the dealer is ready..."
 
 msgid "Close"
 msgstr "Close"
@@ -185,6 +197,9 @@ msgstr "Language"
 msgid "Loading…"
 msgstr "Loading…"
 
+msgid "Making room for new players..."
+msgstr "Making room for new players..."
+
 msgid "Max"
 msgstr "Max"
 
@@ -222,6 +237,9 @@ msgstr "Payment method"
 msgid "Play"
 msgstr "Play"
 
+msgid "Players are taking their positions..."
+msgstr "Players are taking their positions..."
+
 msgid "Pot"
 msgstr "Pot"
 
@@ -239,6 +257,9 @@ msgstr "Retry"
 
 msgid "SB"
 msgstr "SB"
+
+msgid "Setting up the table..."
+msgstr "Setting up the table..."
 
 msgid "Settings"
 msgstr "Settings"
@@ -263,6 +284,15 @@ msgstr "Tap to use max"
 
 msgid "Texas Hold’em"
 msgstr "Texas Hold’em"
+
+msgid "The dealer is counting the cards..."
+msgstr "The dealer is counting the cards..."
+
+msgid "The jack is late to the deal again..."
+msgstr "The jack is late to the deal again..."
+
+msgid "The king is looking for his queen..."
+msgstr "The king is looking for his queen..."
 
 msgid "TON address"
 msgstr "TON address"

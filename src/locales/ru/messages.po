@@ -15,6 +15,9 @@ msgstr "— или отсканируйте в Tonkeeper —"
 msgid "{0, plural, one {player} other {players}}"
 msgstr "{0, plural, one {игрок} few {игрока} many {игроков} other {игрока}}"
 
+msgid "Aces are taking their seats..."
+msgstr "Тузы занимают свои места..."
+
 msgid "Address"
 msgstr "Адрес"
 
@@ -77,6 +80,15 @@ msgstr "Чек / Пас"
 
 msgid "Check your connection and try again."
 msgstr "Проверьте подключение и попробуйте снова."
+
+msgid "Checking game server availability..."
+msgstr "Проверяем доступность игровых серверов..."
+
+msgid "Checking player positions..."
+msgstr "Проверяем позиции игроков..."
+
+msgid "Checking that the dealer is ready..."
+msgstr "Проверяем готовность дилера..."
 
 msgid "Close"
 msgstr "Закрыть"
@@ -186,6 +198,9 @@ msgstr "Язык"
 msgid "Loading…"
 msgstr "Загрузка…"
 
+msgid "Making room for new players..."
+msgstr "Готовим места для новых игроков..."
+
 msgid "Max"
 msgstr "Макс"
 
@@ -223,6 +238,9 @@ msgstr "Способ оплаты"
 msgid "Play"
 msgstr "Играть"
 
+msgid "Players are taking their positions..."
+msgstr "Игроки занимают свои позиции..."
+
 msgid "Pot"
 msgstr "Пот"
 
@@ -240,6 +258,9 @@ msgstr "Повторить"
 
 msgid "SB"
 msgstr "МБ"
+
+msgid "Setting up the table..."
+msgstr "Подготавливаем стол..."
 
 msgid "Settings"
 msgstr "Настройки"
@@ -264,6 +285,15 @@ msgstr "Ввести максимум"
 
 msgid "Texas Hold’em"
 msgstr "Texas Hold’em"
+
+msgid "The dealer is counting the cards..."
+msgstr "Дилер пересчитывает карты..."
+
+msgid "The jack is late to the deal again..."
+msgstr "Валет опять опаздывает на раздачу..."
+
+msgid "The king is looking for his queen..."
+msgstr "Король ищет даму..."
 
 msgid "TON address"
 msgstr "TON-адрес"
