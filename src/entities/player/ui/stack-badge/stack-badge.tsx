@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils/cn';
+import { formatCompactNumber } from 'shared/utils/format';
 
 import styles from './stack-badge.module.css';
 
@@ -66,7 +67,9 @@ export const StackBadge = ({
         <div className={styles.content}>
           <span className={styles.name}>{name}</span>
           <div className={styles.stackRow}>
-            <span className={styles.stackAmount}>{displayAmount}</span>
+            <span className={styles.stackAmount}>
+              {formatCompactNumber(displayAmount)}
+            </span>
             <Logo size={16} className={styles.stackLogo} />
           </div>
         </div>

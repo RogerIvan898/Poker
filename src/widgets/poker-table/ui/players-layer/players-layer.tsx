@@ -10,7 +10,7 @@ import { $raisePanelTop } from 'features/player-actions';
 import { useElementSize } from 'shared/hooks/use-element-size';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils/cn';
-import { formatAmount } from 'shared/utils/format';
+import { formatCompactNumber } from 'shared/utils/format';
 
 import styles from './players-layer.module.css';
 import { computeSeats } from './seating';
@@ -114,7 +114,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
           }}
         >
           <Logo size={16} className={styles.potFlightLogo} />
-          <span>{formatAmount(flight.amount)}</span>
+          <span>{formatCompactNumber(flight.amount)}</span>
         </div>
       ))}
       {flights?.map(flight => (
@@ -127,7 +127,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
           }}
         >
           <Logo size={16} className={styles.potFlightLogo} />
-          <span>{formatAmount(flight.amount)}</span>
+          <span>{formatCompactNumber(flight.amount)}</span>
         </div>
       ))}
       {seats.map(({ seat, towardCenter, x, y }) => {

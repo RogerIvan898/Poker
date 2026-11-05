@@ -5,7 +5,7 @@ import type { CardType } from 'entities/card';
 import { Sound } from 'shared/assets/sounds';
 import { useSound } from 'shared/lib/audio';
 import { Logo } from 'shared/ui/logo';
-import { formatAmount } from 'shared/utils/format';
+import { formatCompactNumber } from 'shared/utils/format';
 
 import styles from './poker-table.module.css';
 
@@ -34,7 +34,9 @@ export const PokerTable = ({
               {showPot && (
                 <div className={styles.potBadge}>
                   <Logo size={16} className={styles.potLogo} />
-                  <span className={styles.potValue}>{formatAmount(pot)}</span>
+                  <span className={styles.potValue}>
+                    {formatCompactNumber(pot)}
+                  </span>
                 </div>
               )}
             </div>

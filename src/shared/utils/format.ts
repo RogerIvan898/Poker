@@ -19,7 +19,8 @@ export const formatCompactNumber = (value: number): string => {
     return `${Math.floor(rounded / 10)}.${rounded % 10}K`;
   }
 
-  return String(value);
+  // Small amounts can be fractional (0.1/0.2 blinds): avoid float noise.
+  return formatAmount(value);
 };
 
 export const truncateMiddle = (
