@@ -104,6 +104,7 @@
 }
 
 .actionBtn {
+  position: relative;
   width: 28px;
   height: 28px;
   border-radius: var(--radius-sm);
@@ -165,4 +166,11 @@
 
 .settingsBtn:active {
   transform: scale(0.9) rotate(30deg);
+}
+
+/* Keep the 28px look but give fingers a ~40px tap target. */
+.actionBtn::after {
+  content: '';
+  position: absolute;
+  inset: -6px -3px;
 }

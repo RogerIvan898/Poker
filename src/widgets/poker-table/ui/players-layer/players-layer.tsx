@@ -6,6 +6,7 @@ import { useUnit } from 'effector-react';
 import { gameModel } from 'entities/game';
 import { findPlayerById, Player } from 'entities/player';
 import { sessionModel } from 'entities/session';
+import { $raisePanelTop } from 'features/player-actions';
 import { useElementSize } from 'shared/hooks/use-element-size';
 import { Logo } from 'shared/ui/logo';
 import { cn } from 'shared/utils/cn';
@@ -51,6 +52,9 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
   );
   const playerList = Object.values(players);
   const viewerSeat = findPlayerById(players, viewerId)?.seat ?? null;
+  const raisePanelTop = useUnit($raisePanelTop);
+  const viewerSeatRef = React.useRef<HTMLDivElement | null>(null);
+  const [viewerLift, setViewerLift] = React.useState(0);
   const seatNumbersKey = playerList.map(player => player.seat).join(',');
 
   const seats = React.useMemo(() => {
@@ -68,6 +72,27 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
     seats,
     onHidePot
   );
+
+  // Lift the viewer's seat just enough to clear the raise panel. Uses the
+  // layout box (offsetTop/offsetHeight), which the lift's `translate` and its
+  // transition don't affect, so repeated measurements stay stable.
+  React.useLayoutEffect(() => {
+    const element = viewerSeatRef.current;
+    const parent = element?.offsetParent;
+
+    if (raisePanelTop === null || !element || !parent) {
+      setViewerLift(0);
+      return;
+    }
+
+    // The wrapper is centered on its anchor with translate(-50%, -50%).
+    const restingBottom =
+      parent.getBoundingClientRect().top +
+      element.offsetTop +
+      element.offsetHeight / 2;
+
+    setViewerLift(Math.max(0, Math.round(restingBottom - raisePanelTop + 8)));
+  }, [raisePanelTop, seats]);
 
   if (!tableElement || !tableSize || !seats.length) {
     return null;
@@ -123,8 +148,15 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
         return (
           <div
             key={player.id}
+            ref={isViewer ? viewerSeatRef : undefined}
             className={styles.seatWrapper}
-            style={{ left: x, top: y }}
+            style={{
+              left: x,
+              top: y,
+              ...(isViewer && viewerLift
+                ? { translate: `0 -${viewerLift}px` }
+                : undefined),
+            }}
           >
             <Player
               player={player}

@@ -1,3 +1,4 @@
+export { $raisePanelTop, setRaisePanelTop } from './action-panel';
 export { call, check, fold, raise } from './actions';
 export { potRaiseTo } from './pot-raise';
 export { $preAction, setPreAction } from './pre-action';

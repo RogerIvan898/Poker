@@ -228,3 +228,38 @@
     transform: translateY(0) scale(1);
   }
 }
+
+/* Phones: the action container already draws the card, so drop the inner
+   frame and tighten rows to keep the hero's cards visible above the panel. */
+@media (max-width: 768px) {
+  .wrapper {
+    gap: 10px;
+    padding: 2px;
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .shortcut {
+    height: 34px;
+  }
+
+  .step {
+    width: 38px;
+    height: 38px;
+  }
+
+  .input {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 18px;
+  }
+
+  .slider {
+    height: 30px;
+  }
+
+  .buttonRow > button {
+    --action-button-height: 46px;
+  }
+}

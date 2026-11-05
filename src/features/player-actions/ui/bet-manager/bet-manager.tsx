@@ -159,7 +159,9 @@ export const BetManager = ({
               type="button"
               className={cn(
                 styles.shortcut,
-                amount === value && styles.shortcutActive
+                preset.label === maxLabel &&
+                  amount === value &&
+                  styles.shortcutActive
               )}
               disabled={preset.value < minAmount}
               onClick={() => commit(value)}

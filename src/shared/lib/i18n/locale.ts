@@ -34,6 +34,14 @@ export const detectLocale = (): Locale => {
   return DEFAULT_LOCALE;
 };
 
+// Shown while the catalog itself is still loading, so it can't come from it.
+const BOOT_LOADING_LABELS: Record<Locale, string> = {
+  en: 'Loading…',
+  ru: 'Загрузка…',
+};
+
+export const getBootLoadingLabel = () => BOOT_LOADING_LABELS[detectLocale()];
+
 export const activateLocale = async (locale: Locale) => {
   const { messages } = await catalogLoaders[locale]();
 

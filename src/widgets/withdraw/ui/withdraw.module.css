@@ -226,7 +226,8 @@
 
 .addressInput {
   font-family: monospace;
-  font-size: 14px;
+  /* Below 16px iOS zooms the page when the field is focused. */
+  font-size: 16px;
 }
 
 .primaryBtn,

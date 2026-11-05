@@ -6,7 +6,7 @@ import { gameModel } from 'entities/game';
 import { findPlayerById, PlayerStatus } from 'entities/player';
 import { sessionModel } from 'entities/session';
 
-import { canPreAct } from '../model';
+import { canPreAct, setRaisePanelTop } from '../model';
 
 import { ActionPanel } from './action-panel';
 import { BetManager } from './bet-manager';
@@ -31,6 +31,34 @@ export const PlayerActions = () => {
     }
   }, [isMyTurn]);
 
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
+  const isRaisePanelOpen = isMyTurn && isChangingAmount;
+
+  // Report the open raise panel's top edge so the table can keep the
+  // viewer's cards visible above it.
+  React.useLayoutEffect(() => {
+    const element = containerRef.current;
+
+    if (!isRaisePanelOpen || !element) {
+      setRaisePanelTop(null);
+      return;
+    }
+
+    const update = () => setRaisePanelTop(element.getBoundingClientRect().top);
+
+    update();
+
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
+    window.addEventListener('resize', update);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', update);
+      setRaisePanelTop(null);
+    };
+  }, [isRaisePanelOpen]);
+
   if (!viewerId) {
     return null;
   }
@@ -43,8 +71,8 @@ export const PlayerActions = () => {
     (allowedActions?.maxRaise ?? 0) >= (allowedActions?.minRaise ?? 0);
 
   return (
-    <div className={styles.actionContainer}>
-      {isMyTurn && isChangingAmount ? (
+    <div ref={containerRef} className={styles.actionContainer}>
+      {isRaisePanelOpen ? (
         <BetManager
           playerId={viewerId}
           minAmount={allowedActions?.minRaise ?? 0}

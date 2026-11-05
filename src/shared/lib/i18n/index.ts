@@ -13,3 +13,4 @@ export {
   I18nGate,
   waitForLocale,
 } from './model';
+export { getBootLoadingLabel } from './locale';
