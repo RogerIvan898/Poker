@@ -17,7 +17,7 @@
 }
 
 .play {
-  animation: cardDrop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) var(--delay, 0ms)
+  animation: cardDeal 0.75s cubic-bezier(0.16, 1, 0.3, 1) var(--delay, 0ms)
     forwards;
 }
 
@@ -71,36 +71,92 @@
 }
 
 .playFlat {
-  animation: cardDropFlat 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)
-    var(--delay, 0ms) forwards;
+  animation: cardDealFlat 0.42s var(--ease-out-soft) var(--delay, 0ms) forwards;
 }
 
-@keyframes cardDropFlat {
+/* Card slides in from the table center, then turns face-up. */
+@keyframes cardDealFlat {
   0% {
-    transform: translateY(-40px) scale(0.9);
+    transform: translateY(-18px) scale(0.92);
     opacity: 0;
   }
-  60% {
-    transform: translateY(4px) scale(1.02);
-    opacity: 1;
-  }
   100% {
-    transform: translateY(0) scale(1);
+    transform: none;
     opacity: 1;
   }
 }
 
-@keyframes cardDrop {
+/* Card slides in face down, lifts, and flips face up. */
+@keyframes cardDeal {
   0% {
-    transform: translateY(-80px) scale(0.9) rotate(-6deg);
+    transform: translate(-70px, -24px) rotate(-12deg) scale(0.9);
     opacity: 0;
   }
-  60% {
-    transform: translateY(6px) scale(1.02) rotate(2deg);
+  12% {
     opacity: 1;
   }
+  40% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
+  62% {
+    transform: translateY(-8px) scale(1.06) scaleX(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
   100% {
-    transform: translateY(0) scale(1) rotate(0deg);
+    transform: translateY(0) scale(1) scaleX(1);
+    opacity: 1;
+  }
+}
+
+/* Face-down layer: covers the face until the card is edge-on. */
+.play::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 3px solid #ffffff;
+  background: repeating-linear-gradient(
+    45deg,
+    #16213e,
+    #16213e 6px,
+    #1a1a2e 6px,
+    #1a1a2e 12px
+  );
+  animation: hideBack 0.75s step-end var(--delay, 0ms) forwards;
+}
+
+@keyframes hideBack {
+  0% {
+    visibility: visible;
+  }
+  62% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: hidden;
+  }
+}
+
+.card {
+  --ease-spring: cubic-bezier(0.22, 1.2, 0.36, 1);
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .play::after {
+    display: none;
+  }
+
+  .play,
+  .playFlat {
+    animation: cardFade 0.2s ease-out var(--delay, 0ms) forwards;
+  }
+}
+
+@keyframes cardFade {
+  to {
     opacity: 1;
   }
 }

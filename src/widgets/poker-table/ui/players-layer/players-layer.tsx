@@ -78,7 +78,11 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
       {collectFlights?.map(flight => (
         <div
           key={`collect-${flight.seat}`}
-          className={cn(styles.potFlight, styles.collectFlight)}
+          className={cn(
+            styles.potFlight,
+            styles.collectFlight,
+            collectAtPot && styles.arrived
+          )}
           style={{
             left: collectAtPot ? flight.toX : flight.fromX,
             top: collectAtPot ? flight.toY : flight.fromY,
@@ -91,7 +95,7 @@ export const PlayersLayer = ({ tableElement, onHidePot }: Props) => {
       {flights?.map(flight => (
         <div
           key={`${flightId}-${flight.seat}`}
-          className={styles.potFlight}
+          className={cn(styles.potFlight, atWinner && styles.arrived)}
           style={{
             left: atWinner ? flight.toX : flight.fromX,
             top: atWinner ? flight.toY : flight.fromY,

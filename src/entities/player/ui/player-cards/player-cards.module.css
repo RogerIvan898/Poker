@@ -15,10 +15,26 @@
 .cardSlot {
   flex-shrink: 0;
   opacity: 0;
-  transform: translateY(25px) scale(0.6);
+  transform: translateY(28px) rotate(-10deg) scale(0.7);
   transition:
     opacity 0.2s ease-out,
-    transform 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    transform 0.42s cubic-bezier(0.22, 1.2, 0.36, 1);
+}
+
+/* Fan the second hole card in slightly after the first. */
+.cardSlot + .cardSlot {
+  transform: translateY(28px) rotate(10deg) scale(0.7);
+  transition-delay: 90ms;
+}
+
+.cardSlot.visible + .cardSlot.visible {
+  transform: translateY(0) rotate(4deg) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardSlot {
+    transition: opacity 0.2s ease-out;
+  }
 }
 
 .cardSlot + .cardSlot {
@@ -27,9 +43,10 @@
   z-index: 2;
 }
 
-.cardSlot.visible {
+/* Doubled class beats the `.cardSlot + .cardSlot` hidden state. */
+.cardSlot.visible.visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0) rotate(-4deg) scale(1);
 }
 
 @media (max-width: 768px) {
