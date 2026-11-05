@@ -35,9 +35,7 @@ export const PaymentDetailsStep = ({
 
   const isWallet = method === 'wallet';
 
-  // lingui-set context="payment-method"
   const exchangeLabel = t`Exchange`;
-  // lingui-reset
 
   return (
     <div className={shared.content}>

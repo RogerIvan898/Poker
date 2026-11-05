@@ -22,9 +22,7 @@ export const ExchangePanel = ({
 }: Props) => {
   const { t } = useLingui();
 
-  // lingui-set context="form-field"
   const requiredLabel = t`Required`;
-  // lingui-reset
 
   return (
     <div

@@ -39,12 +39,10 @@ export const PreActions = () => {
     setActive(activeAction === action ? null : action);
   };
 
-  // lingui-set context="poker-pre-action"
   const checkLabel = t`Check`;
   const checkFoldLabel = t`Check / Fold`;
   const callAmountLabel = t`Call ${callBb} BB`;
   const callLabel = t`Call`;
-  // lingui-reset
 
   return (
     <div className={styles.buttonRow}>

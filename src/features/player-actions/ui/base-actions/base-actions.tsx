@@ -23,13 +23,11 @@ export const BaseActions = ({
 }: Props) => {
   const { t } = useLingui();
 
-  // lingui-set context="poker-action"
   const foldLabel = t`Fold`;
   const callLabel = t`Call`;
   const checkLabel = t`Check`;
   const betLabel = t`Bet`;
   const raiseLabel = t`Raise`;
-  // lingui-reset
 
   return (
     <div className={styles.buttonRow}>

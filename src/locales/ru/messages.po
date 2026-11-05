@@ -24,11 +24,6 @@ msgstr "Только адрес — удобнее для сканеров би�
 msgid "All"
 msgstr "Все"
 
-msgctxt "bet-manager"
-msgid "All in"
-msgstr "Олл-ин"
-
-msgctxt "poker-action"
 msgid "All in"
 msgstr "Олл-ин"
 
@@ -47,29 +42,21 @@ msgstr "Доступные столы"
 msgid "Back"
 msgstr "Назад"
 
-msgctxt "poker-action"
 msgid "BB"
 msgstr "ББ"
 
 msgid "Beginners"
 msgstr "Новички"
 
-msgctxt "poker-action"
 msgid "Bet"
 msgstr "Бет"
 
 msgid "Blinds"
 msgstr "Блайнды"
 
-msgctxt "poker-action"
 msgid "Call"
 msgstr "Колл"
 
-msgctxt "poker-pre-action"
-msgid "Call"
-msgstr "Колл"
-
-msgctxt "poker-pre-action"
 msgid "Call {callBb} BB"
 msgstr "Колл {callBb} ББ"
 
@@ -82,15 +69,9 @@ msgstr "Кэш"
 msgid "Change wallet"
 msgstr "Сменить кошелёк"
 
-msgctxt "poker-action"
 msgid "Check"
 msgstr "Чек"
 
-msgctxt "poker-pre-action"
-msgid "Check"
-msgstr "Чек"
-
-msgctxt "poker-pre-action"
 msgid "Check / Fold"
 msgstr "Чек / Пас"
 
@@ -157,11 +138,9 @@ msgstr "Введите сумму пополнения"
 msgid "Exceeds available balance"
 msgstr "Превышает доступный баланс"
 
-msgctxt "payment-method"
 msgid "Exchange"
 msgstr "Биржа"
 
-msgctxt "poker-action"
 msgid "Fold"
 msgstr "Фолд"
 
@@ -192,7 +171,6 @@ msgstr "Язык"
 msgid "Loading…"
 msgstr "Загрузка…"
 
-msgctxt "bet-manager"
 msgid "Max"
 msgstr "Макс"
 
@@ -230,22 +208,18 @@ msgstr "Способ оплаты"
 msgid "Play"
 msgstr "Играть"
 
-msgctxt "bet-manager"
 msgid "Pot"
 msgstr "Пот"
 
 msgid "Quick add amount"
 msgstr "Быстро добавить"
 
-msgctxt "poker-action"
 msgid "Raise"
 msgstr "Рейз"
 
-msgctxt "form-field"
 msgid "Required"
 msgstr "Обязательно"
 
-msgctxt "poker-action"
 msgid "SB"
 msgstr "МБ"
 

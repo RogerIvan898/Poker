@@ -27,7 +27,6 @@ interface Props {
 export const ActionBadge = ({ action, amount }: Props) => {
   const { t } = useLingui();
 
-  // lingui-set context="poker-action"
   const labels: Record<SeatActionBadge, string> = {
     [PlayerAction.FOLD]: t`Fold`,
     [PlayerAction.CHECK]: t`Check`,
@@ -38,7 +37,6 @@ export const ActionBadge = ({ action, amount }: Props) => {
     [SeatBadgeKind.SB]: t`SB`,
     [SeatBadgeKind.BB]: t`BB`,
   };
-  // lingui-reset
 
   const showAmount =
     amount != null && amount > 0 && action !== PlayerAction.FOLD;

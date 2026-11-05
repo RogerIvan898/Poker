@@ -110,15 +110,11 @@ export const BetManager = ({
     commit(draftValue ?? amount);
   };
 
-  // lingui-set context="bet-manager"
   const maxLabel = t`Max`;
   const potLabel = t`Pot`;
   const allInLabel = t`All in`;
-  // lingui-reset
-  // lingui-set context="poker-action"
   const betLabel = t`Bet`;
   const raiseLabel = t`Raise`;
-  // lingui-reset
   const cancelLabel = t`Cancel`;
 
   // Facing a preflop raise, fixed BB sizes fall below the minimum raise,

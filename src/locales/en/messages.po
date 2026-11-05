@@ -23,11 +23,6 @@ msgstr "Address only — easy for exchange scanners to read."
 msgid "All"
 msgstr "All"
 
-msgctxt "bet-manager"
-msgid "All in"
-msgstr "All in"
-
-msgctxt "poker-action"
 msgid "All in"
 msgstr "All in"
 
@@ -46,29 +41,21 @@ msgstr "Available tables"
 msgid "Back"
 msgstr "Back"
 
-msgctxt "poker-action"
 msgid "BB"
 msgstr "BB"
 
 msgid "Beginners"
 msgstr "Beginners"
 
-msgctxt "poker-action"
 msgid "Bet"
 msgstr "Bet"
 
 msgid "Blinds"
 msgstr "Blinds"
 
-msgctxt "poker-action"
 msgid "Call"
 msgstr "Call"
 
-msgctxt "poker-pre-action"
-msgid "Call"
-msgstr "Call"
-
-msgctxt "poker-pre-action"
 msgid "Call {callBb} BB"
 msgstr "Call {callBb} BB"
 
@@ -81,15 +68,9 @@ msgstr "Cash"
 msgid "Change wallet"
 msgstr "Change wallet"
 
-msgctxt "poker-action"
 msgid "Check"
 msgstr "Check"
 
-msgctxt "poker-pre-action"
-msgid "Check"
-msgstr "Check"
-
-msgctxt "poker-pre-action"
 msgid "Check / Fold"
 msgstr "Check / Fold"
 
@@ -156,11 +137,9 @@ msgstr "Enter the amount you want to deposit"
 msgid "Exceeds available balance"
 msgstr "Exceeds available balance"
 
-msgctxt "payment-method"
 msgid "Exchange"
 msgstr "Exchange"
 
-msgctxt "poker-action"
 msgid "Fold"
 msgstr "Fold"
 
@@ -191,7 +170,6 @@ msgstr "Language"
 msgid "Loading…"
 msgstr "Loading…"
 
-msgctxt "bet-manager"
 msgid "Max"
 msgstr "Max"
 
@@ -229,22 +207,18 @@ msgstr "Payment method"
 msgid "Play"
 msgstr "Play"
 
-msgctxt "bet-manager"
 msgid "Pot"
 msgstr "Pot"
 
 msgid "Quick add amount"
 msgstr "Quick add amount"
 
-msgctxt "poker-action"
 msgid "Raise"
 msgstr "Raise"
 
-msgctxt "form-field"
 msgid "Required"
 msgstr "Required"
 
-msgctxt "poker-action"
 msgid "SB"
 msgstr "SB"
 
