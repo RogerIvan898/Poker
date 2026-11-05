@@ -33,6 +33,11 @@
   cursor: pointer;
 }
 
+.shortcut:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
 .shortcutActive {
   border-color: var(--color-primary);
   color: var(--color-primary-light);

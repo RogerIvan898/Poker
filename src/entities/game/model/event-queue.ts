@@ -194,7 +194,7 @@ const playRunout = async (gen: number) => {
       cancelled: () => gen !== generation,
       collectToPot: () => {
         collectingBets(true);
-        playBuffered(Sound.CHIPS, 0.22);
+        playBuffered(Sound.CHIPS, 0.12);
       },
       applyStreet,
       revealHands: () => {
@@ -270,7 +270,7 @@ const playStreet = async (gen: number) => {
       cancelled: () => gen !== generation,
       collectToPot: () => {
         collectingBets(true);
-        playBuffered(Sound.CHIPS, 0.22);
+        playBuffered(Sound.CHIPS, 0.12);
       },
       applyStreet,
       revealCards: cards => {

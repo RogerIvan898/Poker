@@ -49,8 +49,11 @@ export const loadBuffer = (url: string) => {
 export const startBuffer = (buffer: AudioBuffer, volume = 1) => {
   const context = getAudioContext();
 
-  if (context.state === 'suspended') {
-    void context.resume();
+  // While suspended the context clock is frozen, so anything started now
+  // would pile up and play all at once on resume. Wake it and drop the sound.
+  if (context.state !== 'running') {
+    void context.resume().catch(() => undefined);
+    return;
   }
 
   const source = context.createBufferSource();
@@ -63,6 +66,8 @@ export const startBuffer = (buffer: AudioBuffer, volume = 1) => {
   source.start(0);
 };
 
+const MAX_LATE_MS = 250;
+
 export const playBuffered = (url: string, volume = 1) => {
   const cached = bufferCache.get(url);
 
@@ -71,8 +76,17 @@ export const playBuffered = (url: string, volume = 1) => {
     return;
   }
 
+  const requestedAt = performance.now();
+
   loadBuffer(url)
-    .then(buffer => startBuffer(buffer, volume))
+    .then(buffer => {
+      // A sound that arrives long after its event would play out of sync.
+      if (performance.now() - requestedAt > MAX_LATE_MS) {
+        return;
+      }
+
+      startBuffer(buffer, volume);
+    })
     .catch((error: unknown) => console.warn(`[Audio] ${url}`, error));
 };
 

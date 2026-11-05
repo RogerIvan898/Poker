@@ -179,7 +179,17 @@ class PokerSoundEngine {
 
   async playAction(action: PokerSoundAction) {
     try {
-      await this.resume();
+      if (!this.context) {
+        this.init();
+      }
+
+      // Awaiting resume() would release every queued action at the same
+      // instant once audio unlocks; skip sounds until the context runs.
+      if (this.context?.state !== 'running') {
+        await this.resume();
+        return;
+      }
+
       const recipe = ACTION_SOUND_RECIPES[action];
 
       recipe.clicks.forEach(({ pitch, volume, soft, delay = 0 }) => {

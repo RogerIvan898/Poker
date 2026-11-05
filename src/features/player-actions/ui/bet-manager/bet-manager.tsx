@@ -12,6 +12,11 @@ import { potRaiseTo, raise, type BetPreset } from '../../model';
 
 import styles from './bet-manager.module.css';
 
+// Blinds can be fractional (e.g. 0.1/0.2), so round to cents, not integers.
+const CHIP_PRECISION = 100;
+const roundChips = (value: number) =>
+  Math.round(value * CHIP_PRECISION) / CHIP_PRECISION;
+
 interface Props {
   playerId: string;
   minAmount: number;
@@ -44,7 +49,7 @@ export const BetManager = ({
   const step = bigBlind > 0 ? bigBlind : 1;
   const draftValue = draft === null ? null : parseNumericInput(draft);
   const legal = (value: number) =>
-    clamp(Math.round(value), minAmount, maxAmount);
+    clamp(roundChips(value), minAmount, maxAmount);
 
   const commit = (value: number) => {
     setAmount(legal(value));
@@ -52,7 +57,7 @@ export const BetManager = ({
   };
 
   useEffect(() => {
-    setAmount(current => clamp(Math.round(current), minAmount, maxAmount));
+    setAmount(current => clamp(roundChips(current), minAmount, maxAmount));
   }, [minAmount, maxAmount]);
 
   const handleConfirm = () => {
@@ -78,7 +83,7 @@ export const BetManager = ({
     }
 
     if (value >= minAmount) {
-      setAmount(Math.round(value));
+      setAmount(roundChips(value));
     }
   };
 
@@ -97,10 +102,18 @@ export const BetManager = ({
   // lingui-reset
   const cancelLabel = t`Cancel`;
 
+  // Facing a preflop raise, fixed BB sizes fall below the minimum raise,
+  // so size relative to the bet being called instead.
+  const currentBet = committed + callAmount;
+  const facingRaise = currentBet > bigBlind;
   const presets: BetPreset[] = preflop
     ? [
-        { label: '2.2 BB', value: bigBlind * 2.2 },
-        { label: '3 BB', value: bigBlind * 3 },
+        facingRaise
+          ? { label: '2.5x', value: currentBet * 2.5 }
+          : { label: '2.2 BB', value: bigBlind * 2.2 },
+        facingRaise
+          ? { label: '3x', value: currentBet * 3 }
+          : { label: '3 BB', value: bigBlind * 3 },
         { label: maxLabel, value: maxAmount },
       ]
     : [
@@ -135,6 +148,7 @@ export const BetManager = ({
                   amount === value &&
                   styles.shortcutActive
               )}
+              disabled={preset.value < minAmount}
               onClick={() => commit(value)}
             >
               {preset.label}
@@ -186,7 +200,7 @@ export const BetManager = ({
         onChange={event => commit(Number(event.target.value))}
         min={minAmount}
         max={maxAmount}
-        step={1}
+        step={1 / CHIP_PRECISION}
         className={styles.slider}
       />
 

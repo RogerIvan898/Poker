@@ -21,8 +21,17 @@ const initializeAudio = async () => {
   const audioContext = getAudioContext();
   pokerSoundEngine.init(audioContext);
 
-  if (audioContext.state === 'suspended') {
-    await audioContext.resume();
+  // resume() stays pending until a user gesture, so don't block preloading
+  // on it; decoding works on a suspended context.
+  if (audioContext.state !== 'running') {
+    void audioContext.resume().catch(() => undefined);
+
+    const unlock = () => {
+      void audioContext.resume().catch(() => undefined);
+    };
+
+    window.addEventListener('pointerdown', unlock, { once: true });
+    window.addEventListener('keydown', unlock, { once: true });
   }
 
   return preloadSounds(GAME_SOUNDS);
