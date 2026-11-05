@@ -42,8 +42,27 @@ export const waitForLocale = () => {
   return pendingLoad;
 };
 
+/**
+ * Loads the detected locale's catalog. Called before the first render so the
+ * boot screen stays up until translations are ready (no loader hand-offs).
+ */
+export const prepareI18n = async () => {
+  if ($isI18nReady.getState()) {
+    return;
+  }
+
+  if (!activateLocaleFx.pending.getState()) {
+    void activateLocaleFx(detectLocale()).catch(() => undefined);
+  }
+
+  await waitForLocale();
+};
+
+// Fallback if the app mounts before prepareI18n finished (or wasn't called).
 sample({
   clock: I18nGate.open,
+  filter: () =>
+    !$isI18nReady.getState() && !activateLocaleFx.pending.getState(),
   fn: () => detectLocale(),
   target: activateLocaleFx,
 });

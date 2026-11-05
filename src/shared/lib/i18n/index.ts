@@ -11,6 +11,7 @@ export {
   $isI18nReady,
   changeLocale,
   I18nGate,
+  prepareI18n,
   waitForLocale,
 } from './model';
 export { getBootLoadingLabel } from './locale';
