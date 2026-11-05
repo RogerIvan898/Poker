@@ -40,6 +40,7 @@ export const setupInterceptors = (apiInstance: AxiosInstance) => {
       if (tokenManager.getIsRefreshing()) {
         try {
           const newToken = await tokenManager.addRequestToQueue();
+          originalRequest._isRetry = true;
           originalRequest.headers.set('Authorization', `Bearer ${newToken}`);
           return apiInstance(originalRequest);
         } catch (err) {

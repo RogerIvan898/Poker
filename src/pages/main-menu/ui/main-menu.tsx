@@ -29,8 +29,9 @@ const WithdrawModal = React.lazy(() =>
 );
 
 const prefetchWalletDialogs = () => {
-  void loadDepositDialog();
-  void loadWithdrawModal();
+  // Prefetch is best-effort; React.lazy retries the import on open.
+  loadDepositDialog().catch(() => {});
+  loadWithdrawModal().catch(() => {});
 };
 
 const DevServerSwitch = import.meta.env.DEV

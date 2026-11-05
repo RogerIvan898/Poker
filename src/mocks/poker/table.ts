@@ -577,7 +577,7 @@ export class PokerTable {
               combinationName: 'Uncontested',
             },
           ]
-        : this.showdown(alive, pot);
+        : this.showdown(alive);
 
     streets.forEach(street => {
       this.emit({
@@ -626,7 +626,7 @@ export class PokerTable {
               combinationName: 'Uncontested',
             },
           ]
-        : this.showdown(alive, pot);
+        : this.showdown(alive);
 
     winnerPayload.forEach(winner => {
       const seat = this.seats.find(item => item.seat === winner.seatIndex);
@@ -642,15 +642,57 @@ export class PokerTable {
     });
   }
 
-  private showdown(alive: Seat[], pot: number) {
+  private showdown(alive: Seat[]) {
     const ranked = alive.map(seat => ({
       seat,
       hand: rankHand([...seat.hole, ...this.board]),
     }));
-    const best = Math.max(...ranked.map(item => item.hand.score));
-    const winners = ranked.filter(item => item.hand.score === best);
-    const share = Math.floor(pot / winners.length);
-    let remainder = pot - share * winners.length;
+
+    // Split chips into side pots by commitment level so a short all-in can
+    // only win what each opponent matched.
+    const levels = [...new Set(this.seats.map(seat => seat.totalCommitted))]
+      .filter(level => level > 0)
+      .sort((left, right) => left - right);
+    const won = new Map<number, number>();
+    let previous = 0;
+
+    levels.forEach(level => {
+      const amount = this.seats.reduce(
+        (sum, seat) =>
+          sum + Math.max(0, Math.min(seat.totalCommitted, level) - previous),
+        0
+      );
+      previous = level;
+
+      const eligible = ranked.filter(item => item.seat.totalCommitted >= level);
+
+      if (!amount) {
+        return;
+      }
+
+      // Nobody still in covers this layer (e.g. a folded overbet): refund it
+      // to the live seats with the highest commitment.
+      const contenders = eligible.length
+        ? eligible
+        : ranked.filter(
+            item =>
+              item.seat.totalCommitted ===
+              Math.max(...ranked.map(entry => entry.seat.totalCommitted))
+          );
+      const best = Math.max(...contenders.map(item => item.hand.score));
+      const winners = contenders.filter(item => item.hand.score === best);
+      const share = Math.floor(amount / winners.length);
+      let remainder = amount - share * winners.length;
+
+      winners.forEach(winner => {
+        const extra = remainder > 0 ? 1 : 0;
+        remainder -= extra;
+        won.set(
+          winner.seat.seat,
+          (won.get(winner.seat.seat) ?? 0) + share + extra
+        );
+      });
+    });
 
     this.emit({
       type: SERVER_EVENTS.SHOWDOWN,
@@ -661,16 +703,13 @@ export class PokerTable {
       },
     });
 
-    return winners.map(winner => {
-      const extra = remainder > 0 ? 1 : 0;
-      remainder -= extra;
-
-      return {
-        seatIndex: winner.seat.seat,
-        amountWon: share + extra,
-        combinationName: winner.hand.name,
-      };
-    });
+    return ranked
+      .filter(item => won.has(item.seat.seat))
+      .map(item => ({
+        seatIndex: item.seat.seat,
+        amountWon: won.get(item.seat.seat) ?? 0,
+        combinationName: item.hand.name,
+      }));
   }
 
   private collectStreet() {

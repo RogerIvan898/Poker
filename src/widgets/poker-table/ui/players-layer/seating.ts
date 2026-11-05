@@ -39,7 +39,9 @@ export const computeSeats = (
   const radiusX = table.width * scale.x;
   const radiusY = table.height * scale.y;
   const referenceSeat = viewerSeat ?? seats[0];
-  const seatSpan = Math.max(...seats) + 1;
+  // Include the reference seat so a viewer seated outside the occupied range
+  // (e.g. a spectator on a high empty seat) still wraps correctly.
+  const seatSpan = Math.max(referenceSeat, ...seats) + 1;
   const distanceFromReference = (seat: number) =>
     (((seat - referenceSeat) % seatSpan) + seatSpan) % seatSpan;
   const orderedSeats = [...seats].sort(
