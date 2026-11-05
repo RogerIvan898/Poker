@@ -20,7 +20,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      /* dvh = the visible screen on phones; plain vh includes the area under
+         the browser bars and causes a scrollbar. vh is the fallback. */
       min-height: 100vh;
+      min-height: 100dvh;
       color: #f0f6fc;
       font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       user-select: none;

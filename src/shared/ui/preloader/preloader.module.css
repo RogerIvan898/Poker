@@ -3,7 +3,9 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 100vh;
+  /* Fill #root (which already reserves the Telegram safe areas); 100vh would
+     overflow on phones and add a scrollbar. */
+  min-height: 100%;
   background-color: #0d1117;
   color: #f0f6fc;
   user-select: none;
